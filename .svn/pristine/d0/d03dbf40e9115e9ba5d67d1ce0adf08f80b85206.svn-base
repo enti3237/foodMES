@@ -1,0 +1,1970 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_CR_POP1
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.Panel_List = New System.Windows.Forms.Panel()
+        Me.cboCustomer2 = New System.Windows.Forms.ComboBox()
+        Me.txtVendorCode = New System.Windows.Forms.TextBox()
+        Me.btnCustomerSearch = New System.Windows.Forms.Button()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Button8 = New System.Windows.Forms.Button()
+        Me.Button9 = New System.Windows.Forms.Button()
+        Me.Button10 = New System.Windows.Forms.Button()
+        Me.Button11 = New System.Windows.Forms.Button()
+        Me.Button5 = New System.Windows.Forms.Button()
+        Me.Button6 = New System.Windows.Forms.Button()
+        Me.Button79 = New System.Windows.Forms.Button()
+        Me.Button83 = New System.Windows.Forms.Button()
+        Me.btnShippingRegInd = New System.Windows.Forms.Button()
+        Me.btnShippingInd = New System.Windows.Forms.Button()
+        Me.Button57 = New System.Windows.Forms.Button()
+        Me.Button58 = New System.Windows.Forms.Button()
+        Me.btnMTItmInspInd = New System.Windows.Forms.Button()
+        Me.btnRIRRecv = New System.Windows.Forms.Button()
+        Me.btnQAInd = New System.Windows.Forms.Button()
+        Me.Button50 = New System.Windows.Forms.Button()
+        Me.Button51 = New System.Windows.Forms.Button()
+        Me.Button52 = New System.Windows.Forms.Button()
+        Me.btnMCompInd = New System.Windows.Forms.Button()
+        Me.btnMEInd = New System.Windows.Forms.Button()
+        Me.btnManufactureInd = New System.Windows.Forms.Button()
+        Me.Button44 = New System.Windows.Forms.Button()
+        Me.Button45 = New System.Windows.Forms.Button()
+        Me.Button46 = New System.Windows.Forms.Button()
+        Me.btnWithdrawReqInd = New System.Windows.Forms.Button()
+        Me.btnMCLInd = New System.Windows.Forms.Button()
+        Me.btnMTInd = New System.Windows.Forms.Button()
+        Me.Button38 = New System.Windows.Forms.Button()
+        Me.Button39 = New System.Windows.Forms.Button()
+        Me.Button40 = New System.Windows.Forms.Button()
+        Me.btnRIRInd = New System.Windows.Forms.Button()
+        Me.Button24 = New System.Windows.Forms.Button()
+        Me.btnMTRecv = New System.Windows.Forms.Button()
+        Me.Button26 = New System.Windows.Forms.Button()
+        Me.btnCOInd = New System.Windows.Forms.Button()
+        Me.btnPSRecv = New System.Windows.Forms.Button()
+        Me.btnLORecv = New System.Windows.Forms.Button()
+        Me.btnPrchsInd = New System.Windows.Forms.Button()
+        Me.Button31 = New System.Windows.Forms.Button()
+        Me.Button32 = New System.Windows.Forms.Button()
+        Me.Button33 = New System.Windows.Forms.Button()
+        Me.Button34 = New System.Windows.Forms.Button()
+        Me.btnPSInd1 = New System.Windows.Forms.Button()
+        Me.Button22 = New System.Windows.Forms.Button()
+        Me.btnLOInd = New System.Windows.Forms.Button()
+        Me.Button20 = New System.Windows.Forms.Button()
+        Me.btnCPInd = New System.Windows.Forms.Button()
+        Me.btnDVInd = New System.Windows.Forms.Button()
+        Me.btnPRRecvInd = New System.Windows.Forms.Button()
+        Me.btnTechInd = New System.Windows.Forms.Button()
+        Me.Button15 = New System.Windows.Forms.Button()
+        Me.Button16 = New System.Windows.Forms.Button()
+        Me.Button17 = New System.Windows.Forms.Button()
+        Me.Button18 = New System.Windows.Forms.Button()
+        Me.btnPRInd = New System.Windows.Forms.Button()
+        Me.btnCRItmRegInd = New System.Windows.Forms.Button()
+        Me.btnCRInd = New System.Windows.Forms.Button()
+        Me.btnSalesInd = New System.Windows.Forms.Button()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.txtCRDueDateF = New System.Windows.Forms.TextBox()
+        Me.txtVendorNameF = New System.Windows.Forms.TextBox()
+        Me.txtCRSNoF = New System.Windows.Forms.TextBox()
+        Me.txtCRDateF = New System.Windows.Forms.TextBox()
+        Me.txtJobNameF = New System.Windows.Forms.TextBox()
+        Me.txtJobNoF = New System.Windows.Forms.TextBox()
+        Me.Button7 = New System.Windows.Forms.Button()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.Label36 = New System.Windows.Forms.Label()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.dtpCRDateTo = New System.Windows.Forms.DateTimePicker()
+        Me.dtpCRDateFrom = New System.Windows.Forms.DateTimePicker()
+        Me.dtpCRDueDateTo = New System.Windows.Forms.DateTimePicker()
+        Me.dtpCRDueDateFrom = New System.Windows.Forms.DateTimePicker()
+        Me.txtCRSNo = New System.Windows.Forms.TextBox()
+        Me.btnSearch = New System.Windows.Forms.Button()
+        Me.txtVendorName = New System.Windows.Forms.TextBox()
+        Me.txtJobName = New System.Windows.Forms.TextBox()
+        Me.txtJobNo = New System.Windows.Forms.TextBox()
+        Me.lstMoojinMain = New System.Windows.Forms.DataGridView()
+        Me.CR_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CRS_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_DATE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_DUE_DATE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_ORDER_DATE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DV_INFO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_INFO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_INFO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_INFO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_INFO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PC_INFO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PQ_INFO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Customer_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Customer_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Order_Received = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Order_Received_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Order_Receive_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DV_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DV_REV_NO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_REV_NO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PS_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PS_REV_NO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_REV_NO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_Receive_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PS_Receive_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_REV_NO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_WH_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_REV_NO = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Inspection_Receive_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Inspection_Confirm_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MCL_List_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MR_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PC_CODE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PC_Prepare_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PC_Complete_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DL_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Panel24 = New System.Windows.Forms.Panel()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
+        Me.Panel_List.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        CType(Me.lstMoojinMain, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Panel_List
+        '
+        Me.Panel_List.AutoScroll = True
+        Me.Panel_List.Controls.Add(Me.cboCustomer2)
+        Me.Panel_List.Controls.Add(Me.txtVendorCode)
+        Me.Panel_List.Controls.Add(Me.btnCustomerSearch)
+        Me.Panel_List.Controls.Add(Me.GroupBox2)
+        Me.Panel_List.Controls.Add(Me.GroupBox1)
+        Me.Panel_List.Controls.Add(Me.Button7)
+        Me.Panel_List.Controls.Add(Me.Label35)
+        Me.Panel_List.Controls.Add(Me.Label36)
+        Me.Panel_List.Controls.Add(Me.Label29)
+        Me.Panel_List.Controls.Add(Me.Label30)
+        Me.Panel_List.Controls.Add(Me.Label28)
+        Me.Panel_List.Controls.Add(Me.Label27)
+        Me.Panel_List.Controls.Add(Me.Label26)
+        Me.Panel_List.Controls.Add(Me.Label22)
+        Me.Panel_List.Controls.Add(Me.dtpCRDateTo)
+        Me.Panel_List.Controls.Add(Me.dtpCRDateFrom)
+        Me.Panel_List.Controls.Add(Me.dtpCRDueDateTo)
+        Me.Panel_List.Controls.Add(Me.dtpCRDueDateFrom)
+        Me.Panel_List.Controls.Add(Me.txtCRSNo)
+        Me.Panel_List.Controls.Add(Me.btnSearch)
+        Me.Panel_List.Controls.Add(Me.txtVendorName)
+        Me.Panel_List.Controls.Add(Me.txtJobName)
+        Me.Panel_List.Controls.Add(Me.txtJobNo)
+        Me.Panel_List.Controls.Add(Me.lstMoojinMain)
+        Me.Panel_List.Controls.Add(Me.Panel24)
+        Me.Panel_List.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel_List.Location = New System.Drawing.Point(0, 0)
+        Me.Panel_List.Name = "Panel_List"
+        Me.Panel_List.Size = New System.Drawing.Size(1828, 1591)
+        Me.Panel_List.TabIndex = 134
+        '
+        'cboCustomer2
+        '
+        Me.cboCustomer2.FormattingEnabled = True
+        Me.cboCustomer2.Location = New System.Drawing.Point(1068, 47)
+        Me.cboCustomer2.Name = "cboCustomer2"
+        Me.cboCustomer2.Size = New System.Drawing.Size(55, 20)
+        Me.cboCustomer2.TabIndex = 425
+        Me.cboCustomer2.Visible = False
+        '
+        'txtVendorCode
+        '
+        Me.txtVendorCode.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtVendorCode.Location = New System.Drawing.Point(897, 44)
+        Me.txtVendorCode.Name = "txtVendorCode"
+        Me.txtVendorCode.Size = New System.Drawing.Size(150, 25)
+        Me.txtVendorCode.TabIndex = 424
+        Me.txtVendorCode.Visible = False
+        '
+        'btnCustomerSearch
+        '
+        Me.btnCustomerSearch.BackColor = System.Drawing.Color.White
+        Me.btnCustomerSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCustomerSearch.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnCustomerSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnCustomerSearch.Location = New System.Drawing.Point(471, 45)
+        Me.btnCustomerSearch.Name = "btnCustomerSearch"
+        Me.btnCustomerSearch.Size = New System.Drawing.Size(31, 27)
+        Me.btnCustomerSearch.TabIndex = 423
+        Me.btnCustomerSearch.Text = "⌕"
+        Me.btnCustomerSearch.UseVisualStyleBackColor = False
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.GroupBox3)
+        Me.GroupBox2.Controls.Add(Me.btnShippingRegInd)
+        Me.GroupBox2.Controls.Add(Me.btnShippingInd)
+        Me.GroupBox2.Controls.Add(Me.Button57)
+        Me.GroupBox2.Controls.Add(Me.Button58)
+        Me.GroupBox2.Controls.Add(Me.btnMTItmInspInd)
+        Me.GroupBox2.Controls.Add(Me.btnRIRRecv)
+        Me.GroupBox2.Controls.Add(Me.btnQAInd)
+        Me.GroupBox2.Controls.Add(Me.Button50)
+        Me.GroupBox2.Controls.Add(Me.Button51)
+        Me.GroupBox2.Controls.Add(Me.Button52)
+        Me.GroupBox2.Controls.Add(Me.btnMCompInd)
+        Me.GroupBox2.Controls.Add(Me.btnMEInd)
+        Me.GroupBox2.Controls.Add(Me.btnManufactureInd)
+        Me.GroupBox2.Controls.Add(Me.Button44)
+        Me.GroupBox2.Controls.Add(Me.Button45)
+        Me.GroupBox2.Controls.Add(Me.Button46)
+        Me.GroupBox2.Controls.Add(Me.btnWithdrawReqInd)
+        Me.GroupBox2.Controls.Add(Me.btnMCLInd)
+        Me.GroupBox2.Controls.Add(Me.btnMTInd)
+        Me.GroupBox2.Controls.Add(Me.Button38)
+        Me.GroupBox2.Controls.Add(Me.Button39)
+        Me.GroupBox2.Controls.Add(Me.Button40)
+        Me.GroupBox2.Controls.Add(Me.btnRIRInd)
+        Me.GroupBox2.Controls.Add(Me.Button24)
+        Me.GroupBox2.Controls.Add(Me.btnMTRecv)
+        Me.GroupBox2.Controls.Add(Me.Button26)
+        Me.GroupBox2.Controls.Add(Me.btnCOInd)
+        Me.GroupBox2.Controls.Add(Me.btnPSRecv)
+        Me.GroupBox2.Controls.Add(Me.btnLORecv)
+        Me.GroupBox2.Controls.Add(Me.btnPrchsInd)
+        Me.GroupBox2.Controls.Add(Me.Button31)
+        Me.GroupBox2.Controls.Add(Me.Button32)
+        Me.GroupBox2.Controls.Add(Me.Button33)
+        Me.GroupBox2.Controls.Add(Me.Button34)
+        Me.GroupBox2.Controls.Add(Me.btnPSInd1)
+        Me.GroupBox2.Controls.Add(Me.Button22)
+        Me.GroupBox2.Controls.Add(Me.btnLOInd)
+        Me.GroupBox2.Controls.Add(Me.Button20)
+        Me.GroupBox2.Controls.Add(Me.btnCPInd)
+        Me.GroupBox2.Controls.Add(Me.btnDVInd)
+        Me.GroupBox2.Controls.Add(Me.btnPRRecvInd)
+        Me.GroupBox2.Controls.Add(Me.btnTechInd)
+        Me.GroupBox2.Controls.Add(Me.Button15)
+        Me.GroupBox2.Controls.Add(Me.Button16)
+        Me.GroupBox2.Controls.Add(Me.Button17)
+        Me.GroupBox2.Controls.Add(Me.Button18)
+        Me.GroupBox2.Controls.Add(Me.btnPRInd)
+        Me.GroupBox2.Controls.Add(Me.btnCRItmRegInd)
+        Me.GroupBox2.Controls.Add(Me.btnCRInd)
+        Me.GroupBox2.Controls.Add(Me.btnSalesInd)
+        Me.GroupBox2.Controls.Add(Me.Button4)
+        Me.GroupBox2.Controls.Add(Me.Button3)
+        Me.GroupBox2.Controls.Add(Me.Button2)
+        Me.GroupBox2.Controls.Add(Me.Button1)
+        Me.GroupBox2.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.GroupBox2.Location = New System.Drawing.Point(22, 198)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(1797, 493)
+        Me.GroupBox2.TabIndex = 380
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "진행상황"
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.Label8)
+        Me.GroupBox3.Controls.Add(Me.Label7)
+        Me.GroupBox3.Controls.Add(Me.Button8)
+        Me.GroupBox3.Controls.Add(Me.Button9)
+        Me.GroupBox3.Controls.Add(Me.Button10)
+        Me.GroupBox3.Controls.Add(Me.Button11)
+        Me.GroupBox3.Controls.Add(Me.Button5)
+        Me.GroupBox3.Controls.Add(Me.Button6)
+        Me.GroupBox3.Controls.Add(Me.Button79)
+        Me.GroupBox3.Controls.Add(Me.Button83)
+        Me.GroupBox3.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.GroupBox3.Location = New System.Drawing.Point(972, 0)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(646, 493)
+        Me.GroupBox3.TabIndex = 426
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "성과지표"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.Label8.Font = New System.Drawing.Font("맑은 고딕", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label8.Location = New System.Drawing.Point(39, 289)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(171, 28)
+        Me.Label8.TabIndex = 372
+        Me.Label8.Text = "자재입고일 차(일)"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.Label7.Font = New System.Drawing.Font("맑은 고딕", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label7.Location = New System.Drawing.Point(53, 261)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(139, 28)
+        Me.Label7.TabIndex = 371
+        Me.Label7.Text = "생산시작 대비"
+        '
+        'Button8
+        '
+        Me.Button8.BackColor = System.Drawing.Color.White
+        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button8.Font = New System.Drawing.Font("맑은 고딕", 54.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button8.ForeColor = System.Drawing.Color.Olive
+        Me.Button8.Location = New System.Drawing.Point(239, 326)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(206, 143)
+        Me.Button8.TabIndex = 305
+        Me.Button8.Text = "30%"
+        Me.Button8.UseVisualStyleBackColor = False
+        '
+        'Button9
+        '
+        Me.Button9.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.Button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button9.Font = New System.Drawing.Font("맑은 고딕", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button9.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button9.Location = New System.Drawing.Point(239, 260)
+        Me.Button9.Name = "Button9"
+        Me.Button9.Size = New System.Drawing.Size(206, 60)
+        Me.Button9.TabIndex = 304
+        Me.Button9.Text = "QC검사율(%)"
+        Me.Button9.UseVisualStyleBackColor = False
+        '
+        'Button10
+        '
+        Me.Button10.BackColor = System.Drawing.Color.White
+        Me.Button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button10.Font = New System.Drawing.Font("맑은 고딕", 54.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button10.ForeColor = System.Drawing.Color.Olive
+        Me.Button10.Location = New System.Drawing.Point(17, 326)
+        Me.Button10.Name = "Button10"
+        Me.Button10.Size = New System.Drawing.Size(206, 143)
+        Me.Button10.TabIndex = 303
+        Me.Button10.Text = "-4"
+        Me.Button10.UseVisualStyleBackColor = False
+        '
+        'Button11
+        '
+        Me.Button11.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.Button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button11.Font = New System.Drawing.Font("맑은 고딕", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button11.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button11.Location = New System.Drawing.Point(17, 260)
+        Me.Button11.Name = "Button11"
+        Me.Button11.Size = New System.Drawing.Size(206, 60)
+        Me.Button11.TabIndex = 302
+        Me.Button11.UseVisualStyleBackColor = False
+        '
+        'Button5
+        '
+        Me.Button5.BackColor = System.Drawing.Color.White
+        Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button5.Font = New System.Drawing.Font("맑은 고딕", 54.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button5.ForeColor = System.Drawing.Color.Olive
+        Me.Button5.Location = New System.Drawing.Point(239, 93)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(206, 143)
+        Me.Button5.TabIndex = 301
+        Me.Button5.Text = "30%"
+        Me.Button5.UseVisualStyleBackColor = False
+        '
+        'Button6
+        '
+        Me.Button6.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button6.Font = New System.Drawing.Font("맑은 고딕", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button6.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button6.Location = New System.Drawing.Point(239, 27)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(206, 60)
+        Me.Button6.TabIndex = 300
+        Me.Button6.Text = "생산공정율(%)"
+        Me.Button6.UseVisualStyleBackColor = False
+        '
+        'Button79
+        '
+        Me.Button79.BackColor = System.Drawing.Color.White
+        Me.Button79.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button79.Font = New System.Drawing.Font("맑은 고딕", 54.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button79.ForeColor = System.Drawing.Color.Olive
+        Me.Button79.Location = New System.Drawing.Point(17, 93)
+        Me.Button79.Name = "Button79"
+        Me.Button79.Size = New System.Drawing.Size(206, 143)
+        Me.Button79.TabIndex = 299
+        Me.Button79.Text = "60%"
+        Me.Button79.UseVisualStyleBackColor = False
+        '
+        'Button83
+        '
+        Me.Button83.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.Button83.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button83.Font = New System.Drawing.Font("맑은 고딕", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button83.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button83.Location = New System.Drawing.Point(17, 27)
+        Me.Button83.Name = "Button83"
+        Me.Button83.Size = New System.Drawing.Size(206, 60)
+        Me.Button83.TabIndex = 295
+        Me.Button83.Text = "계약공정율(%)"
+        Me.Button83.UseVisualStyleBackColor = False
+        '
+        'btnShippingRegInd
+        '
+        Me.btnShippingRegInd.BackColor = System.Drawing.Color.White
+        Me.btnShippingRegInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnShippingRegInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnShippingRegInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnShippingRegInd.Location = New System.Drawing.Point(173, 456)
+        Me.btnShippingRegInd.Name = "btnShippingRegInd"
+        Me.btnShippingRegInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnShippingRegInd.TabIndex = 349
+        Me.btnShippingRegInd.UseVisualStyleBackColor = False
+        '
+        'btnShippingInd
+        '
+        Me.btnShippingInd.BackColor = System.Drawing.Color.White
+        Me.btnShippingInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnShippingInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnShippingInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnShippingInd.Location = New System.Drawing.Point(17, 456)
+        Me.btnShippingInd.Name = "btnShippingInd"
+        Me.btnShippingInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnShippingInd.TabIndex = 348
+        Me.btnShippingInd.Text = "완료"
+        Me.btnShippingInd.UseVisualStyleBackColor = False
+        '
+        'Button57
+        '
+        Me.Button57.BackColor = System.Drawing.Color.White
+        Me.Button57.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button57.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button57.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button57.Location = New System.Drawing.Point(173, 423)
+        Me.Button57.Name = "Button57"
+        Me.Button57.Size = New System.Drawing.Size(150, 27)
+        Me.Button57.TabIndex = 346
+        Me.Button57.Text = "출고등록"
+        Me.Button57.UseVisualStyleBackColor = False
+        '
+        'Button58
+        '
+        Me.Button58.BackColor = System.Drawing.Color.Pink
+        Me.Button58.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button58.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button58.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button58.Location = New System.Drawing.Point(17, 423)
+        Me.Button58.Name = "Button58"
+        Me.Button58.Size = New System.Drawing.Size(150, 27)
+        Me.Button58.TabIndex = 345
+        Me.Button58.Text = "출하관리"
+        Me.Button58.UseVisualStyleBackColor = False
+        '
+        'btnMTItmInspInd
+        '
+        Me.btnMTItmInspInd.BackColor = System.Drawing.Color.White
+        Me.btnMTItmInspInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnMTItmInspInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnMTItmInspInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnMTItmInspInd.Location = New System.Drawing.Point(329, 258)
+        Me.btnMTItmInspInd.Name = "btnMTItmInspInd"
+        Me.btnMTItmInspInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnMTItmInspInd.TabIndex = 344
+        Me.btnMTItmInspInd.UseVisualStyleBackColor = False
+        '
+        'btnRIRRecv
+        '
+        Me.btnRIRRecv.BackColor = System.Drawing.Color.White
+        Me.btnRIRRecv.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnRIRRecv.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnRIRRecv.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnRIRRecv.Location = New System.Drawing.Point(173, 258)
+        Me.btnRIRRecv.Name = "btnRIRRecv"
+        Me.btnRIRRecv.Size = New System.Drawing.Size(150, 27)
+        Me.btnRIRRecv.TabIndex = 343
+        Me.btnRIRRecv.UseVisualStyleBackColor = False
+        '
+        'btnQAInd
+        '
+        Me.btnQAInd.BackColor = System.Drawing.Color.White
+        Me.btnQAInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnQAInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnQAInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnQAInd.Location = New System.Drawing.Point(17, 258)
+        Me.btnQAInd.Name = "btnQAInd"
+        Me.btnQAInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnQAInd.TabIndex = 342
+        Me.btnQAInd.Text = "완료"
+        Me.btnQAInd.UseVisualStyleBackColor = False
+        '
+        'Button50
+        '
+        Me.Button50.BackColor = System.Drawing.Color.White
+        Me.Button50.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button50.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button50.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button50.Location = New System.Drawing.Point(329, 225)
+        Me.Button50.Name = "Button50"
+        Me.Button50.Size = New System.Drawing.Size(150, 27)
+        Me.Button50.TabIndex = 341
+        Me.Button50.Text = "인수검사"
+        Me.Button50.UseVisualStyleBackColor = False
+        '
+        'Button51
+        '
+        Me.Button51.BackColor = System.Drawing.Color.White
+        Me.Button51.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button51.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button51.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button51.Location = New System.Drawing.Point(173, 225)
+        Me.Button51.Name = "Button51"
+        Me.Button51.Size = New System.Drawing.Size(150, 27)
+        Me.Button51.TabIndex = 340
+        Me.Button51.Text = "RIR접수"
+        Me.Button51.UseVisualStyleBackColor = False
+        '
+        'Button52
+        '
+        Me.Button52.BackColor = System.Drawing.Color.SkyBlue
+        Me.Button52.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button52.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button52.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button52.Location = New System.Drawing.Point(17, 225)
+        Me.Button52.Name = "Button52"
+        Me.Button52.Size = New System.Drawing.Size(150, 27)
+        Me.Button52.TabIndex = 339
+        Me.Button52.Text = "품질관리"
+        Me.Button52.UseVisualStyleBackColor = False
+        '
+        'btnMCompInd
+        '
+        Me.btnMCompInd.BackColor = System.Drawing.Color.White
+        Me.btnMCompInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnMCompInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnMCompInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnMCompInd.Location = New System.Drawing.Point(329, 390)
+        Me.btnMCompInd.Name = "btnMCompInd"
+        Me.btnMCompInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnMCompInd.TabIndex = 338
+        Me.btnMCompInd.UseVisualStyleBackColor = False
+        '
+        'btnMEInd
+        '
+        Me.btnMEInd.BackColor = System.Drawing.Color.White
+        Me.btnMEInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnMEInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnMEInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnMEInd.Location = New System.Drawing.Point(173, 390)
+        Me.btnMEInd.Name = "btnMEInd"
+        Me.btnMEInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnMEInd.TabIndex = 337
+        Me.btnMEInd.UseVisualStyleBackColor = False
+        '
+        'btnManufactureInd
+        '
+        Me.btnManufactureInd.BackColor = System.Drawing.Color.White
+        Me.btnManufactureInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnManufactureInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnManufactureInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnManufactureInd.Location = New System.Drawing.Point(17, 390)
+        Me.btnManufactureInd.Name = "btnManufactureInd"
+        Me.btnManufactureInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnManufactureInd.TabIndex = 336
+        Me.btnManufactureInd.Text = "완료"
+        Me.btnManufactureInd.UseVisualStyleBackColor = False
+        '
+        'Button44
+        '
+        Me.Button44.BackColor = System.Drawing.Color.White
+        Me.Button44.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button44.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button44.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button44.Location = New System.Drawing.Point(329, 357)
+        Me.Button44.Name = "Button44"
+        Me.Button44.Size = New System.Drawing.Size(150, 27)
+        Me.Button44.TabIndex = 335
+        Me.Button44.Text = "생산완료"
+        Me.Button44.UseVisualStyleBackColor = False
+        '
+        'Button45
+        '
+        Me.Button45.BackColor = System.Drawing.Color.White
+        Me.Button45.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button45.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button45.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button45.Location = New System.Drawing.Point(173, 357)
+        Me.Button45.Name = "Button45"
+        Me.Button45.Size = New System.Drawing.Size(150, 27)
+        Me.Button45.TabIndex = 334
+        Me.Button45.Text = "생산계획"
+        Me.Button45.UseVisualStyleBackColor = False
+        '
+        'Button46
+        '
+        Me.Button46.BackColor = System.Drawing.Color.Gold
+        Me.Button46.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button46.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button46.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button46.Location = New System.Drawing.Point(17, 357)
+        Me.Button46.Name = "Button46"
+        Me.Button46.Size = New System.Drawing.Size(150, 27)
+        Me.Button46.TabIndex = 333
+        Me.Button46.Text = "생산관리"
+        Me.Button46.UseVisualStyleBackColor = False
+        '
+        'btnWithdrawReqInd
+        '
+        Me.btnWithdrawReqInd.BackColor = System.Drawing.Color.White
+        Me.btnWithdrawReqInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnWithdrawReqInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnWithdrawReqInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnWithdrawReqInd.Location = New System.Drawing.Point(329, 324)
+        Me.btnWithdrawReqInd.Name = "btnWithdrawReqInd"
+        Me.btnWithdrawReqInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnWithdrawReqInd.TabIndex = 332
+        Me.btnWithdrawReqInd.UseVisualStyleBackColor = False
+        '
+        'btnMCLInd
+        '
+        Me.btnMCLInd.BackColor = System.Drawing.Color.White
+        Me.btnMCLInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnMCLInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnMCLInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnMCLInd.Location = New System.Drawing.Point(173, 324)
+        Me.btnMCLInd.Name = "btnMCLInd"
+        Me.btnMCLInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnMCLInd.TabIndex = 331
+        Me.btnMCLInd.UseVisualStyleBackColor = False
+        '
+        'btnMTInd
+        '
+        Me.btnMTInd.BackColor = System.Drawing.Color.White
+        Me.btnMTInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnMTInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnMTInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnMTInd.Location = New System.Drawing.Point(17, 324)
+        Me.btnMTInd.Name = "btnMTInd"
+        Me.btnMTInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnMTInd.TabIndex = 330
+        Me.btnMTInd.Text = "완료"
+        Me.btnMTInd.UseVisualStyleBackColor = False
+        '
+        'Button38
+        '
+        Me.Button38.BackColor = System.Drawing.Color.White
+        Me.Button38.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button38.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button38.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button38.Location = New System.Drawing.Point(329, 291)
+        Me.Button38.Name = "Button38"
+        Me.Button38.Size = New System.Drawing.Size(150, 27)
+        Me.Button38.TabIndex = 329
+        Me.Button38.Text = "불출청구"
+        Me.Button38.UseVisualStyleBackColor = False
+        '
+        'Button39
+        '
+        Me.Button39.BackColor = System.Drawing.Color.White
+        Me.Button39.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button39.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button39.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button39.Location = New System.Drawing.Point(173, 291)
+        Me.Button39.Name = "Button39"
+        Me.Button39.Size = New System.Drawing.Size(150, 27)
+        Me.Button39.TabIndex = 328
+        Me.Button39.Text = "재료관리대장"
+        Me.Button39.UseVisualStyleBackColor = False
+        '
+        'Button40
+        '
+        Me.Button40.BackColor = System.Drawing.Color.Gold
+        Me.Button40.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button40.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button40.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button40.Location = New System.Drawing.Point(17, 291)
+        Me.Button40.Name = "Button40"
+        Me.Button40.Size = New System.Drawing.Size(150, 27)
+        Me.Button40.TabIndex = 327
+        Me.Button40.Text = "자재관리"
+        Me.Button40.UseVisualStyleBackColor = False
+        '
+        'btnRIRInd
+        '
+        Me.btnRIRInd.BackColor = System.Drawing.Color.White
+        Me.btnRIRInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnRIRInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnRIRInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnRIRInd.Location = New System.Drawing.Point(797, 192)
+        Me.btnRIRInd.Name = "btnRIRInd"
+        Me.btnRIRInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnRIRInd.TabIndex = 326
+        Me.btnRIRInd.UseVisualStyleBackColor = False
+        '
+        'Button24
+        '
+        Me.Button24.BackColor = System.Drawing.Color.White
+        Me.Button24.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button24.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button24.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button24.Location = New System.Drawing.Point(797, 159)
+        Me.Button24.Name = "Button24"
+        Me.Button24.Size = New System.Drawing.Size(150, 27)
+        Me.Button24.TabIndex = 325
+        Me.Button24.Text = "RIR"
+        Me.Button24.UseVisualStyleBackColor = False
+        '
+        'btnMTRecv
+        '
+        Me.btnMTRecv.BackColor = System.Drawing.Color.White
+        Me.btnMTRecv.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnMTRecv.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnMTRecv.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnMTRecv.Location = New System.Drawing.Point(641, 192)
+        Me.btnMTRecv.Name = "btnMTRecv"
+        Me.btnMTRecv.Size = New System.Drawing.Size(150, 27)
+        Me.btnMTRecv.TabIndex = 324
+        Me.btnMTRecv.UseVisualStyleBackColor = False
+        '
+        'Button26
+        '
+        Me.Button26.BackColor = System.Drawing.Color.White
+        Me.Button26.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button26.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button26.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button26.Location = New System.Drawing.Point(641, 159)
+        Me.Button26.Name = "Button26"
+        Me.Button26.Size = New System.Drawing.Size(150, 27)
+        Me.Button26.TabIndex = 323
+        Me.Button26.Text = "입고"
+        Me.Button26.UseVisualStyleBackColor = False
+        '
+        'btnCOInd
+        '
+        Me.btnCOInd.BackColor = System.Drawing.Color.White
+        Me.btnCOInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCOInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnCOInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnCOInd.Location = New System.Drawing.Point(485, 192)
+        Me.btnCOInd.Name = "btnCOInd"
+        Me.btnCOInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnCOInd.TabIndex = 322
+        Me.btnCOInd.UseVisualStyleBackColor = False
+        '
+        'btnPSRecv
+        '
+        Me.btnPSRecv.BackColor = System.Drawing.Color.White
+        Me.btnPSRecv.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPSRecv.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnPSRecv.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnPSRecv.Location = New System.Drawing.Point(329, 192)
+        Me.btnPSRecv.Name = "btnPSRecv"
+        Me.btnPSRecv.Size = New System.Drawing.Size(150, 27)
+        Me.btnPSRecv.TabIndex = 321
+        Me.btnPSRecv.UseVisualStyleBackColor = False
+        '
+        'btnLORecv
+        '
+        Me.btnLORecv.BackColor = System.Drawing.Color.White
+        Me.btnLORecv.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnLORecv.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnLORecv.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnLORecv.Location = New System.Drawing.Point(173, 192)
+        Me.btnLORecv.Name = "btnLORecv"
+        Me.btnLORecv.Size = New System.Drawing.Size(150, 27)
+        Me.btnLORecv.TabIndex = 320
+        Me.btnLORecv.UseVisualStyleBackColor = False
+        '
+        'btnPrchsInd
+        '
+        Me.btnPrchsInd.BackColor = System.Drawing.Color.White
+        Me.btnPrchsInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPrchsInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnPrchsInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnPrchsInd.Location = New System.Drawing.Point(17, 192)
+        Me.btnPrchsInd.Name = "btnPrchsInd"
+        Me.btnPrchsInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnPrchsInd.TabIndex = 319
+        Me.btnPrchsInd.Text = "완료"
+        Me.btnPrchsInd.UseVisualStyleBackColor = False
+        '
+        'Button31
+        '
+        Me.Button31.BackColor = System.Drawing.Color.White
+        Me.Button31.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button31.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button31.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button31.Location = New System.Drawing.Point(485, 159)
+        Me.Button31.Name = "Button31"
+        Me.Button31.Size = New System.Drawing.Size(150, 27)
+        Me.Button31.TabIndex = 318
+        Me.Button31.Text = "PO"
+        Me.Button31.UseVisualStyleBackColor = False
+        '
+        'Button32
+        '
+        Me.Button32.BackColor = System.Drawing.Color.White
+        Me.Button32.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button32.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button32.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button32.Location = New System.Drawing.Point(329, 159)
+        Me.Button32.Name = "Button32"
+        Me.Button32.Size = New System.Drawing.Size(150, 27)
+        Me.Button32.TabIndex = 317
+        Me.Button32.Text = "PS접수"
+        Me.Button32.UseVisualStyleBackColor = False
+        '
+        'Button33
+        '
+        Me.Button33.BackColor = System.Drawing.Color.White
+        Me.Button33.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button33.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button33.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button33.Location = New System.Drawing.Point(173, 159)
+        Me.Button33.Name = "Button33"
+        Me.Button33.Size = New System.Drawing.Size(150, 27)
+        Me.Button33.TabIndex = 316
+        Me.Button33.Text = "PR접수"
+        Me.Button33.UseVisualStyleBackColor = False
+        '
+        'Button34
+        '
+        Me.Button34.BackColor = System.Drawing.Color.Violet
+        Me.Button34.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button34.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button34.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button34.Location = New System.Drawing.Point(17, 159)
+        Me.Button34.Name = "Button34"
+        Me.Button34.Size = New System.Drawing.Size(150, 27)
+        Me.Button34.TabIndex = 315
+        Me.Button34.Text = "구매관리"
+        Me.Button34.UseVisualStyleBackColor = False
+        '
+        'btnPSInd1
+        '
+        Me.btnPSInd1.BackColor = System.Drawing.Color.White
+        Me.btnPSInd1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPSInd1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnPSInd1.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnPSInd1.Location = New System.Drawing.Point(797, 126)
+        Me.btnPSInd1.Name = "btnPSInd1"
+        Me.btnPSInd1.Size = New System.Drawing.Size(150, 27)
+        Me.btnPSInd1.TabIndex = 314
+        Me.btnPSInd1.UseVisualStyleBackColor = False
+        '
+        'Button22
+        '
+        Me.Button22.BackColor = System.Drawing.Color.White
+        Me.Button22.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button22.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button22.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button22.Location = New System.Drawing.Point(797, 93)
+        Me.Button22.Name = "Button22"
+        Me.Button22.Size = New System.Drawing.Size(150, 27)
+        Me.Button22.TabIndex = 313
+        Me.Button22.Text = "PS"
+        Me.Button22.UseVisualStyleBackColor = False
+        '
+        'btnLOInd
+        '
+        Me.btnLOInd.BackColor = System.Drawing.Color.White
+        Me.btnLOInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnLOInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnLOInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnLOInd.Location = New System.Drawing.Point(641, 126)
+        Me.btnLOInd.Name = "btnLOInd"
+        Me.btnLOInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnLOInd.TabIndex = 312
+        Me.btnLOInd.UseVisualStyleBackColor = False
+        '
+        'Button20
+        '
+        Me.Button20.BackColor = System.Drawing.Color.White
+        Me.Button20.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button20.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button20.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button20.Location = New System.Drawing.Point(641, 93)
+        Me.Button20.Name = "Button20"
+        Me.Button20.Size = New System.Drawing.Size(150, 27)
+        Me.Button20.TabIndex = 311
+        Me.Button20.Text = "PR"
+        Me.Button20.UseVisualStyleBackColor = False
+        '
+        'btnCPInd
+        '
+        Me.btnCPInd.BackColor = System.Drawing.Color.White
+        Me.btnCPInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCPInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnCPInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnCPInd.Location = New System.Drawing.Point(485, 126)
+        Me.btnCPInd.Name = "btnCPInd"
+        Me.btnCPInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnCPInd.TabIndex = 310
+        Me.btnCPInd.UseVisualStyleBackColor = False
+        '
+        'btnDVInd
+        '
+        Me.btnDVInd.BackColor = System.Drawing.Color.White
+        Me.btnDVInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnDVInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnDVInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnDVInd.Location = New System.Drawing.Point(329, 126)
+        Me.btnDVInd.Name = "btnDVInd"
+        Me.btnDVInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnDVInd.TabIndex = 309
+        Me.btnDVInd.UseVisualStyleBackColor = False
+        '
+        'btnPRRecvInd
+        '
+        Me.btnPRRecvInd.BackColor = System.Drawing.Color.White
+        Me.btnPRRecvInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPRRecvInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnPRRecvInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnPRRecvInd.Location = New System.Drawing.Point(173, 126)
+        Me.btnPRRecvInd.Name = "btnPRRecvInd"
+        Me.btnPRRecvInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnPRRecvInd.TabIndex = 308
+        Me.btnPRRecvInd.UseVisualStyleBackColor = False
+        '
+        'btnTechInd
+        '
+        Me.btnTechInd.BackColor = System.Drawing.Color.White
+        Me.btnTechInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnTechInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnTechInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnTechInd.Location = New System.Drawing.Point(17, 126)
+        Me.btnTechInd.Name = "btnTechInd"
+        Me.btnTechInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnTechInd.TabIndex = 307
+        Me.btnTechInd.Text = "완료"
+        Me.btnTechInd.UseVisualStyleBackColor = False
+        '
+        'Button15
+        '
+        Me.Button15.BackColor = System.Drawing.Color.White
+        Me.Button15.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button15.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button15.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button15.Location = New System.Drawing.Point(485, 93)
+        Me.Button15.Name = "Button15"
+        Me.Button15.Size = New System.Drawing.Size(150, 27)
+        Me.Button15.TabIndex = 306
+        Me.Button15.Text = "CP"
+        Me.Button15.UseVisualStyleBackColor = False
+        '
+        'Button16
+        '
+        Me.Button16.BackColor = System.Drawing.Color.White
+        Me.Button16.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button16.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button16.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button16.Location = New System.Drawing.Point(329, 93)
+        Me.Button16.Name = "Button16"
+        Me.Button16.Size = New System.Drawing.Size(150, 27)
+        Me.Button16.TabIndex = 305
+        Me.Button16.Text = "도면"
+        Me.Button16.UseVisualStyleBackColor = False
+        '
+        'Button17
+        '
+        Me.Button17.BackColor = System.Drawing.Color.White
+        Me.Button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button17.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button17.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button17.Location = New System.Drawing.Point(173, 93)
+        Me.Button17.Name = "Button17"
+        Me.Button17.Size = New System.Drawing.Size(150, 27)
+        Me.Button17.TabIndex = 304
+        Me.Button17.Text = "제조의뢰접수"
+        Me.Button17.UseVisualStyleBackColor = False
+        '
+        'Button18
+        '
+        Me.Button18.BackColor = System.Drawing.Color.GreenYellow
+        Me.Button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button18.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button18.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button18.Location = New System.Drawing.Point(17, 93)
+        Me.Button18.Name = "Button18"
+        Me.Button18.Size = New System.Drawing.Size(150, 27)
+        Me.Button18.TabIndex = 303
+        Me.Button18.Text = "기술관리"
+        Me.Button18.UseVisualStyleBackColor = False
+        '
+        'btnPRInd
+        '
+        Me.btnPRInd.BackColor = System.Drawing.Color.White
+        Me.btnPRInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPRInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnPRInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnPRInd.Location = New System.Drawing.Point(485, 60)
+        Me.btnPRInd.Name = "btnPRInd"
+        Me.btnPRInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnPRInd.TabIndex = 302
+        Me.btnPRInd.UseVisualStyleBackColor = False
+        '
+        'btnCRItmRegInd
+        '
+        Me.btnCRItmRegInd.BackColor = System.Drawing.Color.White
+        Me.btnCRItmRegInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCRItmRegInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnCRItmRegInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnCRItmRegInd.Location = New System.Drawing.Point(329, 60)
+        Me.btnCRItmRegInd.Name = "btnCRItmRegInd"
+        Me.btnCRItmRegInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnCRItmRegInd.TabIndex = 301
+        Me.btnCRItmRegInd.UseVisualStyleBackColor = False
+        '
+        'btnCRInd
+        '
+        Me.btnCRInd.BackColor = System.Drawing.Color.White
+        Me.btnCRInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCRInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnCRInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnCRInd.Location = New System.Drawing.Point(173, 60)
+        Me.btnCRInd.Name = "btnCRInd"
+        Me.btnCRInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnCRInd.TabIndex = 300
+        Me.btnCRInd.UseVisualStyleBackColor = False
+        '
+        'btnSalesInd
+        '
+        Me.btnSalesInd.BackColor = System.Drawing.Color.White
+        Me.btnSalesInd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSalesInd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnSalesInd.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.btnSalesInd.Location = New System.Drawing.Point(17, 60)
+        Me.btnSalesInd.Name = "btnSalesInd"
+        Me.btnSalesInd.Size = New System.Drawing.Size(150, 27)
+        Me.btnSalesInd.TabIndex = 299
+        Me.btnSalesInd.Text = "완료"
+        Me.btnSalesInd.UseVisualStyleBackColor = False
+        '
+        'Button4
+        '
+        Me.Button4.BackColor = System.Drawing.Color.White
+        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button4.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button4.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button4.Location = New System.Drawing.Point(485, 27)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(150, 27)
+        Me.Button4.TabIndex = 298
+        Me.Button4.Text = "제조의뢰"
+        Me.Button4.UseVisualStyleBackColor = False
+        '
+        'Button3
+        '
+        Me.Button3.BackColor = System.Drawing.Color.White
+        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button3.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button3.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button3.Location = New System.Drawing.Point(329, 27)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(150, 27)
+        Me.Button3.TabIndex = 297
+        Me.Button3.Text = "제조물품등록"
+        Me.Button3.UseVisualStyleBackColor = False
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.White
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button2.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button2.Location = New System.Drawing.Point(173, 27)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(150, 27)
+        Me.Button2.TabIndex = 296
+        Me.Button2.Text = "계약"
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.SystemColors.Info
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button1.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button1.Location = New System.Drawing.Point(17, 27)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(150, 27)
+        Me.Button1.TabIndex = 295
+        Me.Button1.Text = "영업관리"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.Label6)
+        Me.GroupBox1.Controls.Add(Me.Label5)
+        Me.GroupBox1.Controls.Add(Me.Label4)
+        Me.GroupBox1.Controls.Add(Me.Label3)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Controls.Add(Me.txtCRDueDateF)
+        Me.GroupBox1.Controls.Add(Me.txtVendorNameF)
+        Me.GroupBox1.Controls.Add(Me.txtCRSNoF)
+        Me.GroupBox1.Controls.Add(Me.txtCRDateF)
+        Me.GroupBox1.Controls.Add(Me.txtJobNameF)
+        Me.GroupBox1.Controls.Add(Me.txtJobNoF)
+        Me.GroupBox1.Location = New System.Drawing.Point(18, 94)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(1797, 99)
+        Me.GroupBox1.TabIndex = 379
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "계약정보"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(605, 65)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(41, 12)
+        Me.Label6.TabIndex = 318
+        Me.Label6.Text = "납기일"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(319, 65)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(41, 12)
+        Me.Label5.TabIndex = 317
+        Me.Label5.Text = "발주처"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(605, 31)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(41, 12)
+        Me.Label4.TabIndex = 316
+        Me.Label4.Text = "수주일"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(319, 31)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(37, 12)
+        Me.Label3.TabIndex = 315
+        Me.Label3.Text = "Job명"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(19, 65)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(50, 12)
+        Me.Label2.TabIndex = 314
+        Me.Label2.Text = "CRS No"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(19, 31)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(53, 12)
+        Me.Label1.TabIndex = 313
+        Me.Label1.Text = "계약번호"
+        '
+        'txtCRDueDateF
+        '
+        Me.txtCRDueDateF.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCRDueDateF.Location = New System.Drawing.Point(652, 59)
+        Me.txtCRDueDateF.Name = "txtCRDueDateF"
+        Me.txtCRDueDateF.ReadOnly = True
+        Me.txtCRDueDateF.Size = New System.Drawing.Size(208, 25)
+        Me.txtCRDueDateF.TabIndex = 293
+        '
+        'txtVendorNameF
+        '
+        Me.txtVendorNameF.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtVendorNameF.Location = New System.Drawing.Point(362, 59)
+        Me.txtVendorNameF.Name = "txtVendorNameF"
+        Me.txtVendorNameF.ReadOnly = True
+        Me.txtVendorNameF.Size = New System.Drawing.Size(208, 25)
+        Me.txtVendorNameF.TabIndex = 292
+        '
+        'txtCRSNoF
+        '
+        Me.txtCRSNoF.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCRSNoF.Location = New System.Drawing.Point(78, 59)
+        Me.txtCRSNoF.Name = "txtCRSNoF"
+        Me.txtCRSNoF.ReadOnly = True
+        Me.txtCRSNoF.Size = New System.Drawing.Size(208, 25)
+        Me.txtCRSNoF.TabIndex = 291
+        '
+        'txtCRDateF
+        '
+        Me.txtCRDateF.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCRDateF.Location = New System.Drawing.Point(652, 25)
+        Me.txtCRDateF.Name = "txtCRDateF"
+        Me.txtCRDateF.ReadOnly = True
+        Me.txtCRDateF.Size = New System.Drawing.Size(208, 25)
+        Me.txtCRDateF.TabIndex = 290
+        '
+        'txtJobNameF
+        '
+        Me.txtJobNameF.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtJobNameF.Location = New System.Drawing.Point(362, 25)
+        Me.txtJobNameF.Name = "txtJobNameF"
+        Me.txtJobNameF.ReadOnly = True
+        Me.txtJobNameF.Size = New System.Drawing.Size(208, 25)
+        Me.txtJobNameF.TabIndex = 289
+        '
+        'txtJobNoF
+        '
+        Me.txtJobNoF.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtJobNoF.Location = New System.Drawing.Point(78, 25)
+        Me.txtJobNoF.Name = "txtJobNoF"
+        Me.txtJobNoF.ReadOnly = True
+        Me.txtJobNoF.Size = New System.Drawing.Size(208, 25)
+        Me.txtJobNoF.TabIndex = 288
+        '
+        'Button7
+        '
+        Me.Button7.BackColor = System.Drawing.Color.White
+        Me.Button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button7.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button7.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button7.Location = New System.Drawing.Point(228, 13)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(31, 27)
+        Me.Button7.TabIndex = 378
+        Me.Button7.Text = "⌕"
+        Me.Button7.UseVisualStyleBackColor = False
+        '
+        'Label35
+        '
+        Me.Label35.AutoSize = True
+        Me.Label35.Location = New System.Drawing.Point(689, 52)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(14, 12)
+        Me.Label35.TabIndex = 373
+        Me.Label35.Text = "~"
+        '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Location = New System.Drawing.Point(689, 20)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(14, 12)
+        Me.Label36.TabIndex = 372
+        Me.Label36.Text = "~"
+        '
+        'Label29
+        '
+        Me.Label29.AutoSize = True
+        Me.Label29.Location = New System.Drawing.Point(511, 52)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(41, 12)
+        Me.Label29.TabIndex = 371
+        Me.Label29.Text = "납기일"
+        '
+        'Label30
+        '
+        Me.Label30.AutoSize = True
+        Me.Label30.Location = New System.Drawing.Point(511, 20)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(41, 12)
+        Me.Label30.TabIndex = 370
+        Me.Label30.Text = "수주일"
+        '
+        'Label28
+        '
+        Me.Label28.AutoSize = True
+        Me.Label28.Location = New System.Drawing.Point(268, 52)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(41, 12)
+        Me.Label28.TabIndex = 315
+        Me.Label28.Text = "발주처"
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.Location = New System.Drawing.Point(268, 20)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(37, 12)
+        Me.Label27.TabIndex = 314
+        Me.Label27.Text = "Job명"
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(16, 52)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(50, 12)
+        Me.Label26.TabIndex = 313
+        Me.Label26.Text = "CRS No"
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(16, 20)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(45, 12)
+        Me.Label22.TabIndex = 312
+        Me.Label22.Text = "Job No"
+        '
+        'dtpCRDateTo
+        '
+        Me.dtpCRDateTo.Font = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpCRDateTo.Location = New System.Drawing.Point(709, 15)
+        Me.dtpCRDateTo.Name = "dtpCRDateTo"
+        Me.dtpCRDateTo.Size = New System.Drawing.Size(125, 22)
+        Me.dtpCRDateTo.TabIndex = 303
+        '
+        'dtpCRDateFrom
+        '
+        Me.dtpCRDateFrom.Font = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpCRDateFrom.Location = New System.Drawing.Point(558, 15)
+        Me.dtpCRDateFrom.Name = "dtpCRDateFrom"
+        Me.dtpCRDateFrom.Size = New System.Drawing.Size(125, 22)
+        Me.dtpCRDateFrom.TabIndex = 302
+        Me.dtpCRDateFrom.Value = New Date(2016, 1, 1, 0, 0, 0, 0)
+        '
+        'dtpCRDueDateTo
+        '
+        Me.dtpCRDueDateTo.Font = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpCRDueDateTo.Location = New System.Drawing.Point(709, 47)
+        Me.dtpCRDueDateTo.Name = "dtpCRDueDateTo"
+        Me.dtpCRDueDateTo.Size = New System.Drawing.Size(125, 22)
+        Me.dtpCRDueDateTo.TabIndex = 301
+        '
+        'dtpCRDueDateFrom
+        '
+        Me.dtpCRDueDateFrom.CalendarFont = New System.Drawing.Font("굴림", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpCRDueDateFrom.Font = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpCRDueDateFrom.Location = New System.Drawing.Point(558, 47)
+        Me.dtpCRDueDateFrom.Name = "dtpCRDueDateFrom"
+        Me.dtpCRDueDateFrom.Size = New System.Drawing.Size(125, 22)
+        Me.dtpCRDueDateFrom.TabIndex = 300
+        Me.dtpCRDueDateFrom.Value = New Date(2016, 1, 1, 0, 0, 0, 0)
+        '
+        'txtCRSNo
+        '
+        Me.txtCRSNo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCRSNo.Location = New System.Drawing.Point(72, 46)
+        Me.txtCRSNo.Name = "txtCRSNo"
+        Me.txtCRSNo.Size = New System.Drawing.Size(150, 25)
+        Me.txtCRSNo.TabIndex = 295
+        '
+        'btnSearch
+        '
+        Me.btnSearch.BackColor = System.Drawing.Color.White
+        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSearch.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnSearch.Location = New System.Drawing.Point(1665, 45)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(150, 27)
+        Me.btnSearch.TabIndex = 294
+        Me.btnSearch.Text = "조회"
+        Me.btnSearch.UseVisualStyleBackColor = False
+        '
+        'txtVendorName
+        '
+        Me.txtVendorName.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtVendorName.Location = New System.Drawing.Point(315, 46)
+        Me.txtVendorName.Name = "txtVendorName"
+        Me.txtVendorName.Size = New System.Drawing.Size(150, 25)
+        Me.txtVendorName.TabIndex = 293
+        '
+        'txtJobName
+        '
+        Me.txtJobName.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtJobName.Location = New System.Drawing.Point(315, 14)
+        Me.txtJobName.Name = "txtJobName"
+        Me.txtJobName.Size = New System.Drawing.Size(150, 25)
+        Me.txtJobName.TabIndex = 291
+        '
+        'txtJobNo
+        '
+        Me.txtJobNo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtJobNo.Location = New System.Drawing.Point(72, 14)
+        Me.txtJobNo.Name = "txtJobNo"
+        Me.txtJobNo.ReadOnly = True
+        Me.txtJobNo.Size = New System.Drawing.Size(150, 25)
+        Me.txtJobNo.TabIndex = 287
+        '
+        'lstMoojinMain
+        '
+        Me.lstMoojinMain.AllowUserToAddRows = False
+        Me.lstMoojinMain.AllowUserToDeleteRows = False
+        Me.lstMoojinMain.BackgroundColor = System.Drawing.Color.White
+        Me.lstMoojinMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.lstMoojinMain.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CR_Code, Me.CR_Rev_No, Me.CRS_Code, Me.CR_Name, Me.CR_DATE, Me.CR_DUE_DATE, Me.CR_ORDER_DATE, Me.DV_INFO, Me.BO_INFO, Me.LO_INFO, Me.CO_INFO, Me.CQ_INFO, Me.PC_INFO, Me.PQ_INFO, Me.CR_Customer_Code, Me.CR_Customer_Name, Me.CR_Order_Received, Me.CR_Order_Received_Name, Me.CR_Order_Receive_Date, Me.DV_Code, Me.DV_REV_NO, Me.BO_Code, Me.BO_REV_NO, Me.PS_Code, Me.PS_REV_NO, Me.LO_Code, Me.LO_REV_NO, Me.LO_Receive_Date, Me.PS_Receive_Date, Me.CO_Code, Me.CO_REV_NO, Me.CQ_WH_Date, Me.CQ_Code, Me.CQ_REV_NO, Me.CQ_Date, Me.CQ_Inspection_Receive_Date, Me.CQ_Inspection_Confirm_Date, Me.MCL_List_Code, Me.MR_Date, Me.PC_CODE, Me.PC_Prepare_Date, Me.PC_Complete_Date, Me.DL_Date})
+        Me.lstMoojinMain.Location = New System.Drawing.Point(18, 709)
+        Me.lstMoojinMain.Name = "lstMoojinMain"
+        Me.lstMoojinMain.ReadOnly = True
+        Me.lstMoojinMain.RowHeadersVisible = False
+        Me.lstMoojinMain.RowTemplate.Height = 23
+        Me.lstMoojinMain.Size = New System.Drawing.Size(1797, 240)
+        Me.lstMoojinMain.TabIndex = 70
+        '
+        'CR_Code
+        '
+        Me.CR_Code.DataPropertyName = "CR_Code"
+        Me.CR_Code.HeaderText = "Job No"
+        Me.CR_Code.MinimumWidth = 100
+        Me.CR_Code.Name = "CR_Code"
+        Me.CR_Code.ReadOnly = True
+        '
+        'CR_Rev_No
+        '
+        Me.CR_Rev_No.DataPropertyName = "CR_Rev_No"
+        Me.CR_Rev_No.HeaderText = "개정번호"
+        Me.CR_Rev_No.MinimumWidth = 80
+        Me.CR_Rev_No.Name = "CR_Rev_No"
+        Me.CR_Rev_No.ReadOnly = True
+        '
+        'CRS_Code
+        '
+        Me.CRS_Code.DataPropertyName = "CRS_Code"
+        Me.CRS_Code.HeaderText = "계약검토서번호"
+        Me.CRS_Code.MinimumWidth = 80
+        Me.CRS_Code.Name = "CRS_Code"
+        Me.CRS_Code.ReadOnly = True
+        '
+        'CR_Name
+        '
+        Me.CR_Name.DataPropertyName = "CR_Name"
+        Me.CR_Name.HeaderText = "계약명"
+        Me.CR_Name.MinimumWidth = 180
+        Me.CR_Name.Name = "CR_Name"
+        Me.CR_Name.ReadOnly = True
+        Me.CR_Name.Width = 180
+        '
+        'CR_DATE
+        '
+        Me.CR_DATE.DataPropertyName = "CR_DATE"
+        Me.CR_DATE.HeaderText = "계약일자"
+        Me.CR_DATE.Name = "CR_DATE"
+        Me.CR_DATE.ReadOnly = True
+        Me.CR_DATE.Visible = False
+        '
+        'CR_DUE_DATE
+        '
+        Me.CR_DUE_DATE.DataPropertyName = "CR_DUE_DATE"
+        Me.CR_DUE_DATE.HeaderText = "납기일자"
+        Me.CR_DUE_DATE.Name = "CR_DUE_DATE"
+        Me.CR_DUE_DATE.ReadOnly = True
+        Me.CR_DUE_DATE.Visible = False
+        '
+        'CR_ORDER_DATE
+        '
+        Me.CR_ORDER_DATE.DataPropertyName = "CR_ORDER_DATE"
+        Me.CR_ORDER_DATE.HeaderText = "제조의뢰일자"
+        Me.CR_ORDER_DATE.Name = "CR_ORDER_DATE"
+        Me.CR_ORDER_DATE.ReadOnly = True
+        Me.CR_ORDER_DATE.Visible = False
+        '
+        'DV_INFO
+        '
+        Me.DV_INFO.DataPropertyName = "DV_INFO"
+        Me.DV_INFO.HeaderText = "도면정보"
+        Me.DV_INFO.Name = "DV_INFO"
+        Me.DV_INFO.ReadOnly = True
+        Me.DV_INFO.Visible = False
+        '
+        'BO_INFO
+        '
+        Me.BO_INFO.DataPropertyName = "BO_INFO"
+        Me.BO_INFO.HeaderText = "BOM정보"
+        Me.BO_INFO.Name = "BO_INFO"
+        Me.BO_INFO.ReadOnly = True
+        Me.BO_INFO.Visible = False
+        '
+        'LO_INFO
+        '
+        Me.LO_INFO.DataPropertyName = "LO_INFO"
+        Me.LO_INFO.HeaderText = "구매의뢰정보"
+        Me.LO_INFO.Name = "LO_INFO"
+        Me.LO_INFO.ReadOnly = True
+        Me.LO_INFO.Visible = False
+        '
+        'CO_INFO
+        '
+        Me.CO_INFO.DataPropertyName = "CO_INFO"
+        Me.CO_INFO.HeaderText = "발주정보"
+        Me.CO_INFO.Name = "CO_INFO"
+        Me.CO_INFO.ReadOnly = True
+        Me.CO_INFO.Visible = False
+        '
+        'CQ_INFO
+        '
+        Me.CQ_INFO.DataPropertyName = "CQ_INFO"
+        Me.CQ_INFO.HeaderText = "인수검사의뢰서정보"
+        Me.CQ_INFO.Name = "CQ_INFO"
+        Me.CQ_INFO.ReadOnly = True
+        Me.CQ_INFO.Visible = False
+        '
+        'PC_INFO
+        '
+        Me.PC_INFO.DataPropertyName = "PC_INFO"
+        Me.PC_INFO.HeaderText = "생산공정등록정보"
+        Me.PC_INFO.Name = "PC_INFO"
+        Me.PC_INFO.ReadOnly = True
+        Me.PC_INFO.Visible = False
+        '
+        'PQ_INFO
+        '
+        Me.PQ_INFO.DataPropertyName = "PQ_INFO"
+        Me.PQ_INFO.HeaderText = "QC검사정보"
+        Me.PQ_INFO.Name = "PQ_INFO"
+        Me.PQ_INFO.ReadOnly = True
+        Me.PQ_INFO.Visible = False
+        '
+        'CR_Customer_Code
+        '
+        Me.CR_Customer_Code.DataPropertyName = "CR_Customer_Code"
+        Me.CR_Customer_Code.HeaderText = "발주처코드"
+        Me.CR_Customer_Code.Name = "CR_Customer_Code"
+        Me.CR_Customer_Code.ReadOnly = True
+        Me.CR_Customer_Code.Visible = False
+        '
+        'CR_Customer_Name
+        '
+        Me.CR_Customer_Name.DataPropertyName = "CR_Customer_Name"
+        Me.CR_Customer_Name.HeaderText = "발주처명"
+        Me.CR_Customer_Name.MinimumWidth = 120
+        Me.CR_Customer_Name.Name = "CR_Customer_Name"
+        Me.CR_Customer_Name.ReadOnly = True
+        Me.CR_Customer_Name.Width = 120
+        '
+        'CR_Order_Received
+        '
+        Me.CR_Order_Received.DataPropertyName = "CR_Order_Received"
+        Me.CR_Order_Received.HeaderText = "제조의뢰접수자"
+        Me.CR_Order_Received.Name = "CR_Order_Received"
+        Me.CR_Order_Received.ReadOnly = True
+        Me.CR_Order_Received.Visible = False
+        '
+        'CR_Order_Received_Name
+        '
+        Me.CR_Order_Received_Name.DataPropertyName = "CR_Order_Received_Name"
+        Me.CR_Order_Received_Name.HeaderText = "제조의뢰접수자명"
+        Me.CR_Order_Received_Name.Name = "CR_Order_Received_Name"
+        Me.CR_Order_Received_Name.ReadOnly = True
+        '
+        'CR_Order_Receive_Date
+        '
+        Me.CR_Order_Receive_Date.DataPropertyName = "CR_Order_Receive_Date"
+        Me.CR_Order_Receive_Date.HeaderText = "제조의뢰접수일자"
+        Me.CR_Order_Receive_Date.Name = "CR_Order_Receive_Date"
+        Me.CR_Order_Receive_Date.ReadOnly = True
+        Me.CR_Order_Receive_Date.Visible = False
+        '
+        'DV_Code
+        '
+        Me.DV_Code.DataPropertyName = "DV_Code"
+        Me.DV_Code.HeaderText = "도면번호"
+        Me.DV_Code.MinimumWidth = 100
+        Me.DV_Code.Name = "DV_Code"
+        Me.DV_Code.ReadOnly = True
+        '
+        'DV_REV_NO
+        '
+        Me.DV_REV_NO.DataPropertyName = "DV_REV_NO"
+        Me.DV_REV_NO.HeaderText = "도면개정번호"
+        Me.DV_REV_NO.Name = "DV_REV_NO"
+        Me.DV_REV_NO.ReadOnly = True
+        Me.DV_REV_NO.Visible = False
+        '
+        'BO_Code
+        '
+        Me.BO_Code.DataPropertyName = "BO_Code"
+        Me.BO_Code.HeaderText = "BOM번호"
+        Me.BO_Code.MinimumWidth = 100
+        Me.BO_Code.Name = "BO_Code"
+        Me.BO_Code.ReadOnly = True
+        '
+        'BO_REV_NO
+        '
+        Me.BO_REV_NO.DataPropertyName = "BO_REV_NO"
+        Me.BO_REV_NO.HeaderText = "BOM개정번호"
+        Me.BO_REV_NO.Name = "BO_REV_NO"
+        Me.BO_REV_NO.ReadOnly = True
+        Me.BO_REV_NO.Visible = False
+        '
+        'PS_Code
+        '
+        Me.PS_Code.DataPropertyName = "PS_Code"
+        Me.PS_Code.HeaderText = "PS No."
+        Me.PS_Code.MinimumWidth = 100
+        Me.PS_Code.Name = "PS_Code"
+        Me.PS_Code.ReadOnly = True
+        Me.PS_Code.Visible = False
+        '
+        'PS_REV_NO
+        '
+        Me.PS_REV_NO.DataPropertyName = "PS_REV_NO"
+        Me.PS_REV_NO.HeaderText = "PS개정번호"
+        Me.PS_REV_NO.Name = "PS_REV_NO"
+        Me.PS_REV_NO.ReadOnly = True
+        Me.PS_REV_NO.Visible = False
+        '
+        'LO_Code
+        '
+        Me.LO_Code.DataPropertyName = "LO_Code"
+        Me.LO_Code.HeaderText = "PR No."
+        Me.LO_Code.MinimumWidth = 100
+        Me.LO_Code.Name = "LO_Code"
+        Me.LO_Code.ReadOnly = True
+        '
+        'LO_REV_NO
+        '
+        Me.LO_REV_NO.DataPropertyName = "LO_REV_NO"
+        Me.LO_REV_NO.HeaderText = "PR개정번호"
+        Me.LO_REV_NO.Name = "LO_REV_NO"
+        Me.LO_REV_NO.ReadOnly = True
+        Me.LO_REV_NO.Visible = False
+        '
+        'LO_Receive_Date
+        '
+        Me.LO_Receive_Date.DataPropertyName = "LO_Receive_Date"
+        Me.LO_Receive_Date.HeaderText = "PR접수일자"
+        Me.LO_Receive_Date.MinimumWidth = 100
+        Me.LO_Receive_Date.Name = "LO_Receive_Date"
+        Me.LO_Receive_Date.ReadOnly = True
+        '
+        'PS_Receive_Date
+        '
+        Me.PS_Receive_Date.DataPropertyName = "PS_Receive_Date"
+        Me.PS_Receive_Date.HeaderText = "PS접수일자"
+        Me.PS_Receive_Date.MinimumWidth = 100
+        Me.PS_Receive_Date.Name = "PS_Receive_Date"
+        Me.PS_Receive_Date.ReadOnly = True
+        '
+        'CO_Code
+        '
+        Me.CO_Code.DataPropertyName = "CO_Code"
+        Me.CO_Code.HeaderText = "PO No."
+        Me.CO_Code.MinimumWidth = 100
+        Me.CO_Code.Name = "CO_Code"
+        Me.CO_Code.ReadOnly = True
+        '
+        'CO_REV_NO
+        '
+        Me.CO_REV_NO.DataPropertyName = "CO_REV_NO"
+        Me.CO_REV_NO.HeaderText = "발주서개정번호"
+        Me.CO_REV_NO.Name = "CO_REV_NO"
+        Me.CO_REV_NO.ReadOnly = True
+        Me.CO_REV_NO.Visible = False
+        '
+        'CQ_WH_Date
+        '
+        Me.CQ_WH_Date.DataPropertyName = "CQ_WH_Date"
+        Me.CQ_WH_Date.HeaderText = "입고일"
+        Me.CQ_WH_Date.MinimumWidth = 100
+        Me.CQ_WH_Date.Name = "CQ_WH_Date"
+        Me.CQ_WH_Date.ReadOnly = True
+        '
+        'CQ_Code
+        '
+        Me.CQ_Code.DataPropertyName = "CQ_Code"
+        Me.CQ_Code.HeaderText = "RIR No."
+        Me.CQ_Code.MinimumWidth = 100
+        Me.CQ_Code.Name = "CQ_Code"
+        Me.CQ_Code.ReadOnly = True
+        Me.CQ_Code.Visible = False
+        '
+        'CQ_REV_NO
+        '
+        Me.CQ_REV_NO.DataPropertyName = "CQ_REV_NO"
+        Me.CQ_REV_NO.HeaderText = "RIR개정번호"
+        Me.CQ_REV_NO.Name = "CQ_REV_NO"
+        Me.CQ_REV_NO.ReadOnly = True
+        Me.CQ_REV_NO.Visible = False
+        '
+        'CQ_Date
+        '
+        Me.CQ_Date.DataPropertyName = "CQ_Date"
+        Me.CQ_Date.HeaderText = "RIR작성일"
+        Me.CQ_Date.MinimumWidth = 100
+        Me.CQ_Date.Name = "CQ_Date"
+        Me.CQ_Date.ReadOnly = True
+        '
+        'CQ_Inspection_Receive_Date
+        '
+        Me.CQ_Inspection_Receive_Date.DataPropertyName = "CQ_Inspection_Receive_Date"
+        Me.CQ_Inspection_Receive_Date.HeaderText = "RIR접수일"
+        Me.CQ_Inspection_Receive_Date.MinimumWidth = 100
+        Me.CQ_Inspection_Receive_Date.Name = "CQ_Inspection_Receive_Date"
+        Me.CQ_Inspection_Receive_Date.ReadOnly = True
+        '
+        'CQ_Inspection_Confirm_Date
+        '
+        Me.CQ_Inspection_Confirm_Date.DataPropertyName = "CQ_Inspection_Confirm_Date"
+        Me.CQ_Inspection_Confirm_Date.HeaderText = "인수검사일"
+        Me.CQ_Inspection_Confirm_Date.MinimumWidth = 100
+        Me.CQ_Inspection_Confirm_Date.Name = "CQ_Inspection_Confirm_Date"
+        Me.CQ_Inspection_Confirm_Date.ReadOnly = True
+        '
+        'MCL_List_Code
+        '
+        Me.MCL_List_Code.DataPropertyName = "MCL_List_Code"
+        Me.MCL_List_Code.HeaderText = "재료관리대장"
+        Me.MCL_List_Code.MinimumWidth = 100
+        Me.MCL_List_Code.Name = "MCL_List_Code"
+        Me.MCL_List_Code.ReadOnly = True
+        '
+        'MR_Date
+        '
+        Me.MR_Date.DataPropertyName = "MR_Date"
+        Me.MR_Date.HeaderText = "불출청구일"
+        Me.MR_Date.MinimumWidth = 100
+        Me.MR_Date.Name = "MR_Date"
+        Me.MR_Date.ReadOnly = True
+        '
+        'PC_CODE
+        '
+        Me.PC_CODE.HeaderText = "공정Code"
+        Me.PC_CODE.Name = "PC_CODE"
+        Me.PC_CODE.ReadOnly = True
+        Me.PC_CODE.Visible = False
+        '
+        'PC_Prepare_Date
+        '
+        Me.PC_Prepare_Date.DataPropertyName = "PC_Prepare_Date"
+        Me.PC_Prepare_Date.HeaderText = "생산공정계획일자"
+        Me.PC_Prepare_Date.MinimumWidth = 100
+        Me.PC_Prepare_Date.Name = "PC_Prepare_Date"
+        Me.PC_Prepare_Date.ReadOnly = True
+        '
+        'PC_Complete_Date
+        '
+        Me.PC_Complete_Date.DataPropertyName = "PC_Complete_Date"
+        Me.PC_Complete_Date.HeaderText = "생산완료"
+        Me.PC_Complete_Date.MinimumWidth = 100
+        Me.PC_Complete_Date.Name = "PC_Complete_Date"
+        Me.PC_Complete_Date.ReadOnly = True
+        '
+        'DL_Date
+        '
+        Me.DL_Date.DataPropertyName = "DL_Date"
+        Me.DL_Date.HeaderText = "출고등록"
+        Me.DL_Date.MinimumWidth = 100
+        Me.DL_Date.Name = "DL_Date"
+        Me.DL_Date.ReadOnly = True
+        '
+        'Panel24
+        '
+        Me.Panel24.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel24.Location = New System.Drawing.Point(16, 85)
+        Me.Panel24.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel24.Name = "Panel24"
+        Me.Panel24.Size = New System.Drawing.Size(1797, 1)
+        Me.Panel24.TabIndex = 69
+        '
+        'Frm_CR_POP1
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScroll = True
+        Me.AutoSize = True
+        Me.Controls.Add(Me.Panel_List)
+        Me.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Name = "Frm_CR_POP1"
+        Me.Size = New System.Drawing.Size(2090, 1594)
+        Me.Panel_List.ResumeLayout(False)
+        Me.Panel_List.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        CType(Me.lstMoojinMain, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Panel_List As Panel
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents Button7 As Button
+    Friend WithEvents Label35 As Label
+    Friend WithEvents Label36 As Label
+    Friend WithEvents Label29 As Label
+    Friend WithEvents Label30 As Label
+    Friend WithEvents Label28 As Label
+    Friend WithEvents Label27 As Label
+    Friend WithEvents Label26 As Label
+    Friend WithEvents Label22 As Label
+    Friend WithEvents dtpCRDateTo As DateTimePicker
+    Friend WithEvents dtpCRDateFrom As DateTimePicker
+    Friend WithEvents dtpCRDueDateTo As DateTimePicker
+    Friend WithEvents dtpCRDueDateFrom As DateTimePicker
+    Friend WithEvents txtCRSNo As TextBox
+    Friend WithEvents btnSearch As Button
+    Friend WithEvents txtVendorName As TextBox
+    Friend WithEvents txtJobName As TextBox
+    Public WithEvents txtJobNo As TextBox
+    Friend WithEvents lstMoojinMain As DataGridView
+    Friend WithEvents Panel24 As Panel
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label1 As Label
+    Public WithEvents txtCRDueDateF As TextBox
+    Public WithEvents txtVendorNameF As TextBox
+    Public WithEvents txtCRSNoF As TextBox
+    Public WithEvents txtCRDateF As TextBox
+    Public WithEvents txtJobNameF As TextBox
+    Public WithEvents txtJobNoF As TextBox
+    Friend WithEvents btnShippingRegInd As Button
+    Friend WithEvents btnShippingInd As Button
+    Friend WithEvents Button57 As Button
+    Friend WithEvents Button58 As Button
+    Friend WithEvents btnMTItmInspInd As Button
+    Friend WithEvents btnRIRRecv As Button
+    Friend WithEvents btnQAInd As Button
+    Friend WithEvents Button50 As Button
+    Friend WithEvents Button51 As Button
+    Friend WithEvents Button52 As Button
+    Friend WithEvents btnMCompInd As Button
+    Friend WithEvents btnMEInd As Button
+    Friend WithEvents btnManufactureInd As Button
+    Friend WithEvents Button44 As Button
+    Friend WithEvents Button45 As Button
+    Friend WithEvents Button46 As Button
+    Friend WithEvents btnWithdrawReqInd As Button
+    Friend WithEvents btnMCLInd As Button
+    Friend WithEvents btnMTInd As Button
+    Friend WithEvents Button38 As Button
+    Friend WithEvents Button39 As Button
+    Friend WithEvents Button40 As Button
+    Friend WithEvents btnRIRInd As Button
+    Friend WithEvents Button24 As Button
+    Friend WithEvents btnMTRecv As Button
+    Friend WithEvents Button26 As Button
+    Friend WithEvents btnPSRecv As Button
+    Friend WithEvents btnLORecv As Button
+    Friend WithEvents btnPrchsInd As Button
+    Friend WithEvents Button31 As Button
+    Friend WithEvents Button32 As Button
+    Friend WithEvents Button33 As Button
+    Friend WithEvents Button34 As Button
+    Friend WithEvents btnCOInd As Button
+    Friend WithEvents btnLOInd As Button
+    Friend WithEvents Button20 As Button
+    Friend WithEvents btnCPInd As Button
+    Friend WithEvents btnDVInd As Button
+    Friend WithEvents btnPRRecvInd As Button
+    Friend WithEvents btnTechInd As Button
+    Friend WithEvents Button15 As Button
+    Friend WithEvents Button16 As Button
+    Friend WithEvents Button17 As Button
+    Friend WithEvents Button18 As Button
+    Friend WithEvents btnPRInd As Button
+    Friend WithEvents btnCRItmRegInd As Button
+    Friend WithEvents btnCRInd As Button
+    Friend WithEvents btnSalesInd As Button
+    Friend WithEvents Button4 As Button
+    Friend WithEvents Button3 As Button
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents btnCustomerSearch As Button
+    Friend WithEvents txtVendorCode As TextBox
+    Friend WithEvents cboCustomer2 As ComboBox
+    Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents Button8 As Button
+    Friend WithEvents Button9 As Button
+    Friend WithEvents Button10 As Button
+    Friend WithEvents Button11 As Button
+    Friend WithEvents Button5 As Button
+    Friend WithEvents Button6 As Button
+    Friend WithEvents Button79 As Button
+    Friend WithEvents Button83 As Button
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Label7 As Label
+    Friend WithEvents btnPSInd1 As Button
+    Friend WithEvents Button22 As Button
+    Friend WithEvents CR_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Rev_No As DataGridViewTextBoxColumn
+    Friend WithEvents CRS_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CR_DATE As DataGridViewTextBoxColumn
+    Friend WithEvents CR_DUE_DATE As DataGridViewTextBoxColumn
+    Friend WithEvents CR_ORDER_DATE As DataGridViewTextBoxColumn
+    Friend WithEvents DV_INFO As DataGridViewTextBoxColumn
+    Friend WithEvents BO_INFO As DataGridViewTextBoxColumn
+    Friend WithEvents LO_INFO As DataGridViewTextBoxColumn
+    Friend WithEvents CO_INFO As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_INFO As DataGridViewTextBoxColumn
+    Friend WithEvents PC_INFO As DataGridViewTextBoxColumn
+    Friend WithEvents PQ_INFO As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Customer_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Customer_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Order_Received As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Order_Received_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Order_Receive_Date As DataGridViewTextBoxColumn
+    Friend WithEvents DV_Code As DataGridViewTextBoxColumn
+    Friend WithEvents DV_REV_NO As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Code As DataGridViewTextBoxColumn
+    Friend WithEvents BO_REV_NO As DataGridViewTextBoxColumn
+    Friend WithEvents PS_Code As DataGridViewTextBoxColumn
+    Friend WithEvents PS_REV_NO As DataGridViewTextBoxColumn
+    Friend WithEvents LO_Code As DataGridViewTextBoxColumn
+    Friend WithEvents LO_REV_NO As DataGridViewTextBoxColumn
+    Friend WithEvents LO_Receive_Date As DataGridViewTextBoxColumn
+    Friend WithEvents PS_Receive_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CO_REV_NO As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_WH_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_REV_NO As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Inspection_Receive_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Inspection_Confirm_Date As DataGridViewTextBoxColumn
+    Friend WithEvents MCL_List_Code As DataGridViewTextBoxColumn
+    Friend WithEvents MR_Date As DataGridViewTextBoxColumn
+    Friend WithEvents PC_CODE As DataGridViewTextBoxColumn
+    Friend WithEvents PC_Prepare_Date As DataGridViewTextBoxColumn
+    Friend WithEvents PC_Complete_Date As DataGridViewTextBoxColumn
+    Friend WithEvents DL_Date As DataGridViewTextBoxColumn
+End Class

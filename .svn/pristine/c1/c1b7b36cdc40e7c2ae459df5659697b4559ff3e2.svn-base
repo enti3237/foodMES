@@ -1,0 +1,226 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_MTE_POP
+    Inherits System.Windows.Forms.Form
+
+    'Form은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.lstMain = New System.Windows.Forms.DataGridView()
+        Me.MTECL_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MTE_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MTE_Model = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MTE_Manufacturer = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MTE_Prchs_Year = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MTE_Calib_Freq = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MTE_Calib_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MTE_Calib_Agent = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MTE_Used_Place = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MTE_Bigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Use_Yn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MTE_Prepared = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MTE_Prepare_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MTE_Updated = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MTE_Update_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.White
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button2.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button2.Location = New System.Drawing.Point(216, 335)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(150, 27)
+        Me.Button2.TabIndex = 328
+        Me.Button2.Text = "취소"
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.White
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button1.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button1.Location = New System.Drawing.Point(43, 335)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(150, 27)
+        Me.Button1.TabIndex = 327
+        Me.Button1.Text = "선택"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
+        'lstMain
+        '
+        Me.lstMain.AllowUserToAddRows = False
+        Me.lstMain.AllowUserToDeleteRows = False
+        Me.lstMain.BackgroundColor = System.Drawing.Color.White
+        Me.lstMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.lstMain.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.MTECL_No, Me.MTE_Name, Me.MTE_Model, Me.MTE_Manufacturer, Me.MTE_Prchs_Year, Me.MTE_Calib_Freq, Me.MTE_Calib_Date, Me.MTE_Calib_Agent, Me.MTE_Used_Place, Me.MTE_Bigo, Me.Use_Yn, Me.MTE_Prepared, Me.MTE_Prepare_Date, Me.MTE_Updated, Me.MTE_Update_Date})
+        Me.lstMain.Location = New System.Drawing.Point(43, 89)
+        Me.lstMain.Name = "lstMain"
+        Me.lstMain.ReadOnly = True
+        Me.lstMain.RowHeadersVisible = False
+        Me.lstMain.RowTemplate.Height = 23
+        Me.lstMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.lstMain.Size = New System.Drawing.Size(848, 211)
+        Me.lstMain.TabIndex = 329
+        '
+        'MTECL_No
+        '
+        Me.MTECL_No.DataPropertyName = "MTECL_No"
+        Me.MTECL_No.HeaderText = "관리번호"
+        Me.MTECL_No.Name = "MTECL_No"
+        Me.MTECL_No.ReadOnly = True
+        '
+        'MTE_Name
+        '
+        Me.MTE_Name.DataPropertyName = "MTE_Name"
+        Me.MTE_Name.HeaderText = "품명"
+        Me.MTE_Name.Name = "MTE_Name"
+        Me.MTE_Name.ReadOnly = True
+        '
+        'MTE_Model
+        '
+        Me.MTE_Model.DataPropertyName = "MTE_Model"
+        Me.MTE_Model.HeaderText = "형식"
+        Me.MTE_Model.Name = "MTE_Model"
+        Me.MTE_Model.ReadOnly = True
+        '
+        'MTE_Manufacturer
+        '
+        Me.MTE_Manufacturer.DataPropertyName = "MTE_Manufacturer"
+        Me.MTE_Manufacturer.HeaderText = "제조사"
+        Me.MTE_Manufacturer.Name = "MTE_Manufacturer"
+        Me.MTE_Manufacturer.ReadOnly = True
+        '
+        'MTE_Prchs_Year
+        '
+        Me.MTE_Prchs_Year.DataPropertyName = "MTE_Prchs_Year"
+        Me.MTE_Prchs_Year.HeaderText = "구입년도"
+        Me.MTE_Prchs_Year.Name = "MTE_Prchs_Year"
+        Me.MTE_Prchs_Year.ReadOnly = True
+        '
+        'MTE_Calib_Freq
+        '
+        Me.MTE_Calib_Freq.DataPropertyName = "MTE_Calib_Freq"
+        Me.MTE_Calib_Freq.HeaderText = "교정주기"
+        Me.MTE_Calib_Freq.Name = "MTE_Calib_Freq"
+        Me.MTE_Calib_Freq.ReadOnly = True
+        '
+        'MTE_Calib_Date
+        '
+        Me.MTE_Calib_Date.DataPropertyName = "MTE_Calib_Date"
+        Me.MTE_Calib_Date.HeaderText = "교정일자"
+        Me.MTE_Calib_Date.Name = "MTE_Calib_Date"
+        Me.MTE_Calib_Date.ReadOnly = True
+        '
+        'MTE_Calib_Agent
+        '
+        Me.MTE_Calib_Agent.DataPropertyName = "MTE_Calib_Agent"
+        Me.MTE_Calib_Agent.HeaderText = "교정기관"
+        Me.MTE_Calib_Agent.Name = "MTE_Calib_Agent"
+        Me.MTE_Calib_Agent.ReadOnly = True
+        '
+        'MTE_Used_Place
+        '
+        Me.MTE_Used_Place.DataPropertyName = "MTE_Used_Place"
+        Me.MTE_Used_Place.HeaderText = "사용장소"
+        Me.MTE_Used_Place.Name = "MTE_Used_Place"
+        Me.MTE_Used_Place.ReadOnly = True
+        '
+        'MTE_Bigo
+        '
+        Me.MTE_Bigo.DataPropertyName = "MTE_Bigo"
+        Me.MTE_Bigo.HeaderText = "비고"
+        Me.MTE_Bigo.Name = "MTE_Bigo"
+        Me.MTE_Bigo.ReadOnly = True
+        '
+        'Use_Yn
+        '
+        Me.Use_Yn.DataPropertyName = "Use_Yn"
+        Me.Use_Yn.HeaderText = "사용여부"
+        Me.Use_Yn.Name = "Use_Yn"
+        Me.Use_Yn.ReadOnly = True
+        '
+        'MTE_Prepared
+        '
+        Me.MTE_Prepared.DataPropertyName = "MTE_Prepared"
+        Me.MTE_Prepared.HeaderText = "작성자"
+        Me.MTE_Prepared.Name = "MTE_Prepared"
+        Me.MTE_Prepared.ReadOnly = True
+        '
+        'MTE_Prepare_Date
+        '
+        Me.MTE_Prepare_Date.DataPropertyName = "MTE_Prepare_Date"
+        Me.MTE_Prepare_Date.HeaderText = "작성일시"
+        Me.MTE_Prepare_Date.Name = "MTE_Prepare_Date"
+        Me.MTE_Prepare_Date.ReadOnly = True
+        '
+        'MTE_Updated
+        '
+        Me.MTE_Updated.DataPropertyName = "MTE_Updated"
+        Me.MTE_Updated.HeaderText = "수정자"
+        Me.MTE_Updated.Name = "MTE_Updated"
+        Me.MTE_Updated.ReadOnly = True
+        '
+        'MTE_Update_Date
+        '
+        Me.MTE_Update_Date.DataPropertyName = "MTE_Update_Date"
+        Me.MTE_Update_Date.HeaderText = "수정일시"
+        Me.MTE_Update_Date.Name = "MTE_Update_Date"
+        Me.MTE_Update_Date.ReadOnly = True
+        '
+        'Frm_MTE_POP
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(934, 450)
+        Me.Controls.Add(Me.lstMain)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.Button1)
+        Me.Name = "Frm_MTE_POP"
+        Me.Text = "Frm_MTE_POP"
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents lstMain As DataGridView
+    Friend WithEvents MTECL_No As DataGridViewTextBoxColumn
+    Friend WithEvents MTE_Name As DataGridViewTextBoxColumn
+    Friend WithEvents MTE_Model As DataGridViewTextBoxColumn
+    Friend WithEvents MTE_Manufacturer As DataGridViewTextBoxColumn
+    Friend WithEvents MTE_Prchs_Year As DataGridViewTextBoxColumn
+    Friend WithEvents MTE_Calib_Freq As DataGridViewTextBoxColumn
+    Friend WithEvents MTE_Calib_Date As DataGridViewTextBoxColumn
+    Friend WithEvents MTE_Calib_Agent As DataGridViewTextBoxColumn
+    Friend WithEvents MTE_Used_Place As DataGridViewTextBoxColumn
+    Friend WithEvents MTE_Bigo As DataGridViewTextBoxColumn
+    Friend WithEvents Use_Yn As DataGridViewTextBoxColumn
+    Friend WithEvents MTE_Prepared As DataGridViewTextBoxColumn
+    Friend WithEvents MTE_Prepare_Date As DataGridViewTextBoxColumn
+    Friend WithEvents MTE_Updated As DataGridViewTextBoxColumn
+    Friend WithEvents MTE_Update_Date As DataGridViewTextBoxColumn
+End Class

@@ -1,0 +1,105 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+
+Public Class Frm_CO_Report5
+    Private Sub Frm_CO_Report5_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        palMain.Top = 40
+        palMain.Left = 10
+
+        btnSearch.PerformClick()
+    End Sub
+
+
+
+    Private Sub btnJobSearch_Click(sender As Object, e As EventArgs)
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo.Text = pop1.result
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnLOSearchTop_Click(sender As Object, e As EventArgs) Handles btnLOSearchTop.Click
+        Dim pop1 As Frm_PR_POP = New Frm_PR_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            txtPRNo.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("LO_Code").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnSearch_Click_1(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim i As Integer
+        Dim DBT As DataTable, DBT2 As DataTable
+        Dim itmestr As String = ""
+        DBT = Nothing
+        DBT2 = Nothing
+
+        Try
+
+            StrSQL = " SELECT " &
+                 " CO.CO_Code CO_Code " &
+                 ",CO.CO_Rev_No CO_Rev_No" &
+                 ",CO.CO_Name CO_Name" &
+                 ",CO.CO_CR_Code CO_CR_Code" &
+                 ",CO.CO_PS_Code CO_PS_Code" &
+                 ",CO.CO_LO_Code CO_LO_Code" &
+                 ",CO.CO_Customer_Code CO_Customer_Code" &
+                 ",CO.CO_Date CO_Date" &
+                 ",CO.CO_Deliver CO_Deliver" &
+                 ",CO.CO_WH CO_WH" &
+                 ",CO.CO_Condition CO_Condition" &
+                 ",CO.CO_Src_Verify_YN CO_Src_Verify_YN" &
+                 ",CO.CO_Bigo CO_Bigo" &
+                 ",CO.CO_Prepared CO_Prepared" &
+                 ",CO.CO_Reviewed_MS CO_Reviewed_MS" &
+                 ",CO.CO_Reviewed_QA CO_Reviewed_QA" &
+                 ",CO.CO_Approved CO_Approved" &
+                 ",CO.CO_Updated CO_Updated" &
+                 ",CO.CO_Deliver_Confirmed CO_Deliver_Confirmed" &
+                 ",CO.CO_Prepare_Date CO_Prepare_Date" &
+                 ",CO.CO_Review_Date_MS CO_Review_Date_MS" &
+                 ",CO.CO_Review_Date_QA CO_Review_Date_QA" &
+                 ",CO.CO_Approve_Date CO_Approve_Date" &
+                 ",CO.CO_Update_Date CO_Update_Date" &
+                 ",CO.CO_Deliver_Date CO_Deliver_Date" &
+                 " ,CR.CR_Code CR_Code, CR.CR_Rev_No CR_Rev_No, CR.CR_Name CR_Name " &
+                 " ,(select LO_Rev_No from LA_Order where CO.CO_LO_Code <> '' and LO_Code = CO.CO_LO_Code and LO_Rev_No = (select isnull(max(LO_Rev_No),1) from LA_Order where LO_Code = CO.CO_LO_Code)) CO_LO_Rev_No " &
+                 " ,(select PS_Rev_No from PS_Order_Plan where CO.CO_PS_Code <> '' and PS_Code = CO.CO_PS_Code and PS_Rev_No = (select isnull(max(PS_Rev_No),1) from PS_Order_Plan where PS_Code = CO.CO_PS_Code)) CO_PS_Rev_No " &
+                 " ,(select Man_Name from Man where CO.CO_Prepared <> '' and Man_Code = CO.CO_Prepared) CO_Prepared_Name " &
+                 " ,(select Man_Name from Man where CO.CO_Updated <> '' and Man_Code = CO.CO_Updated) CO_Updated_Name " &
+                 " ,(select Man_Name from Man where CO.CO_Reviewed_MS <> '' and Man_Code = CO.CO_Reviewed_MS) CO_Reviewed_MS_Name " &
+                 " ,(select Man_Name from Man where CO.CO_Reviewed_QA <> '' and Man_Code = CO.CO_Reviewed_QA) CO_Reviewed_QA_Name " &
+                 " ,(select Man_Name from Man where CO.CO_Approved <> '' and Man_Code = CO.CO_Approved) CO_Approved_Name " &
+                 " ,(select Man_Name from Man where CO.CO_Deliver_Confirmed <> '' and Man_Code = CO.CO_Deliver_Confirmed) CO_Deliver_Confirmed_Name " &
+                 " ,(select CM_Name from company where CO.CO_Customer_Code <> '' and CM_Code = CO.CO_Customer_Code) CO_Customer_Name " &
+                 " ,(select CM_Add1 + ' ' + CM_Add2 from company where CM_Code = CO.CO_Customer_Code) CO_Customer_Addr " &
+                 " ,(select isnull(SUM(CO_Itm_Total),0) from CM_Order_List where CO_Code = CO.CO_Code And CO_Rev_No = CO.CO_Rev_No) CO_Total " &
+                 " FROM CM_Order CO, CR_Contract CR " &
+                 " where 1=1 " &
+                 " AND CO.CO_Rev_No = (select isnull(max(CO_Rev_No),1) from CM_Order where CO_Code = CO.CO_code) " &
+                 " And CO.CO_CR_Code Like '%" & txtJobNo.Text & "%' " &
+                 " And CO.CO_LO_Code Like '%" & txtPRNo.Text & "%' " &
+                 " And CO.CO_Code Like '%" & txtPOCode.Text & "%' " &
+                 " And CO.CO_CR_Code = CR.CR_Code " &
+                 " And CR.CR_Rev_No = ( select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code) " &
+                 " And CR.CR_Name like '%" & txtJobName.Text & "%' " &
+                 " order by CO.CO_Code, CO.CO_CR_Code"
+            Re_Count = DB_Select(DBT)
+
+            lstMain.DataSource = DBT
+            lstMain.ClearSelection()
+
+            'hsim 20200517 이력 내역 조회
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+    End Sub
+End Class

@@ -1,0 +1,842 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_PD_Report9
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.Com_Excel = New System.Windows.Forms.Button()
+        Me.Di_Panel2 = New System.Windows.Forms.Panel()
+        Me.Color_Label = New System.Windows.Forms.Label()
+        Me.Com_Contract = New System.Windows.Forms.Button()
+        Me.palMain = New System.Windows.Forms.Panel()
+        Me.btnCustomerSearch = New System.Windows.Forms.Button()
+        Me.Button8 = New System.Windows.Forms.Button()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.dtpRegDateTo = New System.Windows.Forms.DateTimePicker()
+        Me.dtpRegDateFrom = New System.Windows.Forms.DateTimePicker()
+        Me.txtRIRNo = New System.Windows.Forms.TextBox()
+        Me.txtCustomerName = New System.Windows.Forms.TextBox()
+        Me.txtJobName = New System.Windows.Forms.TextBox()
+        Me.txtJobNo = New System.Windows.Forms.TextBox()
+        Me.btnSearch = New System.Windows.Forms.Button()
+        Me.Panel24 = New System.Windows.Forms.Panel()
+        Me.lstMain = New System.Windows.Forms.DataGridView()
+        Me.CQ_CR_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_CR_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Customer_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_PS_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_LO_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_CO_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_CR_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_LO_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_CO_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_PS_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Vendor_Addr = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Vendor_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Prepared_User_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Reviewed_User_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Inspection_Prepared_User_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Inspection_Confirmed_User_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_WH_Confirmed_User_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Vendor_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Customer_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Inspection_Prepared = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Inspection_Prepare_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Inspection_Confirmed = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Inspection_Confirm_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_MT_Identification = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_CFSI = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_M_TE_Equipment = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_M_TE_Eq_Serial = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_M_TE_Eq_Expire_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Externals = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Dimension = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Other_Req = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Cleanness = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Packing_Status = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NCR_YN = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.NCR_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Bigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Prepared = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Prepare_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Updated = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Update_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Reviewed = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Review_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Inspection_Received = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_Inspection_Receive_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_WH_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CQ_WH_Confirmed = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Di_Panel2.SuspendLayout()
+        Me.palMain.SuspendLayout()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Com_Excel
+        '
+        Me.Com_Excel.AutoSize = True
+        Me.Com_Excel.FlatAppearance.BorderSize = 0
+        Me.Com_Excel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange
+        Me.Com_Excel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Com_Excel.Location = New System.Drawing.Point(122, 7)
+        Me.Com_Excel.Margin = New System.Windows.Forms.Padding(0)
+        Me.Com_Excel.Name = "Com_Excel"
+        Me.Com_Excel.Size = New System.Drawing.Size(98, 25)
+        Me.Com_Excel.TabIndex = 161
+        Me.Com_Excel.Text = "RIR 접수"
+        Me.Com_Excel.UseVisualStyleBackColor = True
+        Me.Com_Excel.Visible = False
+        '
+        'Di_Panel2
+        '
+        Me.Di_Panel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Di_Panel2.BackColor = System.Drawing.Color.Silver
+        Me.Di_Panel2.Controls.Add(Me.Color_Label)
+        Me.Di_Panel2.Location = New System.Drawing.Point(8, 35)
+        Me.Di_Panel2.Margin = New System.Windows.Forms.Padding(2)
+        Me.Di_Panel2.Name = "Di_Panel2"
+        Me.Di_Panel2.Size = New System.Drawing.Size(3100, 5)
+        Me.Di_Panel2.TabIndex = 160
+        Me.Di_Panel2.Visible = False
+        '
+        'Color_Label
+        '
+        Me.Color_Label.Location = New System.Drawing.Point(180, 3)
+        Me.Color_Label.Name = "Color_Label"
+        Me.Color_Label.Size = New System.Drawing.Size(47, 8)
+        Me.Color_Label.TabIndex = 0
+        '
+        'Com_Contract
+        '
+        Me.Com_Contract.AutoSize = True
+        Me.Com_Contract.FlatAppearance.BorderSize = 0
+        Me.Com_Contract.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange
+        Me.Com_Contract.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Com_Contract.Location = New System.Drawing.Point(8, 7)
+        Me.Com_Contract.Margin = New System.Windows.Forms.Padding(0)
+        Me.Com_Contract.Name = "Com_Contract"
+        Me.Com_Contract.Size = New System.Drawing.Size(115, 25)
+        Me.Com_Contract.TabIndex = 159
+        Me.Com_Contract.Text = "RIR 목록"
+        Me.Com_Contract.UseVisualStyleBackColor = True
+        Me.Com_Contract.Visible = False
+        '
+        'palMain
+        '
+        Me.palMain.AutoScroll = True
+        Me.palMain.Controls.Add(Me.btnCustomerSearch)
+        Me.palMain.Controls.Add(Me.Button8)
+        Me.palMain.Controls.Add(Me.Label35)
+        Me.palMain.Controls.Add(Me.Label29)
+        Me.palMain.Controls.Add(Me.Label28)
+        Me.palMain.Controls.Add(Me.Label27)
+        Me.palMain.Controls.Add(Me.Label26)
+        Me.palMain.Controls.Add(Me.Label22)
+        Me.palMain.Controls.Add(Me.dtpRegDateTo)
+        Me.palMain.Controls.Add(Me.dtpRegDateFrom)
+        Me.palMain.Controls.Add(Me.txtRIRNo)
+        Me.palMain.Controls.Add(Me.txtCustomerName)
+        Me.palMain.Controls.Add(Me.txtJobName)
+        Me.palMain.Controls.Add(Me.txtJobNo)
+        Me.palMain.Controls.Add(Me.btnSearch)
+        Me.palMain.Controls.Add(Me.Panel24)
+        Me.palMain.Controls.Add(Me.lstMain)
+        Me.palMain.Location = New System.Drawing.Point(26, 105)
+        Me.palMain.Name = "palMain"
+        Me.palMain.Size = New System.Drawing.Size(1630, 909)
+        Me.palMain.TabIndex = 162
+        '
+        'btnCustomerSearch
+        '
+        Me.btnCustomerSearch.BackColor = System.Drawing.Color.White
+        Me.btnCustomerSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCustomerSearch.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnCustomerSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnCustomerSearch.Location = New System.Drawing.Point(499, 49)
+        Me.btnCustomerSearch.Name = "btnCustomerSearch"
+        Me.btnCustomerSearch.Size = New System.Drawing.Size(31, 27)
+        Me.btnCustomerSearch.TabIndex = 572
+        Me.btnCustomerSearch.Text = "⌕"
+        Me.btnCustomerSearch.UseVisualStyleBackColor = False
+        '
+        'Button8
+        '
+        Me.Button8.BackColor = System.Drawing.Color.White
+        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button8.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button8.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button8.Location = New System.Drawing.Point(234, 17)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(31, 27)
+        Me.Button8.TabIndex = 395
+        Me.Button8.Text = "⌕"
+        Me.Button8.UseVisualStyleBackColor = False
+        '
+        'Label35
+        '
+        Me.Label35.AutoSize = True
+        Me.Label35.Location = New System.Drawing.Point(737, 57)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(14, 12)
+        Me.Label35.TabIndex = 394
+        Me.Label35.Text = "~"
+        '
+        'Label29
+        '
+        Me.Label29.AutoSize = True
+        Me.Label29.Location = New System.Drawing.Point(559, 57)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(41, 12)
+        Me.Label29.TabIndex = 392
+        Me.Label29.Text = "등록일"
+        '
+        'Label28
+        '
+        Me.Label28.AutoSize = True
+        Me.Label28.Location = New System.Drawing.Point(296, 56)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(41, 12)
+        Me.Label28.TabIndex = 390
+        Me.Label28.Text = "업체명"
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.Location = New System.Drawing.Point(300, 24)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(37, 12)
+        Me.Label27.TabIndex = 389
+        Me.Label27.Text = "Job명"
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(22, 56)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(52, 12)
+        Me.Label26.TabIndex = 388
+        Me.Label26.Text = "RIR 번호"
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(22, 24)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(45, 12)
+        Me.Label22.TabIndex = 387
+        Me.Label22.Text = "Job No"
+        '
+        'dtpRegDateTo
+        '
+        Me.dtpRegDateTo.Font = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpRegDateTo.Location = New System.Drawing.Point(757, 52)
+        Me.dtpRegDateTo.Name = "dtpRegDateTo"
+        Me.dtpRegDateTo.Size = New System.Drawing.Size(125, 22)
+        Me.dtpRegDateTo.TabIndex = 384
+        '
+        'dtpRegDateFrom
+        '
+        Me.dtpRegDateFrom.CalendarFont = New System.Drawing.Font("굴림", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpRegDateFrom.Font = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpRegDateFrom.Location = New System.Drawing.Point(606, 52)
+        Me.dtpRegDateFrom.Name = "dtpRegDateFrom"
+        Me.dtpRegDateFrom.Size = New System.Drawing.Size(125, 22)
+        Me.dtpRegDateFrom.TabIndex = 383
+        Me.dtpRegDateFrom.Value = New Date(2016, 1, 1, 0, 0, 0, 0)
+        '
+        'txtRIRNo
+        '
+        Me.txtRIRNo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtRIRNo.Location = New System.Drawing.Point(78, 50)
+        Me.txtRIRNo.Name = "txtRIRNo"
+        Me.txtRIRNo.Size = New System.Drawing.Size(150, 25)
+        Me.txtRIRNo.TabIndex = 382
+        '
+        'txtCustomerName
+        '
+        Me.txtCustomerName.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCustomerName.Location = New System.Drawing.Point(343, 50)
+        Me.txtCustomerName.Name = "txtCustomerName"
+        Me.txtCustomerName.Size = New System.Drawing.Size(150, 25)
+        Me.txtCustomerName.TabIndex = 381
+        '
+        'txtJobName
+        '
+        Me.txtJobName.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtJobName.Location = New System.Drawing.Point(343, 18)
+        Me.txtJobName.Name = "txtJobName"
+        Me.txtJobName.Size = New System.Drawing.Size(150, 25)
+        Me.txtJobName.TabIndex = 380
+        '
+        'txtJobNo
+        '
+        Me.txtJobNo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtJobNo.Location = New System.Drawing.Point(78, 18)
+        Me.txtJobNo.Name = "txtJobNo"
+        Me.txtJobNo.Size = New System.Drawing.Size(150, 25)
+        Me.txtJobNo.TabIndex = 379
+        '
+        'btnSearch
+        '
+        Me.btnSearch.BackColor = System.Drawing.Color.White
+        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSearch.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnSearch.Location = New System.Drawing.Point(1465, 45)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(150, 27)
+        Me.btnSearch.TabIndex = 301
+        Me.btnSearch.Text = "조회"
+        Me.btnSearch.UseVisualStyleBackColor = False
+        '
+        'Panel24
+        '
+        Me.Panel24.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel24.Location = New System.Drawing.Point(16, 85)
+        Me.Panel24.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel24.Name = "Panel24"
+        Me.Panel24.Size = New System.Drawing.Size(1600, 1)
+        Me.Panel24.TabIndex = 299
+        '
+        'lstMain
+        '
+        Me.lstMain.AllowUserToAddRows = False
+        Me.lstMain.BackgroundColor = System.Drawing.Color.White
+        Me.lstMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.lstMain.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CQ_CR_Code, Me.CQ_CR_Name, Me.CQ_Code, Me.CQ_Customer_Name, Me.CQ_Date, Me.CQ_PS_Code, Me.CQ_LO_Code, Me.CQ_CO_Code, Me.CQ_CR_Rev_No, Me.CQ_LO_Rev_No, Me.CQ_CO_Rev_No, Me.CQ_PS_Rev_No, Me.CQ_Vendor_Addr, Me.CQ_Vendor_Name, Me.CQ_Prepared_User_Name, Me.CQ_Reviewed_User_Name, Me.CQ_Inspection_Prepared_User_Name, Me.CQ_Inspection_Confirmed_User_Name, Me.CQ_WH_Confirmed_User_Name, Me.CQ_Rev_No, Me.CQ_Vendor_Code, Me.CQ_Customer_Code, Me.CQ_Inspection_Prepared, Me.CQ_Inspection_Prepare_Date, Me.CQ_Inspection_Confirmed, Me.CQ_Inspection_Confirm_Date, Me.CQ_MT_Identification, Me.CQ_CFSI, Me.CQ_M_TE_Equipment, Me.CQ_M_TE_Eq_Serial, Me.CQ_M_TE_Eq_Expire_Date, Me.CQ_Externals, Me.CQ_Dimension, Me.CQ_Other_Req, Me.CQ_Cleanness, Me.CQ_Packing_Status, Me.NCR_YN, Me.NCR_No, Me.CQ_Bigo, Me.CQ_Prepared, Me.CQ_Prepare_Date, Me.CQ_Updated, Me.CQ_Update_Date, Me.CQ_Reviewed, Me.CQ_Review_Date, Me.CQ_Inspection_Received, Me.CQ_Inspection_Receive_Date, Me.CQ_WH_Date, Me.CQ_WH_Confirmed})
+        Me.lstMain.Location = New System.Drawing.Point(16, 103)
+        Me.lstMain.Name = "lstMain"
+        Me.lstMain.ReadOnly = True
+        Me.lstMain.RowHeadersVisible = False
+        Me.lstMain.RowTemplate.Height = 23
+        Me.lstMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.lstMain.Size = New System.Drawing.Size(1600, 732)
+        Me.lstMain.TabIndex = 0
+        '
+        'CQ_CR_Code
+        '
+        Me.CQ_CR_Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CQ_CR_Code.DataPropertyName = "CQ_CR_Code"
+        Me.CQ_CR_Code.HeaderText = "Job No"
+        Me.CQ_CR_Code.MinimumWidth = 100
+        Me.CQ_CR_Code.Name = "CQ_CR_Code"
+        Me.CQ_CR_Code.ReadOnly = True
+        '
+        'CQ_CR_Name
+        '
+        Me.CQ_CR_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CQ_CR_Name.DataPropertyName = "CQ_CR_Name"
+        Me.CQ_CR_Name.FillWeight = 56.27266!
+        Me.CQ_CR_Name.HeaderText = "Job명"
+        Me.CQ_CR_Name.MinimumWidth = 100
+        Me.CQ_CR_Name.Name = "CQ_CR_Name"
+        Me.CQ_CR_Name.ReadOnly = True
+        '
+        'CQ_Code
+        '
+        Me.CQ_Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CQ_Code.DataPropertyName = "CQ_Code"
+        Me.CQ_Code.FillWeight = 56.27266!
+        Me.CQ_Code.HeaderText = "RIR No"
+        Me.CQ_Code.MinimumWidth = 100
+        Me.CQ_Code.Name = "CQ_Code"
+        Me.CQ_Code.ReadOnly = True
+        '
+        'CQ_Customer_Name
+        '
+        Me.CQ_Customer_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CQ_Customer_Name.DataPropertyName = "CQ_Customer_Name"
+        Me.CQ_Customer_Name.FillWeight = 56.27266!
+        Me.CQ_Customer_Name.HeaderText = "고객명"
+        Me.CQ_Customer_Name.MinimumWidth = 100
+        Me.CQ_Customer_Name.Name = "CQ_Customer_Name"
+        Me.CQ_Customer_Name.ReadOnly = True
+        '
+        'CQ_Date
+        '
+        Me.CQ_Date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CQ_Date.DataPropertyName = "CQ_Date"
+        Me.CQ_Date.FillWeight = 56.27266!
+        Me.CQ_Date.HeaderText = "등록일자"
+        Me.CQ_Date.MinimumWidth = 100
+        Me.CQ_Date.Name = "CQ_Date"
+        Me.CQ_Date.ReadOnly = True
+        '
+        'CQ_PS_Code
+        '
+        Me.CQ_PS_Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CQ_PS_Code.DataPropertyName = "CQ_PS_Code"
+        Me.CQ_PS_Code.FillWeight = 56.27266!
+        Me.CQ_PS_Code.HeaderText = "PS No"
+        Me.CQ_PS_Code.MinimumWidth = 150
+        Me.CQ_PS_Code.Name = "CQ_PS_Code"
+        Me.CQ_PS_Code.ReadOnly = True
+        '
+        'CQ_LO_Code
+        '
+        Me.CQ_LO_Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CQ_LO_Code.DataPropertyName = "CQ_LO_Code"
+        Me.CQ_LO_Code.FillWeight = 56.27266!
+        Me.CQ_LO_Code.HeaderText = "PR No"
+        Me.CQ_LO_Code.MinimumWidth = 150
+        Me.CQ_LO_Code.Name = "CQ_LO_Code"
+        Me.CQ_LO_Code.ReadOnly = True
+        '
+        'CQ_CO_Code
+        '
+        Me.CQ_CO_Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CQ_CO_Code.DataPropertyName = "CQ_CO_Code"
+        Me.CQ_CO_Code.FillWeight = 56.27266!
+        Me.CQ_CO_Code.HeaderText = "PO No"
+        Me.CQ_CO_Code.MinimumWidth = 150
+        Me.CQ_CO_Code.Name = "CQ_CO_Code"
+        Me.CQ_CO_Code.ReadOnly = True
+        '
+        'CQ_CR_Rev_No
+        '
+        Me.CQ_CR_Rev_No.DataPropertyName = "CQ_CR_Rev_No"
+        Me.CQ_CR_Rev_No.HeaderText = "Job개정번호"
+        Me.CQ_CR_Rev_No.Name = "CQ_CR_Rev_No"
+        Me.CQ_CR_Rev_No.ReadOnly = True
+        Me.CQ_CR_Rev_No.Visible = False
+        '
+        'CQ_LO_Rev_No
+        '
+        Me.CQ_LO_Rev_No.DataPropertyName = "CQ_LO_Rev_No"
+        Me.CQ_LO_Rev_No.HeaderText = "PR개정번호"
+        Me.CQ_LO_Rev_No.Name = "CQ_LO_Rev_No"
+        Me.CQ_LO_Rev_No.ReadOnly = True
+        Me.CQ_LO_Rev_No.Visible = False
+        '
+        'CQ_CO_Rev_No
+        '
+        Me.CQ_CO_Rev_No.DataPropertyName = "CQ_CO_Rev_No"
+        Me.CQ_CO_Rev_No.HeaderText = "PO개정번호"
+        Me.CQ_CO_Rev_No.Name = "CQ_CO_Rev_No"
+        Me.CQ_CO_Rev_No.ReadOnly = True
+        Me.CQ_CO_Rev_No.Visible = False
+        '
+        'CQ_PS_Rev_No
+        '
+        Me.CQ_PS_Rev_No.DataPropertyName = "CQ_PS_Rev_No"
+        Me.CQ_PS_Rev_No.HeaderText = "PS개정번호"
+        Me.CQ_PS_Rev_No.Name = "CQ_PS_Rev_No"
+        Me.CQ_PS_Rev_No.ReadOnly = True
+        Me.CQ_PS_Rev_No.Visible = False
+        '
+        'CQ_Vendor_Addr
+        '
+        Me.CQ_Vendor_Addr.DataPropertyName = "CQ_Vendor_Addr"
+        Me.CQ_Vendor_Addr.HeaderText = "공급업체 주소"
+        Me.CQ_Vendor_Addr.Name = "CQ_Vendor_Addr"
+        Me.CQ_Vendor_Addr.ReadOnly = True
+        Me.CQ_Vendor_Addr.Visible = False
+        '
+        'CQ_Vendor_Name
+        '
+        Me.CQ_Vendor_Name.DataPropertyName = "CQ_Vendor_Name"
+        Me.CQ_Vendor_Name.HeaderText = "공급업체명"
+        Me.CQ_Vendor_Name.Name = "CQ_Vendor_Name"
+        Me.CQ_Vendor_Name.ReadOnly = True
+        Me.CQ_Vendor_Name.Visible = False
+        '
+        'CQ_Prepared_User_Name
+        '
+        Me.CQ_Prepared_User_Name.DataPropertyName = "CQ_Prepared_User_Name"
+        Me.CQ_Prepared_User_Name.HeaderText = "작성자명"
+        Me.CQ_Prepared_User_Name.Name = "CQ_Prepared_User_Name"
+        Me.CQ_Prepared_User_Name.ReadOnly = True
+        Me.CQ_Prepared_User_Name.Visible = False
+        '
+        'CQ_Reviewed_User_Name
+        '
+        Me.CQ_Reviewed_User_Name.DataPropertyName = "CQ_Reviewed_User_Name"
+        Me.CQ_Reviewed_User_Name.HeaderText = "검토자명"
+        Me.CQ_Reviewed_User_Name.Name = "CQ_Reviewed_User_Name"
+        Me.CQ_Reviewed_User_Name.ReadOnly = True
+        Me.CQ_Reviewed_User_Name.Visible = False
+        '
+        'CQ_Inspection_Prepared_User_Name
+        '
+        Me.CQ_Inspection_Prepared_User_Name.DataPropertyName = "CQ_Inspection_Prepared_User_Name"
+        Me.CQ_Inspection_Prepared_User_Name.HeaderText = "인수검사작성자명"
+        Me.CQ_Inspection_Prepared_User_Name.Name = "CQ_Inspection_Prepared_User_Name"
+        Me.CQ_Inspection_Prepared_User_Name.ReadOnly = True
+        Me.CQ_Inspection_Prepared_User_Name.Visible = False
+        '
+        'CQ_Inspection_Confirmed_User_Name
+        '
+        Me.CQ_Inspection_Confirmed_User_Name.DataPropertyName = "CQ_Inspection_Confirmed_User_Name"
+        Me.CQ_Inspection_Confirmed_User_Name.HeaderText = "인수검사승인자명"
+        Me.CQ_Inspection_Confirmed_User_Name.Name = "CQ_Inspection_Confirmed_User_Name"
+        Me.CQ_Inspection_Confirmed_User_Name.ReadOnly = True
+        Me.CQ_Inspection_Confirmed_User_Name.Visible = False
+        '
+        'CQ_WH_Confirmed_User_Name
+        '
+        Me.CQ_WH_Confirmed_User_Name.DataPropertyName = "CQ_WH_Confirmed_User_Name"
+        Me.CQ_WH_Confirmed_User_Name.HeaderText = "입고확인자명"
+        Me.CQ_WH_Confirmed_User_Name.Name = "CQ_WH_Confirmed_User_Name"
+        Me.CQ_WH_Confirmed_User_Name.ReadOnly = True
+        Me.CQ_WH_Confirmed_User_Name.Visible = False
+        '
+        'CQ_Rev_No
+        '
+        Me.CQ_Rev_No.DataPropertyName = "CQ_Rev_No"
+        Me.CQ_Rev_No.HeaderText = "RIR개정번호"
+        Me.CQ_Rev_No.Name = "CQ_Rev_No"
+        Me.CQ_Rev_No.ReadOnly = True
+        Me.CQ_Rev_No.Visible = False
+        '
+        'CQ_Vendor_Code
+        '
+        Me.CQ_Vendor_Code.DataPropertyName = "CQ_Vendor_Code"
+        Me.CQ_Vendor_Code.HeaderText = "공급업체코드"
+        Me.CQ_Vendor_Code.Name = "CQ_Vendor_Code"
+        Me.CQ_Vendor_Code.ReadOnly = True
+        Me.CQ_Vendor_Code.Visible = False
+        '
+        'CQ_Customer_Code
+        '
+        Me.CQ_Customer_Code.DataPropertyName = "CQ_Customer_Code"
+        Me.CQ_Customer_Code.HeaderText = "거래처코드"
+        Me.CQ_Customer_Code.Name = "CQ_Customer_Code"
+        Me.CQ_Customer_Code.ReadOnly = True
+        Me.CQ_Customer_Code.Visible = False
+        '
+        'CQ_Inspection_Prepared
+        '
+        Me.CQ_Inspection_Prepared.DataPropertyName = "CQ_Inspection_Prepared"
+        Me.CQ_Inspection_Prepared.HeaderText = "인수검사작성자"
+        Me.CQ_Inspection_Prepared.Name = "CQ_Inspection_Prepared"
+        Me.CQ_Inspection_Prepared.ReadOnly = True
+        Me.CQ_Inspection_Prepared.Visible = False
+        '
+        'CQ_Inspection_Prepare_Date
+        '
+        Me.CQ_Inspection_Prepare_Date.DataPropertyName = "CQ_Inspection_Prepare_Date"
+        Me.CQ_Inspection_Prepare_Date.HeaderText = "인수검사작성일시"
+        Me.CQ_Inspection_Prepare_Date.Name = "CQ_Inspection_Prepare_Date"
+        Me.CQ_Inspection_Prepare_Date.ReadOnly = True
+        Me.CQ_Inspection_Prepare_Date.Visible = False
+        '
+        'CQ_Inspection_Confirmed
+        '
+        Me.CQ_Inspection_Confirmed.DataPropertyName = "CQ_Inspection_Confirmed"
+        Me.CQ_Inspection_Confirmed.HeaderText = "인수검사승인자"
+        Me.CQ_Inspection_Confirmed.Name = "CQ_Inspection_Confirmed"
+        Me.CQ_Inspection_Confirmed.ReadOnly = True
+        Me.CQ_Inspection_Confirmed.Visible = False
+        '
+        'CQ_Inspection_Confirm_Date
+        '
+        Me.CQ_Inspection_Confirm_Date.DataPropertyName = "CQ_Inspection_Confirm_Date"
+        Me.CQ_Inspection_Confirm_Date.HeaderText = "인수검사승인일시"
+        Me.CQ_Inspection_Confirm_Date.Name = "CQ_Inspection_Confirm_Date"
+        Me.CQ_Inspection_Confirm_Date.ReadOnly = True
+        Me.CQ_Inspection_Confirm_Date.Visible = False
+        '
+        'CQ_MT_Identification
+        '
+        Me.CQ_MT_Identification.DataPropertyName = "CQ_MT_Identification"
+        Me.CQ_MT_Identification.HeaderText = "재료식별(Non-NNS)"
+        Me.CQ_MT_Identification.Name = "CQ_MT_Identification"
+        Me.CQ_MT_Identification.ReadOnly = True
+        Me.CQ_MT_Identification.Visible = False
+        '
+        'CQ_CFSI
+        '
+        Me.CQ_CFSI.DataPropertyName = "CQ_CFSI"
+        Me.CQ_CFSI.HeaderText = "위변조품목확인(Non-NNS)"
+        Me.CQ_CFSI.Name = "CQ_CFSI"
+        Me.CQ_CFSI.ReadOnly = True
+        Me.CQ_CFSI.Visible = False
+        '
+        'CQ_M_TE_Equipment
+        '
+        Me.CQ_M_TE_Equipment.DataPropertyName = "CQ_M_TE_Equipment"
+        Me.CQ_M_TE_Equipment.HeaderText = "측정장비명(Non-NNS)"
+        Me.CQ_M_TE_Equipment.Name = "CQ_M_TE_Equipment"
+        Me.CQ_M_TE_Equipment.ReadOnly = True
+        Me.CQ_M_TE_Equipment.Visible = False
+        '
+        'CQ_M_TE_Eq_Serial
+        '
+        Me.CQ_M_TE_Eq_Serial.DataPropertyName = "CQ_M_TE_Eq_Serial"
+        Me.CQ_M_TE_Eq_Serial.HeaderText = "측정장비일련번호(Non-NNS)"
+        Me.CQ_M_TE_Eq_Serial.Name = "CQ_M_TE_Eq_Serial"
+        Me.CQ_M_TE_Eq_Serial.ReadOnly = True
+        Me.CQ_M_TE_Eq_Serial.Visible = False
+        '
+        'CQ_M_TE_Eq_Expire_Date
+        '
+        Me.CQ_M_TE_Eq_Expire_Date.DataPropertyName = "CQ_M_TE_Eq_Expire_Date"
+        Me.CQ_M_TE_Eq_Expire_Date.HeaderText = "측정장비만료일자(Non-NNS)"
+        Me.CQ_M_TE_Eq_Expire_Date.Name = "CQ_M_TE_Eq_Expire_Date"
+        Me.CQ_M_TE_Eq_Expire_Date.ReadOnly = True
+        Me.CQ_M_TE_Eq_Expire_Date.Visible = False
+        '
+        'CQ_Externals
+        '
+        Me.CQ_Externals.DataPropertyName = "CQ_Externals"
+        Me.CQ_Externals.HeaderText = "외관(Non-NNS)"
+        Me.CQ_Externals.Name = "CQ_Externals"
+        Me.CQ_Externals.ReadOnly = True
+        Me.CQ_Externals.Visible = False
+        '
+        'CQ_Dimension
+        '
+        Me.CQ_Dimension.DataPropertyName = "CQ_Dimension"
+        Me.CQ_Dimension.HeaderText = "치수(Non-NNS)"
+        Me.CQ_Dimension.Name = "CQ_Dimension"
+        Me.CQ_Dimension.ReadOnly = True
+        Me.CQ_Dimension.Visible = False
+        '
+        'CQ_Other_Req
+        '
+        Me.CQ_Other_Req.DataPropertyName = "CQ_Other_Req"
+        Me.CQ_Other_Req.HeaderText = "기타요건(Non-NNS)"
+        Me.CQ_Other_Req.Name = "CQ_Other_Req"
+        Me.CQ_Other_Req.ReadOnly = True
+        Me.CQ_Other_Req.Visible = False
+        '
+        'CQ_Cleanness
+        '
+        Me.CQ_Cleanness.DataPropertyName = "CQ_Cleanness"
+        Me.CQ_Cleanness.HeaderText = "청결상태(Non-NNS)"
+        Me.CQ_Cleanness.Name = "CQ_Cleanness"
+        Me.CQ_Cleanness.ReadOnly = True
+        Me.CQ_Cleanness.Visible = False
+        '
+        'CQ_Packing_Status
+        '
+        Me.CQ_Packing_Status.DataPropertyName = "CQ_Packing_Status"
+        Me.CQ_Packing_Status.HeaderText = "포장상태(Non-NNS)"
+        Me.CQ_Packing_Status.Name = "CQ_Packing_Status"
+        Me.CQ_Packing_Status.ReadOnly = True
+        Me.CQ_Packing_Status.Visible = False
+        '
+        'NCR_YN
+        '
+        Me.NCR_YN.DataPropertyName = "NCR_YN"
+        Me.NCR_YN.HeaderText = "NCR여부(Non-NNS)"
+        Me.NCR_YN.Name = "NCR_YN"
+        Me.NCR_YN.ReadOnly = True
+        Me.NCR_YN.Visible = False
+        '
+        'NCR_No
+        '
+        Me.NCR_No.DataPropertyName = "NCR_No"
+        Me.NCR_No.HeaderText = "NCR번호(Non-NNS)"
+        Me.NCR_No.Name = "NCR_No"
+        Me.NCR_No.ReadOnly = True
+        Me.NCR_No.Visible = False
+        '
+        'CQ_Bigo
+        '
+        Me.CQ_Bigo.DataPropertyName = "CQ_Bigo"
+        Me.CQ_Bigo.HeaderText = "비고"
+        Me.CQ_Bigo.Name = "CQ_Bigo"
+        Me.CQ_Bigo.ReadOnly = True
+        Me.CQ_Bigo.Visible = False
+        '
+        'CQ_Prepared
+        '
+        Me.CQ_Prepared.DataPropertyName = "CQ_Prepared"
+        Me.CQ_Prepared.HeaderText = "작성자"
+        Me.CQ_Prepared.Name = "CQ_Prepared"
+        Me.CQ_Prepared.ReadOnly = True
+        Me.CQ_Prepared.Visible = False
+        '
+        'CQ_Prepare_Date
+        '
+        Me.CQ_Prepare_Date.DataPropertyName = "CQ_Prepare_Date"
+        Me.CQ_Prepare_Date.HeaderText = "작성일시"
+        Me.CQ_Prepare_Date.Name = "CQ_Prepare_Date"
+        Me.CQ_Prepare_Date.ReadOnly = True
+        Me.CQ_Prepare_Date.Visible = False
+        '
+        'CQ_Updated
+        '
+        Me.CQ_Updated.DataPropertyName = "CQ_Updated"
+        Me.CQ_Updated.HeaderText = "수정자"
+        Me.CQ_Updated.Name = "CQ_Updated"
+        Me.CQ_Updated.ReadOnly = True
+        Me.CQ_Updated.Visible = False
+        '
+        'CQ_Update_Date
+        '
+        Me.CQ_Update_Date.DataPropertyName = "CQ_Update_Date"
+        Me.CQ_Update_Date.HeaderText = "수정일시"
+        Me.CQ_Update_Date.Name = "CQ_Update_Date"
+        Me.CQ_Update_Date.ReadOnly = True
+        Me.CQ_Update_Date.Visible = False
+        '
+        'CQ_Reviewed
+        '
+        Me.CQ_Reviewed.DataPropertyName = "CQ_Reviewed"
+        Me.CQ_Reviewed.HeaderText = "검토자"
+        Me.CQ_Reviewed.Name = "CQ_Reviewed"
+        Me.CQ_Reviewed.ReadOnly = True
+        Me.CQ_Reviewed.Visible = False
+        '
+        'CQ_Review_Date
+        '
+        Me.CQ_Review_Date.DataPropertyName = "CQ_Review_Date"
+        Me.CQ_Review_Date.HeaderText = "검토일시"
+        Me.CQ_Review_Date.Name = "CQ_Review_Date"
+        Me.CQ_Review_Date.ReadOnly = True
+        Me.CQ_Review_Date.Visible = False
+        '
+        'CQ_Inspection_Received
+        '
+        Me.CQ_Inspection_Received.DataPropertyName = "CQ_Inspection_Received"
+        Me.CQ_Inspection_Received.HeaderText = "인수검사접수자"
+        Me.CQ_Inspection_Received.Name = "CQ_Inspection_Received"
+        Me.CQ_Inspection_Received.ReadOnly = True
+        Me.CQ_Inspection_Received.Visible = False
+        '
+        'CQ_Inspection_Receive_Date
+        '
+        Me.CQ_Inspection_Receive_Date.DataPropertyName = "CQ_Inspection_Receive_Date"
+        Me.CQ_Inspection_Receive_Date.HeaderText = "인수검사접수일시"
+        Me.CQ_Inspection_Receive_Date.Name = "CQ_Inspection_Receive_Date"
+        Me.CQ_Inspection_Receive_Date.ReadOnly = True
+        Me.CQ_Inspection_Receive_Date.Visible = False
+        '
+        'CQ_WH_Date
+        '
+        Me.CQ_WH_Date.DataPropertyName = "CQ_WH_Date"
+        Me.CQ_WH_Date.HeaderText = "입고일자"
+        Me.CQ_WH_Date.Name = "CQ_WH_Date"
+        Me.CQ_WH_Date.ReadOnly = True
+        Me.CQ_WH_Date.Visible = False
+        '
+        'CQ_WH_Confirmed
+        '
+        Me.CQ_WH_Confirmed.DataPropertyName = "CQ_WH_Confirmed"
+        Me.CQ_WH_Confirmed.HeaderText = "입고확인자"
+        Me.CQ_WH_Confirmed.Name = "CQ_WH_Confirmed"
+        Me.CQ_WH_Confirmed.ReadOnly = True
+        Me.CQ_WH_Confirmed.Visible = False
+        '
+        'Frm_PD_Report9
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScroll = True
+        Me.Controls.Add(Me.palMain)
+        Me.Controls.Add(Me.Com_Excel)
+        Me.Controls.Add(Me.Di_Panel2)
+        Me.Controls.Add(Me.Com_Contract)
+        Me.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Name = "Frm_PD_Report9"
+        Me.Size = New System.Drawing.Size(1847, 1250)
+        Me.Di_Panel2.ResumeLayout(False)
+        Me.palMain.ResumeLayout(False)
+        Me.palMain.PerformLayout()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+
+    Friend WithEvents Com_Excel As Button
+    Friend WithEvents Di_Panel2 As Panel
+    Friend WithEvents Color_Label As Label
+    Friend WithEvents Com_Contract As Button
+    Friend WithEvents palMain As Panel
+    Friend WithEvents btnCustomerSearch As Button
+    Friend WithEvents Button8 As Button
+    Friend WithEvents Label35 As Label
+    Friend WithEvents Label29 As Label
+    Friend WithEvents Label28 As Label
+    Friend WithEvents Label27 As Label
+    Friend WithEvents Label26 As Label
+    Friend WithEvents Label22 As Label
+    Friend WithEvents dtpRegDateTo As DateTimePicker
+    Friend WithEvents dtpRegDateFrom As DateTimePicker
+    Friend WithEvents txtRIRNo As TextBox
+    Friend WithEvents txtCustomerName As TextBox
+    Friend WithEvents txtJobName As TextBox
+    Friend WithEvents txtJobNo As TextBox
+    Friend WithEvents btnSearch As Button
+    Friend WithEvents Panel24 As Panel
+    Friend WithEvents lstMain As DataGridView
+    Friend WithEvents CQ_CR_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_CR_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Customer_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_PS_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_LO_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_CO_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_CR_Rev_No As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_LO_Rev_No As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_CO_Rev_No As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_PS_Rev_No As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Vendor_Addr As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Vendor_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Prepared_User_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Reviewed_User_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Inspection_Prepared_User_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Inspection_Confirmed_User_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_WH_Confirmed_User_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Rev_No As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Vendor_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Customer_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Inspection_Prepared As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Inspection_Prepare_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Inspection_Confirmed As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Inspection_Confirm_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_MT_Identification As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_CFSI As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_M_TE_Equipment As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_M_TE_Eq_Serial As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_M_TE_Eq_Expire_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Externals As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Dimension As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Other_Req As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Cleanness As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Packing_Status As DataGridViewTextBoxColumn
+    Friend WithEvents NCR_YN As DataGridViewTextBoxColumn
+    Friend WithEvents NCR_No As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Bigo As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Prepared As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Prepare_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Updated As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Update_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Reviewed As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Review_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Inspection_Received As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_Inspection_Receive_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_WH_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CQ_WH_Confirmed As DataGridViewTextBoxColumn
+End Class

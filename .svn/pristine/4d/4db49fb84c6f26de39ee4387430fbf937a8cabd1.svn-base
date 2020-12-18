@@ -1,0 +1,284 @@
+﻿Public Class Frm_Process
+
+    Dim tblProcess As New DataTable
+    Dim Grid_Display As Boolean
+    Dim Process_List_Line_Grid_Row As Integer
+    Dim Process_List_Line_Grid_Col As Integer
+
+    Private Sub fnFrmTblLoad()
+        tblProcess = fnGetTableStructure("dbo.Process")
+    End Sub
+
+    Private Sub Frm_Process_List_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        fnFrmTblLoad()
+        btnSearch.PerformClick()
+
+    End Sub
+
+
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs)
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        'StrSQL = "Select CR_Code, CR_Rev_No, CR_Sun, CR_PL_Code, CR_PL_Name, CR_Qty, CR_Date From CR_Contract_List with(NOLOCK) where CR_Code Like '%" & txtJobNo.Text & "%' And
+        '                                                                                                                   CR_PL_Code Like '%" & txtPLCode.Text & "%' And
+        '                                                                                                                   CR_PL_Name Like '%" & txtPLName.Text & "%' And
+        '                                                                                                                   convert(datetime,'" & dtpDateFrom.Value.ToString("yyyy-MM-dd") & "') <= CR_Date and convert(datetime,'" & dtpDateTo.Value.ToString("yyyy-MM-dd") & "') >= CR_Date order by CR_Sun"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstMain.DataSource = DBT
+            lstMain.ClearSelection()
+        End If
+
+        'hsim 이력 기록
+        'showRevLog("Frm_Process", DBT, lstRev)
+    End Sub
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs)
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        If e.RowIndex >= 0 Then
+            StrSQL = "Select * From PC_Process where CL_Code = '" & lstMain.Rows(e.RowIndex).Cells("CR_Code").Value.ToString & "' And 
+                                                     CL_Rev_No = '" & lstMain.Rows(e.RowIndex).Cells("CR_Rev_No").Value.ToString & "' And
+                                                     CL_Sun = '" & lstMain.Rows(e.RowIndex).Cells("CR_Sun").Value.ToString & "'"
+
+            Re_Count = DB_Select(DBT)
+            If Re_Count > 0 Then
+                lstMain.RowCount = DBT.Rows.Count
+                For i = 0 To DBT.Rows.Count - 1
+                    lstMain.Rows(i).Cells("CL_PL_Name2").Value = lstMain.Rows(e.RowIndex).Cells("CR_PL_Name").Value.ToString
+                    lstMain.Rows(i).Cells("PC_Code").Value = DBT.Rows(i)("PC_Code").ToString
+                    lstMain.Rows(i).Cells("PC_Code").Value = DBT.Rows(i)("PC_Code").ToString
+                    lstMain.Rows(i).Cells("PC_Name").Value = DBT.Rows(i)("PC_Name").ToString
+                    lstMain.Rows(i).Cells("PC_Bigo").Value = DBT.Rows(i)("PC_Bigo").ToString
+                    lstMain.Rows(i).Cells("PC_Prepared").Value = DBT.Rows(i)("PC_Prepared").ToString
+                    lstMain.Rows(i).Cells("PC_Prepare_Date").Value = DBT.Rows(i)("PC_Prepare_Date").ToString
+                    lstMain.Rows(i).Cells("PC_Updated").Value = DBT.Rows(i)("PC_Updated").ToString
+                    lstMain.Rows(i).Cells("PC_Update_Date").Value = DBT.Rows(i)("PC_Update_Date").ToString
+                Next
+            Else
+                lstMain.RowCount = 0
+            End If
+        End If
+
+
+
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs)
+        'txtProcessNo.Text = ""
+        'txtProcessName.Text = ""
+        'txtBigo2.Text = ""
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs)
+        Dim DBT As DataTable
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+
+        DBT = Nothing
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        'If MessageBox.Show(txtProcessNo.Text + " 를 삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+        '    If txtProcessNo.Text <> "" Then
+        '        StrSQL = "Delete PC_Process where CL_Code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString & "'" &
+        '                 "   and CL_Rev_No = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Rev_No").Value.ToString & "'" &
+        '                 "   and CL_Sun = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Sun").Value.ToString & "'" &
+        '                 "   and PC_Code = '" & txtProcessNo.Text & "'"
+        '        Re_Count = DB_Execute()
+
+        '        If Re_Count > 0 Then
+        '            MsgBox("삭제 완료")
+        '        End If
+        '        'hsim 20200515 처리 이력
+        '        'histLogStr = "사용자 " & logInUserName & " 정보 삭제 : " & txtProcessNo.Text & "-" & txtProcessName.Text
+        '        'Man_Log("Frm_Process", "정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+        '        'showRevLog("Frm_Process", DBT, lstRev)
+        '    Else
+        '        MsgBox("선택된 공정이 없습니다")
+        '    End If
+
+        '    StrSQL = "Select * From PC_Process where CL_Code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString & "' And 
+        '                                             CL_Rev_No = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Rev_No").Value.ToString & "' And
+        '                                             CL_Sun = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Sun").Value.ToString & "'"
+
+        '    Re_Count = DB_Select(DBT)
+        '    If Re_Count > 0 Then
+        '        lstMain.RowCount = DBT.Rows.Count
+        '        For i = 0 To DBT.Rows.Count - 1
+        '            lstMain.Rows(i).Cells("CL_PL_Name2").Value = lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_PL_Name").Value.ToString
+        '            lstMain.Rows(i).Cells("PC_Code").Value = DBT.Rows(i)("PC_Code").ToString
+        '            lstMain.Rows(i).Cells("PC_Name").Value = DBT.Rows(i)("PC_Name").ToString
+        '            lstMain.Rows(i).Cells("PC_Bigo").Value = DBT.Rows(i)("PC_Bigo").ToString
+        '            lstMain.Rows(i).Cells("PC_Prepared").Value = DBT.Rows(i)("PC_Prepared").ToString
+        '            lstMain.Rows(i).Cells("PC_Prepare_Date").Value = DBT.Rows(i)("PC_Prepare_Date").ToString
+        '            lstMain.Rows(i).Cells("PC_Updated").Value = DBT.Rows(i)("PC_Updated").ToString
+        '            lstMain.Rows(i).Cells("PC_Update_Date").Value = DBT.Rows(i)("PC_Update_Date").ToString
+        '        Next
+        '    Else
+        '        lstMain.RowCount = 0
+        '    End If
+        'End If
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs)
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        If lstMain.CurrentCell.RowIndex >= 0 Then
+
+            'StrSQL = "  SELECT * from PC_Process " &
+            '         "  where 1=1 " &
+            '         "  and CL_Code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString & "'" &
+            '         "  and CL_Rev_No = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Rev_No").Value.ToString & "'" &
+            '         "  and CL_Sun = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Sun").Value.ToString & "'" &
+            '         "  and PC_Code = '" & txtProcessNo.Text & "'"
+            Re_Count = DB_Select(DBT)
+
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblProcess)
+            '#2. 입력자료 입력
+            For i = 0 To tblProcess.Rows.Count - 1
+
+                Select Case tblProcess.Rows(i).Item(0).ToString
+
+                    Case "CL_Code"
+                        tblProcess.Rows(i).Item(11) = lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString
+
+                    Case "CL_Rev_No"
+                        tblProcess.Rows(i).Item(11) = lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Rev_No").Value.ToString
+                    Case "CL_Sun"
+                        tblProcess.Rows(i).Item(11) = lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Sun").Value.ToString
+                    'Case "PC_Code"
+                    '    If txtProcessNo.Text = "" Then
+                    '        tblProcess.Rows(i).Item(11) = PK_Make("PC_Process")
+                    '    Else
+                    '        tblProcess.Rows(i).Item(11) = txtProcessNo.Text
+                    '    End If
+                    'Case "PC_Name"
+                    '    tblProcess.Rows(i).Item(11) = txtProcessName.Text
+                    'Case "PC_Bigo"
+                    '    tblProcess.Rows(i).Item(11) = txtBigo2.Text
+
+                    Case "PC_Prepared"
+                        If Re_Count > 0 Then
+                            tblProcess.Rows(i).Item(11) = DBT.Rows(0)("PC_Prepared").ToString
+                        Else
+                            tblProcess.Rows(i).Item(11) = logInUserName
+                        End If
+                    Case "PC_Prepare_Date"
+                        If Re_Count > 0 Then
+                            tblProcess.Rows(i).Item(11) = DBT.Rows(0)("PC_Prepare_Date").ToString
+                        Else
+                            tblProcess.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                    Case "PC_Updated"
+                        If Re_Count > 0 Then
+                            tblProcess.Rows(i).Item(11) = logInUserName
+
+                        End If
+                    Case "PC_Update_Date"
+                        If Re_Count > 0 Then
+                            tblProcess.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+
+                        End If
+                End Select
+            Next
+
+            If Re_Count > 0 Then
+
+                Re_Count2 = fnTableUpdate("dbo.PC_Process", tblProcess)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            Else
+
+                Re_Count2 = fnTableInsert("dbo.PC_Process", tblProcess)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            'If prcType = "수정" Then
+            '    'hsim 20200515 처리 이력
+            '    histLogStr = "사용자 " & logInUserName & " 공정 정보 수정 : " & txtProcessNo.Text & "-" & txtProcessName.Text
+            'Else
+            '    'hsim 20200515 처리 이력
+            '    histLogStr = "사용자 " & logInUserName & " 공정 정보 신규 입력 : " & txtProcessNo.Text & "-" & txtProcessName.Text
+            'End If
+            'Man_Log("Frm_Process", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+            ''hsim 20200515 개정이력 조회 갱신
+            'showRevLog("Frm_Process", DBT2, lstRev)
+
+            StrSQL = "Select * From PC_Process where CL_Code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString & "' And 
+                                                     CL_Rev_No = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Rev_No").Value.ToString & "' And
+                                                     CL_Sun = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Sun").Value.ToString & "'"
+
+            Re_Count = DB_Select(DBT)
+            If Re_Count > 0 Then
+                lstMain.RowCount = DBT.Rows.Count
+                For i = 0 To DBT.Rows.Count - 1
+                    lstMain.Rows(i).Cells("CL_PL_Name2").Value = lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_PL_Name").Value.ToString
+                    lstMain.Rows(i).Cells("PC_Code").Value = DBT.Rows(i)("PC_Code").ToString
+                    lstMain.Rows(i).Cells("PC_Name").Value = DBT.Rows(i)("PC_Name").ToString
+                    lstMain.Rows(i).Cells("PC_Bigo").Value = DBT.Rows(i)("PC_Bigo").ToString
+                    lstMain.Rows(i).Cells("PC_Prepared").Value = DBT.Rows(i)("PC_Prepared").ToString
+                    lstMain.Rows(i).Cells("PC_Prepare_Date").Value = DBT.Rows(i)("PC_Prepare_Date").ToString
+                    lstMain.Rows(i).Cells("PC_Updated").Value = DBT.Rows(i)("PC_Updated").ToString
+                    lstMain.Rows(i).Cells("PC_Update_Date").Value = DBT.Rows(i)("PC_Update_Date").ToString
+                Next
+            End If
+        End If
+
+    End Sub
+
+    Private Sub btnItemSearch11_Click(sender As Object, e As EventArgs) Handles btnItemSearch11.Click
+
+        'Dim cboDBT As New DataTable()
+        'Dim pop1 As Frm_Product_Pop = New Frm_Product_Pop
+        'pop1.StartPosition = FormStartPosition.CenterScreen
+        'If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+        '    txtSearchItem11.Text = pop1.lstMain.Rows(pop1.lstMain.CurrentCell.RowIndex).Cells("Product_Name").Value.ToString
+        '    txtSearchItem12.Text = pop1.lstMain.Rows(pop1.lstMain.CurrentCell.RowIndex).Cells("Product_Code").Value.ToString
+        'End If
+        'pop1.Dispose()
+
+    End Sub
+
+End Class

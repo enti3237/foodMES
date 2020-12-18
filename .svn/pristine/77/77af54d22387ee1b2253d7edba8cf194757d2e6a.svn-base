@@ -1,0 +1,78 @@
+﻿Public Class Frm_CT_POP
+    Dim cb As CheckBox = Nothing
+    Private Sub DataGridView1_CellPainting(sender As Object, e As DataGridViewCellPaintingEventArgs) Handles lstMain.CellPainting
+        'If e.ColumnIndex = 0 And e.RowIndex = -1 Then
+
+        '    e.PaintBackground(e.ClipBounds, False)
+
+        '    Dim pt As Point = e.CellBounds.Location  ' where you want the bitmap in the cell
+
+        '    Dim nChkBoxWidth As Integer = 8
+        '    Dim nChkBoxHeight As Integer = 8
+        '    Dim offsetx As Integer = (e.CellBounds.Width - nChkBoxWidth) / 2
+        '    Dim offsety As Integer = (e.CellBounds.Height - nChkBoxHeight) / 2
+
+        '    pt.X += offsetx
+        '    pt.Y += offsety
+
+
+        '    For Each ctrl As Control In Me.Controls
+        '        If TypeOf ctrl Is CheckBox Then
+        '            cb = DirectCast(ctrl, CheckBox)
+        '            AddHandler cb.CheckedChanged, AddressOf CheckBox_CheckedChanged   ' From answer by Reed.
+        '        End If
+        '    Next
+        '    cb.Size = New Size(nChkBoxWidth, nChkBoxHeight)
+        '    cb.Location = pt
+
+        '    sender.Controls.Add(cb)
+
+        '    e.Handled = True
+        'End If
+
+
+
+    End Sub
+
+    Private Sub CheckBox_CheckedChanged()
+
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = " Select BO_JOB, a.BO_Code, BO_Rev_No, BO_Sun, DV_Code, BO_ITM_Code, BO_ITM_Name, " &
+                 " BO_Itm_Standard, BO_Itm_Size, BO_Itm_Unit, BO_Itm_Qty " &
+                 " From BO_BOM with(NOLOCK) as a, BO_BOM_List with(NOLOCK) as b, DV_Drawing with(NOLOCK) " &
+                 " And DV_CR_Code = '%" & txtJobNo.Text & "%' " &
+                 " And DV_Code = '%" & txtDWGCode.Text & "%'" &
+                 " where a.BO_Code = b.BO_Code " &
+                 " And a.BO_DV_Code = DV_Code "
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            lstMain.DataSource = DBT
+            lstMain.ClearSelection()
+        End If
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim i As Integer
+
+        'For i = 0 To lstMain.Rows.Count - 1
+        '    If lstMain.Rows(i).Cells("row_check").Value = True Then
+        '        StrSQL = "Insert into CT_Plan_List (CT_Code, CT_Rev_No, CT_Sun, BO_Code, BO_Rev_No,
+        '                                        BO_Sun, CT_JOB, CT_DV_Code, CT_PL_ITM_Code, CT_PL_ITM_Name,
+        '                                        CT_Form, CT_Method, CT_PL_ITM_Standard, CT_PL_ITM_Size, CT_PL_ITM_Unit,
+        '                                        CT_PL_ITM_QTY, CT_Bigo, CT_Prepared, CT_Prepare_Date, CT_Updated,
+        '                                        CT_Update_Date)  
+        '    Values ('" & DS.Tables(0).Rows(i)("BO_Code").ToString & "', '" & DS.Tables(0).Rows(i)("BO_Rev_No").ToString & "','" & DS.Tables(0).Rows(i)("BO_Sun").ToString & "','" & DS.Tables(0).Rows(i)("BO_ITM_Code").ToString & "','" & DS.Tables(0).Rows(i)("BO_ITM_Name").ToString & "',
+        '    '" & DS.Tables(0).Rows(i)("BO_Form").ToString & "', '" & DS.Tables(0).Rows(i)("BO_Method").ToString & "','" & DS.Tables(0).Rows(i)("BO_ITM_Standard").ToString & "','" & DS.Tables(0).Rows(i)("BO_ITM_Size").ToString & "','" & DS.Tables(0).Rows(i)("BO_ITM_Unit").ToString & "',
+        '    '" & DS.Tables(0).Rows(i)("BO_ITM_QTY").ToString & "', '" & DS.Tables(0).Rows(i)("BO_Bigo").ToString & "','" & DS.Tables(0).Rows(i)("BO_Prepared").ToString & "','" & DS.Tables(0).Rows(i)("BO_Prepare_Date").ToString & "','" & DS.Tables(0).Rows(i)("BO_ITM_Unit").ToString & "',
+        '    '" & DS.Tables(0).Rows(i)("BO_ITM_QTY").ToString & "', '" & DS.Tables(0).Rows(i)("BO_Bigo").ToString & "','" & DS.Tables(0).Rows(i)("BO_Prepared").ToString & "','" & DS.Tables(0).Rows(i)("BO_Prepare_Date").ToString & "','" & DS.Tables(0).Rows(i)("BO_ITM_Unit").ToString & "',
+        '    '" & DS.Tables(0).Rows(i)("BO_ITM_QTY").ToString & "')"
+        '        DB_Execute()
+        '    End If
+        'Next
+    End Sub
+End Class

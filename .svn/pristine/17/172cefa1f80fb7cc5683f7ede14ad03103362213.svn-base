@@ -1,0 +1,179 @@
+﻿Public Class Frm_RE_Report2
+    Dim Main_Form As Frm_Main = Application.OpenForms("Frm_Main")
+    Dim histLogStr As New String(String.Empty)
+
+    Private Sub Frm_RE_Report2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        palMain.Top = 40
+        palMain.Left = 10
+
+        palMain.Visible = True
+
+        comboSatUp2(cboCustomer2, "0001")
+        btnSearch.PerformClick()
+    End Sub
+
+    Private Sub PS_Main_Load()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        Try
+            StrSQL = "Select PS_JOB, CR_Name, PS_Code, PS_Rev_No, PS_Prepare_Date From PS_Order_Plan with(NOLOCK), CR_Contract with(NOLOCK) where PS_JOB = CR_Code"
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count > 0 Then
+                lstMain.DataSource = DBT
+            End If
+            lstMain.ClearSelection()
+        Catch ex As Exception
+            MsgBox(ex)
+        End Try
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles btnMain.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = True
+        'palDetail.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles btnDetail.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        ' palDetail.Visible = True
+    End Sub
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs)
+        txtJobNo2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Job_No").Value.ToString
+        txtJobName2.Text = lstMain.Rows(e.RowIndex).Cells("CR_Name").Value.ToString
+        txtPSNo2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Code").Value.ToString
+        ' txtDate2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Prepare_Date").Value.ToString
+        'txtRev.Text = lstMain.Rows(e.RowIndex).Cells("PS_Rev_No").Value.ToString
+    End Sub
+
+    Private Sub lstMain_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs)
+        Label_Color(btnDetail, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        ' palDetail.Visible = True
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "Select PS_Name, CM_Name, PS_Code_Class, PS_ITM_SVC_Desc, PS_Bigo From PS_Order_Plan with(NOLOCK), Company with(NOLOCK) where PS_Prchs_Company_Code=CM_Code And
+                    PS_Code='" & lstMain.Rows(e.RowIndex).Cells("PS_Code").Value.ToString & "' And PS_Rev_No='" & lstMain.Rows(e.RowIndex).Cells("PS_Rev_No").Value.ToString & "'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            ' txtPSName.Text = DBT.Rows(0)("PS_Name").ToString
+            'txtComparny.Text = DBT.Rows(0)("CM_Name").ToString
+            'txtClass.Text = DBT.Rows(0)("PS_Code_Class").ToString
+            'txtITMSVC.Text = DBT.Rows(0)("PS_ITM_SVC_Desc").ToString
+            ' txtBigo.Text = DBT.Rows(0)("PS_Bigo").ToString
+        End If
+
+    End Sub
+
+
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs)
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        Try
+            StrSQL = "Select PS_Job_No, CR_Name, PS_Code, PS_Rev_No, PS_Prepare_Date From PS_Order_Plan with(NOLOCK), CR_Contract with(NOLOCK) 
+where 1=1 
+and PS_Job_No = CR_Code
+and PS_Job_No Like '%" & txtJobNo.Text & "%'
+and CR_Name Like '%" & txtJobName.Text & "%'
+and PS_Code Like '%" & txtPSNo.Text & "%'
+"
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count > 0 Then
+                lstMain.DataSource = DBT
+            End If
+            lstMain.ClearSelection()
+        Catch ex As Exception
+            MsgBox(ex)
+        End Try
+    End Sub
+
+    Private Sub btnJobSearch_Click(sender As Object, e As EventArgs) Handles btnJobSearch.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo.Text = pop1.result
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnSearch_Click_1(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = " Select CR_Name, PS_Code,  PS_Rev_No, PS_Name, PS_Job_No, PS_Code_Class, PS_ITM_SVC_Desc, PS_Manager, PS_Bigo, PS_Prepared, PS_Prepare_Date, PS_Updated, PS_Update_Date, PS_Received, PS_Receive_Date,
+(select CM_Name From Company where CM_Code = PS.PS_Prchs_Company_Code) as PS_Prchs_Company_Code2, PS_Prchs_Company_Code
+From PS_Order_Plan PS with(NOLOCK), CR_Contract CR with(NOLOCK) 
+                    where PS_Job_No = CR_Code and
+PS.PS_Rev_No = ( select isnull(max(PS_Rev_No),1) from PS_Order_Plan where PS_Code = PS.PS_Code) and
+CR.CR_Rev_No = ( select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code) and
+                                                                    PS_Job_No Like '%" & txtJobNo.Text & "%' And
+                                                                     CR_Name Like '%" & txtJobName.Text & "%' And
+                                                                     PS_Code Like '%" & txtPSNo.Text & "%' order by CR_Code "
+
+        Console.WriteLine(StrSQL)
+
+        'MsgBox(StrSQL)
+
+        Re_Count = DB_Select(DBT)
+        lstMain.DataSource = DBT
+        lstMain.ClearSelection()
+
+        showRevLog("Frm_RE_Report2", DBT, lstRev)
+    End Sub
+
+    Private Sub lstMain_CellClick_1(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        If e.RowIndex >= 0 Then
+            txtJobNo2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Job_No").Value.ToString
+            txtJobName2.Text = lstMain.Rows(e.RowIndex).Cells("CR_Name").Value.ToString
+            txtPSNo2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Code").Value.ToString
+            txtRev2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Rev_No").Value.ToString
+            txtPSName2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Name").Value.ToString
+            txtCustomer2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Prchs_Company_Code2").Value.ToString
+            cboCustomer2.SelectedValue = lstMain.Rows(e.RowIndex).Cells("PS_Prchs_Company_Code").Value.ToString
+            txtClass2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Code_Class").Value.ToString
+            txtITM2.Text = lstMain.Rows(e.RowIndex).Cells("PS_ITM_SVC_Desc").Value.ToString
+            txtManager2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Manager").Value.ToString
+            txtBigo2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Bigo").Value.ToString
+        End If
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "Select * From PS_Order_Plan where PS_Code = '" & txtPSNo2.Text & "' and
+PS_Rev_No = '" & txtRev2.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+        If DBT.Rows(0)("PS_Received") = "" Then
+        Else
+            MsgBox("이미 접수되었습니다.")
+            Exit Sub
+        End If
+
+        StrSQL = "Update PS_Order_Plan set PS_Received = '" & logInUserName & "',
+                                           PS_Receive_Date = '" & DateTime.Now.ToString("yyyy-MM-dd") & "'
+                                            where PS_Code = '" & txtPSNo2.Text & "' and
+                                                  PS_Rev_No = '" & txtRev2.Text & "'"
+        Re_Count = DB_Execute()
+
+        If Re_Count > 0 Then
+            MsgBox("접수완료")
+        End If
+
+        histLogStr = "사용자 " & logInUserName & " PS 접수 : " & txtPSNo2.Text & "-" & txtRev2.Text
+        Man_Log("Frm_RE_Report2", "신규입력", loginID & "-" & logInUserName, histLogStr, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
+    End Sub
+End Class

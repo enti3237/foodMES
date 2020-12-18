@@ -1,0 +1,160 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_QC_Report3
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.Di_Panel1 = New System.Windows.Forms.Panel()
+        Me.Panel_Menu = New System.Windows.Forms.Panel()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Search_Com = New System.Windows.Forms.Button()
+        Me.end_day = New System.Windows.Forms.TextBox()
+        Me.start_day = New System.Windows.Forms.TextBox()
+        Me.Search_Text = New System.Windows.Forms.TextBox()
+        Me.Main_Grid = New System.Windows.Forms.DataGridView()
+        Me.Panel_Menu.SuspendLayout()
+        CType(Me.Main_Grid, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Di_Panel1
+        '
+        Me.Di_Panel1.BackColor = System.Drawing.Color.CornflowerBlue
+        Me.Di_Panel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Di_Panel1.Location = New System.Drawing.Point(0, 71)
+        Me.Di_Panel1.Margin = New System.Windows.Forms.Padding(0)
+        Me.Di_Panel1.Name = "Di_Panel1"
+        Me.Di_Panel1.Size = New System.Drawing.Size(1071, 2)
+        Me.Di_Panel1.TabIndex = 38
+        '
+        'Panel_Menu
+        '
+        Me.Panel_Menu.Controls.Add(Me.Button2)
+        Me.Panel_Menu.Controls.Add(Me.Button1)
+        Me.Panel_Menu.Controls.Add(Me.Search_Com)
+        Me.Panel_Menu.Controls.Add(Me.end_day)
+        Me.Panel_Menu.Controls.Add(Me.start_day)
+        Me.Panel_Menu.Controls.Add(Me.Search_Text)
+        Me.Panel_Menu.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel_Menu.Location = New System.Drawing.Point(0, 0)
+        Me.Panel_Menu.Name = "Panel_Menu"
+        Me.Panel_Menu.Size = New System.Drawing.Size(1071, 71)
+        Me.Panel_Menu.TabIndex = 37
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Button2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.Black
+        Me.Button2.Location = New System.Drawing.Point(11, 3)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(252, 27)
+        Me.Button2.TabIndex = 103
+        Me.Button2.Text = "검색기간"
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Button1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.Black
+        Me.Button1.Location = New System.Drawing.Point(276, 3)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(172, 27)
+        Me.Button1.TabIndex = 103
+        Me.Button1.Text = "품목명"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
+        'Search_Com
+        '
+        Me.Search_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Search_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Search_Com.ForeColor = System.Drawing.Color.Black
+        Me.Search_Com.Location = New System.Drawing.Point(454, 6)
+        Me.Search_Com.Name = "Search_Com"
+        Me.Search_Com.Size = New System.Drawing.Size(99, 54)
+        Me.Search_Com.TabIndex = 11
+        Me.Search_Com.Text = "검색"
+        Me.Search_Com.UseVisualStyleBackColor = False
+        '
+        'end_day
+        '
+        Me.end_day.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.end_day.Location = New System.Drawing.Point(140, 35)
+        Me.end_day.Name = "end_day"
+        Me.end_day.Size = New System.Drawing.Size(124, 25)
+        Me.end_day.TabIndex = 10
+        '
+        'start_day
+        '
+        Me.start_day.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.start_day.Location = New System.Drawing.Point(11, 35)
+        Me.start_day.Name = "start_day"
+        Me.start_day.Size = New System.Drawing.Size(124, 25)
+        Me.start_day.TabIndex = 10
+        '
+        'Search_Text
+        '
+        Me.Search_Text.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Search_Text.Location = New System.Drawing.Point(276, 37)
+        Me.Search_Text.Name = "Search_Text"
+        Me.Search_Text.Size = New System.Drawing.Size(172, 25)
+        Me.Search_Text.TabIndex = 10
+        '
+        'Main_Grid
+        '
+        Me.Main_Grid.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Main_Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.Main_Grid.Location = New System.Drawing.Point(11, 98)
+        Me.Main_Grid.Name = "Main_Grid"
+        Me.Main_Grid.RowHeadersWidth = 51
+        Me.Main_Grid.RowTemplate.Height = 23
+        Me.Main_Grid.Size = New System.Drawing.Size(1047, 548)
+        Me.Main_Grid.TabIndex = 39
+        '
+        'Frm_QC_Report3
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Di_Panel1)
+        Me.Controls.Add(Me.Panel_Menu)
+        Me.Controls.Add(Me.Main_Grid)
+        Me.Name = "Frm_QC_Report3"
+        Me.Size = New System.Drawing.Size(1071, 650)
+        Me.Panel_Menu.ResumeLayout(False)
+        Me.Panel_Menu.PerformLayout()
+        CType(Me.Main_Grid, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Di_Panel1 As Panel
+    Friend WithEvents Panel_Menu As Panel
+    Friend WithEvents Search_Com As Button
+    Friend WithEvents Search_Text As TextBox
+    Friend WithEvents Main_Grid As DataGridView
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents end_day As TextBox
+    Friend WithEvents start_day As TextBox
+End Class

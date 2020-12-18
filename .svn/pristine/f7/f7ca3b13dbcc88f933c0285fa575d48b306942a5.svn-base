@@ -1,0 +1,70 @@
+﻿Public Class Frm_LA_Report1
+    Private Sub Frm_LA_Report1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        CS_Lode()
+    End Sub
+
+    Private Sub CS_Lode()
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT a1,a7,a4,a9,a8,a3,a15,a16,a19,a11,a12,a22,a24
+           FROM  test with(NOLOCK)"
+
+
+
+        Re_Count = DB_Select(DBT)
+        DataGridView1.DataSource = DBT
+
+
+        'Dim DBT As DataTable
+        'DBT = Nothing
+        'Dim DBT2 As DataTable
+        'DBT2 = Nothing
+        'Dim DBT3 As DataTable
+        'DBT3 = Nothing
+        'Dim i As Integer
+
+
+
+        'StrSQL = "SELECT LO_Sun,LO_Code,LO_PR_Name,LO_DV_Code,LO_PL_Code,LO_PL_Name,LO_Standard,LO_Size,LO_Unit,LO_Qty,LO_PS_Code,LO_Delivery FROM LA_Order_List"
+        'DB_Select(DBT)
+        'DataGridView1.RowCount = DBT.Rows.Count
+        'For i = 0 To DataGridView1.RowCount - 1
+        '    DataGridView1.Rows(i).Cells("LO_Sun").Value = DBT.Rows(i)("LO_Sun").ToString
+        '    DataGridView1.Rows(i).Cells("LO_Code").Value = DBT.Rows(i)("LO_Code").ToString
+        '    DataGridView1.Rows(i).Cells("LO_PR_Name").Value = DBT.Rows(i)("LO_PR_Name").ToString
+        '    DataGridView1.Rows(i).Cells("LO_DV_Code").Value = DBT.Rows(i)("LO_DV_Code").ToString
+        '    DataGridView1.Rows(i).Cells("LO_PL_Code").Value = DBT.Rows(i)("LO_PL_Code").ToString
+        '    DataGridView1.Rows(i).Cells("LO_PL_Name").Value = DBT.Rows(i)("LO_PL_Name").ToString
+        '    DataGridView1.Rows(i).Cells("LO_Standard").Value = DBT.Rows(i)("LO_Standard").ToString
+        '    DataGridView1.Rows(i).Cells("LO_Size").Value = DBT.Rows(i)("LO_Size").ToString
+        '    DataGridView1.Rows(i).Cells("LO_Unit").Value = DBT.Rows(i)("LO_Unit").ToString
+        '    DataGridView1.Rows(i).Cells("LO_Qty").Value = DBT.Rows(i)("LO_Qty").ToString
+        '    DataGridView1.Rows(i).Cells("LO_PS_Code").Value = DBT.Rows(i)("LO_PS_Code").ToString
+        '    DataGridView1.Rows(i).Cells("LO_Delivery").Value = DBT.Rows(i)("LO_Delivery").ToString
+
+        '    StrSQL = "SELECT LO_JOB FROM LA_Order where LO_Code = '" & DataGridView1.Rows(i).Cells("LO_Code").Value.ToString & "'"
+        '    Re_Count = DB_Select(DBT2)
+        '    If Re_Count > 0 Then
+        '        DataGridView1.Rows(i).Cells("LO_JOB").Value = DBT2.Rows(0)("LO_JOB").ToString
+        '    End If
+
+        '    StrSQL = "SELECT * FROM CM_Stock where CS_JOB_Code = '" & DataGridView1.Rows(i).Cells("LO_Code").Value.ToString & "'
+        '                                       AND CS_ID = '" & DataGridView1.Rows(i).Cells("LO_PL_Code").Value.ToString & "'"
+        '    Re_Count = DB_Select(DBT3)
+        '    If Re_Count > 0 Then
+        '        DataGridView1.Rows(i).Cells("buy").Value = "Y"
+        '    Else
+        '        DataGridView1.Rows(i).Cells("buy").Value = "N"
+        '    End If
+        'Next
+        'DataGridView1.ClearSelection()
+    End Sub
+
+
+
+
+End Class

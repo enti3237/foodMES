@@ -1,0 +1,83 @@
+﻿Public Class Absence2
+    Private Sub Print_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.TopMost = True
+
+
+
+    End Sub
+
+    Public Structure Pc_stock_print_data
+        Dim psCode_sunCode As String   '제품바코드 일련번호
+        Dim PS_PL_Name As String        '제품명
+        Dim PS_Standard As String       '규격
+        Dim PS_Unit As String           '단위
+        Dim PS_PO_Total As String       '생산량
+        Dim PS_DAY As String            '생산일자
+        Dim PS_Bigo As String           '비고
+        Dim PS_CM As String             '고객
+        Dim PS_CODE As String             '고객
+    End Structure
+
+
+    Private Sub TextBox6_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox3.KeyPress
+        If Not Char.IsDigit(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+            MsgBox("문자는 입력할 수 없습니다.")
+        End If
+    End Sub
+
+    Private Sub TextBox7_KeyPress(sender As Object, e As KeyPressEventArgs)
+        If Not Char.IsDigit(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+            MsgBox("문자는 입력할 수 없습니다.")
+        End If
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        'BOX 무게만 재기
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim d As Double
+        StrSQL = "Select sum(WEIGHT) as weight
+                    FROM IOT_SCALE"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            TextBox2.Text = DBT.Rows(0)("WEIGHT")
+        End If
+
+        If TextBox1.Text IsNot Nothing Or TextBox2.Text IsNot Nothing Then
+            d = Double.Parse(TextBox1.Text) - Double.Parse(TextBox2.Text)
+            TextBox3.Text = d
+        End If
+
+        StrSQL = "DELETE IOT_SCALE"
+        Re_Count = DB_Execute()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        'BOX 포함 완료
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        StrSQL = "Select sum(WEIGHT) as weight
+                    FROM IOT_SCALE"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            TextBox1.Text = DBT.Rows(0)("WEIGHT")
+        End If
+
+        StrSQL = "DELETE IOT_SCALE"
+        Re_Count = DB_Execute()
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        TextBox1.Text = ""
+        TextBox2.Text = ""
+        TextBox3.Text = ""
+
+        StrSQL = "DELETE IOT_SCALE"
+        Re_Count = DB_Execute()
+        MsgBox("초기화 되었습니다")
+    End Sub
+End Class

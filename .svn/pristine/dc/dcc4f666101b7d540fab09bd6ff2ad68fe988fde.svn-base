@@ -1,0 +1,78 @@
+Main
+Data Source=112.162.87.4,1433;initial catalog=SmartFactory_윤푸드;User ID=sa;Password=heart3789!
+E0E0E0
+FFFFFF
+BDBDBD
+FFFFFF
+DEDEEF
+EAEFF7
+윤푸드
+
+
+
+Device 1
+
+YellowGreen
+
+3->메인 배경생
+4->GridColor,BackgroundColor
+5->ColumnHeadersDefaultCellStyle.BackColor
+6->ColumnHeadersDefaultCellStyle.ForeColor
+7->RowsDefaultCellStyle.BackColor
+8->AlternatingRowsDefaultCellStyle.BackColor
+
+
+현장
+Data Source=192.168.219.240,1433 catalog=InnoBizen;User ID=Heartjin2;Password=cins1004
+원격
+Data Source=106.246.189.28,10243;initial catalog=InnoBizen;User ID=sa;Password=cins1004
+'Data Source=106.246.189.28,10243;initial catalog=InnoBizen;User ID=sa;Password=cins1004
+Data Source=localhost;initial catalog=SmartFactory;User ID=Heartjin;Password=heart3789!
+
+Data Source=222.119.115.161,12501;initial catalog=SmartFactory;User ID=sa;Password=cins1004
+
+Main
+Communication
+Monitoring
+Device 105
+
+'정우프린텍
+
+
+'동아프로세스
+9ACD32
+FFFFFF
+6495ED
+FFFFFF
+DEDEEF
+EAEFF7
+
+
+'이노비젠, 동영산업
+FF8C00
+FFFFFF
+6495ED
+FFFFFF
+DEDEEF
+EAEFF7
+
+
+'
+C3E7FA
+FFFFFF
+6495ED
+FFFFFF
+DEDEEF
+EAEFF7
+정우프린텍
+
+
+Main
+Data Source=222.119.115.161,12501;initial catalog=SmartFactory_정우프린텍;User ID=sa;Password=cins1004
+C3E7FA
+FFFFFF
+6495ED
+FFFFFF
+DEDEEF
+EAEFF7
+정우프린텍

@@ -1,0 +1,167 @@
+﻿Public Class Frm_Base_Code
+    Dim Grid_Display_Ch As Boolean
+    Private Sub Frm_Base_Code_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Srch_Combo.Items.Add("코드구분")
+        Srch_Combo.Items.Add("코드명")
+        Srch_Combo.Text = "코드구분"
+
+        Grid_Display_Ch = False
+        Grid_Display()
+
+    End Sub
+    Public Function Grid_Display() As Boolean
+        Grid_Display_Ch = False
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        'BaseCode_Grid.RowCount = 1
+        Select Case Srch_Combo.Text
+            Case "코드구분"
+                StrSQL = "Select * From Base_Code with(NOLOCK) Where Base_Sel Like '" & Search_Text.Text & "%'  Order By Base_Sel asc, Base_Sun asc"
+            Case "코드명"
+                StrSQL = "Select * From Base_Code with(NOLOCK) Where Base_Name Like '" & Search_Text.Text & "%'  Order By Base_Sel asc, Base_Sun asc"
+        End Select
+        Re_Count = DB_Select(DBT)
+        'If Re_Count <> 0 Then
+        '    BaseCode_Grid.RowCount = Re_Count
+        '    For i = 0 To Re_Count - 1
+        '        For j = 0 To BaseCode_Grid.ColumnCount - 1
+        '            BaseCode_Grid.Item(j, i).Value = DBT.Rows(i).Item(j)
+        '        Next j
+        '    Next i
+        'Else
+        '    BaseCode_Grid.RowCount = 1
+        '    For j = 0 To BaseCode_Grid.ColumnCount - 1
+        '        BaseCode_Grid.Item(j, 0).Value = ""
+        '    Next j
+        'End If
+        BaseCode_Grid.DataSource = DBT
+        BaseCode_Grid.ClearSelection()
+
+        Grid_Display = True
+        Grid_Display_Ch = True
+    End Function
+
+    Private Sub Insert_Com_Click(sender As Object, e As EventArgs) Handles Insert_Com.Click
+
+        Dim DBT As New DataTable
+        Dim Db_Sun As Int32
+
+        If Srch_Combo.Text <> "코드구분" Or Search_Text.TextLength < 1 Then
+            MsgBox("추가 대상 코드구분을 입력하세요.")
+            Return
+        End If
+
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & " Select Base_Sel_Code, Base_Sel, isnull(MAX(Base_Sun),0) From Base_Code with(NOLOCK) Where Base_Sel = '" & Search_Text.Text & "'  Group By Base_Sel_Code, Base_Sel, Base_Sun Order By Base_Sel_Code, Base_Sel asc, Base_Sun asc"
+        Re_Count = DB_Select(DBT)
+
+        '추가한다
+        'StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = ""
+        If Re_Count = 0 Then
+            Db_Sun = 1
+            StrSQL = StrSQL & " Insert into Base_Code (Base_Sel_Code, Base_Sel, Base_Sun, Base_Code, Base_Created, Base_Create_Date) " &
+                              "Values ((select cast(convert(int,isnull(Max(Base_Sel_Code),'1000')) + 10 as varchar(4)) from Base_Code where Base_Sel_Code like '1%'),'" &
+                              Search_Text.Text & "'," & Db_Sun & ", '1000', '" & loginID & "', CONVERT(CHAR(19), getdate(), 120))"
+        Else
+            Db_Sun = DBT.Rows(0).Item(2) + 1
+            StrSQL = StrSQL & " Insert into Base_Code (Base_Sel_Code, Base_Sel, Base_Sun, Base_Code, Base_Created, Base_Create_Date) " &
+                              "Values ('" & DBT.Rows(0).Item(0) & "','" & DBT.Rows(0).Item(1) & "'," & Db_Sun &
+                              ",(select cast(convert(int,isnull(Max(Base_Code),'1000')) + 10 as varchar(4)) from Base_Code where Base_Sel_Code = '" & DBT.Rows(0).Item(0) &
+                              "'),'" & loginID & "',  CONVERT(CHAR(19), getdate(), 120))"
+        End If
+
+        Re_Count = DB_Execute()
+
+        Grid_Display()
+
+    End Sub
+
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs) Handles Search_Com.Click
+        Grid_Display()
+
+    End Sub
+
+
+    Private Sub Customer_Grid_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles BaseCode_Grid.CellValueChanged
+        If Grid_Display_Ch = True Then
+            sender.CurrentRow.HeaderCell.Value = "*"
+        End If
+
+    End Sub
+
+    Private Sub Save_Com_Click(sender As Object, e As EventArgs) Handles Save_Com.Click
+        Grid_Display_Ch = False
+        Dim Table_Name As String
+        Dim i As Integer
+        Dim j As Long
+        Dim k As Integer
+        Dim Field_Name(500) As String
+        Dim DBT As DataTable = Nothing
+
+        Table_Name = "Base_Code"
+        j = 0
+        StrSQL = "Select sys.Columns.Name From sys.Tables with(NOLOCK) , sys.Columns with(NOLOCK) Where sys.Tables.name = '" & Table_Name & "' And sys.Tables.Object_id = sys.Columns.Object_id Order By sys.Columns.column_id"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                Field_Name(j) = DBT.Rows(i)("Name").ToString
+                j = j + 1
+            Next i
+        End If
+        j = j - 1
+        Dim RRR As String
+
+        For i = 0 To BaseCode_Grid.Rows.Count - 1
+            If BaseCode_Grid.Rows(i).HeaderCell.Value = "*" Then
+                'Update
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "UPDATE " & Table_Name & " SET "
+                For k = 1 To j
+                    RRR = IIf(IsDBNull(BaseCode_Grid.Item(k, i).Value), "", BaseCode_Grid.Item(k, i).Value)
+                    'hsim 업데이트 사용자 및 업데이트일자 적용
+                    BaseCode_Grid.Item(8, i).Value = loginID
+                    BaseCode_Grid.Item(9, i).Value = DateTime.Now
+
+                    StrSQL = StrSQL & " " & Table_Name & "." & Field_Name(k) & " = '" & Replace(RRR, "'", "''") & "'"
+                    If k <> j Then
+                        StrSQL = StrSQL & ","
+                    End If
+                Next k
+                StrSQL = StrSQL & " WHERE " & Table_Name & "." & Field_Name(0) & " = '" & BaseCode_Grid.Item(0, i).Value.ToString & "'
+                                    AND " & Table_Name & "." & Field_Name(1) & " = '" & BaseCode_Grid.Item(1, i).Value.ToString & "'
+                                    AND " & Table_Name & "." & Field_Name(2) & " = '" & BaseCode_Grid.Item(2, i).Value.ToString & "'"
+                Re_Count = DB_Execute()
+                BaseCode_Grid.Rows(i).HeaderCell.Value = ""
+            End If
+        Next i
+        '선택된 컬럼값을 가지고 온다
+        Grid_Display()
+        Grid_Display_Ch = True
+    End Sub
+
+    Private Sub Delete_Com_Click(sender As Object, e As EventArgs) Handles Delete_Com.Click
+        '활성화
+        '해당 칼럼 삭제
+        If Len(BaseCode_Grid.Item(0, BaseCode_Grid.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        '삭제한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Delete Base_Code Where " &
+                          " Base_Sel_Code = '" & BaseCode_Grid.Item(0, BaseCode_Grid.CurrentCell.RowIndex).Value & "'" &
+                          " AND Base_Sel = '" & BaseCode_Grid.Item(1, BaseCode_Grid.CurrentCell.RowIndex).Value & "'" &
+                          " And Base_Sun = " & BaseCode_Grid.Item(2, BaseCode_Grid.CurrentCell.RowIndex).Value
+        Re_Count = DB_Execute()
+
+        '선택된 컬럼값을 가지고 온다
+        Grid_Display()
+        Grid_Display_Ch = True
+    End Sub
+
+End Class

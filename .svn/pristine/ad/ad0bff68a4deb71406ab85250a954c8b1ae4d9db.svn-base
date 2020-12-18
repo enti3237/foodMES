@@ -1,0 +1,41 @@
+﻿Public Class FrmCT_POP
+    Dim cb As CheckBox = Nothing
+    Private Sub DataGridView1_CellPainting(sender As Object, e As DataGridViewCellPaintingEventArgs) Handles DataGridView1.CellPainting
+        'If e.ColumnIndex = 0 And e.RowIndex = -1 Then
+
+        '    e.PaintBackground(e.ClipBounds, False)
+
+        '    Dim pt As Point = e.CellBounds.Location  ' where you want the bitmap in the cell
+
+        '    Dim nChkBoxWidth As Integer = 8
+        '    Dim nChkBoxHeight As Integer = 8
+        '    Dim offsetx As Integer = (e.CellBounds.Width - nChkBoxWidth) / 2
+        '    Dim offsety As Integer = (e.CellBounds.Height - nChkBoxHeight) / 2
+
+        '    pt.X += offsetx
+        '    pt.Y += offsety
+
+
+        '    For Each ctrl As Control In Me.Controls
+        '        If TypeOf ctrl Is CheckBox Then
+        '            cb = DirectCast(ctrl, CheckBox)
+        '            AddHandler cb.CheckedChanged, AddressOf CheckBox_CheckedChanged   ' From answer by Reed.
+        '        End If
+        '    Next
+        '    cb.Size = New Size(nChkBoxWidth, nChkBoxHeight)
+        '    cb.Location = pt
+
+        '    sender.Controls.Add(cb)
+
+        '    e.Handled = True
+        'End If
+
+
+
+    End Sub
+
+    Private Sub CheckBox_CheckedChanged()
+
+    End Sub
+
+End Class

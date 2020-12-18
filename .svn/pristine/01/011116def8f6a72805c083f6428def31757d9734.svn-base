@@ -1,0 +1,165 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_Man_Pass_POP1
+    Inherits System.Windows.Forms.Form
+
+    'Form은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label_Title = New System.Windows.Forms.Label()
+        Me.Label111 = New System.Windows.Forms.Label()
+        Me.Label117 = New System.Windows.Forms.Label()
+        Me.Com_Can = New System.Windows.Forms.Button()
+        Me.Com_OK = New System.Windows.Forms.Button()
+        Me.txtPasswd = New System.Windows.Forms.TextBox()
+        Me.txtPasswd2 = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Panel1.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.Label1)
+        Me.Panel1.Controls.Add(Me.Label_Title)
+        Me.Panel1.Controls.Add(Me.Label111)
+        Me.Panel1.Controls.Add(Me.Label117)
+        Me.Panel1.Controls.Add(Me.Com_Can)
+        Me.Panel1.Controls.Add(Me.Com_OK)
+        Me.Panel1.Controls.Add(Me.txtPasswd)
+        Me.Panel1.Controls.Add(Me.txtPasswd2)
+        Me.Panel1.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel1.Location = New System.Drawing.Point(5, 5)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(364, 238)
+        Me.Panel1.TabIndex = 168
+        '
+        'Label_Title
+        '
+        Me.Label_Title.AutoSize = True
+        Me.Label_Title.Font = New System.Drawing.Font("휴먼엑스포", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label_Title.Location = New System.Drawing.Point(112, 37)
+        Me.Label_Title.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label_Title.Name = "Label_Title"
+        Me.Label_Title.Size = New System.Drawing.Size(140, 21)
+        Me.Label_Title.TabIndex = 302
+        Me.Label_Title.Text = "비밀번호 변경 "
+        '
+        'Label111
+        '
+        Me.Label111.AutoSize = True
+        Me.Label111.Location = New System.Drawing.Point(40, 133)
+        Me.Label111.Name = "Label111"
+        Me.Label111.Size = New System.Drawing.Size(81, 12)
+        Me.Label111.TabIndex = 301
+        Me.Label111.Text = "비밀번호 확인"
+        '
+        'Label117
+        '
+        Me.Label117.AutoSize = True
+        Me.Label117.Location = New System.Drawing.Point(47, 98)
+        Me.Label117.Name = "Label117"
+        Me.Label117.Size = New System.Drawing.Size(65, 12)
+        Me.Label117.TabIndex = 300
+        Me.Label117.Text = "비 밀 번 호"
+        '
+        'Com_Can
+        '
+        Me.Com_Can.BackColor = System.Drawing.Color.White
+        Me.Com_Can.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue
+        Me.Com_Can.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue
+        Me.Com_Can.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Com_Can.Font = New System.Drawing.Font("새굴림", 9.0!)
+        Me.Com_Can.Location = New System.Drawing.Point(187, 174)
+        Me.Com_Can.Margin = New System.Windows.Forms.Padding(2)
+        Me.Com_Can.Name = "Com_Can"
+        Me.Com_Can.Size = New System.Drawing.Size(124, 27)
+        Me.Com_Can.TabIndex = 299
+        Me.Com_Can.Text = "취    소"
+        Me.Com_Can.UseVisualStyleBackColor = False
+        '
+        'Com_OK
+        '
+        Me.Com_OK.BackColor = System.Drawing.Color.White
+        Me.Com_OK.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue
+        Me.Com_OK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue
+        Me.Com_OK.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Com_OK.Font = New System.Drawing.Font("새굴림", 9.0!)
+        Me.Com_OK.Location = New System.Drawing.Point(32, 174)
+        Me.Com_OK.Margin = New System.Windows.Forms.Padding(2)
+        Me.Com_OK.Name = "Com_OK"
+        Me.Com_OK.Size = New System.Drawing.Size(124, 27)
+        Me.Com_OK.TabIndex = 298
+        Me.Com_OK.Text = "확    인"
+        Me.Com_OK.UseVisualStyleBackColor = False
+        '
+        'txtPasswd
+        '
+        Me.txtPasswd.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtPasswd.Location = New System.Drawing.Point(174, 92)
+        Me.txtPasswd.Name = "txtPasswd"
+        Me.txtPasswd.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.txtPasswd.Size = New System.Drawing.Size(150, 25)
+        Me.txtPasswd.TabIndex = 10
+        '
+        'txtPasswd2
+        '
+        Me.txtPasswd2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtPasswd2.Location = New System.Drawing.Point(174, 127)
+        Me.txtPasswd2.Name = "txtPasswd2"
+        Me.txtPasswd2.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.txtPasswd2.Size = New System.Drawing.Size(150, 25)
+        Me.txtPasswd2.TabIndex = 20
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(315, 17)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(42, 12)
+        Me.Label1.TabIndex = 303
+        Me.Label1.Text = "Label1"
+        Me.Label1.Visible = False
+        '
+        'Frm_Man_Pass_POP1
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(374, 249)
+        Me.Controls.Add(Me.Panel1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Name = "Frm_Man_Pass_POP1"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "Frm_Man_Pass_POP1"
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Label_Title As Label
+    Friend WithEvents Label111 As Label
+    Friend WithEvents Label117 As Label
+    Friend WithEvents Com_Can As Button
+    Friend WithEvents Com_OK As Button
+    Friend WithEvents txtPasswd As TextBox
+    Friend WithEvents txtPasswd2 As TextBox
+    Friend WithEvents Label1 As Label
+End Class

@@ -1,0 +1,1730 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{08E6D797-EE44-4FD4-86AF-94681BB9E58C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>SmartFactory.My.MyApplication</StartupObject>
+    <RootNamespace>SmartFactory</RootNamespace>
+    <AssemblyName>SmartFactory</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <PublishUrl>게시\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>SmartFactory.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>SmartFactory.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>SmartFactory.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppResource.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AppResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="BarInformation.vb" />
+    <Compile Include="FrmCT_POP.Designer.vb">
+      <DependentUpon>FrmCT_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCT_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Barcode.designer.vb">
+      <DependentUpon>Frm_Barcode.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Barcode.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Base_Code.designer.vb">
+      <DependentUpon>Frm_Base_Code.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Base_Code.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Bigo_POP.Designer.vb">
+      <DependentUpon>Frm_Bigo_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Bigo_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_BOM.Designer.vb">
+      <DependentUpon>Frm_BOM.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_BOM.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_BOM_Itm_POP.designer.vb">
+      <DependentUpon>Frm_BOM_Itm_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_BOM_Itm_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_BOM_POP.designer.vb">
+      <DependentUpon>Frm_BOM_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_BOM_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_CC_Report6.Designer.vb">
+      <DependentUpon>Frm_CC_Report6.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CC_Report6.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CM_Order.Designer.vb">
+      <DependentUpon>Frm_CM_Order.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CM_Order.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CM_POP.Designer.vb">
+      <DependentUpon>Frm_CM_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CM_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_CM_Stock_QC.Designer.vb">
+      <DependentUpon>Frm_CM_Stock_QC.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CM_Stock_QC.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Contract_CRS1.Designer.vb">
+      <DependentUpon>Frm_Contract_CRS1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Contract_CRS1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Contract_Plan.Designer.vb">
+      <DependentUpon>Frm_Contract_Plan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Contract_Plan.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Contract_POP.Designer.vb">
+      <DependentUpon>Frm_Contract_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Contract_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_CO_Report6.Designer.vb">
+      <DependentUpon>Frm_CO_Report6.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CO_Report6.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CP.Designer.vb">
+      <DependentUpon>Frm_CP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_CR_POP.Designer.vb">
+      <DependentUpon>Frm_CR_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CR_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_CR_POP1.Designer.vb">
+      <DependentUpon>Frm_CR_POP1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CR_POP1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CT_Plan.Designer.vb">
+      <DependentUpon>Frm_CT_Plan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CT_Plan.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CT_POP.Designer.vb">
+      <DependentUpon>Frm_CT_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CT_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Customer_POP.designer.vb">
+      <DependentUpon>Frm_Customer_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Customer_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Deliver_Tag.Designer.vb">
+      <DependentUpon>Frm_Deliver_Tag.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Deliver_Tag.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_DEL_Report1.Designer.vb">
+      <DependentUpon>Frm_DEL_Report1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_DEL_Report1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_DEL_Report2.Designer.vb">
+      <DependentUpon>Frm_DEL_Report2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_DEL_Report2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_DRW1.Designer.vb">
+      <DependentUpon>Frm_DRW1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_DRW1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_DRW2.Designer.vb">
+      <DependentUpon>Frm_DRW2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_DRW2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_DV_Drawing.Designer.vb">
+      <DependentUpon>Frm_DV_Drawing.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_DV_Drawing.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_DV_POP.Designer.vb">
+      <DependentUpon>Frm_DV_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_DV_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_LA_Order.Designer.vb">
+      <DependentUpon>Frm_LA_Order.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_LA_Order.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_LA_Order2.Designer.vb">
+      <DependentUpon>Frm_LA_Order2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_LA_Order2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_LA_Report1.Designer.vb">
+      <DependentUpon>Frm_LA_Report1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_LA_Report1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Main2.Designer.vb">
+      <DependentUpon>Frm_Main2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Main2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Man_Group.Designer.vb">
+      <DependentUpon>Frm_Man_Group.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Man_Group.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Man_Group_Level.Designer.vb">
+      <DependentUpon>Frm_Man_Group_Level.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Man_Group_Level.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Man_Level.Designer.vb">
+      <DependentUpon>Frm_Man_Level.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Man_Level.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Man_Log.Designer.vb">
+      <DependentUpon>Frm_Man_Log.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Man_Log.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Man_Pass1.Designer.vb">
+      <DependentUpon>Frm_Man_Pass1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Man_Pass1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Man_Pass_POP.Designer.vb">
+      <DependentUpon>Frm_Man_Pass_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Man_Pass_POP.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Man_Pass_POP1.Designer.vb">
+      <DependentUpon>Frm_Man_Pass_POP1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Man_Pass_POP1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Man_POP.Designer.vb">
+      <DependentUpon>Frm_Man_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Man_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_MCL.Designer.vb">
+      <DependentUpon>Frm_MCL.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_MCL.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Menu_Log.Designer.vb">
+      <DependentUpon>Frm_Menu_Log.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Menu_Log.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_MJ_Report1.Designer.vb">
+      <DependentUpon>Frm_MJ_Report1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_MJ_Report1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_MJ_Report2.Designer.vb">
+      <DependentUpon>Frm_MJ_Report2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_MJ_Report2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_MJ_Report3.Designer.vb">
+      <DependentUpon>Frm_MJ_Report3.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_MJ_Report3.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_MJ_Report4.Designer.vb">
+      <DependentUpon>Frm_MJ_Report4.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_MJ_Report4.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_MJ_Report5.Designer.vb">
+      <DependentUpon>Frm_MJ_Report5.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_MJ_Report5.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_MJ_Report6.Designer.vb">
+      <DependentUpon>Frm_MJ_Report6.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_MJ_Report6.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_MRIS.Designer.vb">
+      <DependentUpon>Frm_MRIS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_MRIS.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_MTE_POP.Designer.vb">
+      <DependentUpon>Frm_MTE_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_MTE_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_MT_Itm_POP.designer.vb">
+      <DependentUpon>Frm_MT_Itm_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_MT_Itm_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_MT_POP.Designer.vb">
+      <DependentUpon>Frm_MT_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_MT_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Notice.Designer.vb">
+      <DependentUpon>Frm_Notice.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Notice.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Order_Plan2.Designer.vb">
+      <DependentUpon>Frm_Order_Plan2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Order_Plan2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PD_Report10.Designer.vb">
+      <DependentUpon>Frm_PD_Report10.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PD_Report10.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PD_Report11.Designer.vb">
+      <DependentUpon>Frm_PD_Report11.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PD_Report11.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PD_Report12.Designer.vb">
+      <DependentUpon>Frm_PD_Report12.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PD_Report12.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PD_Report13.Designer.vb">
+      <DependentUpon>Frm_PD_Report13.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PD_Report13.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PD_Report2.designer.vb">
+      <DependentUpon>Frm_PD_Report2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PD_Report2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PD_Report4.designer.vb">
+      <DependentUpon>Frm_PD_Report4.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PD_Report4.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PD_Report3.designer.vb">
+      <DependentUpon>Frm_PD_Report3.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PD_Report3.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PD_Report1.designer.vb">
+      <DependentUpon>Frm_PD_Report1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PD_Report1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CM_Report2.designer.vb">
+      <DependentUpon>Frm_CM_Report2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CM_Report2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CM_Report1.designer.vb">
+      <DependentUpon>Frm_CM_Report1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CM_Report1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PC_Report4.designer.vb">
+      <DependentUpon>Frm_PC_Report4.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PC_Report4.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CO_Report5.designer.vb">
+      <DependentUpon>Frm_CO_Report5.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CO_Report5.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CO_Report4.designer.vb">
+      <DependentUpon>Frm_CO_Report4.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CO_Report4.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CC_Report1.designer.vb">
+      <DependentUpon>Frm_CC_Report1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CC_Report1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CC_Report2.designer.vb">
+      <DependentUpon>Frm_CC_Report2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CC_Report2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CC_Report3.Designer.vb">
+      <DependentUpon>Frm_CC_Report3.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CC_Report3.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CC_Report4.Designer.vb">
+      <DependentUpon>Frm_CC_Report4.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CC_Report4.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Collection.Designer.vb">
+      <DependentUpon>Frm_Collection.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Collection.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Company.Designer.vb">
+      <DependentUpon>Frm_Company.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Company.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Contract.designer.vb">
+      <DependentUpon>Frm_Contract.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Contract.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Contract_CRS.Designer.vb">
+      <DependentUpon>Frm_Contract_CRS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Contract_CRS.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Contract_Lot.Designer.vb">
+      <DependentUpon>Frm_Contract_Lot.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Contract_Lot.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CO_Report1.designer.vb">
+      <DependentUpon>Frm_CO_Report1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CO_Report1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CO_Report2.designer.vb">
+      <DependentUpon>Frm_CO_Report2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CO_Report2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_CO_Report3.designer.vb">
+      <DependentUpon>Frm_CO_Report3.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_CO_Report3.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Customer.designer.vb">
+      <DependentUpon>Frm_Customer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Customer.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Deliver.designer.vb">
+      <DependentUpon>Frm_Deliver.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Deliver.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Deliver_Ing.Designer.vb">
+      <DependentUpon>Frm_Deliver_Ing.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Deliver_Ing.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Device.designer.vb">
+      <DependentUpon>Frm_Device.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Device.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Device2.Designer.vb">
+      <DependentUpon>Frm_Device2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Device2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Facilities.Designer.vb">
+      <DependentUpon>Frm_Facilities.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Facilities.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_FForm.Designer.vb">
+      <DependentUpon>Frm_FForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_FForm.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_FL_Report1.Designer.vb">
+      <DependentUpon>Frm_FL_Report1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_FL_Report1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_FL_Report2.Designer.vb">
+      <DependentUpon>Frm_FL_Report2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_FL_Report2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Insert.designer.vb">
+      <DependentUpon>Frm_Insert.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Insert.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Login.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Login.Designer.vb">
+      <DependentUpon>Frm_Login.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Login_Report.Designer.vb">
+      <DependentUpon>Frm_Login_Report.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Login_Report.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Main.Designer.vb">
+      <DependentUpon>Frm_Main.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Main.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Man.designer.vb">
+      <DependentUpon>Frm_Man.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Man.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Material.designer.vb">
+      <DependentUpon>Frm_Material.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Material.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Merchandise.Designer.vb">
+      <DependentUpon>Frm_Merchandise.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Merchandise.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Monitoring.designer.vb">
+      <DependentUpon>Frm_Monitoring.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Monitoring.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Network_Report.Designer.vb">
+      <DependentUpon>Frm_Network_Report.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Network_Report.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Order.designer.vb">
+      <DependentUpon>Frm_Order.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Order.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Order_Plan.designer.vb">
+      <DependentUpon>Frm_Order_Plan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Order_Plan.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PC_Lot.Designer.vb">
+      <DependentUpon>Frm_PC_Lot.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PC_Lot.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PC_Order.designer.vb">
+      <DependentUpon>Frm_PC_Order.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PC_Order.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PC_Order_Plan.designer.vb">
+      <DependentUpon>Frm_PC_Order_Plan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PC_Order_Plan.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PC_Report1.designer.vb">
+      <DependentUpon>Frm_PC_Report1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PC_Report1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PC_Report2.designer.vb">
+      <DependentUpon>Frm_PC_Report2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PC_Report2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PC_Report3.Designer.vb">
+      <DependentUpon>Frm_PC_Report3.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PC_Report3.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PC_Stock.designer.vb">
+      <DependentUpon>Frm_PC_Stock.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PC_Stock.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PC_Stock_Device.designer.vb">
+      <DependentUpon>Frm_PC_Stock_Device.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PC_Stock_Device.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_PD_Report5.Designer.vb">
+      <DependentUpon>Frm_PD_Report5.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PD_Report5.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PD_Report6.Designer.vb">
+      <DependentUpon>Frm_PD_Report6.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PD_Report6.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PD_Report7.Designer.vb">
+      <DependentUpon>Frm_PD_Report7.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PD_Report7.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PD_Report8.Designer.vb">
+      <DependentUpon>Frm_PD_Report8.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PD_Report8.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PD_Report9.Designer.vb">
+      <DependentUpon>Frm_PD_Report9.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PD_Report9.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PL_POP.Designer.vb">
+      <DependentUpon>Frm_PL_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PL_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_PO.Designer.vb">
+      <DependentUpon>Frm_PO.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PO.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_PO_POP.designer.vb">
+      <DependentUpon>Frm_PO_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PO_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_PR.Designer.vb">
+      <DependentUpon>Frm_PR.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PR.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Process.designer.vb">
+      <DependentUpon>Frm_Process.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Process.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Product.designer.vb">
+      <DependentUpon>Frm_Product.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Product.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PR_POP.designer.vb">
+      <DependentUpon>Frm_PR_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PR_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_PR_Report1.Designer.vb">
+      <DependentUpon>Frm_PR_Report1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PR_Report1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PR_report2.Designer.vb">
+      <DependentUpon>Frm_PR_report2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PR_report2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PS.Designer.vb">
+      <DependentUpon>Frm_PS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PS.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_PS_POP.designer.vb">
+      <DependentUpon>Frm_PS_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PS_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_QA.Designer.vb">
+      <DependentUpon>Frm_QA.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QA.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_QCImport2.Designer.vb">
+      <DependentUpon>Frm_QCImport2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QCImport2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_QC_Base.Designer.vb">
+      <DependentUpon>Frm_QC_Base.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QC_Base.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_QC_Code.designer.vb">
+      <DependentUpon>Frm_QC_Code.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QC_Code.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_QC_Export.designer.vb">
+      <DependentUpon>Frm_QC_Export.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QC_Export.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_QC_Import.designer.vb">
+      <DependentUpon>Frm_QC_Import.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QC_Import.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_QC_Inf.designer.vb">
+      <DependentUpon>Frm_QC_Inf.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QC_Inf.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_QC_Process.Designer.vb">
+      <DependentUpon>Frm_QC_Process.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QC_Process.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_QC_Report1.designer.vb">
+      <DependentUpon>Frm_QC_Report1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QC_Report1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_QC_Report2.Designer.vb">
+      <DependentUpon>Frm_QC_Report2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QC_Report2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_QC_Report3.Designer.vb">
+      <DependentUpon>Frm_QC_Report3.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QC_Report3.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_QC_Report4.Designer.vb">
+      <DependentUpon>Frm_QC_Report4.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QC_Report4.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_QC_Report5.Designer.vb">
+      <DependentUpon>Frm_QC_Report5.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QC_Report5.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_QC_Report6.Designer.vb">
+      <DependentUpon>Frm_QC_Report6.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QC_Report6.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_QC_Travel.Designer.vb">
+      <DependentUpon>Frm_QC_Travel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QC_Travel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_QC_Travel2.Designer.vb">
+      <DependentUpon>Frm_QC_Travel2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_QC_Travel2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Report1.designer.vb">
+      <DependentUpon>Frm_Report1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Report1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Report2.designer.vb">
+      <DependentUpon>Frm_Report2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Report2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Report3.designer.vb">
+      <DependentUpon>Frm_Report3.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Report3.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_PD_Stock.designer.vb">
+      <DependentUpon>Frm_PD_Stock.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_PD_Stock.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_RE_Report1.Designer.vb">
+      <DependentUpon>Frm_RE_Report1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_RE_Report1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_RE_Report2.Designer.vb">
+      <DependentUpon>Frm_RE_Report2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_RE_Report2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_RIR.Designer.vb">
+      <DependentUpon>Frm_RIR.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_RIR.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_RIR_POP.designer.vb">
+      <DependentUpon>Frm_RIR_POP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_RIR_POP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Stock.designer.vb">
+      <DependentUpon>Frm_Stock.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Stock.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_Stock2.Designer.vb">
+      <DependentUpon>Frm_Stock2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Stock2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Frm_WForm.Designer.vb">
+      <DependentUpon>Frm_WForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_WForm.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GanttChart.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Main_Menu.designer.vb">
+      <DependentUpon>Main_Menu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Main_Menu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main_Module.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="UCFrm1.Designer.vb">
+      <DependentUpon>UCFrm1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm2.Designer.vb">
+      <DependentUpon>UCFrm2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm3.Designer.vb">
+      <DependentUpon>UCFrm3.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm3.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm4.Designer.vb">
+      <DependentUpon>UCFrm4.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm4.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm5.Designer.vb">
+      <DependentUpon>UCFrm5.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm5.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm6.Designer.vb">
+      <DependentUpon>UCFrm6.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm6.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm7.Designer.vb">
+      <DependentUpon>UCFrm7.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm7.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm8.Designer.vb">
+      <DependentUpon>UCFrm8.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm8.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm9.Designer.vb">
+      <DependentUpon>UCFrm9.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm9.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm_CP.Designer.vb">
+      <DependentUpon>UCFrm_CP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm_CP.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm_DRW1.Designer.vb">
+      <DependentUpon>UCFrm_DRW1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm_DRW1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm_DRW2.Designer.vb">
+      <DependentUpon>UCFrm_DRW2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm_DRW2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm_MCL.Designer.vb">
+      <DependentUpon>UCFrm_MCL.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm_MCL.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm_MRIS.Designer.vb">
+      <DependentUpon>UCFrm_MRIS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm_MRIS.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm_PO.Designer.vb">
+      <DependentUpon>UCFrm_PO.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm_PO.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm_PR.Designer.vb">
+      <DependentUpon>UCFrm_PR.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm_PR.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm_PS.Designer.vb">
+      <DependentUpon>UCFrm_PS.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm_PS.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm_QA.Designer.vb">
+      <DependentUpon>UCFrm_QA.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm_QA.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCFrm_RIR.Designer.vb">
+      <DependentUpon>UCFrm_RIR.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UCFrm_RIR.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl1.Designer.vb">
+      <DependentUpon>UserControl1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl1.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControl2.Designer.vb">
+      <DependentUpon>UserControl2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AppResource.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResource.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCT_POP.resx">
+      <DependentUpon>FrmCT_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Barcode.resx">
+      <DependentUpon>Frm_Barcode.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Base_Code.resx">
+      <DependentUpon>Frm_Base_Code.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Bigo_POP.resx">
+      <DependentUpon>Frm_Bigo_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_BOM.resx">
+      <DependentUpon>Frm_BOM.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_BOM_Itm_POP.resx">
+      <DependentUpon>Frm_BOM_Itm_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_BOM_POP.resx">
+      <DependentUpon>Frm_BOM_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CC_Report6.resx">
+      <DependentUpon>Frm_CC_Report6.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CM_Order.resx">
+      <DependentUpon>Frm_CM_Order.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CM_POP.resx">
+      <DependentUpon>Frm_CM_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CM_Stock_QC.resx">
+      <DependentUpon>Frm_CM_Stock_QC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Contract_CRS1.resx">
+      <DependentUpon>Frm_Contract_CRS1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Contract_Plan.resx">
+      <DependentUpon>Frm_Contract_Plan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Contract_POP.resx">
+      <DependentUpon>Frm_Contract_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CO_Report6.resx">
+      <DependentUpon>Frm_CO_Report6.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CP.resx">
+      <DependentUpon>Frm_CP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CR_POP.resx">
+      <DependentUpon>Frm_CR_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CR_POP1.resx">
+      <DependentUpon>Frm_CR_POP1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CT_Plan.resx">
+      <DependentUpon>Frm_CT_Plan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CT_POP.resx">
+      <DependentUpon>Frm_CT_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Customer_POP.resx">
+      <DependentUpon>Frm_Customer_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Deliver_Tag.resx">
+      <DependentUpon>Frm_Deliver_Tag.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_DEL_Report1.resx">
+      <DependentUpon>Frm_DEL_Report1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_DEL_Report2.resx">
+      <DependentUpon>Frm_DEL_Report2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_DRW1.resx">
+      <DependentUpon>Frm_DRW1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_DRW2.resx">
+      <DependentUpon>Frm_DRW2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_DV_Drawing.resx">
+      <DependentUpon>Frm_DV_Drawing.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_DV_POP.resx">
+      <DependentUpon>Frm_DV_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_LA_Order.resx">
+      <DependentUpon>Frm_LA_Order.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_LA_Order2.resx">
+      <DependentUpon>Frm_LA_Order2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_LA_Report1.resx">
+      <DependentUpon>Frm_LA_Report1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Main2.resx">
+      <DependentUpon>Frm_Main2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Man_Group.resx">
+      <DependentUpon>Frm_Man_Group.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Man_Group_Level.resx">
+      <DependentUpon>Frm_Man_Group_Level.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Man_Level.resx">
+      <DependentUpon>Frm_Man_Level.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Man_Log.resx">
+      <DependentUpon>Frm_Man_Log.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Man_Pass1.resx">
+      <DependentUpon>Frm_Man_Pass1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Man_Pass_POP.resx">
+      <DependentUpon>Frm_Man_Pass_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Man_Pass_POP1.resx">
+      <DependentUpon>Frm_Man_Pass_POP1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Man_POP.resx">
+      <DependentUpon>Frm_Man_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_MCL.resx">
+      <DependentUpon>Frm_MCL.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Menu_Log.resx">
+      <DependentUpon>Frm_Menu_Log.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_MJ_Report1.resx">
+      <DependentUpon>Frm_MJ_Report1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_MRIS.resx">
+      <DependentUpon>Frm_MRIS.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_MTE_POP.resx">
+      <DependentUpon>Frm_MTE_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_MT_Itm_POP.resx">
+      <DependentUpon>Frm_MT_Itm_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_MT_POP.resx">
+      <DependentUpon>Frm_MT_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Notice.resx">
+      <DependentUpon>Frm_Notice.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Order_Plan2.resx">
+      <DependentUpon>Frm_Order_Plan2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PD_Report10.resx">
+      <DependentUpon>Frm_PD_Report10.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PD_Report11.resx">
+      <DependentUpon>Frm_PD_Report11.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PD_Report12.resx">
+      <DependentUpon>Frm_PD_Report12.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PD_Report13.resx">
+      <DependentUpon>Frm_PD_Report13.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PD_Report2.resx">
+      <DependentUpon>Frm_PD_Report2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PD_Report4.resx">
+      <DependentUpon>Frm_PD_Report4.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PD_Report3.resx">
+      <DependentUpon>Frm_PD_Report3.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PD_Report1.resx">
+      <DependentUpon>Frm_PD_Report1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CM_Report2.resx">
+      <DependentUpon>Frm_CM_Report2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CM_Report1.resx">
+      <DependentUpon>Frm_CM_Report1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PC_Report4.resx">
+      <DependentUpon>Frm_PC_Report4.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CO_Report5.resx">
+      <DependentUpon>Frm_CO_Report5.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CO_Report4.resx">
+      <DependentUpon>Frm_CO_Report4.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CC_Report1.resx">
+      <DependentUpon>Frm_CC_Report1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CC_Report2.resx">
+      <DependentUpon>Frm_CC_Report2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CC_Report3.resx">
+      <DependentUpon>Frm_CC_Report3.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CC_Report4.resx">
+      <DependentUpon>Frm_CC_Report4.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Collection.resx">
+      <DependentUpon>Frm_Collection.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Company.resx">
+      <DependentUpon>Frm_Company.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Contract.resx">
+      <DependentUpon>Frm_Contract.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Contract_CRS.resx">
+      <DependentUpon>Frm_Contract_CRS.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Contract_Lot.resx">
+      <DependentUpon>Frm_Contract_Lot.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CO_Report1.resx">
+      <DependentUpon>Frm_CO_Report1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CO_Report2.resx">
+      <DependentUpon>Frm_CO_Report2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_CO_Report3.resx">
+      <DependentUpon>Frm_CO_Report3.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Customer.resx">
+      <DependentUpon>Frm_Customer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Deliver.resx">
+      <DependentUpon>Frm_Deliver.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Deliver_Ing.resx">
+      <DependentUpon>Frm_Deliver_Ing.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Device.resx">
+      <DependentUpon>Frm_Device.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Device2.resx">
+      <DependentUpon>Frm_Device2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Facilities.resx">
+      <DependentUpon>Frm_Facilities.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_FForm.resx">
+      <DependentUpon>Frm_FForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_FL_Report1.resx">
+      <DependentUpon>Frm_FL_Report1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_FL_Report2.resx">
+      <DependentUpon>Frm_FL_Report2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Insert.resx">
+      <DependentUpon>Frm_Insert.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Login.resx">
+      <DependentUpon>Frm_Login.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Login_Report.resx">
+      <DependentUpon>Frm_Login_Report.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Main.resx">
+      <DependentUpon>Frm_Main.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Man.resx">
+      <DependentUpon>Frm_Man.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Material.resx">
+      <DependentUpon>Frm_Material.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Merchandise.resx">
+      <DependentUpon>Frm_Merchandise.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Monitoring.resx">
+      <DependentUpon>Frm_Monitoring.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Network_Report.resx">
+      <DependentUpon>Frm_Network_Report.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Order.resx">
+      <DependentUpon>Frm_Order.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Order_Plan.resx">
+      <DependentUpon>Frm_Order_Plan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PC_Lot.resx">
+      <DependentUpon>Frm_PC_Lot.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PC_Order.resx">
+      <DependentUpon>Frm_PC_Order.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PC_Order_Plan.resx">
+      <DependentUpon>Frm_PC_Order_Plan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PC_Report1.resx">
+      <DependentUpon>Frm_PC_Report1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PC_Report2.resx">
+      <DependentUpon>Frm_PC_Report2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PC_Report3.resx">
+      <DependentUpon>Frm_PC_Report3.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PC_Stock.resx">
+      <DependentUpon>Frm_PC_Stock.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PC_Stock_Device.resx">
+      <DependentUpon>Frm_PC_Stock_Device.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PD_Report5.resx">
+      <DependentUpon>Frm_PD_Report5.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PD_Report6.resx">
+      <DependentUpon>Frm_PD_Report6.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PD_Report7.resx">
+      <DependentUpon>Frm_PD_Report7.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PD_Report8.resx">
+      <DependentUpon>Frm_PD_Report8.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PD_Report9.resx">
+      <DependentUpon>Frm_PD_Report9.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PL_POP.resx">
+      <DependentUpon>Frm_PL_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PO.resx">
+      <DependentUpon>Frm_PO.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PO_POP.resx">
+      <DependentUpon>Frm_PO_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PR.resx">
+      <DependentUpon>Frm_PR.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Process.resx">
+      <DependentUpon>Frm_Process.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Product.resx">
+      <DependentUpon>Frm_Product.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PR_POP.resx">
+      <DependentUpon>Frm_PR_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PR_Report1.resx">
+      <DependentUpon>Frm_PR_Report1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PR_report2.resx">
+      <DependentUpon>Frm_PR_report2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PS.resx">
+      <DependentUpon>Frm_PS.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PS_POP.resx">
+      <DependentUpon>Frm_PS_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QA.resx">
+      <DependentUpon>Frm_QA.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QCImport2.resx">
+      <DependentUpon>Frm_QCImport2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QC_Base.resx">
+      <DependentUpon>Frm_QC_Base.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QC_Code.resx">
+      <DependentUpon>Frm_QC_Code.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QC_Export.resx">
+      <DependentUpon>Frm_QC_Export.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QC_Import.resx">
+      <DependentUpon>Frm_QC_Import.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QC_Inf.resx">
+      <DependentUpon>Frm_QC_Inf.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QC_Process.resx">
+      <DependentUpon>Frm_QC_Process.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QC_Report1.resx">
+      <DependentUpon>Frm_QC_Report1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QC_Report2.resx">
+      <DependentUpon>Frm_QC_Report2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QC_Report3.resx">
+      <DependentUpon>Frm_QC_Report3.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QC_Report4.resx">
+      <DependentUpon>Frm_QC_Report4.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QC_Report5.resx">
+      <DependentUpon>Frm_QC_Report5.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QC_Report6.resx">
+      <DependentUpon>Frm_QC_Report6.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QC_Travel.resx">
+      <DependentUpon>Frm_QC_Travel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_QC_Travel2.resx">
+      <DependentUpon>Frm_QC_Travel2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Report1.resx">
+      <DependentUpon>Frm_Report1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Report2.resx">
+      <DependentUpon>Frm_Report2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Report3.resx">
+      <DependentUpon>Frm_Report3.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_PD_Stock.resx">
+      <DependentUpon>Frm_PD_Stock.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_RE_Report1.resx">
+      <DependentUpon>Frm_RE_Report1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_RE_Report2.resx">
+      <DependentUpon>Frm_RE_Report2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_RIR.resx">
+      <DependentUpon>Frm_RIR.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_RIR_POP.resx">
+      <DependentUpon>Frm_RIR_POP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Stock.resx">
+      <DependentUpon>Frm_Stock.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Stock2.resx">
+      <DependentUpon>Frm_Stock2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_WForm.resx">
+      <DependentUpon>Frm_WForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GanttChart.resx">
+      <DependentUpon>GanttChart.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main_Menu.resx">
+      <DependentUpon>Main_Menu.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm1.resx">
+      <DependentUpon>UCFrm1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm2.resx">
+      <DependentUpon>UCFrm2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm3.resx">
+      <DependentUpon>UCFrm3.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm4.resx">
+      <DependentUpon>UCFrm4.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm5.resx">
+      <DependentUpon>UCFrm5.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm6.resx">
+      <DependentUpon>UCFrm6.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm7.resx">
+      <DependentUpon>UCFrm7.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm8.resx">
+      <DependentUpon>UCFrm8.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm9.resx">
+      <DependentUpon>UCFrm9.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm_CP.resx">
+      <DependentUpon>UCFrm_CP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm_DRW1.resx">
+      <DependentUpon>UCFrm_DRW1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm_DRW2.resx">
+      <DependentUpon>UCFrm_DRW2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm_MCL.resx">
+      <DependentUpon>UCFrm_MCL.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm_MRIS.resx">
+      <DependentUpon>UCFrm_MRIS.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm_PO.resx">
+      <DependentUpon>UCFrm_PO.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm_PR.resx">
+      <DependentUpon>UCFrm_PR.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm_PS.resx">
+      <DependentUpon>UCFrm_PS.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm_QA.resx">
+      <DependentUpon>UCFrm_QA.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCFrm_RIR.resx">
+      <DependentUpon>UCFrm_RIR.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl1.resx">
+      <DependentUpon>UserControl1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl2.resx">
+      <DependentUpon>UserControl2.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SmartFactory.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

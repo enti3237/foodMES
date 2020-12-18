@@ -1,0 +1,328 @@
+﻿Public Class Absence
+    Private Sub Print_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.TopMost = True
+        Panel1.Visible = False
+
+        setup()
+        setup2()
+
+        TextBox1.ReadOnly = True
+        TextBox2.ReadOnly = True
+        TextBox3.ReadOnly = True
+        TextBox4.ReadOnly = True
+        TextBox5.ReadOnly = True
+
+        Label7.Visible = False
+        TextBox7.Visible = False
+
+        Panel2.Visible = False
+
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        '검색
+        Panel1.Visible = True
+        Panel2.Visible = False
+        display()
+
+    End Sub
+
+    Public Sub display()
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        StrSQL = "Select PL_CODE, PL_NAME From SI_PRODUCT With(NOLOCK) WHERE PL_SEL='완제품' ORDER BY PL_CODE"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            DataGridView1.RowCount = Re_Count
+            For i = 0 To DBT.Rows.Count - 1
+                DataGridView1.Item(0, i).Value = DBT.Rows(i).Item(0).ToString
+                DataGridView1.Item(1, i).Value = DBT.Rows(i).Item(1).ToString
+            Next i
+        Else
+            DataGridView1.RowCount = 1
+        End If
+    End Sub
+
+    Public Sub display2()
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        StrSQL = "Select * FROM SI_PRODUCT_RECIPE WITH(NOLOCK)  WHERE PL_CODE = '" & TextBox1.Text & "' ORDER BY PL_CODE"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            DataGridView2.RowCount = Re_Count
+            For i = 0 To DBT.Rows.Count - 1
+                DataGridView2.Item(0, i).Value = DBT.Rows(i).Item(0).ToString
+                DataGridView2.Item(1, i).Value = DBT.Rows(i).Item(1).ToString
+                DataGridView2.Item(2, i).Value = DBT.Rows(i).Item(2).ToString
+                DataGridView2.Item(3, i).Value = DBT.Rows(i).Item(3).ToString
+                DataGridView2.Item(5, i).Value = ""
+            Next i
+        Else
+            DataGridView2.RowCount = 1
+        End If
+        TextBox6.Text = ""
+    End Sub
+
+    Public Sub setup()
+        Grid_Color(DataGridView1)
+
+        DataGridView1.AllowUserToAddRows = False
+        DataGridView1.RowTemplate.Height = 50
+        DataGridView1.ColumnCount = 2
+        DataGridView1.RowCount = 5
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        DataGridView1.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DataGridView1.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridView1.RowHeadersWidth = 10
+        DataGridView1.Columns(0).Width = 30
+        DataGridView1.Columns(1).Width = 470
+        DataGridView1.Columns(0).HeaderText = "제품코드"
+        DataGridView1.Columns(1).HeaderText = "제품명"
+        DataGridView1.ColumnHeadersHeight = 40
+
+
+        'Datagridview1.Columns(0).ReadOnly = True
+        'Datagridview1.Columns(1).ReadOnly = True
+
+    End Sub
+
+
+    Public Sub setup2()
+        Grid_Color(DataGridView2)
+
+        DataGridView2.AllowUserToAddRows = False
+        DataGridView2.RowTemplate.Height = 50
+        DataGridView2.ColumnCount = 6
+        DataGridView2.RowCount = 1
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        DataGridView2.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DataGridView2.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridView2.RowHeadersWidth = 10
+        DataGridView2.Columns(0).Width = 100
+        '  DataGridView2.Columns(2).Width = 300
+
+        DataGridView2.Columns(0).HeaderText = "순번"
+        DataGridView2.Columns(0).Visible = False
+        DataGridView2.Columns(1).HeaderText = "제품코드"
+        DataGridView2.Columns(1).Visible = False
+        DataGridView2.Columns(2).HeaderText = "제품코드"
+        DataGridView2.Columns(3).HeaderText = "%"
+        DataGridView2.Columns(4).HeaderText = "비고"
+        DataGridView2.Columns(4).Visible = False
+        DataGridView2.Columns(5).HeaderText = "필요량"
+        DataGridView2.ColumnHeadersHeight = 40
+
+
+        'Datagridview1.Columns(0).ReadOnly = True
+        'Datagridview1.Columns(1).ReadOnly = True
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        '부재료 양 계산
+        If TextBox1.Text = "" Then
+            MsgBox("공백은 출력할 수 없습니다")
+            Exit Sub
+        End If
+
+        If TextBox6.Text = Nothing Or TextBox6.Text = 0 Then
+            MsgBox("무게는 공백이거나 0일 수 없습니다")
+            Exit Sub
+        End If
+
+        Dim DBT As New DataTable
+        Dim My_Date As String
+        Dim My_Time As String
+        Dim code As String
+        Dim su As Integer
+        Dim box As Integer
+        Dim count As Integer = 0
+        Dim sum As Integer = 0
+
+
+
+        For j = 0 To DataGridView2.Rows.Count - 1
+
+            If DataGridView2.Item(3, j).Value = "" Then
+                MsgBox("%에는 공백이 들어갈 수 없습니다. 기준관리에서 수정해주세요.")
+                Exit Sub
+            End If
+
+            sum += DataGridView2.Item(3, j).Value
+
+            If j = DataGridView2.Rows.Count - 1 Then
+                If sum <> 100 Then
+                    MsgBox("총 합계는 100%가 되어야합니다! 기준관리에서 수정해주세요.")
+                    Exit Sub
+                End If
+            End If
+            '% 합계가 100%인지 확인한다 
+        Next j
+
+        '합계 구해주기
+        Dim 대상무게 As Double
+        Dim 필요량 As Double
+        Dim 행 As Integer = 0
+        Dim 제일큰퍼센트 As Double = 0
+        Dim 백퍼일때무게 As Double = 0
+        대상무게 = Val(TextBox6.Text)
+
+        '  MsgBox(DataGridView2.Item(1, 0).Value)
+        ' MsgBox(DataGridView2.Item(2, 0).Value)' 코드
+        '  MsgBox(DataGridView2.Item(3, 0).Value) '%
+        '  MsgBox(DataGridView2.Item(5, 0).Value) '필요량
+
+        For j = 0 To DataGridView2.Rows.Count - 1
+            '제일 큰 퍼센트 계산하기
+            If DataGridView2.Item(3, j).Value = 100 Then
+                '100퍼면 바로 무게 구하기
+                DataGridView2.Item(4, j).Value = 대상무게
+            End If
+
+            If j = 0 Then
+                제일큰퍼센트 = DataGridView2.Item(3, j).Value
+                행 = j
+            Else
+                If DataGridView2.Item(3, j).Value > 제일큰퍼센트 Then
+                    제일큰퍼센트 = DataGridView2.Item(3, j).Value
+                    행 = j
+                End If
+            End If
+        Next j
+
+        If 제일큰퍼센트 = 100 Then
+            DataGridView2.Item(5, 0).Value = 대상무게
+            '필요량 = 대상무게 * Val(DataGridView2.Item(3, 0).Value)
+            '필요량 = 필요량 / 100
+            'DataGridView2.Item(5, 0).Value = 필요량
+        Else
+            '  MsgBox(제일큰퍼센트)
+            백퍼일때무게 = Math.Truncate(대상무게 * 100 / DataGridView2.Item(3, 행).Value)
+            For j = 0 To DataGridView2.Rows.Count - 1
+                '   DataGridView2.Item(5, 행).Value = 대상무게
+
+                If 행 = j Then
+                    DataGridView2.Item(5, j).Value = TextBox6.Text
+                Else
+                    필요량 = 백퍼일때무게 * Val(DataGridView2.Item(3, j).Value)
+                    필요량 = 필요량 / 100
+                    DataGridView2.Item(5, j).Value = 필요량
+                End If
+                '  MsgBox(백퍼일때무게)
+            Next j
+        End If
+
+        'For j = 0 To DataGridView2.Rows.Count - 1
+
+        '    '필요량 구하기
+
+        '    필요량 = 대상무게 * Val(DataGridView2.Item(3, j).Value)
+        '    필요량 = 필요량 / 100
+        '    DataGridView2.Item(5, j).Value = 필요량
+        '    '% 합계가 100%인지 확인한다 
+        'Next j
+
+    End Sub
+    Public Structure Pc_stock_print_data
+        Dim psCode_sunCode As String   '제품바코드 일련번호
+        Dim PS_PL_Name As String        '제품명
+        Dim PS_Standard As String       '규격
+        Dim PS_Unit As String           '단위
+        Dim PS_PO_Total As String       '생산량
+        Dim PS_DAY As String            '생산일자
+        Dim PS_Bigo As String           '비고
+        Dim PS_CM As String             '고객
+        Dim PS_CODE As String             '고객
+    End Structure
+    Private Sub DataGridView1_DoubleClick(sender As Object, e As EventArgs) Handles DataGridView1.DoubleClick
+
+        If DataGridView1.Item(0, DataGridView1.CurrentCell.RowIndex).Value = "" Then
+            Exit Sub
+        End If
+
+        If DataGridView1.Item(0, DataGridView1.CurrentCell.RowIndex).Value = Nothing Then
+            Exit Sub
+        End If
+        Dim code = DataGridView1.Item(0, DataGridView1.CurrentCell.RowIndex).Value
+        Dim name, st, ut, gold
+
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        StrSQL = "Select PL_CODE, PL_NAME, PL_STANDARD, PL_UNIT, PL_UNIT_GOLD From SI_PRODUCT With(NOLOCK) Where PL_Code = '" & code & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+
+                If IsDBNull(DBT.Rows(i)("PL_NAME")) Then
+                    name = ""
+                Else
+                    name = DBT.Rows(i)("PL_NAME")
+                End If
+
+
+                If IsDBNull(DBT.Rows(i)("PL_STANDARD")) Then
+                    st = ""
+                Else
+                    st = DBT.Rows(i)("PL_STANDARD")
+                End If
+
+
+                If IsDBNull(DBT.Rows(i)("PL_UNIT")) Then
+                    ut = ""
+                Else
+                    ut = DBT.Rows(i)("PL_UNIT")
+                End If
+
+
+                If IsDBNull(DBT.Rows(i)("PL_UNIT_GOLD")) Then
+                    gold = 0
+                Else
+                    gold = DBT.Rows(i)("PL_UNIT_GOLD")
+                End If
+
+            Next i
+        Else
+            MsgBox("등록되지 않은 제품코드입니다.")
+            Panel1.Visible = False
+            Exit Sub
+        End If
+
+
+        TextBox1.Text = code
+        TextBox2.Text = name
+        TextBox3.Text = st
+        TextBox4.Text = ut
+        TextBox5.Text = gold
+
+        Panel1.Visible = False
+        Panel2.Visible = True
+        display2()
+    End Sub
+
+    Private Sub TextBox6_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox6.KeyPress
+        If Not Char.IsDigit(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+            MsgBox("문자는 입력할 수 없습니다.")
+        End If
+    End Sub
+
+    Private Sub TextBox7_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox7.KeyPress
+        If Not Char.IsDigit(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+            MsgBox("문자는 입력할 수 없습니다.")
+        End If
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+
+    End Sub
+
+    Private Sub TextBox7_TextChanged(sender As Object, e As EventArgs) Handles TextBox7.TextChanged
+
+    End Sub
+End Class

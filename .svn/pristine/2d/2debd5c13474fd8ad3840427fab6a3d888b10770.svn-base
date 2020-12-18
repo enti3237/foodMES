@@ -1,0 +1,553 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.Windows
+Imports System.Diagnostics
+Imports System.Runtime.InteropServices
+Imports Microsoft
+Imports Microsoft.Office.Interop
+Public Class Frm_Contract_Plan
+    Dim tblPlan As New DataTable
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlbooks As Excel.Workbooks = Nothing
+    Dim xlsheet As Excel.Worksheet
+    Dim xlsheets As Excel.Worksheets = Nothing
+
+
+
+    Private Sub fnFrmTblLoad()
+        dtpDateFrom.Text = "2015-01-01"
+        dtpDueDateFrom.Text = "2015-01-01"
+        tblPlan = fnGetTableStructure("dbo.Job_Scheduled_Date")
+        btnSearch.PerformClick()
+    End Sub
+    Private Sub Frm_Contract_Plan_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim DBT As DataTable
+        DBT = Nothing
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        fnFrmTblLoad()
+        showRevLog("Frm_Contract_Plan", DBT, lstRev)
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable, DBT2 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = " SELECT CR.CR_Code, CR.CR_Rev_No, CR.CRS_Code, CR.CR_Name, CM.CM_Name, CR.CR_Date, CR.CR_Due_Date " &
+                 " FROM CR_Contract CR with(NOLOCK), Company CM with(NOLOCK) " &
+                 " where 1=1 " &
+                 " AND CR.CR_Rev_No = ( select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code) " &
+                 " AND CR.CR_Customer_Code = CM.CM_Code " &
+                 " AND CR.CR_Code Like '%" & txtJobNo.Text & "%' " &
+                 " AND CR.CR_Name Like '%" & txtJobName.Text & "%' " &
+                 " AND convert(datetime,'" & dtpDateFrom.Value.ToString("yyyy-MM-dd") & "') <= CR.CR_Date and convert(datetime,'" & dtpDateTo.Value.ToString("yyyy-MM-dd") & "') >= CR.CR_Date " &
+                 " AND convert(datetime,'" & dtpDueDateFrom.Value.ToString("yyyy-MM-dd") & "') <= CR.CR_Due_Date and convert(datetime,'" & dtpDueDateTo.Value.ToString("yyyy-MM-dd") & "') >= CR.CR_Due_Date " &
+                 " order by CR.CR_Due_Date desc, CR.CR_Date desc, CR.CR_CODE, CR.CR_NAME "
+
+        Re_Count = DB_Select(DBT)
+
+        lstMain.DataSource = DBT
+        'lstMain.Rows(0).Selected = True '첫 째 행 선택
+
+        showRevLog("Frm_Contract_Plan", DBT2, lstRev)
+
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles btnJobSearch.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo.Text = pop1.result
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub Detail_Load()
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+        Dim i As Integer
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = "Select * From CR_Contract_List CR with(NOLOCK)
+where 1=1
+and CR_Code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString & "'
+and CR_Rev_No = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CR_Rev_No").Value.ToString & "'
+order by CR.CR_Sun"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstDetail.RowCount = Re_Count
+            For i = 0 To lstDetail.RowCount - 1
+                lstDetail.Rows(i).Cells("CR_Code2").Value = DBT.Rows(i)("CR_Code").ToString
+                lstDetail.Rows(i).Cells("CR_Rev_No2").Value = DBT.Rows(i)("CR_Rev_No").ToString
+                lstDetail.Rows(i).Cells("CR_Sun2").Value = DBT.Rows(i)("CR_Sun").ToString
+                lstDetail.Rows(i).Cells("CR_PL_Code").Value = DBT.Rows(i)("CR_PL_Code").ToString
+                lstDetail.Rows(i).Cells("CR_PL_Name").Value = DBT.Rows(i)("CR_PL_Name").ToString
+                lstDetail.Rows(i).Cells("CR_Qty").Value = DBT.Rows(i)("CR_Qty").ToString
+
+            Next
+
+            'MsgBox(lstDetail.Rows(0).Cells("CR_Code2").Value.ToString & " / " & lstDetail.Rows(0).Cells("CR_Rev_No2").Value.ToString & " / " & lstDetail.Rows(0).Cells("CR_Rev_No2").Value.ToString)
+
+            For i = 0 To lstDetail.RowCount - 1
+
+                StrSQL = "Select * From Job_Scheduled_Date JOB with(NOLOCK)
+where 1=1
+and CL_Code = '" & lstDetail.Rows(i).Cells("CR_Code2").Value.ToString & "'
+and CL_Rev_No = '" & lstDetail.Rows(i).Cells("CR_Rev_No2").Value.ToString & "'
+and CL_Sun = '" & lstDetail.Rows(i).Cells("CR_Sun2").Value.ToString & "'
+order by JOB.CL_Sun"
+                Re_Count2 = DB_Select(DBT2)
+
+                If Re_Count2 > 0 Then
+
+                    lstDetail.Rows(i).Cells("Dwg_Scheduled").Value = DBT2.Rows(0)("Dwg_Scheduled").ToString
+                    lstDetail.Rows(i).Cells("Dwg_Scheduled_Date").Value = DBT2.Rows(0)("Dwg_Scheduled_Date").ToString
+                    lstDetail.Rows(i).Cells("CP_Scheduled").Value = DBT2.Rows(0)("CP_Scheduled").ToString
+                    lstDetail.Rows(i).Cells("CP_Scheduled_Date").Value = DBT2.Rows(0)("CP_Scheduled_Date").ToString
+                    lstDetail.Rows(i).Cells("PR_Scheduled").Value = DBT2.Rows(0)("PR_Scheduled").ToString
+                    lstDetail.Rows(i).Cells("PR_Scheduled_Date").Value = DBT2.Rows(0)("PR_Scheduled_Date").ToString
+                    lstDetail.Rows(i).Cells("PO_Scheduled").Value = DBT2.Rows(0)("PO_Scheduled").ToString
+                    lstDetail.Rows(i).Cells("PO_Scheduled_Date").Value = DBT2.Rows(0)("PO_Scheduled_Date").ToString
+                    lstDetail.Rows(i).Cells("RIR_Scheduled").Value = DBT2.Rows(0)("RIR_Scheduled").ToString
+                    lstDetail.Rows(i).Cells("RIR_Scheduled_Date").Value = DBT2.Rows(0)("RIR_Scheduled_Date").ToString
+                    lstDetail.Rows(i).Cells("PO_Ship_Scheduled").Value = DBT2.Rows(0)("PO_Ship_Scheduled").ToString
+                    lstDetail.Rows(i).Cells("PO_Ship_Scheduled_Date").Value = DBT2.Rows(0)("PO_Ship_Scheduled_Date").ToString
+                    lstDetail.Rows(i).Cells("RIR_Confirm_Scheduled").Value = DBT2.Rows(0)("RIR_Confirm_Scheduled").ToString
+                    lstDetail.Rows(i).Cells("RIR_Confirm_Scheduled_Date").Value = DBT2.Rows(0)("RIR_Confirm_Scheduled_Date").ToString
+                    lstDetail.Rows(i).Cells("Bigo").Value = DBT2.Rows(0)("Bigo").ToString
+                Else
+                    lstDetail.Rows(i).Cells("Dwg_Scheduled").Value = ""
+                    lstDetail.Rows(i).Cells("Dwg_Scheduled_Date").Value = ""
+                    lstDetail.Rows(i).Cells("CP_Scheduled").Value = ""
+                    lstDetail.Rows(i).Cells("CP_Scheduled_Date").Value = ""
+                    lstDetail.Rows(i).Cells("PR_Scheduled").Value = ""
+                    lstDetail.Rows(i).Cells("PR_Scheduled_Date").Value = ""
+                    lstDetail.Rows(i).Cells("PO_Scheduled").Value = ""
+                    lstDetail.Rows(i).Cells("PO_Scheduled_Date").Value = ""
+                    lstDetail.Rows(i).Cells("RIR_Scheduled").Value = ""
+                    lstDetail.Rows(i).Cells("RIR_Scheduled_Date").Value = ""
+                    lstDetail.Rows(i).Cells("PO_Ship_Scheduled").Value = ""
+                    lstDetail.Rows(i).Cells("PO_Ship_Scheduled_Date").Value = ""
+                    lstDetail.Rows(i).Cells("RIR_Confirm_Scheduled").Value = ""
+                    lstDetail.Rows(i).Cells("RIR_Confirm_Scheduled_Date").Value = ""
+                    lstDetail.Rows(i).Cells("Bigo").Value = ""
+                End If
+            Next
+        Else
+            lstDetail.RowCount = 0
+        End If
+    End Sub
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+        Dim i As Integer
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = "Select * From CR_Contract_List CR with(NOLOCK)
+where 1=1
+and CR_Code = '" & lstMain.Rows(e.RowIndex).Cells("CR_Code").Value.ToString & "'
+and CR_Rev_No = '" & lstMain.Rows(e.RowIndex).Cells("CR_Rev_No").Value.ToString & "'
+order by CR.CR_Sun"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstDetail.RowCount = Re_Count
+            For i = 0 To lstDetail.RowCount - 1
+                lstDetail.Rows(i).Cells("CR_Code2").Value = DBT.Rows(i)("CR_Code").ToString
+                lstDetail.Rows(i).Cells("CR_Rev_No2").Value = DBT.Rows(i)("CR_Rev_No").ToString
+                lstDetail.Rows(i).Cells("CR_Sun2").Value = DBT.Rows(i)("CR_Sun").ToString
+                lstDetail.Rows(i).Cells("CR_PL_Code").Value = DBT.Rows(i)("CR_PL_Code").ToString
+                lstDetail.Rows(i).Cells("CR_PL_Name").Value = DBT.Rows(i)("CR_PL_Name").ToString
+                lstDetail.Rows(i).Cells("CR_Qty").Value = DBT.Rows(i)("CR_Qty").ToString
+
+            Next
+
+            'MsgBox(lstDetail.Rows(0).Cells("CR_Code2").Value.ToString & " / " & lstDetail.Rows(0).Cells("CR_Rev_No2").Value.ToString & " / " & lstDetail.Rows(0).Cells("CR_Rev_No2").Value.ToString)
+
+            For i = 0 To lstDetail.RowCount - 1
+
+                StrSQL = "Select * From Job_Scheduled_Date JOB with(NOLOCK)
+where 1=1
+and CL_Code = '" & lstDetail.Rows(i).Cells("CR_Code2").Value.ToString & "'
+and CL_Rev_No = '" & lstDetail.Rows(i).Cells("CR_Rev_No2").Value.ToString & "'
+and CL_Sun = '" & lstDetail.Rows(i).Cells("CR_Sun2").Value.ToString & "'
+order by JOB.CL_Sun"
+                Re_Count2 = DB_Select(DBT2)
+
+                If Re_Count2 > 0 Then
+
+                    lstDetail.Rows(i).Cells("Dwg_Scheduled").Value = DBT2.Rows(0)("Dwg_Scheduled").ToString
+                    lstDetail.Rows(i).Cells("Dwg_Scheduled_Date").Value = DBT2.Rows(0)("Dwg_Scheduled_Date").ToString
+                    lstDetail.Rows(i).Cells("CP_Scheduled").Value = DBT2.Rows(0)("CP_Scheduled").ToString
+                    lstDetail.Rows(i).Cells("CP_Scheduled_Date").Value = DBT2.Rows(0)("CP_Scheduled_Date").ToString
+                    lstDetail.Rows(i).Cells("PR_Scheduled").Value = DBT2.Rows(0)("PR_Scheduled").ToString
+                    lstDetail.Rows(i).Cells("PR_Scheduled_Date").Value = DBT2.Rows(0)("PR_Scheduled_Date").ToString
+                    lstDetail.Rows(i).Cells("PO_Scheduled").Value = DBT2.Rows(0)("PO_Scheduled").ToString
+                    lstDetail.Rows(i).Cells("PO_Scheduled_Date").Value = DBT2.Rows(0)("PO_Scheduled_Date").ToString
+                    lstDetail.Rows(i).Cells("RIR_Scheduled").Value = DBT2.Rows(0)("RIR_Scheduled").ToString
+                    lstDetail.Rows(i).Cells("RIR_Scheduled_Date").Value = DBT2.Rows(0)("RIR_Scheduled_Date").ToString
+                    lstDetail.Rows(i).Cells("PO_Ship_Scheduled").Value = DBT2.Rows(0)("PO_Ship_Scheduled").ToString
+                    lstDetail.Rows(i).Cells("PO_Ship_Scheduled_Date").Value = DBT2.Rows(0)("PO_Ship_Scheduled_Date").ToString
+                    lstDetail.Rows(i).Cells("RIR_Confirm_Scheduled").Value = DBT2.Rows(0)("RIR_Confirm_Scheduled").ToString
+                    lstDetail.Rows(i).Cells("RIR_Confirm_Scheduled_Date").Value = DBT2.Rows(0)("RIR_Confirm_Scheduled_Date").ToString
+                    lstDetail.Rows(i).Cells("Bigo").Value = DBT2.Rows(0)("Bigo").ToString
+                Else
+                    lstDetail.Rows(i).Cells("Dwg_Scheduled").Value = ""
+                    lstDetail.Rows(i).Cells("Dwg_Scheduled_Date").Value = ""
+                    lstDetail.Rows(i).Cells("CP_Scheduled").Value = ""
+                    lstDetail.Rows(i).Cells("CP_Scheduled_Date").Value = ""
+                    lstDetail.Rows(i).Cells("PR_Scheduled").Value = ""
+                    lstDetail.Rows(i).Cells("PR_Scheduled_Date").Value = ""
+                    lstDetail.Rows(i).Cells("PO_Scheduled").Value = ""
+                    lstDetail.Rows(i).Cells("PO_Scheduled_Date").Value = ""
+                    lstDetail.Rows(i).Cells("RIR_Scheduled").Value = ""
+                    lstDetail.Rows(i).Cells("RIR_Scheduled_Date").Value = ""
+                    lstDetail.Rows(i).Cells("PO_Ship_Scheduled").Value = ""
+                    lstDetail.Rows(i).Cells("PO_Ship_Scheduled_Date").Value = ""
+                    lstDetail.Rows(i).Cells("RIR_Confirm_Scheduled").Value = ""
+                    lstDetail.Rows(i).Cells("RIR_Confirm_Scheduled_Date").Value = ""
+                    lstDetail.Rows(i).Cells("Bigo").Value = ""
+                End If
+            Next
+        Else
+            lstDetail.RowCount = 0
+        End If
+
+        btnAdd.PerformClick()
+        txtJobNo2.Text = ""
+        txtPLCode2.Text = ""
+        txtSun2.Text = ""
+        txtPLName2.Text = ""
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        'txtJobNo2.Text = ""
+        'txtPLCode2.Text = ""
+        'txtSun2.Text = ""
+        'txtPLName2.Text = ""
+        txtBigo2.Text = ""
+        txtDWG2.Text = ""
+        dtpDWGDate2.Text = ""
+        txtPR2.Text = ""
+        dtpPRDate2.Text = ""
+        txtCP2.Text = ""
+        dtpCPDate2.Text = ""
+        txtPO2.Text = ""
+        dtpPODate2.Text = ""
+        txtWH2.Text = ""
+        dtpWHDate2.Text = ""
+        txtRIR2.Text = ""
+        dtpRIRDate2.Text = ""
+        txtCon2.Text = ""
+        dtpConDate2.Text = ""
+    End Sub
+
+    Private Sub lstDetail_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstDetail.CellClick
+        If e.RowIndex >= 0 Then
+            txtJobNo2.Text = lstDetail.Rows(e.RowIndex).Cells("CR_Code2").Value.ToString
+            txtPLCode2.Text = lstDetail.Rows(e.RowIndex).Cells("CR_PL_Code").Value.ToString
+            txtSun2.Text = lstDetail.Rows(e.RowIndex).Cells("CR_Sun2").Value.ToString
+            txtPLName2.Text = lstDetail.Rows(e.RowIndex).Cells("CR_PL_Name").Value.ToString
+            txtBigo2.Text = lstDetail.Rows(e.RowIndex).Cells("Bigo").Value.ToString
+            txtDWG2.Text = lstDetail.Rows(e.RowIndex).Cells("Dwg_Scheduled").Value.ToString
+            dtpDWGDate2.Text = lstDetail.Rows(e.RowIndex).Cells("Dwg_Scheduled_Date").Value.ToString
+            txtPR2.Text = lstDetail.Rows(e.RowIndex).Cells("PR_Scheduled").Value.ToString
+            dtpPRDate2.Text = lstDetail.Rows(e.RowIndex).Cells("PR_Scheduled_Date").Value.ToString
+            txtCP2.Text = lstDetail.Rows(e.RowIndex).Cells("CP_Scheduled").Value.ToString
+            dtpCPDate2.Text = lstDetail.Rows(e.RowIndex).Cells("CP_Scheduled_Date").Value.ToString
+            txtPO2.Text = lstDetail.Rows(e.RowIndex).Cells("PO_Scheduled").Value.ToString
+            dtpPODate2.Text = lstDetail.Rows(e.RowIndex).Cells("PO_Scheduled_Date").Value.ToString
+            txtWH2.Text = lstDetail.Rows(e.RowIndex).Cells("PO_Ship_Scheduled").Value.ToString
+            dtpWHDate2.Text = lstDetail.Rows(e.RowIndex).Cells("PO_Ship_Scheduled_Date").Value.ToString
+            txtRIR2.Text = lstDetail.Rows(e.RowIndex).Cells("RIR_Scheduled").Value.ToString
+            dtpRIRDate2.Text = lstDetail.Rows(e.RowIndex).Cells("RIR_Scheduled_Date").Value.ToString
+            txtCon2.Text = lstDetail.Rows(e.RowIndex).Cells("RIR_Confirm_Scheduled").Value.ToString
+            dtpConDate2.Text = lstDetail.Rows(e.RowIndex).Cells("RIR_Confirm_Scheduled_Date").Value.ToString
+            txtRev.Text = lstDetail.Rows(e.RowIndex).Cells("CR_Rev_No2").Value.ToString
+        End If
+
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        Dim DBT As DataTable
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+
+        DBT = Nothing
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        If MessageBox.Show(txtPLName2.Text + "의 일정을 삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If txtJobNo2.Text <> "" Then
+                StrSQL = "Delete Job_Scheduled_Date where CL_Code = '" & txtJobNo2.Text & "' and CL_Rev_No = '" & txtRev.Text & "' and CL_Sun = '" & txtSun2.Text & "'"
+                Re_Count = DB_Execute()
+
+                If Re_Count > 0 Then
+                    MsgBox("삭제 완료")
+                    histLogStr = "사용자 " & logInUserName & " 정보 삭제 : " & txtPLCode2.Text & "-" & txtPLName2.Text
+                    Man_Log("Frm_Contract_Plan", "정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+                    btnAdd.PerformClick()
+                End If
+                'hsim 20200515 처리 이력
+
+            Else
+                MsgBox("선택된 제품이 없습니다")
+            End If
+
+            showRevLog("Frm_Contract_Plan", DBT, lstRev)
+            Detail_Load()
+        End If
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        If lstDetail.RowCount = 0 Then
+            MsgBox("제품 내역이 존재하지 않습니다.")
+            Exit Sub
+
+        End If
+
+        If txtJobNo2.Text = "" Then
+            MsgBox("제품을 선택해주세요.")
+            Exit Sub
+        End If
+
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = "SELECT * from Job_Scheduled_Date where CL_Code = '" & txtJobNo2.Text & "' and CL_Rev_No = '" & txtRev.Text & "' and CL_Sun = '" & txtSun2.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+
+        '#1. 기존 입력 값 초기화
+        clearTblRowValues(tblPlan)
+        '#2. 입력자료 입력
+        For i = 0 To tblPlan.Rows.Count - 1
+
+            Select Case tblPlan.Rows(i).Item(0).ToString
+
+                Case "CL_Code"
+                    tblPlan.Rows(i).Item(11) = txtJobNo2.Text
+
+                Case "CL_Rev_No"
+                    tblPlan.Rows(i).Item(11) = txtRev.Text
+                Case "CL_Sun"
+                    tblPlan.Rows(i).Item(11) = txtSun2.Text
+                Case "Dwg_Scheduled"
+                    tblPlan.Rows(i).Item(11) = txtDWG2.Text
+                Case "Dwg_Scheduled_Date"
+                    tblPlan.Rows(i).Item(11) = dtpDWGDate2.Value.ToString(fmtStr)
+                Case "CP_Scheduled"
+                    tblPlan.Rows(i).Item(11) = txtCP2.Text
+                Case "CP_Scheduled_Date"
+                    tblPlan.Rows(i).Item(11) = dtpCPDate2.Value.ToString(fmtStr)
+                Case "PR_Scheduled"
+                    tblPlan.Rows(i).Item(11) = txtPR2.Text
+                Case "PR_Scheduled_Date"
+                    tblPlan.Rows(i).Item(11) = dtpPRDate2.Value.ToString(fmtStr)
+                Case "PO_Scheduled"
+                    tblPlan.Rows(i).Item(11) = txtPO2.Text
+                Case "PO_Scheduled_Date"
+                    tblPlan.Rows(i).Item(11) = dtpPODate2.Value.ToString(fmtStr)
+                Case "RIR_Scheduled"
+                    tblPlan.Rows(i).Item(11) = txtRIR2.Text
+                Case "RIR_Scheduled_Date"
+                    tblPlan.Rows(i).Item(11) = dtpRIRDate2.Value.ToString(fmtStr)
+                Case "PO_Ship_Scheduled"
+                    tblPlan.Rows(i).Item(11) = txtWH2.Text
+                Case "PO_Ship_Scheduled_Date"
+                    tblPlan.Rows(i).Item(11) = dtpWHDate2.Value.ToString(fmtStr)
+                Case "RIR_Confirm_Scheduled"
+                    tblPlan.Rows(i).Item(11) = txtCon2.Text
+                Case "RIR_Confirm_Scheduled_Date"
+                    tblPlan.Rows(i).Item(11) = dtpConDate2.Value.ToString(fmtStr)
+                Case "Bigo"
+                    tblPlan.Rows(i).Item(11) = txtBigo2.Text
+
+                Case "Prepared"
+                    If Re_Count > 0 Then
+                    Else
+                        tblPlan.Rows(i).Item(11) = logInUserName
+                    End If
+                Case "Prepare_Date"
+                    If Re_Count > 0 Then
+                    Else
+                        tblPlan.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                    End If
+                Case "Updated"
+                    If Re_Count > 0 Then
+                        tblPlan.Rows(i).Item(11) = logInUserName
+
+                    End If
+                Case "Update_Date"
+                    If Re_Count > 0 Then
+                        tblPlan.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+
+                    End If
+            End Select
+        Next
+
+        If Re_Count > 0 Then
+
+            Re_Count2 = fnTableUpdate("dbo.Job_Scheduled_Date", tblPlan)
+
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        Else
+
+            Re_Count2 = fnTableInsert("dbo.Job_Scheduled_Date", tblPlan)
+
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        End If
+
+        If Re_Count > 0 Then
+            prcType = "수정" '수정
+        Else
+            prcType = "신규입력" '입력
+        End If
+
+        If prcType = "수정" Then
+            'hsim 20200515 처리 이력
+            histLogStr = "사용자 " & logInUserName & " 예정일 정보 수정 : " & txtPLCode2.Text & "-" & txtPLName2.Text
+        Else
+            'hsim 20200515 처리 이력
+            histLogStr = "사용자 " & logInUserName & " 예정일 정보 신규 입력 : " & txtPLCode2.Text & "-" & txtPLName2.Text
+        End If
+        Man_Log("Frm_Contract_Plan", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        'hsim 20200515 개정이력 조회 갱신
+        showRevLog("Frm_Contract_Plan", DBT2, lstRev)
+
+        Detail_Load()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnExcelDown.Click
+        Dim i As Integer
+        Dim DBT As DataTable
+        DBT = Nothing
+        xlapp = New Excel.Application
+        'xlapp.Visible = False
+        'xlbooks = xlapp.Workbooks
+        xlbook = xlapp.Workbooks.Add(Application.StartupPath + "\\Excel\\기술팀\\완료예정일.xlsx")
+        'xlsheets = xlbook.Worksheets(1)
+        xlsheet = xlbook.Worksheets(1)
+        Try
+            If lstDetail.RowCount > 0 Then
+                For i = 0 To lstDetail.RowCount - 1
+                    xlsheet.Range("A" + (i + 2).ToString).Value = lstDetail.Rows(i).Cells("CR_Code2").Value.ToString
+                    xlsheet.Range("B" + (i + 2).ToString).Value = lstDetail.Rows(i).Cells("CR_Sun2").Value.ToString
+                    xlsheet.Range("C" + (i + 2).ToString).Value = lstDetail.Rows(i).Cells("CR_PL_Code").Value.ToString
+                    xlsheet.Range("D" + (i + 2).ToString).Value = lstDetail.Rows(i).Cells("CR_PL_Name").Value.ToString
+                    xlsheet.Range("E" + (i + 2).ToString).Value = lstDetail.Rows(i).Cells("CR_Qty").Value.ToString
+                    xlsheet.Range("F" + (i + 2).ToString).Value = lstDetail.Rows(i).Cells("Dwg_Scheduled_Date").Value.ToString
+                    xlsheet.Range("G" + (i + 2).ToString).Value = lstDetail.Rows(i).Cells("CP_Scheduled_Date").Value.ToString
+                    xlsheet.Range("H" + (i + 2).ToString).Value = lstDetail.Rows(i).Cells("PR_Scheduled_Date").Value.ToString
+                    xlsheet.Range("I" + (i + 2).ToString).Value = lstDetail.Rows(i).Cells("PO_Scheduled_Date").Value.ToString
+                    xlsheet.Range("J" + (i + 2).ToString).Value = lstDetail.Rows(i).Cells("PO_Ship_Scheduled_Date").Value.ToString
+                    xlsheet.Range("K" + (i + 2).ToString).Value = lstDetail.Rows(i).Cells("RIR_Scheduled_Date").Value.ToString
+                    xlsheet.Range("L" + (i + 2).ToString).Value = lstDetail.Rows(i).Cells("RIR_Confirm_Scheduled_Date").Value.ToString
+                    xlsheet.Range("M" + (i + 2).ToString).Value = lstDetail.Rows(i).Cells("Bigo").Value.ToString
+                Next
+                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                    xlapp.ActiveWorkbook.SaveAs(SaveFileDialog1.FileName)
+
+                    '                Process[] process = Process.GetProcessesByName("excel");
+                    'foreach(Process p In process)
+                    '{
+                    '	//if(!string.IsNullOrEmpty(p.ProcessName))
+                    '	If (p.MainWindowTitle.Length == 0) Then
+                    '                    					{
+                    '		Try
+                    '		{
+                    '			p.Kill();
+                    '		}
+                    '		Catch { }
+                    '	}
+                    '}
+
+                    'Dim processes() As Process
+                    'processes = Process.GetProcessesByName("excel")
+                    'For Each p As Process In processes
+                    '    Try
+
+                    '        p.Kill()
+
+                    '    Catch
+                    '    End Try
+                    'Next
+
+                    MsgBox("Excel 저장 완료")
+                End If
+            End If
+
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        Finally
+            xlapp.DisplayAlerts = False
+
+            Try
+                If xlbook IsNot Nothing Then
+                    xlbook.Close(Nothing, Nothing, Nothing)
+                End If
+                xlapp.Workbooks.Close()
+                xlapp.Quit()
+                If xlsheet IsNot Nothing Then
+                    Marshal.ReleaseComObject(xlsheet)
+                End If
+                If xlbook IsNot Nothing Then
+                    Marshal.ReleaseComObject(xlbook)
+                End If
+                'If xlbooks IsNot Nothing Then
+                ' Marshal.ReleaseComObject(xlbooks)
+                'End If
+                If xlapp IsNot Nothing Then
+                    Marshal.ReleaseComObject(xlapp)
+                End If
+
+            Catch
+            End Try
+            xlsheet = Nothing
+            xlbook = Nothing
+            'xlbooks = Nothing
+            xlapp = Nothing
+            ' force final cleanup!
+            GC.Collect()
+            GC.WaitForPendingFinalizers()
+            'System.Runtime.InteropServices.Marshal.ReleaseComObject(xlsheet)
+            ''System.Runtime.InteropServices.Marshal.ReleaseComObject(xlsheets)
+            'System.Runtime.InteropServices.Marshal.ReleaseComObject(xlbook)
+            'System.Runtime.InteropServices.Marshal.ReleaseComObject(xlbooks)
+            'System.Runtime.InteropServices.Marshal.ReleaseComObject(xlapp)
+        End Try
+    End Sub
+
+
+
+End Class

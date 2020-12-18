@@ -1,0 +1,655 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_Monitoring2
+    Inherits System.Windows.Forms.Form
+
+    'Form은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
+        Dim Timer2 As System.Windows.Forms.Timer
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Day_Label = New System.Windows.Forms.Label()
+        Me.Time_Label = New System.Windows.Forms.Label()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.Grid_Main = New System.Windows.Forms.DataGridView()
+        Me.Panel_Main = New System.Windows.Forms.Panel()
+        Me.hidePanel = New System.Windows.Forms.Panel()
+        Me.Label_p20 = New System.Windows.Forms.Label()
+        Me.Label_P19 = New System.Windows.Forms.Label()
+        Me.Label_p18 = New System.Windows.Forms.Label()
+        Me.Label_p17 = New System.Windows.Forms.Label()
+        Me.Label_p16 = New System.Windows.Forms.Label()
+        Me.Label_p15 = New System.Windows.Forms.Label()
+        Me.Label_p14 = New System.Windows.Forms.Label()
+        Me.Label_p13 = New System.Windows.Forms.Label()
+        Me.Label_p12 = New System.Windows.Forms.Label()
+        Me.Label_p11 = New System.Windows.Forms.Label()
+        Me.Label_p10 = New System.Windows.Forms.Label()
+        Me.Label_p9 = New System.Windows.Forms.Label()
+        Me.Label_p8 = New System.Windows.Forms.Label()
+        Me.Label_p7 = New System.Windows.Forms.Label()
+        Me.Label_p6 = New System.Windows.Forms.Label()
+        Me.Label_p5 = New System.Windows.Forms.Label()
+        Me.Label_p4 = New System.Windows.Forms.Label()
+        Me.Label_p3 = New System.Windows.Forms.Label()
+        Me.Label_p2 = New System.Windows.Forms.Label()
+        Me.Label_p1 = New System.Windows.Forms.Label()
+        Me.Label_1 = New System.Windows.Forms.Label()
+        Me.Label_2 = New System.Windows.Forms.Label()
+        Me.Label_3 = New System.Windows.Forms.Label()
+        Me.Label_4 = New System.Windows.Forms.Label()
+        Me.Label_5 = New System.Windows.Forms.Label()
+        Me.Label_6 = New System.Windows.Forms.Label()
+        Me.Label_7 = New System.Windows.Forms.Label()
+        Me.Label_8 = New System.Windows.Forms.Label()
+        Me.Label_9 = New System.Windows.Forms.Label()
+        Me.Label_10 = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Time_Label2 = New System.Windows.Forms.Label()
+        Me.TextBox5 = New System.Windows.Forms.TextBox()
+        Timer2 = New System.Windows.Forms.Timer(Me.components)
+        CType(Me.Grid_Main, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel_Main.SuspendLayout()
+        Me.hidePanel.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'Timer2
+        '
+        Timer2.Enabled = True
+        Timer2.Interval = 60000
+        AddHandler Timer2.Tick, AddressOf Me.Timer2_Tick
+        '
+        'Label3
+        '
+        Me.Label3.BackColor = System.Drawing.Color.DarkBlue
+        Me.Label3.Font = New System.Drawing.Font("맑은 고딕", 30.0!, System.Drawing.FontStyle.Bold)
+        Me.Label3.ForeColor = System.Drawing.Color.Yellow
+        Me.Label3.Location = New System.Drawing.Point(11, 28)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(449, 154)
+        Me.Label3.TabIndex = 87
+        Me.Label3.Text = "납품예정 모니터링"
+        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Day_Label
+        '
+        Me.Day_Label.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Day_Label.BackColor = System.Drawing.Color.DarkBlue
+        Me.Day_Label.Font = New System.Drawing.Font("DS-Digital", 38.0!)
+        Me.Day_Label.ForeColor = System.Drawing.Color.White
+        Me.Day_Label.Location = New System.Drawing.Point(1125, 28)
+        Me.Day_Label.Name = "Day_Label"
+        Me.Day_Label.Size = New System.Drawing.Size(539, 84)
+        Me.Day_Label.TabIndex = 86
+        Me.Day_Label.Text = "2019년 04월 12일"
+        Me.Day_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Time_Label
+        '
+        Me.Time_Label.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Time_Label.BackColor = System.Drawing.Color.DarkBlue
+        Me.Time_Label.Font = New System.Drawing.Font("DS-Digital", 38.0!)
+        Me.Time_Label.ForeColor = System.Drawing.Color.White
+        Me.Time_Label.Location = New System.Drawing.Point(1310, 112)
+        Me.Time_Label.Name = "Time_Label"
+        Me.Time_Label.Size = New System.Drawing.Size(270, 81)
+        Me.Time_Label.TabIndex = 85
+        Me.Time_Label.Text = "토요일"
+        Me.Time_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Timer1
+        '
+        Me.Timer1.Enabled = True
+        Me.Timer1.Interval = 1000
+        '
+        'Grid_Main
+        '
+        Me.Grid_Main.AllowUserToAddRows = False
+        Me.Grid_Main.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Grid_Main.BackgroundColor = System.Drawing.Color.DarkBlue
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("굴림", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grid_Main.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.Grid_Main.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("굴림", 12.0!)
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grid_Main.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Grid_Main.Location = New System.Drawing.Point(0, 12)
+        Me.Grid_Main.Margin = New System.Windows.Forms.Padding(2)
+        Me.Grid_Main.Name = "Grid_Main"
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("굴림", 20.0!, System.Drawing.FontStyle.Bold)
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        Me.Grid_Main.RowsDefaultCellStyle = DataGridViewCellStyle3
+        Me.Grid_Main.RowTemplate.Height = 30
+        Me.Grid_Main.ScrollBars = System.Windows.Forms.ScrollBars.None
+        Me.Grid_Main.Size = New System.Drawing.Size(1920, 832)
+        Me.Grid_Main.TabIndex = 18
+        '
+        'Panel_Main
+        '
+        Me.Panel_Main.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel_Main.BackColor = System.Drawing.Color.DarkBlue
+        Me.Panel_Main.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel_Main.Controls.Add(Me.hidePanel)
+        Me.Panel_Main.Controls.Add(Me.Grid_Main)
+        Me.Panel_Main.Controls.Add(Me.Panel1)
+        Me.Panel_Main.Location = New System.Drawing.Point(0, 204)
+        Me.Panel_Main.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel_Main.Name = "Panel_Main"
+        Me.Panel_Main.Size = New System.Drawing.Size(1920, 870)
+        Me.Panel_Main.TabIndex = 97
+        '
+        'hidePanel
+        '
+        Me.hidePanel.BackColor = System.Drawing.Color.White
+        Me.hidePanel.Controls.Add(Me.Label_p20)
+        Me.hidePanel.Controls.Add(Me.Label_P19)
+        Me.hidePanel.Controls.Add(Me.Label_p18)
+        Me.hidePanel.Controls.Add(Me.Label_p17)
+        Me.hidePanel.Controls.Add(Me.Label_p16)
+        Me.hidePanel.Controls.Add(Me.Label_p15)
+        Me.hidePanel.Controls.Add(Me.Label_p14)
+        Me.hidePanel.Controls.Add(Me.Label_p13)
+        Me.hidePanel.Controls.Add(Me.Label_p12)
+        Me.hidePanel.Controls.Add(Me.Label_p11)
+        Me.hidePanel.Controls.Add(Me.Label_p10)
+        Me.hidePanel.Controls.Add(Me.Label_p9)
+        Me.hidePanel.Controls.Add(Me.Label_p8)
+        Me.hidePanel.Controls.Add(Me.Label_p7)
+        Me.hidePanel.Controls.Add(Me.Label_p6)
+        Me.hidePanel.Controls.Add(Me.Label_p5)
+        Me.hidePanel.Controls.Add(Me.Label_p4)
+        Me.hidePanel.Controls.Add(Me.Label_p3)
+        Me.hidePanel.Controls.Add(Me.Label_p2)
+        Me.hidePanel.Controls.Add(Me.Label_p1)
+        Me.hidePanel.Controls.Add(Me.Label_1)
+        Me.hidePanel.Controls.Add(Me.Label_2)
+        Me.hidePanel.Controls.Add(Me.Label_3)
+        Me.hidePanel.Controls.Add(Me.Label_4)
+        Me.hidePanel.Controls.Add(Me.Label_5)
+        Me.hidePanel.Controls.Add(Me.Label_6)
+        Me.hidePanel.Controls.Add(Me.Label_7)
+        Me.hidePanel.Controls.Add(Me.Label_8)
+        Me.hidePanel.Controls.Add(Me.Label_9)
+        Me.hidePanel.Controls.Add(Me.Label_10)
+        Me.hidePanel.Location = New System.Drawing.Point(799, 116)
+        Me.hidePanel.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.hidePanel.Name = "hidePanel"
+        Me.hidePanel.Size = New System.Drawing.Size(474, 310)
+        Me.hidePanel.TabIndex = 101
+        Me.hidePanel.Visible = False
+        '
+        'Label_p20
+        '
+        Me.Label_p20.AutoSize = True
+        Me.Label_p20.Location = New System.Drawing.Point(291, 140)
+        Me.Label_p20.Name = "Label_p20"
+        Me.Label_p20.Size = New System.Drawing.Size(133, 15)
+        Me.Label_p20.TabIndex = 29
+        Me.Label_p20.Text = "현재날에서 20일후"
+        '
+        'Label_P19
+        '
+        Me.Label_P19.AutoSize = True
+        Me.Label_P19.Location = New System.Drawing.Point(237, 140)
+        Me.Label_P19.Name = "Label_P19"
+        Me.Label_P19.Size = New System.Drawing.Size(58, 15)
+        Me.Label_P19.TabIndex = 28
+        Me.Label_P19.Text = "Label28"
+        '
+        'Label_p18
+        '
+        Me.Label_p18.AutoSize = True
+        Me.Label_p18.Location = New System.Drawing.Point(182, 140)
+        Me.Label_p18.Name = "Label_p18"
+        Me.Label_p18.Size = New System.Drawing.Size(58, 15)
+        Me.Label_p18.TabIndex = 27
+        Me.Label_p18.Text = "Label29"
+        '
+        'Label_p17
+        '
+        Me.Label_p17.AutoSize = True
+        Me.Label_p17.Location = New System.Drawing.Point(127, 140)
+        Me.Label_p17.Name = "Label_p17"
+        Me.Label_p17.Size = New System.Drawing.Size(58, 15)
+        Me.Label_p17.TabIndex = 26
+        Me.Label_p17.Text = "Label30"
+        '
+        'Label_p16
+        '
+        Me.Label_p16.AutoSize = True
+        Me.Label_p16.Location = New System.Drawing.Point(72, 140)
+        Me.Label_p16.Name = "Label_p16"
+        Me.Label_p16.Size = New System.Drawing.Size(58, 15)
+        Me.Label_p16.TabIndex = 25
+        Me.Label_p16.Text = "Label31"
+        '
+        'Label_p15
+        '
+        Me.Label_p15.AutoSize = True
+        Me.Label_p15.Location = New System.Drawing.Point(17, 140)
+        Me.Label_p15.Name = "Label_p15"
+        Me.Label_p15.Size = New System.Drawing.Size(58, 15)
+        Me.Label_p15.TabIndex = 24
+        Me.Label_p15.Text = "Label32"
+        '
+        'Label_p14
+        '
+        Me.Label_p14.AutoSize = True
+        Me.Label_p14.Location = New System.Drawing.Point(291, 111)
+        Me.Label_p14.Name = "Label_p14"
+        Me.Label_p14.Size = New System.Drawing.Size(58, 15)
+        Me.Label_p14.TabIndex = 23
+        Me.Label_p14.Text = "Label21"
+        '
+        'Label_p13
+        '
+        Me.Label_p13.AutoSize = True
+        Me.Label_p13.Location = New System.Drawing.Point(237, 111)
+        Me.Label_p13.Name = "Label_p13"
+        Me.Label_p13.Size = New System.Drawing.Size(58, 15)
+        Me.Label_p13.TabIndex = 22
+        Me.Label_p13.Text = "Label22"
+        '
+        'Label_p12
+        '
+        Me.Label_p12.AutoSize = True
+        Me.Label_p12.Location = New System.Drawing.Point(182, 111)
+        Me.Label_p12.Name = "Label_p12"
+        Me.Label_p12.Size = New System.Drawing.Size(58, 15)
+        Me.Label_p12.TabIndex = 21
+        Me.Label_p12.Text = "Label23"
+        '
+        'Label_p11
+        '
+        Me.Label_p11.AutoSize = True
+        Me.Label_p11.Location = New System.Drawing.Point(127, 111)
+        Me.Label_p11.Name = "Label_p11"
+        Me.Label_p11.Size = New System.Drawing.Size(58, 15)
+        Me.Label_p11.TabIndex = 20
+        Me.Label_p11.Text = "Label24"
+        '
+        'Label_p10
+        '
+        Me.Label_p10.AutoSize = True
+        Me.Label_p10.Location = New System.Drawing.Point(72, 111)
+        Me.Label_p10.Name = "Label_p10"
+        Me.Label_p10.Size = New System.Drawing.Size(68, 15)
+        Me.Label_p10.TabIndex = 19
+        Me.Label_p10.Text = "현재날10"
+        '
+        'Label_p9
+        '
+        Me.Label_p9.AutoSize = True
+        Me.Label_p9.Location = New System.Drawing.Point(17, 111)
+        Me.Label_p9.Name = "Label_p9"
+        Me.Label_p9.Size = New System.Drawing.Size(58, 15)
+        Me.Label_p9.TabIndex = 18
+        Me.Label_p9.Text = "Label26"
+        '
+        'Label_p8
+        '
+        Me.Label_p8.AutoSize = True
+        Me.Label_p8.Location = New System.Drawing.Point(291, 76)
+        Me.Label_p8.Name = "Label_p8"
+        Me.Label_p8.Size = New System.Drawing.Size(58, 15)
+        Me.Label_p8.TabIndex = 17
+        Me.Label_p8.Text = "Label15"
+        '
+        'Label_p7
+        '
+        Me.Label_p7.AutoSize = True
+        Me.Label_p7.Location = New System.Drawing.Point(237, 76)
+        Me.Label_p7.Name = "Label_p7"
+        Me.Label_p7.Size = New System.Drawing.Size(58, 15)
+        Me.Label_p7.TabIndex = 16
+        Me.Label_p7.Text = "Label16"
+        '
+        'Label_p6
+        '
+        Me.Label_p6.AutoSize = True
+        Me.Label_p6.Location = New System.Drawing.Point(182, 76)
+        Me.Label_p6.Name = "Label_p6"
+        Me.Label_p6.Size = New System.Drawing.Size(58, 15)
+        Me.Label_p6.TabIndex = 15
+        Me.Label_p6.Text = "Label17"
+        '
+        'Label_p5
+        '
+        Me.Label_p5.AutoSize = True
+        Me.Label_p5.Location = New System.Drawing.Point(127, 76)
+        Me.Label_p5.Name = "Label_p5"
+        Me.Label_p5.Size = New System.Drawing.Size(60, 15)
+        Me.Label_p5.TabIndex = 14
+        Me.Label_p5.Text = "현재날5"
+        '
+        'Label_p4
+        '
+        Me.Label_p4.AutoSize = True
+        Me.Label_p4.Location = New System.Drawing.Point(72, 76)
+        Me.Label_p4.Name = "Label_p4"
+        Me.Label_p4.Size = New System.Drawing.Size(58, 15)
+        Me.Label_p4.TabIndex = 13
+        Me.Label_p4.Text = "Label19"
+        '
+        'Label_p3
+        '
+        Me.Label_p3.AutoSize = True
+        Me.Label_p3.Location = New System.Drawing.Point(17, 76)
+        Me.Label_p3.Name = "Label_p3"
+        Me.Label_p3.Size = New System.Drawing.Size(58, 15)
+        Me.Label_p3.TabIndex = 12
+        Me.Label_p3.Text = "Label20"
+        '
+        'Label_p2
+        '
+        Me.Label_p2.AutoSize = True
+        Me.Label_p2.Location = New System.Drawing.Point(291, 48)
+        Me.Label_p2.Name = "Label_p2"
+        Me.Label_p2.Size = New System.Drawing.Size(50, 15)
+        Me.Label_p2.TabIndex = 11
+        Me.Label_p2.Text = "Label9"
+        '
+        'Label_p1
+        '
+        Me.Label_p1.AutoSize = True
+        Me.Label_p1.Location = New System.Drawing.Point(237, 48)
+        Me.Label_p1.Name = "Label_p1"
+        Me.Label_p1.Size = New System.Drawing.Size(125, 15)
+        Me.Label_p1.TabIndex = 10
+        Me.Label_p1.Text = "현재날에서 1일후"
+        '
+        'Label_1
+        '
+        Me.Label_1.AutoSize = True
+        Me.Label_1.Location = New System.Drawing.Point(182, 48)
+        Me.Label_1.Name = "Label_1"
+        Me.Label_1.Size = New System.Drawing.Size(58, 15)
+        Me.Label_1.TabIndex = 9
+        Me.Label_1.Text = "Label11"
+        '
+        'Label_2
+        '
+        Me.Label_2.AutoSize = True
+        Me.Label_2.Location = New System.Drawing.Point(127, 48)
+        Me.Label_2.Name = "Label_2"
+        Me.Label_2.Size = New System.Drawing.Size(58, 15)
+        Me.Label_2.TabIndex = 8
+        Me.Label_2.Text = "Label12"
+        '
+        'Label_3
+        '
+        Me.Label_3.AutoSize = True
+        Me.Label_3.Location = New System.Drawing.Point(72, 48)
+        Me.Label_3.Name = "Label_3"
+        Me.Label_3.Size = New System.Drawing.Size(58, 15)
+        Me.Label_3.TabIndex = 7
+        Me.Label_3.Text = "Label13"
+        '
+        'Label_4
+        '
+        Me.Label_4.AutoSize = True
+        Me.Label_4.Location = New System.Drawing.Point(17, 48)
+        Me.Label_4.Name = "Label_4"
+        Me.Label_4.Size = New System.Drawing.Size(58, 15)
+        Me.Label_4.TabIndex = 6
+        Me.Label_4.Text = "Label14"
+        '
+        'Label_5
+        '
+        Me.Label_5.AutoSize = True
+        Me.Label_5.Location = New System.Drawing.Point(291, 15)
+        Me.Label_5.Name = "Label_5"
+        Me.Label_5.Size = New System.Drawing.Size(50, 15)
+        Me.Label_5.TabIndex = 5
+        Me.Label_5.Text = "Label8"
+        '
+        'Label_6
+        '
+        Me.Label_6.AutoSize = True
+        Me.Label_6.Location = New System.Drawing.Point(237, 15)
+        Me.Label_6.Name = "Label_6"
+        Me.Label_6.Size = New System.Drawing.Size(50, 15)
+        Me.Label_6.TabIndex = 4
+        Me.Label_6.Text = "Label7"
+        '
+        'Label_7
+        '
+        Me.Label_7.AutoSize = True
+        Me.Label_7.Location = New System.Drawing.Point(182, 15)
+        Me.Label_7.Name = "Label_7"
+        Me.Label_7.Size = New System.Drawing.Size(50, 15)
+        Me.Label_7.TabIndex = 3
+        Me.Label_7.Text = "Label6"
+        '
+        'Label_8
+        '
+        Me.Label_8.AutoSize = True
+        Me.Label_8.Location = New System.Drawing.Point(127, 15)
+        Me.Label_8.Name = "Label_8"
+        Me.Label_8.Size = New System.Drawing.Size(50, 15)
+        Me.Label_8.TabIndex = 2
+        Me.Label_8.Text = "Label5"
+        '
+        'Label_9
+        '
+        Me.Label_9.AutoSize = True
+        Me.Label_9.Location = New System.Drawing.Point(72, 15)
+        Me.Label_9.Name = "Label_9"
+        Me.Label_9.Size = New System.Drawing.Size(50, 15)
+        Me.Label_9.TabIndex = 1
+        Me.Label_9.Text = "Label4"
+        '
+        'Label_10
+        '
+        Me.Label_10.AutoSize = True
+        Me.Label_10.Location = New System.Drawing.Point(17, 15)
+        Me.Label_10.Name = "Label_10"
+        Me.Label_10.Size = New System.Drawing.Size(143, 15)
+        Me.Label_10.TabIndex = 0
+        Me.Label_10.Text = "현재 날에서 10일 전"
+        '
+        'Panel1
+        '
+        Me.Panel1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel1.BackColor = System.Drawing.Color.Maroon
+        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.TextBox4)
+        Me.Panel1.Controls.Add(Me.TextBox3)
+        Me.Panel1.Controls.Add(Me.TextBox2)
+        Me.Panel1.Controls.Add(Me.TextBox1)
+        Me.Panel1.Controls.Add(Me.Label1)
+        Me.Panel1.Location = New System.Drawing.Point(1794, 69)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(928, 318)
+        Me.Panel1.TabIndex = 98
+        Me.Panel1.Visible = False
+        '
+        'TextBox4
+        '
+        Me.TextBox4.Font = New System.Drawing.Font("굴림", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox4.Location = New System.Drawing.Point(21, 291)
+        Me.TextBox4.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox4.Name = "TextBox4"
+        Me.TextBox4.Size = New System.Drawing.Size(311, 42)
+        Me.TextBox4.TabIndex = 91
+        '
+        'TextBox3
+        '
+        Me.TextBox3.Font = New System.Drawing.Font("굴림", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox3.Location = New System.Drawing.Point(21, 224)
+        Me.TextBox3.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.Size = New System.Drawing.Size(311, 42)
+        Me.TextBox3.TabIndex = 90
+        '
+        'TextBox2
+        '
+        Me.TextBox2.Font = New System.Drawing.Font("굴림", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox2.Location = New System.Drawing.Point(19, 158)
+        Me.TextBox2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(311, 42)
+        Me.TextBox2.TabIndex = 89
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Font = New System.Drawing.Font("굴림", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox1.Location = New System.Drawing.Point(19, 94)
+        Me.TextBox1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(311, 42)
+        Me.TextBox1.TabIndex = 88
+        '
+        'Label1
+        '
+        Me.Label1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Label1.Font = New System.Drawing.Font("굴림", 36.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label1.Location = New System.Drawing.Point(18, 19)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(314, 58)
+        Me.Label1.TabIndex = 87
+        Me.Label1.Text = "공지 사항"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Time_Label2
+        '
+        Me.Time_Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Time_Label2.BackColor = System.Drawing.Color.DarkBlue
+        Me.Time_Label2.Font = New System.Drawing.Font("DS-Digital", 38.0!)
+        Me.Time_Label2.ForeColor = System.Drawing.Color.White
+        Me.Time_Label2.Location = New System.Drawing.Point(1586, 28)
+        Me.Time_Label2.Name = "Time_Label2"
+        Me.Time_Label2.Size = New System.Drawing.Size(325, 165)
+        Me.Time_Label2.TabIndex = 100
+        Me.Time_Label2.Text = "11시 30분"
+        Me.Time_Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TextBox5
+        '
+        Me.TextBox5.Location = New System.Drawing.Point(542, 58)
+        Me.TextBox5.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox5.Name = "TextBox5"
+        Me.TextBox5.Size = New System.Drawing.Size(577, 25)
+        Me.TextBox5.TabIndex = 101
+        Me.TextBox5.Visible = False
+        Me.TextBox5.WordWrap = False
+        '
+        'Frm_Monitoring2
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.DarkBlue
+        Me.ClientSize = New System.Drawing.Size(1920, 1086)
+        Me.Controls.Add(Me.TextBox5)
+        Me.Controls.Add(Me.Time_Label2)
+        Me.Controls.Add(Me.Panel_Main)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.Day_Label)
+        Me.Controls.Add(Me.Time_Label)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
+        Me.Name = "Frm_Monitoring2"
+        Me.Text = "Frm_Monitoring"
+        CType(Me.Grid_Main, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel_Main.ResumeLayout(False)
+        Me.hidePanel.ResumeLayout(False)
+        Me.hidePanel.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Day_Label As Label
+    Friend WithEvents Time_Label As Label
+    Friend WithEvents Timer1 As Timer
+    Friend WithEvents Grid_Main As DataGridView
+    Friend WithEvents Panel_Main As Panel
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents TextBox4 As TextBox
+    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Time_Label2 As Label
+    Friend WithEvents hidePanel As Panel
+    Friend WithEvents Label_7 As Label
+    Friend WithEvents Label_8 As Label
+    Friend WithEvents Label_9 As Label
+    Friend WithEvents Label_10 As Label
+    Friend WithEvents Label_p20 As Label
+    Friend WithEvents Label_P19 As Label
+    Friend WithEvents Label_p18 As Label
+    Friend WithEvents Label_p17 As Label
+    Friend WithEvents Label_p16 As Label
+    Friend WithEvents Label_p15 As Label
+    Friend WithEvents Label_p14 As Label
+    Friend WithEvents Label_p13 As Label
+    Friend WithEvents Label_p12 As Label
+    Friend WithEvents Label_p11 As Label
+    Friend WithEvents Label_p10 As Label
+    Friend WithEvents Label_p9 As Label
+    Friend WithEvents Label_p8 As Label
+    Friend WithEvents Label_p7 As Label
+    Friend WithEvents Label_p6 As Label
+    Friend WithEvents Label_p5 As Label
+    Friend WithEvents Label_p4 As Label
+    Friend WithEvents Label_p3 As Label
+    Friend WithEvents Label_p2 As Label
+    Friend WithEvents Label_p1 As Label
+    Friend WithEvents Label_1 As Label
+    Friend WithEvents Label_2 As Label
+    Friend WithEvents Label_3 As Label
+    Friend WithEvents Label_4 As Label
+    Friend WithEvents Label_5 As Label
+    Friend WithEvents Label_6 As Label
+    Friend WithEvents TextBox5 As TextBox
+End Class

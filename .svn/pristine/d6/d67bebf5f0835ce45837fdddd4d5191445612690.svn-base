@@ -1,0 +1,31 @@
+﻿Public Class Frm_DV_POP
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = " SELECT DV.DV_Code, DV.DV_Name, CR_Code, CR_Name, DV.DV_Manager, DV.DV_PL_Code, DV.DV_Prepare_Date " &
+                 " FROM CR_Contract CR , DV_Drawing DV " &
+                 " where 1=1 " &
+                 " And CR_Rev_No = (select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code) " &
+                 " And DV.DV_Rev_No = (select isnull(max(DV_Rev_No),1) from DV_Drawing where DV_Code = DV.DV_Code) " &
+                 " And CR_Code = DV_CR_Code " &
+                 " And CR_Code Like '%" & TextBox15.Text & "%' " &
+                 " And DV.DV_Code Like '%" & TextBox16.Text & "%' " &
+                 " order by DV.DV_Code, DV.DV_Name, DV.DV_Prepare_Date "
+
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+        DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.DialogResult = DialogResult.OK
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Me.Close()
+    End Sub
+End Class

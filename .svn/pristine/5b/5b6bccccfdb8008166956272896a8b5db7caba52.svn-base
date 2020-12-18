@@ -1,0 +1,28 @@
+﻿Public Class Frm_QC_Report6
+    Private Sub Frm_QC_Report6_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Panel_List.Top = 40
+        Panel_List.Left = 10
+        Panel41.Top = 40
+        Panel41.Left = 10
+
+        Panel_List.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel_List.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel_List.Visible = False
+        Panel41.Visible = True
+    End Sub
+End Class

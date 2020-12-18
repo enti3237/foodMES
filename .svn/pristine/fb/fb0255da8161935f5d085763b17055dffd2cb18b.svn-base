@@ -1,0 +1,423 @@
+﻿Public Class Frm_Monitoring3
+    Dim De_CC(100) As String
+    Dim De_Su(100) As String
+    Dim count As Integer = 0
+    Dim today As String = ""
+
+
+    Dim c() As Label '기계대수
+    Dim ii() As Label '지시수량 / 생산수량
+    Dim p() As Label '실적
+
+
+    Private Sub Frm_Monitoring_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Dim DBT As New DataTable
+        Dim k As Integer
+        Dim i As Integer
+
+
+
+        PIc_Pic(Picture_Logo, Application.StartupPath & "\Picture\Logo2_" & Setup_Data(9) & ".png")
+        'PIc_Pic(Picture_Logo, Application.StartupPath & "\Picture\Logo2.png")
+
+        c = New Label() {C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23, C24, C25, C26, C27, C28}
+        ii = New Label() {i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i20, i21, i22, i23, i24, i25, i26, i27, i28}
+        p = New Label() {p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28}
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        For k = 0 To 27
+
+            c(k).TextAlign = ContentAlignment.MiddleCenter
+            ii(k).TextAlign = ContentAlignment.MiddleCenter
+            p(k).TextAlign = ContentAlignment.MiddleCenter
+
+            ii(k).BackColor = Color.Red
+            If ii(k).BackColor = Color.Red Then
+                ii(k).Text = ""
+                p(k).Visible = False
+            End If
+
+        Next
+
+        StrSQL = "SELECT GETDATE()"
+
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count = 0 Then
+            Exit Sub
+        Else
+
+            today = DBT.Rows(0).Item(0)
+            today = Mid(today, 1, 4) & "-" & Mid(today, 6, 2) & "-" & Mid(today, 9, 2)
+        End If
+
+
+        StrSQL = "SELECT COUNT(DEVICE_CODE) AS A FROM DEVICE"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count = 0 Then
+            MsgBox("설비가 존재하지 않습니다")
+            Exit Sub
+        Else
+            Label1.Text = DBT.Rows(i)("A")
+        End If
+
+        '설비명 붙이기
+        StrSQL = "SELECT DEVICE_NAME FROM DEVICE"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count <> 0 Then
+
+            '28개보다 적으면 나머지는 안보이게 하기
+            If Re_Count < 28 Then
+                count = Re_Count - 1
+                For i = 0 To Re_Count - 1
+                    c(i).Text = DBT.Rows(i)("DEVICE_NAME")
+                Next
+
+                '
+                For i = Re_Count To 27
+                    c(i).Visible = False
+                    ii(i).Visible = False
+                    p(i).Visible = False
+                Next
+
+            Else
+                count = 27
+                For i = 0 To 27
+                    c(i).Text = DBT.Rows(i)("DEVICE_NAME")
+                Next
+
+            End If
+
+        Else
+            Exit Sub
+        End If
+
+        Display()
+
+    End Sub
+
+    Private Sub Display()
+
+        Dim DBT As New DataTable
+        Dim DBT2 As New DataTable
+
+        Dim Re_Count2 As Long
+        Dim i As Integer
+        Dim j As Integer
+        Dim k As Integer
+
+
+
+
+        '가동설비개수 확인
+        StrSQL = "SELECT COUNT(IOT_CODE) AS A FROM IOT WHERE IOT_ING = 'ing' and iot_st_day = '" & today & "'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count = 0 Then
+            '전부 비가동
+            '  Label2.Text = DBT.Rows(i)("A")
+            Label2.Text = 0
+        Else
+            '가동중
+            Label2.Text = DBT.Rows(0)("A")
+
+        End If
+
+
+        '가동률
+        If Label2.Text = 0 Then
+            Label3.Text = 0
+        Else
+            Label3.Text = Math.Round(Integer.Parse(Label2.Text) * 100 / Integer.Parse(Label1.Text)) & "%"
+        End If
+
+
+        Dim 실적코드 As String
+        Dim 설비코드 As String
+        Dim 설비명 As String
+        Dim 가동여부 As String
+        Dim 지시수량 As Integer
+        Dim 생산수량 As Integer
+
+
+
+
+        '각각설비 가동인지 비가동인지 확인 후 각자 지시수량 / 생산수량 구해주기
+        For i = 0 To count
+
+            Dim 여부 As Integer
+
+            '이 설비가 iot 장비에 들어가있는지
+
+            StrSQL = "SELECT COUNT(IOT_NAME) as a FROM IOT WHERE iot_st_day = '" & today & "' and iot_NAME ='" & c(i).Text & "'"
+            Re_Count = DB_Select(DBT)
+            여부 = DBT.Rows(0)("a")
+
+            If 여부 = 0 Then
+                StrSQL = "SELECT SUM(CONVERT(DECIMAL,PS_TOTAL)) AS P FROM PO_STOCK JOIN PO_STOCK_LIST ON PO_STOCK.PS_Code = PO_STOCK_LIST.PS_Code WHERE PS_DATE = '" & today & "' and PS_DE_NAME ='" & c(i).Text & "' and ps_sel = '관리'"
+                Re_Count = DB_Select(DBT)
+                If IsDBNull(Re_Count) Then
+                    Continue For
+                End If
+            Else
+
+                '설비코드, 실적코드 구하기
+
+                StrSQL = "SELECT IOT_CODE, IOT_PS_CODE FROM IOT WHERE iot_st_day = '" & today & "' and iot_NAME ='" & c(i).Text & "'"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    설비코드 = DBT.Rows(0)("IOT_CODE")
+                    실적코드 = DBT.Rows(0)("IOT_PS_CODE")
+                Else
+                    Exit Sub
+                End If
+
+
+
+
+                '가동여부
+                StrSQL = "SELECT IOT_ING FROM IOT WHERE iot_st_day = '" & today & "' and iot_NAME ='" & c(i).Text & "'"
+                Re_Count = DB_Select(DBT)
+                가동여부 = DBT.Rows(0)("IOT_ING")
+                ' MsgBox(가동여부)
+
+                If 가동여부 = "" Then
+                    '비가동
+
+                    ii(i).BackColor = Color.Red
+                    ii(i).ForeColor = Color.White
+                    p(i).Visible = False
+                    ' 지금은 비가동이지만 여태껏 생산한 생산수량이 있는가에 관해서 (설비기준)
+
+
+                    StrSQL = "SELECT Sum(Convert(Decimal,PS_Total)) AS P FROM PO_STOCK_LIST  JOIN PO_STOCK ON PO_STOCK.PS_CODE = PO_STOCK_LIST.PS_Code  WHERE PS_st_day = '" & today & "' AND PS_EN_TIME IS NOT NULL and PS_total is not null and ps_total != '' and PS_DE_CODE ='" & 설비코드 & "'"
+                    Re_Count = DB_Select(DBT)
+
+                    ' MsgBox(Re_Count)
+
+                    If IsDBNull(DBT.Rows(0)("P")) Then
+                        Continue For
+
+                    ElseIf Re_Count = 0 Then
+                        ii(i).Text = 0
+
+                    End If
+                    ii(i).Text = DBT.Rows(0)("P")
+
+                Else
+                    '가동
+
+
+                    '생산지시서에서 장비별 지시수량 가져오기
+
+                    'StrSQL = "SELECT Sum(Convert(Decimal,PS_PO_Total)) AS P FROM PO_STOCK JOIN PO_STOCK_LIST ON PO_STOCK.PS_CODE = PO_STOCK_LIST.PS_Code JOIN IOT ON PO_STOCK_LIST.PS_CODE = IOT_PS_CODE  WHERE IOT_ING = 'ing' and PS_PO_Total is not null and PS_Total is not null and po_stock_list.ps_code = '" & 실적코드 & "' and ps_st_day = '" & today & "'"
+                    ' StrSQL = "SELECT Sum(Convert(Decimal,PROCESS_IN_TOTAL)) AS P FROM PROCESS_IN_LIST JOIN PROCESS_IN ON PROCESS_IN.PROCESS_IN_CODE = PROCESS_IN_LIST.PROCESS_IN_Code WHERE  PROCESS_IN_Total is not null and PROCESS_IN_DE_CODE= '" & 설비코드 & "' and PROCESS_IN_DATE = '" & today & "' AND PROCESS_IN_DAY ='" & today & "'"
+                    StrSQL = "SELECT Sum(Convert(Decimal,PROCESS_IN_TOTAL)) AS P FROM PROCESS_IN_LIST JOIN PROCESS_IN ON PROCESS_IN.PROCESS_IN_CODE = PROCESS_IN_LIST.PROCESS_IN_Code WHERE  PROCESS_IN_Total is not null and PROCESS_IN_DE_CODE= '" & 설비코드 & "' AND PROCESS_IN_DAY ='" & today & "'"
+
+                    Re_Count2 = DB_Select(DBT2)
+
+                    If Re_Count2 = 0 Then
+                        Continue For
+                    Else
+                        지시수량 = DBT2.Rows(0)("P")
+
+                        '생산수량 + 투입량(나중에 생산량이 됨)
+
+
+                        '투입량
+                        StrSQL = "SELECT IOT_GO FROM IOT JOIN PO_STOCK ON IOT.IOT_PS_CODE = PO_STOCK.PS_CODE  WHERE IOT_CODE = '" & 설비코드 & "' AND IOT_PS_CODE = '" & 실적코드 & "' and iot_st_day = '" & today & "'"
+
+                        Re_Count = DB_Select(DBT)
+                        If IsDBNull(Re_Count) Then
+                            Continue For
+                        End If
+                        생산수량 = DBT.Rows(0)("IOT_GO") '투입량
+
+
+                        '이전 생산수량
+
+                        Dim 이전수량 As Integer
+
+                        StrSQL = "SELECT Sum(Convert(Decimal,PS_TOTAL)) AS PS_TOTAL FROM PO_STOCK JOIN PO_STOCK_LIST ON PO_STOCK.PS_CODE = PO_STOCK_LIST.PS_Code WHERE PS_Total is not null and PS_DE_CODE = '" & 설비코드 & "' AND PS_ST_DAY = '" & today & "' AND PS_DATE ='" & today & "'"
+
+                        Re_Count2 = DB_Select(DBT2)
+
+                        이전수량 = DBT2.Rows(Re_Count2 - 1)("PS_TOTAL") '투입량
+
+
+
+                        ' 지시수량 = 지시수량 + 생산수량
+                        ii(i).BackColor = Color.LightGreen
+                        ii(i).ForeColor = Color.Black
+                        p(i).Visible = True
+                        ii(i).Text = 지시수량 & " / " & (생산수량 + 이전수량)
+                        If 지시수량 = 0 Then
+                            p(i).Text = 0
+                            Exit For
+                        End If
+                        p(i).Text = Math.Round((생산수량 + 이전수량) * 100 / 지시수량) & " %"
+                    End If
+
+                End If
+            End If
+        Next
+
+
+
+
+
+
+        ''가동설비 색 표시 및 정보기록 /가동중일때
+        'StrSQL = "SELECT IOT_CODE, IOT_PS_CODE FROM IOT WHERE IOT_ING = 'ing' and iot_st_day = '" & today & "'"
+        'Re_Count = DB_Select(DBT)
+
+        'If Re_Count = 0 Then
+        '    '비가동
+        '    ''가동설비 색 표시 및 정보기록 /비가동중일때
+        '    StrSQL = "SELECT IOT_CODE, IOT_GO  FROM IOT WHERE IOT_ING != 'ing' and iot_st_day = '" & today & "'"
+        '    Re_Count2 = DB_Select(DBT2)
+
+        '    If Re_Count2 = 0 Then
+        '        '가동
+        '    Else
+        '        '  비가동
+        '        For k = 0 To Re_Count2 - 1
+
+        '            If IsDBNull(DBT2.Rows(k)("IOT_CODE")) Then
+        '                ' MsgBox("값이 없습니다")
+        '                Exit For
+        '            End If
+
+        '            설비코드 = DBT2.Rows(k)("IOT_CODE")
+        '            For j = 0 To 27
+
+        '                If c(j).Text = 설비코드 Then
+        '                    ii(j).BackColor = Color.Red
+        '                    p(j).Visible = False
+        '                    ' 지금은 비가동이지만 여태껏 생산한 생산수량이 있는가에 관해서 (설비기준)
+
+
+
+        '                    StrSQL = "SELECT Sum(Convert(Decimal,PS_Total)) AS P FROM PO_STOCK_LIST  JOIN PO_STOCK ON PO_STOCK.PS_CODE = PO_STOCK_LIST.PS_Code  WHERE PS_st_day = '" & today & "' AND PS_EN_TIME IS NOT NULL and PS_total is not null and ps_total != '' and PS_DE_CODE ='" & 설비코드 & "'"
+        '                    Re_Count = DB_Select(DBT)
+
+
+        '                    If IsDBNull(DBT.Rows(0)("P")) Then
+        '                        Exit For
+        '                    ElseIf Re_Count = 0 Then
+        '                        ii(j).Text = 0
+
+        '                    End If
+        '                    ii(j).Text = DBT.Rows(0)("P")
+        '                    ' ii(j).Text = DBT2.Rows(k)("IOT_GO")
+        '                End If
+        '            Next
+
+        '        Next
+        '    End If
+        'Else
+        '    '가동일때
+
+        '    '지시/생산 - 실적(%) 나타내기 
+
+
+        '    For k = 0 To Re_Count - 1
+        '        설비코드 = DBT.Rows(k)("IOT_CODE")
+        '        실적코드 = DBT.Rows(k)("IOT_PS_CODE")
+
+        '        '생산지시서에서 장비별 지시수량 가져오기
+
+        '        'StrSQL = "SELECT Sum(Convert(Decimal,PS_PO_Total)) AS P FROM PO_STOCK JOIN PO_STOCK_LIST ON PO_STOCK.PS_CODE = PO_STOCK_LIST.PS_Code JOIN IOT ON PO_STOCK_LIST.PS_CODE = IOT_PS_CODE  WHERE IOT_ING = 'ing' and PS_PO_Total is not null and PS_Total is not null and po_stock_list.ps_code = '" & 실적코드 & "' and ps_st_day = '" & today & "'"
+        '        StrSQL = "SELECT Sum(Convert(Decimal,PROCESS_IN_TOTAL)) AS P FROM PROCESS_IN_LIST JOIN PROCESS_IN ON PROCESS_IN.PROCESS_IN_CODE = PROCESS_IN_LIST.PROCESS_IN_Code WHERE  PROCESS_IN_Total is not null and PROCESS_IN_DE_CODE= '" & 설비코드 & "' and PROCESS_IN_DATE = '" & today & "' AND PROCESS_IN_DAY ='" & today & "'"
+
+        '        Re_Count2 = DB_Select(DBT2)
+
+        '        If Re_Count2 = 0 Then
+        '            Continue For
+        '        Else
+        '            지시수량 = DBT2.Rows(Re_Count2 - 1)("P")
+
+        '            '생산수량 + 투입량(나중에 생산량이 됨)
+
+
+        '            '투입량
+        '            StrSQL = "SELECT IOT_GO FROM IOT JOIN PO_STOCK ON IOT.IOT_PS_CODE = PO_STOCK.PS_CODE  WHERE IOT_ING = 'ing' AND IOT_CODE = '" & 설비코드 & "' AND IOT_PS_CODE = '" & 실적코드 & "' and iot_st_day = '" & today & "'"
+
+        '            Re_Count2 = DB_Select(DBT2)
+
+        '            생산수량 = DBT2.Rows(Re_Count2 - 1)("IOT_GO") '투입량
+
+
+        '            '이전 생산수량
+
+        '            Dim 이전수량 As Integer
+
+        '            StrSQL = "SELECT Sum(Convert(Decimal,PS_TOTAL)) AS PS_TOTAL FROM PO_STOCK JOIN PO_STOCK_LIST ON PO_STOCK.PS_CODE = PO_STOCK_LIST.PS_Code WHERE PS_Total is not null and PS_DE_CODE = '" & 설비코드 & "' AND PS_ST_DAY = '" & today & "' AND PS_DATE ='" & today & "'"
+
+        '            Re_Count2 = DB_Select(DBT2)
+
+        '            이전수량 = DBT2.Rows(Re_Count2 - 1)("PS_TOTAL") '투입량
+
+
+        '            For j = 0 To 27
+        '                '  MsgBox(c(j).Text)
+        '                If c(j).Text.Equals(설비코드) Then
+        '                    ' 지시수량 = 지시수량 + 생산수량
+        '                    ii(j).BackColor = Color.LightGreen
+        '                    p(j).Visible = True
+        '                    ii(j).Text = 지시수량 & " / " & (생산수량 + 이전수량)
+        '                    If 지시수량 = 0 Then
+        '                        p(j).Text = 0
+        '                        Exit For
+        '                    End If
+        '                    p(j).Text = Math.Round((생산수량 + 이전수량) * 100 / 지시수량) & " %"
+        '                End If
+        '            Next
+        '        End If
+
+
+        '    Next
+        'End If
+
+
+
+
+        'If ii(k).BackColor = Color.Red Then
+        '    p(k).Visible = False
+        '    ii(k).Text = ""
+        'End If
+
+    End Sub
+
+    Private Sub Frm_Monitoring_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles Me.MouseDoubleClick
+        Dim dualMonitor() As Screen = Screen.AllScreens
+        If dualMonitor.Length = 2 Then
+            If Me.Bounds = dualMonitor(1).Bounds Then
+                Me.Bounds = dualMonitor(0).WorkingArea
+            Else
+                Me.Bounds = dualMonitor(1).WorkingArea
+            End If
+        End If
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+
+        Display()
+
+    End Sub
+
+
+    Private Sub Picture_Logo_Click(sender As Object, e As EventArgs) Handles Picture_Logo.Click
+        Me.Close()
+
+    End Sub
+
+    Private Sub Label21_Click(sender As Object, e As EventArgs)
+
+    End Sub
+End Class

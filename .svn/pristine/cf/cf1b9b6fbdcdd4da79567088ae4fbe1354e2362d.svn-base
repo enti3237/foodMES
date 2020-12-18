@@ -1,0 +1,288 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_CT_POP
+    Inherits System.Windows.Forms.Form
+
+    'Form은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.labDWGCode = New System.Windows.Forms.Label()
+        Me.txtDWGCode = New System.Windows.Forms.TextBox()
+        Me.btnExit = New System.Windows.Forms.Button()
+        Me.btnSave = New System.Windows.Forms.Button()
+        Me.btnSearch = New System.Windows.Forms.Button()
+        Me.lstMain = New System.Windows.Forms.DataGridView()
+        Me.row_check = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.BO_JOB = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Sun = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DV_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_ITM_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_ITM_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_ITM_Standard = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_ITM_Size = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_ITM_Unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_ITM_QTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.labJobNo = New System.Windows.Forms.Label()
+        Me.txtJobNo = New System.Windows.Forms.TextBox()
+        Me.labCPNo = New System.Windows.Forms.Label()
+        Me.txtCPNo = New System.Windows.Forms.TextBox()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'labDWGCode
+        '
+        Me.labDWGCode.AutoSize = True
+        Me.labDWGCode.Location = New System.Drawing.Point(322, 121)
+        Me.labDWGCode.Name = "labDWGCode"
+        Me.labDWGCode.Size = New System.Drawing.Size(53, 12)
+        Me.labDWGCode.TabIndex = 327
+        Me.labDWGCode.Text = "도면번호"
+        '
+        'txtDWGCode
+        '
+        Me.txtDWGCode.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtDWGCode.Location = New System.Drawing.Point(392, 115)
+        Me.txtDWGCode.Name = "txtDWGCode"
+        Me.txtDWGCode.Size = New System.Drawing.Size(150, 25)
+        Me.txtDWGCode.TabIndex = 326
+        '
+        'btnExit
+        '
+        Me.btnExit.BackColor = System.Drawing.Color.White
+        Me.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnExit.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnExit.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnExit.Location = New System.Drawing.Point(271, 392)
+        Me.btnExit.Name = "btnExit"
+        Me.btnExit.Size = New System.Drawing.Size(150, 27)
+        Me.btnExit.TabIndex = 325
+        Me.btnExit.Text = "취소"
+        Me.btnExit.UseVisualStyleBackColor = False
+        '
+        'btnSave
+        '
+        Me.btnSave.BackColor = System.Drawing.Color.White
+        Me.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSave.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnSave.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnSave.Location = New System.Drawing.Point(98, 392)
+        Me.btnSave.Name = "btnSave"
+        Me.btnSave.Size = New System.Drawing.Size(150, 27)
+        Me.btnSave.TabIndex = 324
+        Me.btnSave.Text = "저장"
+        Me.btnSave.UseVisualStyleBackColor = False
+        '
+        'btnSearch
+        '
+        Me.btnSearch.BackColor = System.Drawing.Color.White
+        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSearch.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnSearch.Location = New System.Drawing.Point(796, 115)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(150, 27)
+        Me.btnSearch.TabIndex = 323
+        Me.btnSearch.Text = "조회"
+        Me.btnSearch.UseVisualStyleBackColor = False
+        '
+        'lstMain
+        '
+        Me.lstMain.AllowUserToAddRows = False
+        Me.lstMain.AllowUserToDeleteRows = False
+        Me.lstMain.BackgroundColor = System.Drawing.Color.White
+        Me.lstMain.ColumnHeadersHeight = 20
+        Me.lstMain.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.row_check, Me.BO_JOB, Me.BO_Code, Me.BO_Rev_No, Me.BO_Sun, Me.DV_Code, Me.BO_ITM_Code, Me.BO_ITM_Name, Me.BO_ITM_Standard, Me.BO_ITM_Size, Me.BO_ITM_Unit, Me.BO_ITM_QTY})
+        Me.lstMain.Location = New System.Drawing.Point(98, 146)
+        Me.lstMain.Name = "lstMain"
+        Me.lstMain.ReadOnly = True
+        Me.lstMain.RowHeadersVisible = False
+        Me.lstMain.RowTemplate.Height = 23
+        Me.lstMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.lstMain.Size = New System.Drawing.Size(848, 211)
+        Me.lstMain.TabIndex = 322
+        '
+        'row_check
+        '
+        Me.row_check.HeaderText = ""
+        Me.row_check.Name = "row_check"
+        Me.row_check.ReadOnly = True
+        Me.row_check.Width = 50
+        '
+        'BO_JOB
+        '
+        Me.BO_JOB.DataPropertyName = "BO_JOB"
+        Me.BO_JOB.HeaderText = "JOB No"
+        Me.BO_JOB.Name = "BO_JOB"
+        Me.BO_JOB.ReadOnly = True
+        '
+        'BO_Code
+        '
+        Me.BO_Code.DataPropertyName = "BO_Code"
+        Me.BO_Code.HeaderText = "BOM Code"
+        Me.BO_Code.Name = "BO_Code"
+        Me.BO_Code.ReadOnly = True
+        '
+        'BO_Rev_No
+        '
+        Me.BO_Rev_No.DataPropertyName = "BO_Rev_No"
+        Me.BO_Rev_No.HeaderText = "BOM 개정번호"
+        Me.BO_Rev_No.Name = "BO_Rev_No"
+        Me.BO_Rev_No.ReadOnly = True
+        '
+        'BO_Sun
+        '
+        Me.BO_Sun.DataPropertyName = "BO_Sun"
+        Me.BO_Sun.HeaderText = "BOM 순번"
+        Me.BO_Sun.Name = "BO_Sun"
+        Me.BO_Sun.ReadOnly = True
+        '
+        'DV_Code
+        '
+        Me.DV_Code.DataPropertyName = "DV_Code"
+        Me.DV_Code.HeaderText = "도면번호"
+        Me.DV_Code.Name = "DV_Code"
+        Me.DV_Code.ReadOnly = True
+        '
+        'BO_ITM_Code
+        '
+        Me.BO_ITM_Code.DataPropertyName = "BO_ITM_Code"
+        Me.BO_ITM_Code.HeaderText = "부품코드"
+        Me.BO_ITM_Code.Name = "BO_ITM_Code"
+        Me.BO_ITM_Code.ReadOnly = True
+        '
+        'BO_ITM_Name
+        '
+        Me.BO_ITM_Name.DataPropertyName = "BO_ITM_Name"
+        Me.BO_ITM_Name.HeaderText = "부품명"
+        Me.BO_ITM_Name.Name = "BO_ITM_Name"
+        Me.BO_ITM_Name.ReadOnly = True
+        '
+        'BO_ITM_Standard
+        '
+        Me.BO_ITM_Standard.DataPropertyName = "BO_ITM_Standard"
+        Me.BO_ITM_Standard.HeaderText = "규격"
+        Me.BO_ITM_Standard.Name = "BO_ITM_Standard"
+        Me.BO_ITM_Standard.ReadOnly = True
+        '
+        'BO_ITM_Size
+        '
+        Me.BO_ITM_Size.DataPropertyName = "BO_ITM_Size"
+        Me.BO_ITM_Size.HeaderText = "치수"
+        Me.BO_ITM_Size.Name = "BO_ITM_Size"
+        Me.BO_ITM_Size.ReadOnly = True
+        '
+        'BO_ITM_Unit
+        '
+        Me.BO_ITM_Unit.DataPropertyName = "BO_ITM_Unit"
+        Me.BO_ITM_Unit.HeaderText = "단위"
+        Me.BO_ITM_Unit.Name = "BO_ITM_Unit"
+        Me.BO_ITM_Unit.ReadOnly = True
+        '
+        'BO_ITM_QTY
+        '
+        Me.BO_ITM_QTY.DataPropertyName = "BO_ITM_QTY"
+        Me.BO_ITM_QTY.HeaderText = "수량"
+        Me.BO_ITM_QTY.Name = "BO_ITM_QTY"
+        Me.BO_ITM_QTY.ReadOnly = True
+        '
+        'labJobNo
+        '
+        Me.labJobNo.AutoSize = True
+        Me.labJobNo.Location = New System.Drawing.Point(96, 121)
+        Me.labJobNo.Name = "labJobNo"
+        Me.labJobNo.Size = New System.Drawing.Size(45, 12)
+        Me.labJobNo.TabIndex = 321
+        Me.labJobNo.Text = "Job No"
+        '
+        'txtJobNo
+        '
+        Me.txtJobNo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtJobNo.Location = New System.Drawing.Point(147, 115)
+        Me.txtJobNo.Name = "txtJobNo"
+        Me.txtJobNo.Size = New System.Drawing.Size(150, 25)
+        Me.txtJobNo.TabIndex = 320
+        '
+        'labCPNo
+        '
+        Me.labCPNo.AutoSize = True
+        Me.labCPNo.Location = New System.Drawing.Point(273, 46)
+        Me.labCPNo.Name = "labCPNo"
+        Me.labCPNo.Size = New System.Drawing.Size(94, 12)
+        Me.labCPNo.TabIndex = 329
+        Me.labCPNo.Text = "CP No 받아오기"
+        Me.labCPNo.Visible = False
+        '
+        'txtCPNo
+        '
+        Me.txtCPNo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCPNo.Location = New System.Drawing.Point(373, 40)
+        Me.txtCPNo.Name = "txtCPNo"
+        Me.txtCPNo.Size = New System.Drawing.Size(150, 25)
+        Me.txtCPNo.TabIndex = 328
+        Me.txtCPNo.Visible = False
+        '
+        'Frm_CT_POP
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(1042, 535)
+        Me.Controls.Add(Me.labCPNo)
+        Me.Controls.Add(Me.txtCPNo)
+        Me.Controls.Add(Me.labDWGCode)
+        Me.Controls.Add(Me.txtDWGCode)
+        Me.Controls.Add(Me.btnExit)
+        Me.Controls.Add(Me.btnSave)
+        Me.Controls.Add(Me.btnSearch)
+        Me.Controls.Add(Me.lstMain)
+        Me.Controls.Add(Me.labJobNo)
+        Me.Controls.Add(Me.txtJobNo)
+        Me.Name = "Frm_CT_POP"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "CP정보 조회"
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+
+    Friend WithEvents labDWGCode As Label
+    Friend WithEvents txtDWGCode As TextBox
+    Friend WithEvents btnExit As Button
+    Friend WithEvents btnSave As Button
+    Friend WithEvents btnSearch As Button
+    Public WithEvents lstMain As DataGridView
+    Friend WithEvents labJobNo As Label
+    Friend WithEvents txtJobNo As TextBox
+    Friend WithEvents row_check As DataGridViewCheckBoxColumn
+    Friend WithEvents BO_JOB As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Code As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Rev_No As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Sun As DataGridViewTextBoxColumn
+    Friend WithEvents DV_Code As DataGridViewTextBoxColumn
+    Friend WithEvents BO_ITM_Code As DataGridViewTextBoxColumn
+    Friend WithEvents BO_ITM_Name As DataGridViewTextBoxColumn
+    Friend WithEvents BO_ITM_Standard As DataGridViewTextBoxColumn
+    Friend WithEvents BO_ITM_Size As DataGridViewTextBoxColumn
+    Friend WithEvents BO_ITM_Unit As DataGridViewTextBoxColumn
+    Friend WithEvents BO_ITM_QTY As DataGridViewTextBoxColumn
+    Friend WithEvents labCPNo As Label
+    Public WithEvents txtCPNo As TextBox
+End Class

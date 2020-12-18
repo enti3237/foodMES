@@ -1,0 +1,408 @@
+﻿Public Class Frm_Man
+    'hsim 20200508 사용 테이블 저장용 변수 선언
+    '#1. 사용자 테이블
+    Dim tblMan As New DataTable
+
+    Private Sub fnFrmTblLoad()
+        '#1. 사용자 테이블
+        tblMan = fnGetTableStructure("dbo.Man")
+    End Sub
+
+    Private Sub Frm_Man_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = True
+        palDetail.Visible = False
+
+        'hsim 20200508 DB작업 대상 테이블 Schema Load
+        fnFrmTblLoad()
+
+        'combo box 설정
+        comboSetUp(cboManSex, "0003")
+        comboSetUp(cboManForeigner, "0004")
+        comboSetUp(cboManLevel, "0005")
+        comboSetUp(cboManGroup, "0006")
+
+        Grid_Man_Load()
+
+    End Sub
+
+    Private Sub Grid_Man_Load()
+
+        '***********************************************************************************************
+        '이전 처리 방법
+        'Dim DBT As DataTable
+        'DBT = Nothing
+        'StrSQL = "SELECT Man_Code, Man_Name, Man_Sangho, Man_Bu, Man_Gik, Man_Sex, Man_Birth, Man_Junum, 
+        '                 Man_Foreigner, Man_Tel, Man_Phon, Man_Email, Man_St_Day, Man_En_Day, Man_Car,
+        '                 Man_Zip, Man_Add1, Man_Add2, Man_Pass, Man_Level, Man_Group, Man_Bigo
+        '            FROM Man"
+        'Re_Count = DB_Select(DBT)
+
+        'lstMain.DataSource = DBT
+        '***********************************************************************************************
+        Me.btnSearch.PerformClick()
+
+    End Sub
+
+    Private Sub text_clear()
+        txtId.Text = ""
+        txtManName.Text = ""
+        TxtManSangHo.Text = ""
+        cboManDept.Text = ""
+        cboManRank.Text = ""
+        dtpManBirth.Text = ""
+        txtManJunum.Text = ""
+        cboManSex.Text = ""
+        cboManForeigner.Text = ""
+        dtpManStDay.Text = ""
+        dtpManEnDay.Text = ""
+        txtManCar.Text = ""
+        txtManZip.Text = ""
+        txtManTel.Text = ""
+        txtManPhon.Text = ""
+        txtManEmail.Text = ""
+        cboManLevel.Text = ""
+        cboManGroup.Text = ""
+        txtManBigo.Text = ""
+    End Sub
+
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles tab_Main.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        palDetail.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles tab_Detail.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        palDetail.Visible = True
+    End Sub
+
+    Private Sub lstMain_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs)
+        Label_Color(tab_Detail, Color_Label, Di_Panel2)
+
+        '상세화면 Focus
+        Panel1.Visible = False
+        palDetail.Visible = True
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        '***********************************************************************************************
+        '이전 처리 방법
+        'StrSQL = "SELECT * FROM Man where Man_Code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("Man_Code").Value.ToString & "'"
+        'Re_Count = DB_Select(DBT)
+        '***********************************************************************************************
+
+        '#0. 임시변수 초기화
+        Dim tblData1 As Tuple(Of String, String)
+        Dim selectStr As New String("")
+        Dim whereStr As New String("")
+        '#1. select column List
+        For z = 0 To tblMan.Rows.Count - 1
+            selectStr += tblMan.TableName & "." & tblMan.Rows(z).Item(0).ToString
+            If z < tblMan.Rows.Count - 1 Then
+                selectStr += ", "
+            End If
+        Next
+        '#2. where condition
+        whereStr = " And dbo.Man.Man_Code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("Man_Code").Value.ToString & "'"
+        '#3. 변수 조합
+        tblData1 = New Tuple(Of String, String)(selectStr, whereStr)
+
+
+        DBT = fnExecSelectSql(1, ' ByVal tblCnt As Integer
+                                "dbo.Man", 'ByVal tblNm1 As String
+                                "", 'ByVal tblNm2 As String
+                                "", 'ByVal tblNm3 As String
+                                "", 'ByVal tblNm4 As String
+                                "", 'ByVal tblNm5 As String
+                                "", 'ByVal tblNm6 As String
+                                tblData1, 'ByVal tblData1 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData2 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData3 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData4 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData5 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData6 As Tuple(Of String, String)
+                                "",   'ByVal joinCond1 As String
+                                "",   'ByVal joinCond2 As String
+                                "",   'ByVal joinCond3 As String
+                                "",   'ByVal joinCond4 As String
+                                "",   'ByVal joinCond5 As String
+                                "",   'ByVal joinCondStr1 As String
+                                "",   'ByVal joinCondStr2 As String
+                                "",   'ByVal joinCondStr3 As String
+                                "",   'ByVal joinCondStr4 As String
+                                ""    'ByVal joinCondStr5 As String
+                                )
+
+        txtId.Text = DBT.Rows(0)("id").ToString
+        txtManCode.Text = DBT.Rows(0)("Man_Code").ToString
+        txtManName.Text = DBT.Rows(0)("Man_Name").ToString
+        TxtManSangHo.Text = DBT.Rows(0)("Man_Sangho").ToString
+        cboManDept.Text = DBT.Rows(0)("Man_Bu").ToString
+        cboManRank.Text = DBT.Rows(0)("Man_Gik").ToString
+        cboManSex.Text = DBT.Rows(0)("Man_Sex").ToString
+        If DBT.Rows(0)("Man_Birth").ToString.Length = 8 Then
+            dtpManBirth.Value = DateTime.ParseExact(DBT.Rows(0)("Man_Birth").ToString, "yyyyMMdd", Nothing).ToString("MM\/dd\/yyyy")
+        End If
+        If DBT.Rows(0)("Man_St_Day").ToString.Length = 8 Then
+            dtpManStDay.Value = DateTime.ParseExact(DBT.Rows(0)("Man_St_Day").ToString, "yyyyMMdd", Nothing).ToString("MM\/dd\/yyyy")
+        End If
+        If DBT.Rows(0)("Man_En_Day").ToString.Length = 8 Then
+            dtpManEnDay.Value = DateTime.ParseExact(DBT.Rows(0)("Man_En_Day").ToString, "yyyyMMdd", Nothing).ToString("MM\/dd\/yyyy")
+        End If
+        txtManEmail.Text = DBT.Rows(0)("Man_Email").ToString
+        txtManPhon.Text = DBT.Rows(0)("Man_Phon").ToString
+        txtManJunum.Text = DBT.Rows(0)("Man_Junum").ToString
+        txtManZip.Text = DBT.Rows(0)("Man_Zip").ToString
+        txtManAdd1.Text = DBT.Rows(0)("Man_Add1").ToString
+        txtManAdd2.Text = DBT.Rows(0)("Man_Add2").ToString
+        txtManTel.Text = DBT.Rows(0)("Man_Tel").ToString
+        txtManPass.Text = DBT.Rows(0)("Man_Pass").ToString
+        cboManLevel.Text = DBT.Rows(0)("Man_Level").ToString
+        cboManGroup.Text = DBT.Rows(0)("Man_Group").ToString
+        txtManBigo.Text = DBT.Rows(0)("Man_Bigo").ToString
+    End Sub
+
+    Private Sub Com_Can_Click(sender As Object, e As EventArgs)
+        text_clear()
+        Label_Color(tab_Main, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        palDetail.Visible = False
+    End Sub
+
+    Private Sub Com_OK_Click(sender As Object, e As EventArgs)
+        Dim i%
+        Dim DBT As DataTable
+        Dim fmtStr As String
+        fmtStr = String.Format("yyyyMMdd")
+
+        DBT = Nothing
+
+        StrSQL = "SELECT * FROM Man where Man_Code = '" & txtManCode.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+        '#1. 기존 입력 값 초기화
+        clearTblRowValues(tblMan)
+        '#2. 입력자료 입력
+        For i = 0 To tblMan.Rows.Count - 1
+
+            Select Case tblMan.Rows(i).Item(0).ToString
+                Case "id"
+                    If Re_Count > 0 Then
+                        tblMan.Rows(i).Item(11) = txtId.Text
+                    Else
+                        tblMan.Rows(i).Item(11) = "(select isnull(max(id),0) + 1 from dbo.Man)"
+                    End If
+                Case "Man_Name"
+                    tblMan.Rows(i).Item(11) = txtManName.Text
+                Case "Man_Sangho"
+                    tblMan.Rows(i).Item(11) = TxtManSangHo.Text
+                Case "Man_Bu"
+                    tblMan.Rows(i).Item(11) = cboManDept.Text
+                Case "Man_Gik"
+                    tblMan.Rows(i).Item(11) = cboManRank.Text
+                Case "Man_Sex"
+                    tblMan.Rows(i).Item(11) = cboManSex.Text
+                Case "Man_Birth"
+                    tblMan.Rows(i).Item(11) = dtpManBirth.Value.ToString(fmtStr)
+                Case "Man_Junum"
+                    tblMan.Rows(i).Item(11) = txtManJunum.Text
+                Case "Man_Foreigner"
+                    tblMan.Rows(i).Item(11) = cboManForeigner.Text
+                Case "Man_St_Day"
+                    tblMan.Rows(i).Item(11) = dtpManStDay.Value.ToString(fmtStr)
+                Case "Man_En_Day"
+                    tblMan.Rows(i).Item(11) = dtpManEnDay.Value.ToString(fmtStr)
+                Case "Man_Tel"
+                    tblMan.Rows(i).Item(11) = txtManTel.Text
+                Case "Man_Phon"
+                    tblMan.Rows(i).Item(11) = txtManPhon.Text
+                Case "Man_Email"
+                    tblMan.Rows(i).Item(11) = txtManEmail.Text
+                Case "Man_Car"
+                    tblMan.Rows(i).Item(11) = txtManJunum.Text
+                Case "Man_Zip"
+                    tblMan.Rows(i).Item(11) = txtManZip.Text
+                Case "Man_Add1"
+                    tblMan.Rows(i).Item(11) = txtManAdd1.Text
+                Case "Man_Add2"
+                    tblMan.Rows(i).Item(11) = txtManAdd2.Text
+                Case "Man_Pass"
+                    tblMan.Rows(i).Item(11) = txtManPass.Text
+                Case "Man_Level"
+                    tblMan.Rows(i).Item(11) = cboManLevel.Text
+                Case "Man_Group"
+                    tblMan.Rows(i).Item(11) = cboManGroup.Text
+                Case "Man_Bigo"
+                    tblMan.Rows(i).Item(11) = txtManBigo.Text
+                Case "Man_Code"
+                    tblMan.Rows(i).Item(11) = txtManCode.Text
+            End Select
+
+        Next
+
+        If Re_Count > 0 Then
+            '***********************************************************************************************
+            '이전 처리 방법
+            'StrSQL = "Update Man Set Man_Name ='" & txtManName.Text & "',
+            '                             Man_Sangho = '" & txtManSangho.Text & "',
+            '                             Man_Bu = '" & cboManDept.Text & "',
+            '                             Man_Gik = '" & cboManRank.Text & "',
+            '                             Man_Sex = '" & cboManSex.Text & "',
+            '                             Man_Birth = '" & Format(dtpManBirth.Text, "yyyymmdd") & "',
+            '                             Man_Junum = '" & txtManJunum.Text & "',
+            '                             Man_Foreigner = '" & cboManForeigner.Text & "',
+            '                             Man_St_Day = '" & Format(dtpManStDay.Text, "yyyymmdd") & "',
+            '                             Man_En_Day = '" & Format(dtpManEnDay.Text, "yyyymmdd") & "',
+            '                             Man_Tel = '" & txtManTel.Text & "',
+            '                             Man_Phon = '" & txtManPhon.Text & "',
+            '                             Man_Email = '" & txtManEmail.Text & "', 
+            '                             Man_Car = '" & txtManJunum.Text & "',
+            '                             Man_Zip = '" & txtManZip.Text & "',
+            '                             Man_Add1 = '" & txtManAdd1.Text & "',
+            '                             Man_Add2 = '" & txtManAdd2.Text & "',
+            '                             Man_Pass = '" & txtManTel.Text & "',
+            '                             Man_Level = '" & cboManLevel.Text & "',
+            '                             Man_Group = '" & cboManGroup.Text & "',
+            '                             Man_Bigo = '" & txtManBigo.Text & "'
+            '                             WHERE Man_Code = '" & txtId.Text & "'"
+            'Re_Count2 = DB_Execute()
+            '***********************************************************************************************
+            Re_Count2 = fnTableUpdate("dbo.Man", tblMan)
+
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        Else
+
+            '***********************************************************************************************
+            '이전 처리 방법
+            'StrSQL = "Insert into Man (    id, Man_Code, Man_Name, Man_Sangho, Man_Bu, Man_Gik,
+            '                               Man_Sex, Man_Birth, Man_Junum, Man_Foreigner, Man_St_Day, Man_En_Day, 
+            '                               Man_Tel, Man_Phon, Man_Email, Man_Car, Man_Zip, Man_Add1, Man_Add2,
+            '                               Man_Pass, Man_Level, Man_Group, Man_Bigo) 
+            '                       Values ( (select isnull(max(id),0) + 1 from Man), '" & txtId.Text & "', '" & txtManName.Text & "', '" & txtManSangho.Text & "', '" & cboManDept.Text & "', '" & cboManRank.Text & "','" &
+            '                                    cboManSex.Text & "', '" & Format(dtpManBirth.Text, "yyyymmdd") & "', '" & txtManJunum.Text & "', '" & cboManForeigner.Text & "', '" & Format(dtpManStDay.Text, "yyyymmdd") & "','" & Format(dtpManEnDay.Text, "yyyymmdd") & "','" &
+            '                                    txtManTel.Text & "', '" & txtManPhon.Text & "', '" & txtManEmail.Text & "', '" &
+            '                                    txtManCar.Text & "', '" & txtManZip.Text & "', '" & txtManAdd1.Text & "', '" & txtManAdd2.Text & "', '" &
+            '                                    txtManPass.Text & "', '" & cboManLevel.Text & "', '" & cboManGroup.Text & "', '" & txtManBigo.Text & "')"
+            '    Re_Count2 = DB_Execute()
+            '***********************************************************************************************
+            Re_Count2 = fnTableInsert("dbo.Man", tblMan)
+
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        End If
+
+        Grid_Man_Load()
+        text_clear()
+        Label_Color(tab_Main, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        palDetail.Visible = False
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs)
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        '***********************************************************************************************
+        '이전 처리 방법
+        'StrSQL = "SELECT Man_Code, Man_Name, Man_Sangho, Man_Bu, Man_Gik, Man_Sex, Man_Birth, Man_Junum, 
+        '                 Man_Foreigner, Man_Tel, Man_Phon, Man_Email, Man_St_Day, Man_En_Day, Man_Car,
+        '                 Man_Zip, Man_Add1, Man_Add2, Man_Pass, Man_Level, Man_Group, Man_Bigo
+        '            FROM Man 
+        '            where 1=1
+        '            AND Man_Name Like '%" & TextBox15.Text & "%'
+        '            AND Man_Bu Like '%" & TextBox16.Text & "%'
+        '            AND Man_Level Like '%" & TextBox17.Text & "%'"
+        'Re_Count = DB_Select(DBT)
+        '***********************************************************************************************
+
+        '#0. 임시변수 초기화
+        Dim tblData1 As Tuple(Of String, String)
+        Dim selectStr As New String("")
+        Dim whereStr As New String("")
+        '#1. select column List
+        For z = 0 To tblMan.Rows.Count - 1
+            selectStr += tblMan.TableName & "." & tblMan.Rows(z).Item(0).ToString
+            If z < tblMan.Rows.Count - 1 Then
+                selectStr += ", "
+            End If
+        Next
+        '#2. where condition
+        whereStr = " And dbo.Man.Man_Name Like '%" & txtSearchItem11.Text & "%' " &
+                   " order by Man_Dept, Man_Rank, Man_Name, Man_Code "
+        '" And dbo.Man.Man_Bu in (select Base_Code from dbo.Base_Code where Base_Sel_Code = '0001' and Base_Code_Name like '%" & TextBox16.Text & "%') " &
+        '" And dbo.Man.Man_Level Like '%" & TextBox17.Text & "%'" &
+        '#3. 변수 조합
+        tblData1 = New Tuple(Of String, String)(selectStr, whereStr)
+
+        DBT = fnExecSelectSql(1, ' ByVal tblCnt As Integer
+                                "dbo.Man", 'ByVal tblNm1 As String
+                                "", 'ByVal tblNm2 As String
+                                "", 'ByVal tblNm3 As String
+                                "", 'ByVal tblNm4 As String
+                                "", 'ByVal tblNm5 As String
+                                "", 'ByVal tblNm6 As String
+                                tblData1, 'ByVal tblData1 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData2 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData3 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData4 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData5 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData6 As Tuple(Of String, String)
+                                "",   'ByVal joinCond1 As String
+                                "",   'ByVal joinCond2 As String
+                                "",   'ByVal joinCond3 As String
+                                "",   'ByVal joinCond4 As String
+                                "",   'ByVal joinCond5 As String
+                                "",   'ByVal joinCondStr1 As String
+                                "",   'ByVal joinCondStr2 As String
+                                "",   'ByVal joinCondStr3 As String
+                                "",   'ByVal joinCondStr4 As String
+                                ""    'ByVal joinCondStr5 As String
+                                )
+
+        lstMain.DataSource = DBT
+        lstMain.ClearSelection()
+
+    End Sub
+
+    Private Sub tab_List_MouseClick(sender As Object, e As MouseEventArgs) Handles tab_Main.MouseClick
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = True
+        palDetail.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_MouseClick(sender As Object, e As MouseEventArgs) Handles tab_Detail.MouseClick
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = False
+        palDetail.Visible = True
+    End Sub
+End Class

@@ -1,0 +1,45 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+
+Public Class Frm_CO_Report5
+    Private Sub Frm_CO_Report5_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        palMain.Top = 40
+        palMain.Left = 10
+
+        btnSearch.PerformClick()
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT CO_JOB, CO.CO_Code, CO_Rev_No, CO_WH, CO_Condition, CO_PL_Name, CO_PL_Material, CO_PL_Spec, CO_DwgNo, CO_Unit, CO_Qty, CO_Unit_Price, CO_Price, CO_Delivery_Date, CO_Insu_Date 
+FROM CM_Order CO, CM_Order_List CL 
+where 1=1
+and CO.CO_Rev_No = (select isnull(max(CO_Rev_No),1) from CM_Order where CO_Code = CO.CO_Code)
+and CL.CO_Rev_No = (select isnull(max(CO_Rev_No),1) from CM_Order_List where CO_Code = CL.CO_Code)
+and CO.CO_Code = CL.CO_Code  
+and CO_JOB Like '" & txtJobNo.Text & "'
+and CO_DwgNo Like '" & txtJobName.Text & "'
+and CO.CO_Code Like '" & txtPOCode.Text & "'
+order by CO_JOB"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstMain.DataSource = DBT
+            lstMain.ClearSelection()
+        End If
+
+    End Sub
+
+    Private Sub btnJobSearch_Click(sender As Object, e As EventArgs) Handles btnJobSearch.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo.Text = pop1.result
+        End If
+        pop1.Dispose()
+    End Sub
+End Class

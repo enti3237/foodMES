@@ -1,0 +1,251 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Public Class Frm_CC_Report2
+    Dim Grid_Display As Boolean
+
+
+    Private Sub Frm_CC_Report1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        S_Text_Setup()
+        Sales_out_List_Grid_Setup()
+        SalseOutList_List_Grid_Setup()
+
+        'Search_Combo.Items.Add("코드")
+        'Search_Combo.Items.Add("날짜")
+        'Search_Combo.Items.Add("거래처")
+        'Search_Combo.Text = "코드"
+        '12, 135
+
+
+
+    End Sub
+    Public Function S_Text_Setup() As Boolean
+        E_Day.Text = Format(Now, "yyyy-MM-dd")
+        S_Day.Text = Mid(E_Day.Text, 1, 8) & "01"
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Search_Combo.Items.Clear()
+        Search_Combo.Items.Add("전체")
+        StrSQL = "Select *  From Customer with(NOLOCK) Order By CUSTOMER_Code"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            For i = 0 To Re_Count - 1
+                Search_Combo.Items.Add(DBT.Rows(i)("CUSTOMER_Code"))  'DBT.Rows(0)("CUSTOMER_Name")
+            Next i
+        End If
+
+        Search_Combo_Name.Items.Clear()
+        Search_Combo_Name.Items.Add("전체")
+        StrSQL = "Select *  From Customer with(NOLOCK) Order By CUSTOMER_Name"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            For i = 0 To Re_Count - 1
+                Search_Combo_Name.Items.Add(DBT.Rows(i)("CUSTOMER_Name"))  'DBT.Rows(0)("CUSTOMER_Name")
+            Next i
+        End If
+
+        Search_Combo.Text = "전체"
+        Search_Combo_Name.Text = "전체"
+
+
+        S_Text_Setup = True
+
+    End Function
+
+    Private Sub Search_Combo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Search_Combo.SelectedIndexChanged
+
+        If Search_Combo.Text = "전체" Then
+            Search_Combo_Name.Text = "전체"
+            Exit Sub
+        End If
+
+        Dim DBT As New DataTable
+        StrSQL = "Select *  From Customer with(NOLOCK) Where CUSTOMER_Code = '" & Search_Combo.Text & "' Order By CUSTOMER_Code"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Search_Combo_Name.Text = DBT.Rows(0)("CUSTOMER_Name")
+        End If
+    End Sub
+
+    Private Sub Search_Combo_Name_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Search_Combo_Name.SelectedIndexChanged
+        If Search_Combo_Name.Text = "전체" Then
+            Search_Combo.Text = "전체"
+            Exit Sub
+        End If
+
+        Dim DBT As New DataTable
+        StrSQL = "Select *  From Customer with(NOLOCK) Where CUSTOMER_Name = '" & Search_Combo_Name.Text & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Search_Combo.Text = DBT.Rows(0)("CUSTOMER_Code")
+        End If
+
+    End Sub
+    Public Function Sales_out_List_Grid_Setup() As Boolean
+        Grid_Color(SalseOut_List_Grid)
+
+
+        SalseOut_List_Grid.AllowUserToAddRows = False
+        SalseOut_List_Grid.RowTemplate.Height = 20
+
+
+        '열의 갯수는 하나 더 많아야 함.
+        SalseOut_List_Grid.ColumnCount = 9
+        SalseOut_List_Grid.RowCount = 1
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        SalseOut_List_Grid.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        SalseOut_List_Grid.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        SalseOut_List_Grid.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+
+        SalseOut_List_Grid.RowHeadersWidth = 40
+        SalseOut_List_Grid.Columns(0).Width = 40
+        SalseOut_List_Grid.Columns(0).HeaderText = "순번"
+        SalseOut_List_Grid.Columns(1).HeaderText = "출하코드"
+        SalseOut_List_Grid.Columns(2).HeaderText = "거래처명"
+        SalseOut_List_Grid.Columns(3).HeaderText = "지시일자"
+        SalseOut_List_Grid.Columns(4).HeaderText = "지시수량"
+        SalseOut_List_Grid.Columns(5).HeaderText = "출하수량"
+        SalseOut_List_Grid.Columns(6).HeaderText = "진행상태"
+
+
+
+
+        SalseOut_List_Grid.Columns(0).ReadOnly = True
+        Sales_out_List_Grid_Setup = True
+    End Function
+
+    Private Function SalseOutList_List_Grid_Setup() As Boolean
+        Grid_Color(SalseOutList_List_Grid)
+
+        SalseOutList_List_Grid.AllowUserToAddRows = False
+        SalseOutList_List_Grid.RowTemplate.Height = 24
+        SalseOutList_List_Grid.ColumnCount = 11
+        SalseOutList_List_Grid.RowCount = 1
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        SalseOutList_List_Grid.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        SalseOutList_List_Grid.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        SalseOutList_List_Grid.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        SalseOutList_List_Grid.Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        SalseOutList_List_Grid.Columns(6).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        SalseOutList_List_Grid.Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        SalseOutList_List_Grid.Columns(8).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        SalseOutList_List_Grid.Columns(9).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        SalseOutList_List_Grid.Columns(10).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+
+        SalseOutList_List_Grid.RowHeadersWidth = 10
+
+
+        SalseOutList_List_Grid.Columns(0).HeaderText = "순번"
+        SalseOutList_List_Grid.Columns(1).HeaderText = "일자"
+        SalseOutList_List_Grid.Columns(2).HeaderText = "제품코드"
+        SalseOutList_List_Grid.Columns(3).HeaderText = "제품명"
+        SalseOutList_List_Grid.Columns(4).HeaderText = "규격"
+        SalseOutList_List_Grid.Columns(5).HeaderText = "단위"
+        SalseOutList_List_Grid.Columns(6).HeaderText = "단가"
+        SalseOutList_List_Grid.Columns(7).HeaderText = "수량"
+        SalseOutList_List_Grid.Columns(8).HeaderText = "금액"
+        SalseOutList_List_Grid.Columns(9).HeaderText = "세액"
+        SalseOutList_List_Grid.Columns(10).HeaderText = "비고"
+
+        Dim i As Integer
+
+        SalseOutList_List_Grid.Columns(0).Width = 60
+        SalseOutList_List_Grid.Columns(1).Width = 100
+        SalseOutList_List_Grid.Columns(2).Width = 100
+
+        For i = 3 To SalseOutList_List_Grid.ColumnCount - 1
+            SalseOutList_List_Grid.Columns(i).Width = 80
+        Next i
+
+
+
+
+        SalseOutList_List_Grid_Setup = True
+
+    End Function
+
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs) Handles Search_Com.Click
+        Dim S_T As String
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        'S_T = Mid(S_Day.Text, 1, 4) & Mid(S_Day.Text, 6, 2) & Mid(S_Day.Text, 9, 2) & Mid(S_Time.Text, 1, 2)
+
+        SalseOut_List_Grid.RowCount = 0
+        If Search_Combo_Name.Text = "전체" Then
+            StrSQL = "SELECT SALES_OUT.SALES_OUT_CODE, SALES_OUT_CUSTOMER_NAME, SALES_OUT_DATE,  SALES_OUT.SALES_OUT_CHECK, sum(SALES_OUT_LIST.SALES_OUT_TOTAL) as SALES_OUT_TOTAL "
+            StrSQL = StrSQL & "From SALES_OUT, SALES_OUT_LIST "
+            StrSQL = StrSQL & "Where SALES_OUT.SALES_OUT_CODE = SALES_OUT_LIST.SALES_OUT_CODE And SALES_OUT_DATE BETWEEN '" & S_Day.Text & "' And '" & E_Day.Text & "' "
+            StrSQL = StrSQL & "GROUP BY SALES_OUT.SALES_OUT_CODE, SALES_OUT.SALES_OUT_CUSTOMER_NAME, SALES_OUT.SALES_OUT_DATE, SALES_OUT.SALES_OUT_CHECK"
+        Else
+            StrSQL = "SELECT SALES_OUT.SALES_OUT_CODE, SALES_OUT_CUSTOMER_NAME, SALES_OUT_DATE,  SALES_OUT.SALES_OUT_CHECK, sum(SALES_OUT_LIST.SALES_OUT_TOTAL) as SALES_OUT_TOTAL "
+            StrSQL = StrSQL & "From SALES_OUT, SALES_OUT_LIST "
+            StrSQL = StrSQL & "Where SALES_OUT.SALES_OUT_CODE = SALES_OUT_LIST.SALES_OUT_CODE And SALES_OUT_DATE BETWEEN '" & S_Day.Text & "' And '" & E_Day.Text & "' And SALES_OUT_Customer_Code = '" & Search_Combo.Text & " '"
+            StrSQL = StrSQL & "GROUP BY SALES_OUT.SALES_OUT_CODE, SALES_OUT.SALES_OUT_CUSTOMER_NAME, SALES_OUT.SALES_OUT_DATE, SALES_OUT.SALES_OUT_CHECK"
+        End If
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            SalseOut_List_Grid.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                SalseOut_List_Grid.Item(0, i).Value = i + 1
+                For j = 1 To 5
+                    SalseOut_List_Grid.Item(j, i).Value = DBT.Rows(i).Item(j - 1).ToString
+                Next j
+                '출하완료 유무 확인(지시수량, 출하수량 비교)
+                If Val(DBT.Rows(i)("SALES_OUT_CHECK").ToString) > Val(DBT.Rows(i)("SALES_OUT_TOTAL").ToString) Then
+                    SalseOut_List_Grid.Item(6, i).Value = "진행"
+                Else
+                    SalseOut_List_Grid.Item(6, i).Value = "완료"
+                End If
+
+            Next i
+        Else
+            SalseOut_List_Grid.RowCount = 1
+            For j = 0 To SalseOut_List_Grid.ColumnCount - 1
+                SalseOut_List_Grid.Item(j, 0).Value = ""
+            Next j
+        End If
+
+        SalseOut_List_Grid.MultiSelect = False
+        SalseOut_List_Grid.ClearSelection()
+
+    End Sub
+
+    Private Sub SalseOut_List_Grid_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles SalseOut_List_Grid.CellEnter
+        If Len(SalseOut_List_Grid.Item(0, SalseOut_List_Grid.CurrentCell.RowIndex).Value) > 0 Then
+            Line_Panel.Visible = True
+            SalseOutList_List_Grid_Display(SalseOut_List_Grid.Item(1, SalseOut_List_Grid.CurrentCell.RowIndex).Value)
+        End If
+    End Sub
+    Public Function SalseOutList_List_Grid_Display(SALES_OUT_Code As String) As Boolean
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+
+        SalseOutList_List_Grid.RowCount = 0
+        StrSQL = "Select SALES_OUT_Sun, SALES_OUT_Day, SALES_OUT_PRODUCT_Code, SALES_OUT_PRODUCT_Name, SALES_OUT_Standard, SALES_OUT_Unit, SALES_OUT_Unit_Amount, SALES_OUT_Total, SALES_OUT_Gold, SALES_OUT_Vat, SALES_OUT_Bigo  From SALES_OUT_LIST with(NOLOCK)  Where SALES_OUT_Code = '" & SALES_OUT_Code & "' Order By Convert(Decimal,SALES_OUT_Sun)"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            SalseOutList_List_Grid.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                For j = 0 To SalseOutList_List_Grid.ColumnCount - 1
+                    SalseOutList_List_Grid.Item(j, i).Value = DBT.Rows(i).Item(j).ToString
+                Next j
+            Next i
+        Else
+            SalseOutList_List_Grid.RowCount = 1
+            For j = 0 To SalseOutList_List_Grid.ColumnCount - 1
+                SalseOutList_List_Grid.Item(j, 0).Value = ""
+            Next j
+        End If
+
+        SalseOutList_List_Grid.ReadOnly = True
+        SalseOutList_List_Grid_Display = True
+    End Function
+
+End Class

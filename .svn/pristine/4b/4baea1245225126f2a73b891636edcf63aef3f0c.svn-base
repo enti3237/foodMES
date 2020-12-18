@@ -1,0 +1,87 @@
+﻿Public Class Frm_PD_Report9
+    Private Sub Frm_PD_Report9_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        palMain.Top = 40
+        palMain.Left = 10
+
+        palMain.Visible = True
+
+        btnSearch.PerformClick()
+    End Sub
+
+
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            txtJobNo.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString
+            txtJobName.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Name").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnCustomerSearch_Click(sender As Object, e As EventArgs) Handles btnCustomerSearch.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Customer_POP = New Frm_Customer_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            cboDBT.Columns.Add("CM_Code")
+            cboDBT.Columns.Add("CM_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            txtCustomerName.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            'cboCustomer2.DataSource = cboDBT
+            'cboCustomer2.ValueMember = "CM_Code"
+            'cboCustomer2.DisplayMember = "CM_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        CQ_Load()
+    End Sub
+
+    Private Sub CQ_Load()
+
+        Dim i As Integer
+        Dim DBT As DataTable, DBT2 As DataTable
+        Dim itmestr As String = ""
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = " SELECT CQ.* " &
+                 " ,CR.CR_Name CQ_CR_Name " &
+                 " ,(select isnull(Max(CR_Rev_No),1) from CR_Contract where CR_Code = CQ.CQ_CR_Code) As CQ_CR_Rev_No " &
+                 " ,(select isnull(Max(LO_Rev_No),1) from LA_Order where LO_Code = CQ.CQ_LO_Code) As CQ_LO_Rev_No " &
+                 " ,(select isnull(Max(CO_Rev_No),1) from CM_Order where CO_Code = CQ.CQ_CO_Code) As CQ_CO_Rev_No " &
+                 " ,(select isnull(Max(PS_Rev_No),1) from PS_Order_Plan where PS_Code = CQ.CQ_PS_Code) As CQ_PS_Rev_No " &
+                 " ,(select CM_Name from company where CQ.CQ_Customer_Code <> '' And CM_Code = CQ.CQ_Customer_Code) As CQ_Customer_Name " &
+                 " ,(select CM_Add1 + ' ' + CM_Add2 from company where CQ.CQ_Vendor_Code <> '' And CM_Code = CQ.CQ_Vendor_Code) As CQ_Vendor_Addr " &
+                 " ,(select CM_Name from company where CQ.CQ_Vendor_Code <> '' And CM_Code = CQ.CQ_Vendor_Code) As CQ_Vendor_Name " &
+                 " ,(select Man_Name from man where CQ.CQ_Prepared <> '' And Man_Code = CQ.CQ_Prepared) As CQ_Prepared_User_Name " &
+                 " ,(select Man_Name from man where CQ.CQ_Reviewed <> '' And Man_Code = CQ.CQ_Reviewed) As CQ_Reviewed_User_Name " &
+                 " ,(select Man_Name from man where CQ.CQ_Inspection_Prepared <> '' And Man_Code = CQ.CQ_Inspection_Prepared) As CQ_Inspection_Prepared_User_Name " &
+                 " ,(select Man_Name from man where CQ.CQ_Inspection_Confirmed <> '' And Man_Code = CQ.CQ_Inspection_Confirmed) As CQ_Inspection_Confirmed_User_Name " &
+                 " ,(select Man_Name from man where CQ.CQ_WH_Confirmed <> '' And Man_Code = CQ.CQ_WH_Confirmed) As CQ_WH_Confirmed_User_Name " &
+                 " FROM CM_Stock_QC CQ, CR_Contract CR " &
+                 " where 1=1 " &
+                 " AND CQ.CQ_Rev_No = (select isnull(max(CQ_Rev_No),1) from CM_Stock_QC where CQ_Code = CQ.CQ_code) " &
+                 " And CQ.CQ_CR_Code Like '%" & txtJobNo.Text & "%' " &
+                 " And CQ.CQ_Code Like '%" & txtRIRNo.Text & "%' " &
+                 " AND convert(datetime,'" & dtpRegDateFrom.Value.ToString("yyyy-MM-dd") & "') <= CQ.CQ_Date and convert(datetime,'" & dtpRegDateTo.Value.ToString("yyyy-MM-dd") & "') >= CQ.CQ_Date " &
+                 " And CQ.CQ_CR_Code = CR.CR_Code " &
+                 " And CR.CR_Rev_No = ( select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code) " &
+                 " And CR.CR_Name like '%" & txtJobName.Text & "%' " &
+                 " order by CQ.CQ_Code, CQ.CQ_CR_Code"
+        Re_Count = DB_Select(DBT)
+
+        lstMain.DataSource = DBT
+        lstMain.ClearSelection()
+
+
+    End Sub
+End Class

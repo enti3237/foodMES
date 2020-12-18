@@ -1,0 +1,30 @@
+﻿Public Class Frm_MTE_POP
+    Private Sub Frm_MTE_POP_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        MTE_Load()
+    End Sub
+
+    Private Sub MTE_Load()
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = "SELECT *
+                        FROM 
+                        QC_MTECL with(NOLOCK) 
+                        order by MTECL_No"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstMain.DataSource = DBT
+            lstMain.ClearSelection()
+        End If
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.DialogResult = DialogResult.OK
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Me.Close()
+    End Sub
+End Class

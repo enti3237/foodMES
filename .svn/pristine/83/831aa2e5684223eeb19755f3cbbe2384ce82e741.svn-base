@@ -1,0 +1,275 @@
+﻿Public Class Frm_Collection
+    Private Sub Frm_Collection_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Grid_Code_Setup()
+        Grid_Info_Setup()
+        Grid_Main_Setup()
+
+
+
+
+        Search_Combo.Items.Add("코드")
+        Search_Combo.Items.Add("날짜")
+        Search_Combo.Items.Add("거래처")
+        Search_Combo.Text = "코드"
+
+
+        Panel_Main.Top = 136
+        Panel_Main.Left = 389
+
+        Panel_Main.Visible = True
+
+    End Sub
+    Public Function Grid_Code_Setup() As Boolean
+        Grid_Color(Grid_Code)
+
+        Grid_Code.AllowUserToAddRows = False
+        Grid_Code.RowTemplate.Height = 20
+        Grid_Code.ColumnCount = 3
+        Grid_Code.RowCount = 1
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Code.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.RowHeadersWidth = 10
+        Grid_Code.Columns(0).Width = 100
+        Grid_Code.Columns(1).Width = 70
+        Grid_Code.Columns(2).Width = 80
+
+        Grid_Code.Columns(0).HeaderText = "코드"
+        Grid_Code.Columns(1).HeaderText = "날짜"
+        Grid_Code.Columns(2).HeaderText = "거래처"
+
+        Dim i As Integer
+        For i = 0 To Grid_Code.ColumnCount - 1
+            Grid_Code.Columns(i).ReadOnly = True
+        Next i
+        Grid_Code_Setup = True
+    End Function
+
+    Public Function Grid_Info_Setup() As Boolean
+
+        Grid_Color(Grid_Info)
+
+
+        Grid_Info.AllowUserToAddRows = False
+        Grid_Info.RowTemplate.Height = 24
+        Grid_Info.ColumnCount = 2
+        Grid_Info.RowCount = 14
+
+
+
+
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Info.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Grid_Info.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Info.RowHeadersWidth = 10
+        Grid_Info.Columns(0).Width = 100
+        Grid_Info.Columns(1).Width = 240
+        Grid_Info.Columns(0).HeaderText = "구분"
+        Grid_Info.Columns(1).HeaderText = "내용"
+
+        Grid_Info.Item(0, 0).Value = "코드"
+        Grid_Info.Item(0, 1).Value = "담당자"
+        Grid_Info.Item(0, 2).Value = "날짜"
+        Grid_Info.Item(0, 3).Value = "시간"
+        Grid_Info.Item(0, 4).Value = "거래처코드"
+        Grid_Info.Item(0, 5).Value = "거래처명"
+        Grid_Info.Item(0, 6).Value = "담당자"
+        Grid_Info.Item(0, 7).Value = "연락처"
+        Grid_Info.Item(0, 8).Value = "지불조건"
+        Grid_Info.Item(0, 9).Value = "납기일자1"
+        Grid_Info.Item(0, 10).Value = "납기일자2"
+        Grid_Info.Item(0, 11).Value = "납기일자3"
+        Grid_Info.Item(0, 12).Value = "비고"
+        Grid_Info.Item(0, 13).Value = "관리"
+
+
+        'Grid_Info.Columns(0).ReadOnly = True
+        'Grid_Info.Columns(1).ReadOnly = True
+
+        Grid_Info.Rows(0).ReadOnly = True
+        Grid_Info.Rows(1).ReadOnly = True
+        Grid_Info.Rows(2).ReadOnly = True
+        Grid_Info.Rows(3).ReadOnly = True
+        Grid_Info.Rows(4).ReadOnly = False
+
+        Grid_Info_Setup = True
+    End Function
+    Public Function Grid_Main_Setup() As Boolean
+        Grid_Color(Grid_Main)
+
+        Grid_Main.AllowUserToAddRows = False
+        Grid_Main.RowTemplate.Height = 24
+        Grid_Main.ColumnCount = 12
+        Grid_Main.RowCount = 0
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Main.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        Grid_Main.Columns(6).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        Grid_Main.Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        Grid_Main.Columns(8).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        Grid_Main.Columns(9).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        Grid_Main.Columns(10).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+
+        Grid_Main.RowHeadersWidth = 10
+
+
+        Grid_Main.Columns(0).HeaderText = "순번"
+        Grid_Main.Columns(1).HeaderText = "제품코드"
+        Grid_Main.Columns(2).HeaderText = "제품명"
+        Grid_Main.Columns(3).HeaderText = "규격"
+        Grid_Main.Columns(4).HeaderText = "단위"
+        Grid_Main.Columns(5).HeaderText = "단가"
+        Grid_Main.Columns(6).HeaderText = "day01"
+        Grid_Main.Columns(7).HeaderText = "day02"
+        Grid_Main.Columns(8).HeaderText = "day03"
+        Grid_Main.Columns(9).HeaderText = "Total"
+        Grid_Main.Columns(10).HeaderText = "금액"
+        Grid_Main.Columns(11).HeaderText = "비고"
+
+        Dim i As Integer
+
+        Grid_Main.Columns(0).Width = 60
+        Grid_Main.Columns(1).Width = 150
+        Grid_Main.Columns(2).Width = 150
+
+        For i = 3 To Grid_Main.ColumnCount - 1
+            Grid_Main.Columns(i).Width = 80
+        Next i
+
+        Grid_Main_Setup = True
+    End Function
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs) Handles Search_Com.Click
+        '검색
+        Grid_Code_Display()
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+            Panel_Main.Visible = True
+
+        End If
+
+    End Sub
+    Public Function Grid_Code_Display() As Boolean
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        Grid_Code.RowCount = 1
+        Select Case Search_Combo.Text
+            Case "코드"
+                StrSQL = "Select CR_Code, CR_Date, CR_Customer_Name From Contract with(NOLOCK) Where CR_Code Like '" & Search_Text.Text & "%'  Order  By CR_Code DESC"
+            Case "날짜"
+                StrSQL = "Select CR_Code, CR_Date, CR_Customer_Name From Contract with(NOLOCK) Where CR_Date Like '" & Search_Text.Text & "%' Or CR_Date Is Null  Order By CR_Date"
+            Case "거래처"
+                StrSQL = "Select CR_Code, CR_Date, CR_Customer_Name From Contract with(NOLOCK) Where CR_Customer_Name Like '" & Search_Text.Text & "%' Or CR_Customer_Name Is Null  Order By CR_Customer_Name"
+        End Select
+
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Grid_Code.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                For j = 0 To Grid_Code.ColumnCount - 1
+                    Grid_Code.Item(j, i).Value = DBT.Rows(i).Item(j)
+                Next j
+            Next i
+        Else
+            Grid_Code.RowCount = 1
+            For j = 0 To Grid_Code.ColumnCount - 1
+                Grid_Code.Item(j, 0).Value = ""
+            Next j
+        End If
+        Grid_Code_Display = True
+    End Function
+
+    Private Sub Grid_Code_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Code.CellEnter
+        Dim DBT As New DataTable
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+            Panel_Main.Visible = True
+            Grid_Info_Display(Grid_Info, "Select * From Contract With(NOLOCK) Where CR_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "'")
+
+            StrSQL = "Select CR_Code, CR_Name, CR_S_Day, CR_E_Day, CR_Sel From Collection with(NOLOCK) Where CR_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "'"
+            Re_Count = DB_Select(DBT)
+            If Re_Count <> 0 Then
+                Text1.Text = DBT.Rows(0)("CR_Name")
+                Text2.Text = DBT.Rows(0)("CR_S_Day")
+                Text3.Text = DBT.Rows(0)("CR_E_Day")
+                Text4.Text = DBT.Rows(0)("CR_Sel")
+
+            Else
+                Text1.Text = ""
+                Text2.Text = ""
+                Text3.Text = ""
+                Text4.Text = ""
+
+            End If
+
+            Main_Grid_day()
+            Label_Color(Com_Contract, Color_Label, Di_Panel2)
+            Grid_Main_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+            Panel_Main.Visible = True
+        End If
+
+    End Sub
+
+    Public Function Main_Grid_day() As Boolean
+        Grid_Main.Columns(6).HeaderText = Grid_Info.Item(1, 9).Value.ToString
+        Grid_Main.Columns(7).HeaderText = Grid_Info.Item(1, 10).Value.ToString
+        Grid_Main.Columns(8).HeaderText = Grid_Info.Item(1, 11).Value.ToString
+        Main_Grid_day = True
+
+    End Function
+    Public Function Grid_Main_Display(PL_Code As String) As Boolean
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+
+        Grid_Main.RowCount = 0
+        StrSQL = "Select CL_Sun, CL_PL_Code, CL_PL_Name, CL_Standard, CL_Unit, CL_Unit_Amount, CL_day01, CL_day02, CL_day03, CL_Total, CL_Gold, CL_Bigo  From Contract_List with(NOLOCK)  Where CL_Code = '" & PL_Code & "' Order By Convert(Decimal,CL_Sun)"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Grid_Main.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                For j = 0 To Grid_Main.ColumnCount - 1
+                    Grid_Main.Item(j, i).Value = DBT.Rows(i).Item(j).ToString
+                Next j
+            Next i
+        Else
+            Grid_Main.RowCount = 1
+            For j = 0 To Grid_Main.ColumnCount - 1
+                Grid_Main.Item(j, 0).Value = ""
+            Next j
+        End If
+        Main_Grid_day()
+
+
+        Grid_Main_Display = True
+
+    End Function
+
+    Private Sub Grid_Code_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Code.CellContentClick
+
+    End Sub
+
+    Private Sub Save_Com_Click(sender As Object, e As EventArgs) Handles Save_Com.Click
+        Dim DBT As New DataTable
+        StrSQL = "Select * From Collection with(NOLOCK)  Where CR_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+        Else
+            '추가 한다
+            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+            StrSQL = StrSQL & "Insert into Collection (CR_Code)  Values ('" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "')"
+            Re_Count = DB_Execute()
+
+        End If
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "update Collection Set CR_Name  = '" & Text1.Text & "', CR_S_Day = '" & Text2.Text & "', CR_E_Day = '" & Text3.Text & "', CR_SEL = '" & Text4.Text & "' Where CR_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "' "
+        Re_Count = DB_Execute()
+    End Sub
+End Class

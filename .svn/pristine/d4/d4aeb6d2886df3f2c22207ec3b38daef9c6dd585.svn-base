@@ -1,0 +1,468 @@
+﻿Public Class Frm_Base_Code
+    Dim Grid_Display_Ch As Boolean
+
+    'hsim 20200717 사용 테이블 개체 Load
+    Dim tblBaseCode As New DataTable
+    Private Sub Frm_Base_Code_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        'hsim 20200717 사용 테이블 Schema Load
+        tblBaseCode = fnGetTableStructure("dbo.Base_Code")
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        cboSearch.Items.Add("코드구분")
+        cboSearch.Items.Add("코드명")
+        cboSearch.Text = "코드구분"
+
+        Grid_Display_Ch = False
+        Grid_Display()
+
+    End Sub
+    Public Function Grid_Display() As Boolean
+        Grid_Display_Ch = False
+        Dim DBT As New DataTable
+        DBT = Nothing
+        Dim i As Integer
+        Dim j As Integer
+
+        Re_Count = DB_Select(DBT)
+        lstMain.DataSource = DBT
+        'hsim 20200719 Grid의 컬럼항목 설정
+        fillGridColumns(lstMain, DBT)
+        lstMain.ClearSelection()
+
+        Grid_Display = True
+        Grid_Display_Ch = True
+
+        '***********************************************************************************************
+        '이전 처리 방법
+        'Select Case cboSearch.Text
+        ' Case "코드구분"
+        '   StrSQL = "Select * From Base_Code with(NOLOCK) Where Base_Sel Like '" & txtSearch.Text & "%'  Order By Base_Sel asc, Base_Sun asc"
+        ' Case "코드명"
+        '   StrSQL = "Select * From Base_Code with(NOLOCK) Where Base_Code_Name Like '" & txtSearch.Text & "%'  Order By Base_Sel asc, Base_Sun asc"
+        'End Select
+        'Re_Count = DB_Select(DBT)
+        '***********************************************************************************************
+
+        '#0. 임시변수 초기화
+        Dim tblData1 As Tuple(Of String, String)
+        Dim selectStr As New String("")
+        Dim whereStr As New String("")
+        '#1. select column List
+        For z = 0 To tblBaseCode.Rows.Count - 1
+            selectStr += tblBaseCode.TableName & "." & tblBaseCode.Rows(z).Item(0).ToString
+            If z < tblBaseCode.Rows.Count - 1 Then
+                selectStr += ", "
+            End If
+        Next
+        '#2. where condition
+        Select Case cboSearch.Text
+            Case "코드구분"
+                whereStr = "And Base_Sel Like '" & txtSearch.Text & "%'  Order By Base_Sel_code asc, Base_Code asc"
+            Case "코드명"
+                whereStr = "And Base_Code_Name Like '" & txtSearch.Text & "%'  Order By Base_Sel_Code asc, Base_Code asc"
+        End Select
+        '#3. 변수 조합
+        tblData1 = New Tuple(Of String, String)(selectStr, whereStr)
+
+        DBT = fnExecSelectSql(1, ' ByVal tblCnt As Integer
+                                "dbo.Base_Code", 'ByVal tblNm1 As String
+                                "", 'ByVal tblNm2 As String
+                                "", 'ByVal tblNm3 As String
+                                "", 'ByVal tblNm4 As String
+                                "", 'ByVal tblNm5 As String
+                                "", 'ByVal tblNm6 As String
+                                tblData1, 'ByVal tblData1 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData2 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData3 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData4 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData5 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData6 As Tuple(Of String, String)
+                                "",   'ByVal joinCond1 As String
+                                "",   'ByVal joinCond2 As String
+                                "",   'ByVal joinCond3 As String
+                                "",   'ByVal joinCond4 As String
+                                "",   'ByVal joinCond5 As String
+                                "",   'ByVal joinCondStr1 As String
+                                "",   'ByVal joinCondStr2 As String
+                                "",   'ByVal joinCondStr3 As String
+                                "",   'ByVal joinCondStr4 As String
+                                ""    'ByVal joinCondStr5 As String
+                                )
+
+        lstMain.DataSource = DBT
+        lstMain.ClearSelection()
+
+    End Function
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+        Dim Db_Sun As Int32
+
+        If cboSearch.Text <> "코드구분" Or txtSearch.TextLength < 1 Then
+            MsgBox("추가 대상 코드구분을 입력하세요.")
+            Return
+        End If
+
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & " Select Base_Sel_Code, Base_Sel, isnull(MAX(Base_Sun),0) From Base_Code with(NOLOCK) Where Base_Sel = '" & txtSearch.Text & "'  Group By Base_Sel_Code, Base_Sel, Base_Sun Order By Base_Sel_Code, Base_Sel asc, Base_Sun asc"
+        Re_Count = DB_Select(DBT)
+
+        '***********************************************************************************************
+        '이전 처리 방법
+        '추가한다
+        'StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        'StrSQL = ""
+        'If Re_Count = 0 Then
+        '    Db_Sun = 1
+        '    StrSQL = StrSQL & " Insert into Base_Code (Base_Sel_Code, Base_Sel, Base_Sun, Base_Code, Base_Created, Base_Create_Date) " &
+        '                      "Values ((select cast(convert(int,isnull(Max(Base_Sel_Code),'1000')) + 10 as varchar(4)) from Base_Code where Base_Sel_Code like '1%'),'" &
+        '                      txtSearch.Text & "'," & Db_Sun & ", '1000', '" & loginID & "', CONVERT(CHAR(19), getdate(), 120))"
+        'Else
+        '    Db_Sun = DBT.Rows(0).Item(2) + 1
+        '    StrSQL = StrSQL & " Insert into Base_Code (Base_Sel_Code, Base_Sel, Base_Sun, Base_Code, Base_Created, Base_Create_Date) " &
+        '                      "Values ('" & DBT.Rows(0).Item(0) & "','" & DBT.Rows(0).Item(1) & "'," & Db_Sun &
+        '                      ",(select cast(convert(int,isnull(Max(Base_Code),'1000')) + 10 as varchar(4)) from Base_Code where Base_Sel_Code = '" & DBT.Rows(0).Item(0) &
+        '                      "'),'" & loginID & "',  CONVERT(CHAR(19), getdate(), 120))"
+        'End If
+        'Re_Count = DB_Execute()
+        '***********************************************************************************************
+
+        Try
+
+            StrSQL = "SELECT * from Base_Code where Base_Sel_Code = '" & txtBaseSelCd.Text & "'"
+            Re_Count = DB_Select(DBT)
+
+            StrSQL = "SELECT * from Base_Code where Base_Sel_Code = '" & txtBaseSelCd.Text & "' And Base_Code = '" & txtBaseCode.Text & "'"
+            Re_Count2 = DB_Select(DBT2)
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblBaseCode)
+            '#2. 입력자료 입력
+            For i = 0 To tblBaseCode.Rows.Count - 1
+
+                Select Case tblBaseCode.Rows(i).Item(0).ToString
+
+                    Case "Base_Sel_Code"
+                        If txtBaseSelCd.Text <> "" Then
+                            tblBaseCode.Rows(i).Item(11) = txtBaseSelCd.Text
+                        ElseIf Re_Count2 > 0 Then
+                            tblBaseCode.Rows(i).Item(11) = DBT2.Rows(0).Item("Base_Sel_Code")
+                            'Else
+                            'tblBaseCode.Rows(i).Item(11) = PK_Make("Base_Code")
+                        End If
+                    Case "Base_Sel"
+                        If txtBaseSel.Text <> "" Then
+                            tblBaseCode.Rows(i).Item(11) = txtBaseSel.Text
+                        ElseIf Re_Count2 > 0 Then
+                            tblBaseCode.Rows(i).Item(11) = DBT2.Rows(0).Item("Base_Sel")
+                        End If
+                    Case "Base_Code"
+                        If txtBaseCode.Text <> "" Then
+                            tblBaseCode.Rows(i).Item(11) = txtBaseCode.Text
+                        ElseIf Re_Count2 > 0 Then
+                            tblBaseCode.Rows(i).Item(11) = DBT.Rows(0).Item("Base_Code")
+                        End If
+                    Case "Base_Code_Name"
+                        If txtBaseCodeName.Text <> "" Then
+                            tblBaseCode.Rows(i).Item(11) = txtBaseCodeName.Text
+                        ElseIf Re_Count2 > 0 Then
+                            tblBaseCode.Rows(i).Item(11) = DBT2.Rows(0).Item("Base_Code_Name")
+                        End If
+                    Case "Base_Sun"
+                        If txtBaseSun.Text <> "" Then
+                            tblBaseCode.Rows(i).Item(11) = txtBaseSun.Text
+                        ElseIf Re_Count2 > 0 Then
+                            tblBaseCode.Rows(i).Item(11) = DBT2.Rows(0).Item("Base_Sun")
+                        Else
+                            If lstMain.Rows.Count > 0 Then
+                                tblBaseCode.Rows(i).Item(11) = lstMain.Rows.Count
+                            Else
+                                tblBaseCode.Rows(i).Item(11) = 1
+                            End If
+                        End If
+                    Case "Base_Bigo"
+                        If txtBaseBigo.Text <> "" Then
+                            tblBaseCode.Rows(i).Item(11) = txtBaseBigo.Text
+                        ElseIf Re_Count2 > 0 Then
+                            tblBaseCode.Rows(i).Item(11) = DBT2.Rows(0).Item("Base_Bigo")
+                        End If
+                    Case "Cre_Man"
+                        If Re_Count2 > 0 Then
+                            tblBaseCode.Rows(i).Item(11) = DBT2.Rows(0)("Cre_Man").ToString
+                        Else
+                            tblBaseCode.Rows(i).Item(11) = logInUserName
+                        End If
+                    Case "Cre_Dttm"
+                        If Re_Count2 > 0 Then
+                            tblBaseCode.Rows(i).Item(11) = DBT2.Rows(0)("Cre_Dttm").ToString
+                        Else
+                            tblBaseCode.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                    Case "Mod_Man"
+                        If Re_Count2 > 0 Then
+                            tblBaseCode.Rows(i).Item(11) = logInUserName
+                        End If
+                    Case "Mod_Dttm"
+                        If Re_Count2 > 0 Then
+                            tblBaseCode.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                End Select
+            Next
+
+            If Re_Count > 0 Then
+
+                Re_Count2 = fnTableUpdate("dbo.Base_Code", tblBaseCode)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            Else
+
+                Re_Count2 = fnTableInsert("dbo.Base_Code", tblBaseCode)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 품목 정보 수정 : " & txtBaseSel.Text & "-" & txtBaseCodeName.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 품목 정보 신규 입력 : " & txtBaseSel.Text & "-" & txtBaseCodeName.Text
+            End If
+            Man_Log("Frm_Contract", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+            'hsim 20200515 개정이력 조회 갱신
+            'showRevLog("Frm_Contract", DBT2, lstRev)
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+
+        Grid_Display()
+
+    End Sub
+
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs)
+        Grid_Display()
+
+    End Sub
+
+
+    Private Sub Customer_Grid_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs)
+        If Grid_Display_Ch = True Then
+            sender.CurrentRow.HeaderCell.Value = "*"
+        End If
+
+    End Sub
+
+    Private Sub Save_Com_Click(sender As Object, e As EventArgs)
+        Grid_Display_Ch = False
+        Dim Table_Name As String
+        Dim i As Integer
+        Dim j As Long
+        Dim k As Integer
+        Dim Field_Name(500) As String
+        Dim DBT As DataTable = Nothing
+
+        Table_Name = "Base_Code"
+        j = 0
+        StrSQL = "Select sys.Columns.Name From sys.Tables with(NOLOCK) , sys.Columns with(NOLOCK) Where sys.Tables.name = '" & Table_Name & "' And sys.Tables.Object_id = sys.Columns.Object_id Order By sys.Columns.column_id"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                Field_Name(j) = DBT.Rows(i)("Name").ToString
+                j = j + 1
+            Next i
+        End If
+        j = j - 1
+        Dim RRR As String
+
+        For i = 0 To lstMain.Rows.Count - 1
+            If lstMain.Rows(i).HeaderCell.Value = "*" Then
+                'Update
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "UPDATE " & Table_Name & " SET "
+                For k = 1 To j
+                    RRR = IIf(IsDBNull(lstMain.Item(k, i).Value), "", lstMain.Item(k, i).Value)
+                    'hsim 업데이트 사용자 및 업데이트일자 적용
+                    lstMain.Item(8, i).Value = loginID
+                    lstMain.Item(9, i).Value = DateTime.Now
+
+                    StrSQL = StrSQL & " " & Table_Name & "." & Field_Name(k) & " = '" & Replace(RRR, "'", "''") & "'"
+                    If k <> j Then
+                        StrSQL = StrSQL & ","
+                    End If
+                Next k
+                StrSQL = StrSQL & " WHERE " & Table_Name & "." & Field_Name(0) & " = '" & lstMain.Item(0, i).Value.ToString & "'
+                                    AND " & Table_Name & "." & Field_Name(1) & " = '" & lstMain.Item(1, i).Value.ToString & "'
+                                    AND " & Table_Name & "." & Field_Name(2) & " = '" & lstMain.Item(2, i).Value.ToString & "'"
+                Re_Count = DB_Execute()
+                lstMain.Rows(i).HeaderCell.Value = ""
+            End If
+        Next i
+        '선택된 컬럼값을 가지고 온다
+        Grid_Display()
+        Grid_Display_Ch = True
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+
+        txtBaseSelCd.Text = ""
+        txtBaseSel.Text = ""
+        txtBaseSun.Text = ""
+        txtBaseCode.Text = ""
+        txtBaseCodeName.Text = ""
+        txtBaseBigo.Text = ""
+
+    End Sub
+
+    Private Sub btnDel_Click(sender As Object, e As EventArgs) Handles btnDel.Click
+
+        '활성화
+        '해당 칼럼 삭제
+        If Len(lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value) > 0 Then
+
+        Else
+            Exit Sub
+        End If
+
+        '삭제한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Delete Base_Code Where " &
+                          " Base_Sel_code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("Base_Sel_Code").Value.ToString() & "'" &
+                          " AND Base_Sel = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("Base_Sel").Value.ToString() & "'" &
+                          " And Base_Sun = " & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("Base_Sun").Value.ToString()
+        Re_Count = DB_Execute()
+
+        '선택된 컬럼값을 가지고 온다
+        Grid_Display()
+        Grid_Display_Ch = True
+
+    End Sub
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+        If e.RowIndex >= 0 Then
+            StrSQL = "SELECT * FROM Base_Code with(NOLOCK) " &
+                     " Where 1=1 " &
+                     " And Base_Sel_Code = '" & lstMain.Rows(e.RowIndex).Cells("Base_Sel_Code").Value.ToString() & "' " &
+                     " And Base_Code = '" & lstMain.Rows(e.RowIndex).Cells("Base_Code").Value.ToString() & "' "
+            Re_Count = DB_Select(DBT2)
+
+            If Re_Count > 0 Then
+                txtBaseSelCd.Text = DBT2.Rows(0)("Base_Sel_Code").ToString
+                txtBaseSel.Text = DBT2.Rows(0)("Base_Sel").ToString
+                txtBaseSun.Text = DBT2.Rows(0)("Base_Sun").ToString
+                txtBaseCode.Text = DBT2.Rows(0)("Base_Code").ToString
+                txtBaseCodeName.Text = DBT2.Rows(0)("Base_Code_Name").ToString
+                txtBaseBigo.Text = DBT2.Rows(0)("Base_Bigo").ToString
+            End If
+        End If
+
+    End Sub
+
+    Private Sub btnDelete1_Click(sender As Object, e As EventArgs) Handles btnDelete1.Click
+
+        Dim DBT As DataTable
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+
+        DBT = Nothing
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        If cboSearch.Text <> "코드구분" Then
+
+            MsgBox("코드구분 대상 전체 항목에 대해서만 삭제처리가 가능합니다.")
+            Exit Sub
+
+        End If
+
+        If MessageBox.Show("코드구분 " + txtSearch.Text + " 공통코드 를 삭제하시겠습니까?" & vbCrLf & "해당 코드구분 전체 코드가 삭제됩니다.", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If txtSearch.Text <> "" Then
+                StrSQL = "Delete Base_Code where Base_Sel = '" & txtSearch.Text & "'"
+                Re_Count = DB_Execute()
+
+                If Re_Count > 0 Then
+                    MsgBox("삭제 완료")
+                End If
+                'hsim 20200515 처리 이력
+                'histLogStr = "사용자 " & logInUserName & " 정보 삭제 : " & txtJobNo2.Text & "-" & txtJobName2.Text
+                'Man_Log("Frm_Contract", "정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+            Else
+                MsgBox("선택된 Job No 가 없습니다")
+                Exit Sub
+            End If
+            '선택된 컬럼값을 가지고 온다
+            Grid_Display()
+            Grid_Display_Ch = True
+        End If
+
+    End Sub
+
+    Private Sub fillGridColumns(inGrd As DataGridView, DBT As DataTable)
+
+        Dim i As Int32
+        Dim gridCellCount As Int32, gridRowCount As Int32
+
+        gridRowCount = DBT.Rows.Count
+        gridCellCount = DBT.Columns.Count
+
+        For i = 0 To gridCellCount - 1
+            inGrd.Columns(i).DataPropertyName = DBT.Columns(i).ColumnName
+            inGrd.Columns(i).HeaderText = DBT.Columns(i).Caption
+            inGrd.Columns(i).Width = DBT.Columns(i).MaxLength
+            'hsim 20200719 화면에 비표시 할 항목들에 대해서는 Visible 속성을 False로
+            If DBT.Columns(i).ColumnName = "Cre_Dttm" Or
+               DBT.Columns(i).ColumnName = "Cre_Man" Or
+               DBT.Columns(i).ColumnName = "Mod_Dttm" Or
+               DBT.Columns(i).ColumnName = "Mod_Man" Then
+                inGrd.Columns(i).Visible = False
+            End If
+        Next
+
+    End Sub
+
+    Private Sub btnNew1_Click(sender As Object, e As EventArgs) Handles btnNew1.Click
+
+    End Sub
+
+End Class

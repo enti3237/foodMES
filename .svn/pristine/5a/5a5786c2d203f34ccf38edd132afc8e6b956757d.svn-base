@@ -1,0 +1,3101 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_Selng_Tax_Info
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.pnlSearch1 = New System.Windows.Forms.Panel()
+        Me.dtpRegDateTo = New System.Windows.Forms.DateTimePicker()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.dtpRegDateFrom = New System.Windows.Forms.DateTimePicker()
+        Me.btnItemSearch11 = New System.Windows.Forms.Button()
+        Me.lblSearchItem12 = New System.Windows.Forms.Label()
+        Me.lblSearchItem11 = New System.Windows.Forms.Label()
+        Me.txtSearchItem11 = New System.Windows.Forms.TextBox()
+        Me.btnSearch = New System.Windows.Forms.Button()
+        Me.Panel43 = New System.Windows.Forms.Panel()
+        Me.Panel44 = New System.Windows.Forms.Panel()
+        Me.Panel57 = New System.Windows.Forms.Panel()
+        Me.Panel31 = New System.Windows.Forms.Panel()
+        Me.Panel40 = New System.Windows.Forms.Panel()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.lstMain = New System.Windows.Forms.DataGridView()
+        Me.Color_Label = New System.Windows.Forms.Label()
+        Me.Panel30 = New System.Windows.Forms.Panel()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.txtCMAddr = New System.Windows.Forms.TextBox()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.Panel10 = New System.Windows.Forms.Panel()
+        Me.Panel11 = New System.Windows.Forms.Panel()
+        Me.pnlResultGrid = New System.Windows.Forms.Panel()
+        Me.tab_Detail = New System.Windows.Forms.Button()
+        Me.Di_Panel2 = New System.Windows.Forms.Panel()
+        Me.tab_Main = New System.Windows.Forms.Button()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.palMain = New System.Windows.Forms.Panel()
+        Me.txtSearchItem12 = New System.Windows.Forms.TextBox()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.txtSelngId = New System.Windows.Forms.TextBox()
+        Me.txtSiNo = New System.Windows.Forms.TextBox()
+        Me.cboCalcSe = New System.Windows.Forms.ComboBox()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.txtSnNo = New System.Windows.Forms.TextBox()
+        Me.Label54 = New System.Windows.Forms.Label()
+        Me.txtBHo = New System.Windows.Forms.TextBox()
+        Me.Label52 = New System.Windows.Forms.Label()
+        Me.Label53 = New System.Windows.Forms.Label()
+        Me.txtBKw = New System.Windows.Forms.TextBox()
+        Me.Panel46 = New System.Windows.Forms.Panel()
+        Me.Panel49 = New System.Windows.Forms.Panel()
+        Me.txtSelngTaxInfoID = New System.Windows.Forms.TextBox()
+        Me.Label50 = New System.Windows.Forms.Label()
+        Me.Label49 = New System.Windows.Forms.Label()
+        Me.Panel45 = New System.Windows.Forms.Panel()
+        Me.txtReceivableAmount = New System.Windows.Forms.TextBox()
+        Me.Label45 = New System.Windows.Forms.Label()
+        Me.txtNoteAmount = New System.Windows.Forms.TextBox()
+        Me.txtCashAmount = New System.Windows.Forms.TextBox()
+        Me.Label46 = New System.Windows.Forms.Label()
+        Me.Label47 = New System.Windows.Forms.Label()
+        Me.Label48 = New System.Windows.Forms.Label()
+        Me.txtCheckAmount = New System.Windows.Forms.TextBox()
+        Me.txtAmount = New System.Windows.Forms.TextBox()
+        Me.Label44 = New System.Windows.Forms.Label()
+        Me.txtTaxAmt = New System.Windows.Forms.TextBox()
+        Me.txtSplPc = New System.Windows.Forms.TextBox()
+        Me.txtCMManEmail2 = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.txtCMManCell2 = New System.Windows.Forms.TextBox()
+        Me.txtCMManName2 = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.txtCMManTel2 = New System.Windows.Forms.TextBox()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.txtCMLeader2 = New System.Windows.Forms.TextBox()
+        Me.txtCMName2 = New System.Windows.Forms.TextBox()
+        Me.txtCMOpNumber2 = New System.Windows.Forms.TextBox()
+        Me.Label32 = New System.Windows.Forms.Label()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.txtCMAddr2 = New System.Windows.Forms.TextBox()
+        Me.Label34 = New System.Windows.Forms.Label()
+        Me.Label39 = New System.Windows.Forms.Label()
+        Me.txtCMItem2 = New System.Windows.Forms.TextBox()
+        Me.txtCMConditions2 = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.dtpIsuDe = New System.Windows.Forms.DateTimePicker()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Panel6 = New System.Windows.Forms.Panel()
+        Me.Panel41 = New System.Windows.Forms.Panel()
+        Me.Panel47 = New System.Windows.Forms.Panel()
+        Me.Panel48 = New System.Windows.Forms.Panel()
+        Me.Panel52 = New System.Windows.Forms.Panel()
+        Me.Panel53 = New System.Windows.Forms.Panel()
+        Me.Panel54 = New System.Windows.Forms.Panel()
+        Me.Panel55 = New System.Windows.Forms.Panel()
+        Me.cboRqestRcptSe2 = New System.Windows.Forms.ComboBox()
+        Me.Panel63 = New System.Windows.Forms.Panel()
+        Me.Panel64 = New System.Windows.Forms.Panel()
+        Me.Panel65 = New System.Windows.Forms.Panel()
+        Me.Panel69 = New System.Windows.Forms.Panel()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Panel70 = New System.Windows.Forms.Panel()
+        Me.Panel71 = New System.Windows.Forms.Panel()
+        Me.Panel72 = New System.Windows.Forms.Panel()
+        Me.Panel73 = New System.Windows.Forms.Panel()
+        Me.btnCMSearch = New System.Windows.Forms.Button()
+        Me.btnNew1 = New System.Windows.Forms.Button()
+        Me.btnDel1 = New System.Windows.Forms.Button()
+        Me.btnSave1 = New System.Windows.Forms.Button()
+        Me.txtRm = New System.Windows.Forms.TextBox()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.txtCMCode2 = New System.Windows.Forms.TextBox()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.Panel74 = New System.Windows.Forms.Panel()
+        Me.Panel75 = New System.Windows.Forms.Panel()
+        Me.Panel76 = New System.Windows.Forms.Panel()
+        Me.Panel77 = New System.Windows.Forms.Panel()
+        Me.Panel78 = New System.Windows.Forms.Panel()
+        Me.Panel81 = New System.Windows.Forms.Panel()
+        Me.Panel82 = New System.Windows.Forms.Panel()
+        Me.Panel83 = New System.Windows.Forms.Panel()
+        Me.Panel84 = New System.Windows.Forms.Panel()
+        Me.Panel94 = New System.Windows.Forms.Panel()
+        Me.Panel95 = New System.Windows.Forms.Panel()
+        Me.Panel96 = New System.Windows.Forms.Panel()
+        Me.Panel97 = New System.Windows.Forms.Panel()
+        Me.Panel98 = New System.Windows.Forms.Panel()
+        Me.Panel99 = New System.Windows.Forms.Panel()
+        Me.Panel100 = New System.Windows.Forms.Panel()
+        Me.Panel101 = New System.Windows.Forms.Panel()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.pnlBasicInfo = New System.Windows.Forms.Panel()
+        Me.txtCMCode = New System.Windows.Forms.TextBox()
+        Me.txtCMManEmail = New System.Windows.Forms.TextBox()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.txtCMManCell = New System.Windows.Forms.TextBox()
+        Me.txtCMManName = New System.Windows.Forms.TextBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.txtCMManTel = New System.Windows.Forms.TextBox()
+        Me.cboCMTaxImposeGubun = New System.Windows.Forms.ComboBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Panel7 = New System.Windows.Forms.Panel()
+        Me.Panel8 = New System.Windows.Forms.Panel()
+        Me.Panel9 = New System.Windows.Forms.Panel()
+        Me.Label36 = New System.Windows.Forms.Label()
+        Me.txtCMLeader = New System.Windows.Forms.TextBox()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.txtCMName = New System.Windows.Forms.TextBox()
+        Me.txtCMOpNumber = New System.Windows.Forms.TextBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.txtCMItem = New System.Windows.Forms.TextBox()
+        Me.txtCMConditions = New System.Windows.Forms.TextBox()
+        Me.Panel12 = New System.Windows.Forms.Panel()
+        Me.Panel13 = New System.Windows.Forms.Panel()
+        Me.Panel14 = New System.Windows.Forms.Panel()
+        Me.Panel15 = New System.Windows.Forms.Panel()
+        Me.Panel16 = New System.Windows.Forms.Panel()
+        Me.Panel42 = New System.Windows.Forms.Panel()
+        Me.Panel66 = New System.Windows.Forms.Panel()
+        Me.Panel67 = New System.Windows.Forms.Panel()
+        Me.Panel68 = New System.Windows.Forms.Panel()
+        Me.Panel79 = New System.Windows.Forms.Panel()
+        Me.Panel80 = New System.Windows.Forms.Panel()
+        Me.Panel85 = New System.Windows.Forms.Panel()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.palDetail = New System.Windows.Forms.Panel()
+        Me.Panel51 = New System.Windows.Forms.Panel()
+        Me.txtSelngTaxDtlInfoID = New System.Windows.Forms.TextBox()
+        Me.cboPrdUnit = New System.Windows.Forms.ComboBox()
+        Me.chkVATInclsAt = New System.Windows.Forms.CheckBox()
+        Me.Label56 = New System.Windows.Forms.Label()
+        Me.txtSelngTaxInfoSeq = New System.Windows.Forms.TextBox()
+        Me.Panel86 = New System.Windows.Forms.Panel()
+        Me.Panel87 = New System.Windows.Forms.Panel()
+        Me.txtSelngTaxInfoID2 = New System.Windows.Forms.TextBox()
+        Me.Label57 = New System.Windows.Forms.Label()
+        Me.Label58 = New System.Windows.Forms.Label()
+        Me.txtAmount2 = New System.Windows.Forms.TextBox()
+        Me.Label63 = New System.Windows.Forms.Label()
+        Me.txtTaxAmt2 = New System.Windows.Forms.TextBox()
+        Me.txtSplPc2 = New System.Windows.Forms.TextBox()
+        Me.Label68 = New System.Windows.Forms.Label()
+        Me.txtPrdQy = New System.Windows.Forms.TextBox()
+        Me.txtPrdPc = New System.Windows.Forms.TextBox()
+        Me.Label71 = New System.Windows.Forms.Label()
+        Me.Label73 = New System.Windows.Forms.Label()
+        Me.Label74 = New System.Windows.Forms.Label()
+        Me.Panel109 = New System.Windows.Forms.Panel()
+        Me.Panel110 = New System.Windows.Forms.Panel()
+        Me.Panel111 = New System.Windows.Forms.Panel()
+        Me.Panel112 = New System.Windows.Forms.Panel()
+        Me.Panel113 = New System.Windows.Forms.Panel()
+        Me.Panel114 = New System.Windows.Forms.Panel()
+        Me.Panel115 = New System.Windows.Forms.Panel()
+        Me.Panel116 = New System.Windows.Forms.Panel()
+        Me.btnPrdSearch = New System.Windows.Forms.Button()
+        Me.btnNew2 = New System.Windows.Forms.Button()
+        Me.btnDel2 = New System.Windows.Forms.Button()
+        Me.btnSave2 = New System.Windows.Forms.Button()
+        Me.txtPrdCode = New System.Windows.Forms.TextBox()
+        Me.Label78 = New System.Windows.Forms.Label()
+        Me.Label79 = New System.Windows.Forms.Label()
+        Me.txtPrdName = New System.Windows.Forms.TextBox()
+        Me.Panel117 = New System.Windows.Forms.Panel()
+        Me.Panel118 = New System.Windows.Forms.Panel()
+        Me.Panel119 = New System.Windows.Forms.Panel()
+        Me.Panel120 = New System.Windows.Forms.Panel()
+        Me.Panel121 = New System.Windows.Forms.Panel()
+        Me.Panel122 = New System.Windows.Forms.Panel()
+        Me.Panel128 = New System.Windows.Forms.Panel()
+        Me.Panel129 = New System.Windows.Forms.Panel()
+        Me.Panel130 = New System.Windows.Forms.Panel()
+        Me.Panel131 = New System.Windows.Forms.Panel()
+        Me.Panel132 = New System.Windows.Forms.Panel()
+        Me.Panel133 = New System.Windows.Forms.Panel()
+        Me.Label80 = New System.Windows.Forms.Label()
+        Me.Panel155 = New System.Windows.Forms.Panel()
+        Me.lstDetail = New System.Windows.Forms.DataGridView()
+        Me.Panel156 = New System.Windows.Forms.Panel()
+        Me.Panel157 = New System.Windows.Forms.Panel()
+        Me.Panel158 = New System.Windows.Forms.Panel()
+        Me.Label93 = New System.Windows.Forms.Label()
+        Me.pnlSearch1.SuspendLayout()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel4.SuspendLayout()
+        Me.pnlResultGrid.SuspendLayout()
+        Me.palMain.SuspendLayout()
+        Me.Panel2.SuspendLayout()
+        Me.Panel6.SuspendLayout()
+        Me.Panel52.SuspendLayout()
+        Me.Panel63.SuspendLayout()
+        Me.Panel70.SuspendLayout()
+        Me.Panel74.SuspendLayout()
+        Me.Panel82.SuspendLayout()
+        Me.Panel96.SuspendLayout()
+        Me.pnlBasicInfo.SuspendLayout()
+        Me.Panel3.SuspendLayout()
+        Me.Panel12.SuspendLayout()
+        Me.Panel66.SuspendLayout()
+        Me.palDetail.SuspendLayout()
+        Me.Panel51.SuspendLayout()
+        Me.Panel109.SuspendLayout()
+        Me.Panel113.SuspendLayout()
+        Me.Panel117.SuspendLayout()
+        Me.Panel128.SuspendLayout()
+        Me.Panel155.SuspendLayout()
+        CType(Me.lstDetail, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'pnlSearch1
+        '
+        Me.pnlSearch1.AutoSize = True
+        Me.pnlSearch1.Controls.Add(Me.dtpRegDateTo)
+        Me.pnlSearch1.Controls.Add(Me.Label6)
+        Me.pnlSearch1.Controls.Add(Me.dtpRegDateFrom)
+        Me.pnlSearch1.Controls.Add(Me.btnItemSearch11)
+        Me.pnlSearch1.Controls.Add(Me.lblSearchItem12)
+        Me.pnlSearch1.Controls.Add(Me.lblSearchItem11)
+        Me.pnlSearch1.Controls.Add(Me.txtSearchItem11)
+        Me.pnlSearch1.Controls.Add(Me.btnSearch)
+        Me.pnlSearch1.Controls.Add(Me.Panel43)
+        Me.pnlSearch1.Controls.Add(Me.Panel44)
+        Me.pnlSearch1.Controls.Add(Me.Panel57)
+        Me.pnlSearch1.Location = New System.Drawing.Point(10, 10)
+        Me.pnlSearch1.Name = "pnlSearch1"
+        Me.pnlSearch1.Size = New System.Drawing.Size(1150, 51)
+        Me.pnlSearch1.TabIndex = 433
+        '
+        'dtpRegDateTo
+        '
+        Me.dtpRegDateTo.CalendarFont = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpRegDateTo.CustomFormat = "yyyy-MM-dd"
+        Me.dtpRegDateTo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpRegDateTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpRegDateTo.Location = New System.Drawing.Point(597, 14)
+        Me.dtpRegDateTo.MaximumSize = New System.Drawing.Size(150, 25)
+        Me.dtpRegDateTo.MinimumSize = New System.Drawing.Size(150, 25)
+        Me.dtpRegDateTo.Name = "dtpRegDateTo"
+        Me.dtpRegDateTo.Size = New System.Drawing.Size(150, 25)
+        Me.dtpRegDateTo.TabIndex = 16
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label6.Location = New System.Drawing.Point(564, 14)
+        Me.Label6.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label6.MinimumSize = New System.Drawing.Size(30, 25)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(30, 25)
+        Me.Label6.TabIndex = 15
+        Me.Label6.Text = " ~ "
+        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'dtpRegDateFrom
+        '
+        Me.dtpRegDateFrom.CalendarFont = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpRegDateFrom.CustomFormat = "yyyy-MM-dd"
+        Me.dtpRegDateFrom.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpRegDateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpRegDateFrom.Location = New System.Drawing.Point(412, 14)
+        Me.dtpRegDateFrom.MaximumSize = New System.Drawing.Size(150, 25)
+        Me.dtpRegDateFrom.MinimumSize = New System.Drawing.Size(150, 25)
+        Me.dtpRegDateFrom.Name = "dtpRegDateFrom"
+        Me.dtpRegDateFrom.Size = New System.Drawing.Size(150, 25)
+        Me.dtpRegDateFrom.TabIndex = 14
+        '
+        'btnItemSearch11
+        '
+        Me.btnItemSearch11.BackColor = System.Drawing.Color.White
+        Me.btnItemSearch11.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnItemSearch11.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnItemSearch11.ForeColor = System.Drawing.SystemColors.HotTrack
+        Me.btnItemSearch11.Location = New System.Drawing.Point(274, 13)
+        Me.btnItemSearch11.Name = "btnItemSearch11"
+        Me.btnItemSearch11.Size = New System.Drawing.Size(27, 27)
+        Me.btnItemSearch11.TabIndex = 12
+        Me.btnItemSearch11.Text = "⌕"
+        Me.btnItemSearch11.UseVisualStyleBackColor = False
+        '
+        'lblSearchItem12
+        '
+        Me.lblSearchItem12.AutoSize = True
+        Me.lblSearchItem12.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.lblSearchItem12.Location = New System.Drawing.Point(302, 14)
+        Me.lblSearchItem12.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.lblSearchItem12.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.lblSearchItem12.Name = "lblSearchItem12"
+        Me.lblSearchItem12.Size = New System.Drawing.Size(100, 25)
+        Me.lblSearchItem12.TabIndex = 13
+        Me.lblSearchItem12.Text = "작성일자"
+        Me.lblSearchItem12.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'lblSearchItem11
+        '
+        Me.lblSearchItem11.AutoSize = True
+        Me.lblSearchItem11.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.lblSearchItem11.Location = New System.Drawing.Point(12, 14)
+        Me.lblSearchItem11.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.lblSearchItem11.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.lblSearchItem11.Name = "lblSearchItem11"
+        Me.lblSearchItem11.Size = New System.Drawing.Size(100, 25)
+        Me.lblSearchItem11.TabIndex = 10
+        Me.lblSearchItem11.Text = "거 래 처"
+        Me.lblSearchItem11.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtSearchItem11
+        '
+        Me.txtSearchItem11.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtSearchItem11.Location = New System.Drawing.Point(122, 14)
+        Me.txtSearchItem11.Name = "txtSearchItem11"
+        Me.txtSearchItem11.Size = New System.Drawing.Size(150, 25)
+        Me.txtSearchItem11.TabIndex = 11
+        '
+        'btnSearch
+        '
+        Me.btnSearch.BackColor = System.Drawing.SystemColors.Info
+        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSearch.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnSearch.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnSearch.Location = New System.Drawing.Point(990, 11)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(150, 31)
+        Me.btnSearch.TabIndex = 17
+        Me.btnSearch.Text = "조    회"
+        Me.btnSearch.UseVisualStyleBackColor = False
+        '
+        'Panel43
+        '
+        Me.Panel43.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel43.Location = New System.Drawing.Point(10, 41)
+        Me.Panel43.Name = "Panel43"
+        Me.Panel43.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel43.TabIndex = 389
+        Me.Panel43.Visible = False
+        '
+        'Panel44
+        '
+        Me.Panel44.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel44.Location = New System.Drawing.Point(10, 11)
+        Me.Panel44.Name = "Panel44"
+        Me.Panel44.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel44.TabIndex = 387
+        Me.Panel44.Visible = False
+        '
+        'Panel57
+        '
+        Me.Panel57.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel57.Location = New System.Drawing.Point(10, 11)
+        Me.Panel57.Name = "Panel57"
+        Me.Panel57.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel57.TabIndex = 388
+        Me.Panel57.Visible = False
+        '
+        'Panel31
+        '
+        Me.Panel31.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel31.Location = New System.Drawing.Point(10, 11)
+        Me.Panel31.Name = "Panel31"
+        Me.Panel31.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel31.TabIndex = 387
+        Me.Panel31.Visible = False
+        '
+        'Panel40
+        '
+        Me.Panel40.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel40.Location = New System.Drawing.Point(10, 11)
+        Me.Panel40.Name = "Panel40"
+        Me.Panel40.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel40.TabIndex = 388
+        Me.Panel40.Visible = False
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label25.Location = New System.Drawing.Point(10, 14)
+        Me.Label25.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label25.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(100, 25)
+        Me.Label25.TabIndex = 19991
+        Me.Label25.Text = "검색결과"
+        Me.Label25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lstMain
+        '
+        Me.lstMain.AllowUserToAddRows = False
+        Me.lstMain.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
+        Me.lstMain.BackgroundColor = System.Drawing.Color.White
+        Me.lstMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.lstMain.GridColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.lstMain.Location = New System.Drawing.Point(10, 42)
+        Me.lstMain.MultiSelect = False
+        Me.lstMain.Name = "lstMain"
+        Me.lstMain.ReadOnly = True
+        Me.lstMain.RowTemplate.Height = 23
+        Me.lstMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.lstMain.Size = New System.Drawing.Size(1130, 184)
+        Me.lstMain.TabIndex = 21
+        '
+        'Color_Label
+        '
+        Me.Color_Label.Location = New System.Drawing.Point(342, 13)
+        Me.Color_Label.Name = "Color_Label"
+        Me.Color_Label.Size = New System.Drawing.Size(47, 8)
+        Me.Color_Label.TabIndex = 99944
+        Me.Color_Label.Visible = False
+        '
+        'Panel30
+        '
+        Me.Panel30.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel30.Location = New System.Drawing.Point(10, 41)
+        Me.Panel30.Name = "Panel30"
+        Me.Panel30.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel30.TabIndex = 389
+        Me.Panel30.Visible = False
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label9.Location = New System.Drawing.Point(272, 104)
+        Me.Label9.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label9.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(100, 25)
+        Me.Label9.TabIndex = 41
+        Me.Label9.Text = "종     목"
+        Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label10.Location = New System.Drawing.Point(10, 104)
+        Me.Label10.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label10.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(100, 25)
+        Me.Label10.TabIndex = 39
+        Me.Label10.Text = "업     태"
+        Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtCMAddr
+        '
+        Me.txtCMAddr.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMAddr.Location = New System.Drawing.Point(120, 74)
+        Me.txtCMAddr.Name = "txtCMAddr"
+        Me.txtCMAddr.ReadOnly = True
+        Me.txtCMAddr.Size = New System.Drawing.Size(674, 25)
+        Me.txtCMAddr.TabIndex = 38
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label12.Location = New System.Drawing.Point(10, 45)
+        Me.Label12.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label12.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(100, 25)
+        Me.Label12.TabIndex = 31
+        Me.Label12.Text = "등록번호"
+        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Panel4
+        '
+        Me.Panel4.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel4.Controls.Add(Me.Panel5)
+        Me.Panel4.Controls.Add(Me.Panel10)
+        Me.Panel4.Controls.Add(Me.Panel11)
+        Me.Panel4.Location = New System.Drawing.Point(10, 131)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel4.TabIndex = 474
+        Me.Panel4.Visible = False
+        '
+        'Panel5
+        '
+        Me.Panel5.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel5.Location = New System.Drawing.Point(0, 62)
+        Me.Panel5.Name = "Panel5"
+        Me.Panel5.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel5.TabIndex = 392
+        Me.Panel5.Visible = False
+        '
+        'Panel10
+        '
+        Me.Panel10.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel10.Location = New System.Drawing.Point(0, 32)
+        Me.Panel10.Name = "Panel10"
+        Me.Panel10.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel10.TabIndex = 390
+        Me.Panel10.Visible = False
+        '
+        'Panel11
+        '
+        Me.Panel11.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel11.Location = New System.Drawing.Point(0, 32)
+        Me.Panel11.Name = "Panel11"
+        Me.Panel11.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel11.TabIndex = 391
+        Me.Panel11.Visible = False
+        '
+        'pnlResultGrid
+        '
+        Me.pnlResultGrid.AutoSize = True
+        Me.pnlResultGrid.Controls.Add(Me.lstMain)
+        Me.pnlResultGrid.Controls.Add(Me.Panel30)
+        Me.pnlResultGrid.Controls.Add(Me.Panel31)
+        Me.pnlResultGrid.Controls.Add(Me.Panel40)
+        Me.pnlResultGrid.Controls.Add(Me.Label25)
+        Me.pnlResultGrid.Location = New System.Drawing.Point(10, 60)
+        Me.pnlResultGrid.Name = "pnlResultGrid"
+        Me.pnlResultGrid.Size = New System.Drawing.Size(1150, 235)
+        Me.pnlResultGrid.TabIndex = 440
+        '
+        'tab_Detail
+        '
+        Me.tab_Detail.AutoSize = True
+        Me.tab_Detail.FlatAppearance.BorderSize = 0
+        Me.tab_Detail.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange
+        Me.tab_Detail.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.tab_Detail.Location = New System.Drawing.Point(111, 5)
+        Me.tab_Detail.Margin = New System.Windows.Forms.Padding(0)
+        Me.tab_Detail.Name = "tab_Detail"
+        Me.tab_Detail.Size = New System.Drawing.Size(98, 25)
+        Me.tab_Detail.TabIndex = 99947
+        Me.tab_Detail.Text = "상세정보"
+        Me.tab_Detail.UseVisualStyleBackColor = True
+        '
+        'Di_Panel2
+        '
+        Me.Di_Panel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Di_Panel2.BackColor = System.Drawing.Color.Silver
+        Me.Di_Panel2.Location = New System.Drawing.Point(8, 35)
+        Me.Di_Panel2.Margin = New System.Windows.Forms.Padding(2)
+        Me.Di_Panel2.Name = "Di_Panel2"
+        Me.Di_Panel2.Size = New System.Drawing.Size(1508, 3)
+        Me.Di_Panel2.TabIndex = 99946
+        '
+        'tab_Main
+        '
+        Me.tab_Main.AutoSize = True
+        Me.tab_Main.FlatAppearance.BorderSize = 0
+        Me.tab_Main.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange
+        Me.tab_Main.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.tab_Main.Location = New System.Drawing.Point(12, 2)
+        Me.tab_Main.Margin = New System.Windows.Forms.Padding(0)
+        Me.tab_Main.Name = "tab_Main"
+        Me.tab_Main.Size = New System.Drawing.Size(99, 31)
+        Me.tab_Main.TabIndex = 99945
+        Me.tab_Main.Text = "기본정보"
+        Me.tab_Main.UseVisualStyleBackColor = True
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        '
+        'palMain
+        '
+        Me.palMain.Controls.Add(Me.txtSearchItem12)
+        Me.palMain.Controls.Add(Me.Panel2)
+        Me.palMain.Controls.Add(Me.pnlBasicInfo)
+        Me.palMain.Controls.Add(Me.pnlResultGrid)
+        Me.palMain.Controls.Add(Me.pnlSearch1)
+        Me.palMain.ForeColor = System.Drawing.SystemColors.InfoText
+        Me.palMain.Location = New System.Drawing.Point(15, 80)
+        Me.palMain.Name = "palMain"
+        Me.palMain.Size = New System.Drawing.Size(1171, 840)
+        Me.palMain.TabIndex = 99949
+        '
+        'txtSearchItem12
+        '
+        Me.txtSearchItem12.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtSearchItem12.Location = New System.Drawing.Point(768, 24)
+        Me.txtSearchItem12.Name = "txtSearchItem12"
+        Me.txtSearchItem12.ReadOnly = True
+        Me.txtSearchItem12.Size = New System.Drawing.Size(73, 25)
+        Me.txtSearchItem12.TabIndex = 999991
+        Me.txtSearchItem12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.txtSearchItem12.Visible = False
+        '
+        'Panel2
+        '
+        Me.Panel2.AutoSize = True
+        Me.Panel2.Controls.Add(Me.txtSelngId)
+        Me.Panel2.Controls.Add(Me.txtSiNo)
+        Me.Panel2.Controls.Add(Me.cboCalcSe)
+        Me.Panel2.Controls.Add(Me.Label16)
+        Me.Panel2.Controls.Add(Me.txtSnNo)
+        Me.Panel2.Controls.Add(Me.Label54)
+        Me.Panel2.Controls.Add(Me.txtBHo)
+        Me.Panel2.Controls.Add(Me.Label52)
+        Me.Panel2.Controls.Add(Me.Label53)
+        Me.Panel2.Controls.Add(Me.txtBKw)
+        Me.Panel2.Controls.Add(Me.Panel46)
+        Me.Panel2.Controls.Add(Me.Panel49)
+        Me.Panel2.Controls.Add(Me.txtSelngTaxInfoID)
+        Me.Panel2.Controls.Add(Me.Label50)
+        Me.Panel2.Controls.Add(Me.Label49)
+        Me.Panel2.Controls.Add(Me.Panel45)
+        Me.Panel2.Controls.Add(Me.txtReceivableAmount)
+        Me.Panel2.Controls.Add(Me.Label45)
+        Me.Panel2.Controls.Add(Me.txtNoteAmount)
+        Me.Panel2.Controls.Add(Me.txtCashAmount)
+        Me.Panel2.Controls.Add(Me.Label46)
+        Me.Panel2.Controls.Add(Me.Label47)
+        Me.Panel2.Controls.Add(Me.Label48)
+        Me.Panel2.Controls.Add(Me.txtCheckAmount)
+        Me.Panel2.Controls.Add(Me.txtAmount)
+        Me.Panel2.Controls.Add(Me.Label44)
+        Me.Panel2.Controls.Add(Me.txtTaxAmt)
+        Me.Panel2.Controls.Add(Me.txtSplPc)
+        Me.Panel2.Controls.Add(Me.txtCMManEmail2)
+        Me.Panel2.Controls.Add(Me.Label4)
+        Me.Panel2.Controls.Add(Me.txtCMManCell2)
+        Me.Panel2.Controls.Add(Me.txtCMManName2)
+        Me.Panel2.Controls.Add(Me.Label5)
+        Me.Panel2.Controls.Add(Me.Label7)
+        Me.Panel2.Controls.Add(Me.Label20)
+        Me.Panel2.Controls.Add(Me.txtCMManTel2)
+        Me.Panel2.Controls.Add(Me.Label22)
+        Me.Panel2.Controls.Add(Me.txtCMLeader2)
+        Me.Panel2.Controls.Add(Me.txtCMName2)
+        Me.Panel2.Controls.Add(Me.txtCMOpNumber2)
+        Me.Panel2.Controls.Add(Me.Label32)
+        Me.Panel2.Controls.Add(Me.Label33)
+        Me.Panel2.Controls.Add(Me.txtCMAddr2)
+        Me.Panel2.Controls.Add(Me.Label34)
+        Me.Panel2.Controls.Add(Me.Label39)
+        Me.Panel2.Controls.Add(Me.txtCMItem2)
+        Me.Panel2.Controls.Add(Me.txtCMConditions2)
+        Me.Panel2.Controls.Add(Me.Label1)
+        Me.Panel2.Controls.Add(Me.dtpIsuDe)
+        Me.Panel2.Controls.Add(Me.Label2)
+        Me.Panel2.Controls.Add(Me.Label3)
+        Me.Panel2.Controls.Add(Me.Panel6)
+        Me.Panel2.Controls.Add(Me.Panel52)
+        Me.Panel2.Controls.Add(Me.cboRqestRcptSe2)
+        Me.Panel2.Controls.Add(Me.Panel63)
+        Me.Panel2.Controls.Add(Me.Label15)
+        Me.Panel2.Controls.Add(Me.Panel70)
+        Me.Panel2.Controls.Add(Me.btnCMSearch)
+        Me.Panel2.Controls.Add(Me.btnNew1)
+        Me.Panel2.Controls.Add(Me.btnDel1)
+        Me.Panel2.Controls.Add(Me.btnSave1)
+        Me.Panel2.Controls.Add(Me.txtRm)
+        Me.Panel2.Controls.Add(Me.Label17)
+        Me.Panel2.Controls.Add(Me.txtCMCode2)
+        Me.Panel2.Controls.Add(Me.Label27)
+        Me.Panel2.Controls.Add(Me.Panel74)
+        Me.Panel2.Controls.Add(Me.Panel78)
+        Me.Panel2.Controls.Add(Me.Panel81)
+        Me.Panel2.Controls.Add(Me.Panel82)
+        Me.Panel2.Controls.Add(Me.Panel95)
+        Me.Panel2.Controls.Add(Me.Panel96)
+        Me.Panel2.Controls.Add(Me.Panel100)
+        Me.Panel2.Controls.Add(Me.Panel101)
+        Me.Panel2.Controls.Add(Me.Label29)
+        Me.Panel2.Location = New System.Drawing.Point(10, 469)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(1150, 357)
+        Me.Panel2.TabIndex = 446
+        '
+        'txtSelngId
+        '
+        Me.txtSelngId.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtSelngId.Location = New System.Drawing.Point(562, 44)
+        Me.txtSelngId.Name = "txtSelngId"
+        Me.txtSelngId.ReadOnly = True
+        Me.txtSelngId.Size = New System.Drawing.Size(119, 25)
+        Me.txtSelngId.TabIndex = 999993
+        Me.txtSelngId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.txtSelngId.Visible = False
+        '
+        'txtSiNo
+        '
+        Me.txtSiNo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtSiNo.Location = New System.Drawing.Point(811, 44)
+        Me.txtSiNo.Name = "txtSiNo"
+        Me.txtSiNo.ReadOnly = True
+        Me.txtSiNo.Size = New System.Drawing.Size(119, 25)
+        Me.txtSiNo.TabIndex = 999995
+        Me.txtSiNo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.txtSiNo.Visible = False
+        '
+        'cboCalcSe
+        '
+        Me.cboCalcSe.DropDownHeight = 140
+        Me.cboCalcSe.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.cboCalcSe.FormattingEnabled = True
+        Me.cboCalcSe.IntegralHeight = False
+        Me.cboCalcSe.ItemHeight = 17
+        Me.cboCalcSe.Location = New System.Drawing.Point(644, 165)
+        Me.cboCalcSe.MaximumSize = New System.Drawing.Size(150, 0)
+        Me.cboCalcSe.MinimumSize = New System.Drawing.Size(150, 0)
+        Me.cboCalcSe.Name = "cboCalcSe"
+        Me.cboCalcSe.Size = New System.Drawing.Size(150, 25)
+        Me.cboCalcSe.TabIndex = 83
+        Me.cboCalcSe.Visible = False
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label16.Location = New System.Drawing.Point(534, 165)
+        Me.Label16.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label16.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(100, 25)
+        Me.Label16.TabIndex = 82
+        Me.Label16.Text = "과세형태"
+        Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Label16.Visible = False
+        '
+        'txtSnNo
+        '
+        Me.txtSnNo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtSnNo.Location = New System.Drawing.Point(687, 44)
+        Me.txtSnNo.Name = "txtSnNo"
+        Me.txtSnNo.ReadOnly = True
+        Me.txtSnNo.Size = New System.Drawing.Size(119, 25)
+        Me.txtSnNo.TabIndex = 999994
+        Me.txtSnNo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.txtSnNo.Visible = False
+        '
+        'Label54
+        '
+        Me.Label54.AutoSize = True
+        Me.Label54.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label54.Location = New System.Drawing.Point(482, 44)
+        Me.Label54.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label54.MinimumSize = New System.Drawing.Size(30, 25)
+        Me.Label54.Name = "Label54"
+        Me.Label54.Size = New System.Drawing.Size(30, 25)
+        Me.Label54.TabIndex = 66
+        Me.Label54.Text = "호"
+        Me.Label54.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'txtBHo
+        '
+        Me.txtBHo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtBHo.Location = New System.Drawing.Point(450, 44)
+        Me.txtBHo.Name = "txtBHo"
+        Me.txtBHo.Size = New System.Drawing.Size(30, 25)
+        Me.txtBHo.TabIndex = 65
+        Me.txtBHo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label52
+        '
+        Me.Label52.AutoSize = True
+        Me.Label52.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label52.Location = New System.Drawing.Point(414, 44)
+        Me.Label52.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label52.MinimumSize = New System.Drawing.Size(30, 25)
+        Me.Label52.Name = "Label52"
+        Me.Label52.Size = New System.Drawing.Size(30, 25)
+        Me.Label52.TabIndex = 64
+        Me.Label52.Text = "권"
+        Me.Label52.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label53
+        '
+        Me.Label53.AutoSize = True
+        Me.Label53.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label53.Location = New System.Drawing.Point(272, 44)
+        Me.Label53.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label53.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label53.Name = "Label53"
+        Me.Label53.Size = New System.Drawing.Size(100, 25)
+        Me.Label53.TabIndex = 62
+        Me.Label53.Text = "책 번 호"
+        Me.Label53.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtBKw
+        '
+        Me.txtBKw.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtBKw.Location = New System.Drawing.Point(382, 44)
+        Me.txtBKw.Name = "txtBKw"
+        Me.txtBKw.Size = New System.Drawing.Size(30, 25)
+        Me.txtBKw.TabIndex = 63
+        Me.txtBKw.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Panel46
+        '
+        Me.Panel46.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel46.Location = New System.Drawing.Point(10, 101)
+        Me.Panel46.Name = "Panel46"
+        Me.Panel46.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel46.TabIndex = 626
+        Me.Panel46.Visible = False
+        '
+        'Panel49
+        '
+        Me.Panel49.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel49.Location = New System.Drawing.Point(10, 101)
+        Me.Panel49.Name = "Panel49"
+        Me.Panel49.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel49.TabIndex = 627
+        Me.Panel49.Visible = False
+        '
+        'txtSelngTaxInfoID
+        '
+        Me.txtSelngTaxInfoID.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtSelngTaxInfoID.Location = New System.Drawing.Point(120, 44)
+        Me.txtSelngTaxInfoID.Name = "txtSelngTaxInfoID"
+        Me.txtSelngTaxInfoID.ReadOnly = True
+        Me.txtSelngTaxInfoID.Size = New System.Drawing.Size(150, 25)
+        Me.txtSelngTaxInfoID.TabIndex = 61
+        '
+        'Label50
+        '
+        Me.Label50.AutoSize = True
+        Me.Label50.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label50.Location = New System.Drawing.Point(10, 45)
+        Me.Label50.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label50.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label50.Name = "Label50"
+        Me.Label50.Size = New System.Drawing.Size(100, 25)
+        Me.Label50.TabIndex = 60
+        Me.Label50.Text = "계산서일련번호"
+        Me.Label50.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label49
+        '
+        Me.Label49.AutoSize = True
+        Me.Label49.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label49.Location = New System.Drawing.Point(272, 105)
+        Me.Label49.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label49.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label49.Name = "Label49"
+        Me.Label49.Size = New System.Drawing.Size(100, 25)
+        Me.Label49.TabIndex = 72
+        Me.Label49.Text = "상호(법인명)"
+        Me.Label49.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Panel45
+        '
+        Me.Panel45.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel45.Location = New System.Drawing.Point(10, 282)
+        Me.Panel45.Name = "Panel45"
+        Me.Panel45.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel45.TabIndex = 622
+        Me.Panel45.Visible = False
+        '
+        'txtReceivableAmount
+        '
+        Me.txtReceivableAmount.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtReceivableAmount.Location = New System.Drawing.Point(906, 255)
+        Me.txtReceivableAmount.Name = "txtReceivableAmount"
+        Me.txtReceivableAmount.Size = New System.Drawing.Size(180, 25)
+        Me.txtReceivableAmount.TabIndex = 107
+        Me.txtReceivableAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label45
+        '
+        Me.Label45.AutoSize = True
+        Me.Label45.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label45.Location = New System.Drawing.Point(796, 255)
+        Me.Label45.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label45.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label45.Name = "Label45"
+        Me.Label45.Size = New System.Drawing.Size(100, 25)
+        Me.Label45.TabIndex = 106
+        Me.Label45.Text = "외상미수금"
+        Me.Label45.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtNoteAmount
+        '
+        Me.txtNoteAmount.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtNoteAmount.Location = New System.Drawing.Point(644, 255)
+        Me.txtNoteAmount.Name = "txtNoteAmount"
+        Me.txtNoteAmount.Size = New System.Drawing.Size(150, 25)
+        Me.txtNoteAmount.TabIndex = 105
+        Me.txtNoteAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'txtCashAmount
+        '
+        Me.txtCashAmount.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCashAmount.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.txtCashAmount.Location = New System.Drawing.Point(120, 255)
+        Me.txtCashAmount.Name = "txtCashAmount"
+        Me.txtCashAmount.Size = New System.Drawing.Size(150, 25)
+        Me.txtCashAmount.TabIndex = 101
+        Me.txtCashAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label46
+        '
+        Me.Label46.AutoSize = True
+        Me.Label46.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label46.Location = New System.Drawing.Point(534, 255)
+        Me.Label46.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label46.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label46.Name = "Label46"
+        Me.Label46.Size = New System.Drawing.Size(100, 25)
+        Me.Label46.TabIndex = 104
+        Me.Label46.Text = "어     음"
+        Me.Label46.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label47
+        '
+        Me.Label47.AutoSize = True
+        Me.Label47.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label47.Location = New System.Drawing.Point(272, 255)
+        Me.Label47.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label47.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label47.Name = "Label47"
+        Me.Label47.Size = New System.Drawing.Size(100, 25)
+        Me.Label47.TabIndex = 102
+        Me.Label47.Text = "수     표"
+        Me.Label47.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label48
+        '
+        Me.Label48.AutoSize = True
+        Me.Label48.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label48.Location = New System.Drawing.Point(10, 255)
+        Me.Label48.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label48.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label48.Name = "Label48"
+        Me.Label48.Size = New System.Drawing.Size(100, 25)
+        Me.Label48.TabIndex = 100
+        Me.Label48.Text = "현     금"
+        Me.Label48.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtCheckAmount
+        '
+        Me.txtCheckAmount.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCheckAmount.Location = New System.Drawing.Point(382, 255)
+        Me.txtCheckAmount.Name = "txtCheckAmount"
+        Me.txtCheckAmount.Size = New System.Drawing.Size(150, 25)
+        Me.txtCheckAmount.TabIndex = 103
+        Me.txtCheckAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'txtAmount
+        '
+        Me.txtAmount.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtAmount.Location = New System.Drawing.Point(906, 225)
+        Me.txtAmount.Name = "txtAmount"
+        Me.txtAmount.ReadOnly = True
+        Me.txtAmount.Size = New System.Drawing.Size(180, 25)
+        Me.txtAmount.TabIndex = 99
+        Me.txtAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label44
+        '
+        Me.Label44.AutoSize = True
+        Me.Label44.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label44.Location = New System.Drawing.Point(796, 225)
+        Me.Label44.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label44.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label44.Name = "Label44"
+        Me.Label44.Size = New System.Drawing.Size(100, 25)
+        Me.Label44.TabIndex = 98
+        Me.Label44.Text = "합계금액"
+        Me.Label44.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtTaxAmt
+        '
+        Me.txtTaxAmt.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtTaxAmt.Location = New System.Drawing.Point(644, 225)
+        Me.txtTaxAmt.Name = "txtTaxAmt"
+        Me.txtTaxAmt.ReadOnly = True
+        Me.txtTaxAmt.Size = New System.Drawing.Size(150, 25)
+        Me.txtTaxAmt.TabIndex = 97
+        Me.txtTaxAmt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'txtSplPc
+        '
+        Me.txtSplPc.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtSplPc.Location = New System.Drawing.Point(382, 225)
+        Me.txtSplPc.Name = "txtSplPc"
+        Me.txtSplPc.ReadOnly = True
+        Me.txtSplPc.Size = New System.Drawing.Size(150, 25)
+        Me.txtSplPc.TabIndex = 95
+        Me.txtSplPc.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'txtCMManEmail2
+        '
+        Me.txtCMManEmail2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMManEmail2.Location = New System.Drawing.Point(906, 195)
+        Me.txtCMManEmail2.Name = "txtCMManEmail2"
+        Me.txtCMManEmail2.ReadOnly = True
+        Me.txtCMManEmail2.Size = New System.Drawing.Size(180, 25)
+        Me.txtCMManEmail2.TabIndex = 91
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label4.Location = New System.Drawing.Point(796, 195)
+        Me.Label4.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label4.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(100, 25)
+        Me.Label4.TabIndex = 90
+        Me.Label4.Text = "E-Mail"
+        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtCMManCell2
+        '
+        Me.txtCMManCell2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMManCell2.Location = New System.Drawing.Point(644, 195)
+        Me.txtCMManCell2.Name = "txtCMManCell2"
+        Me.txtCMManCell2.ReadOnly = True
+        Me.txtCMManCell2.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMManCell2.TabIndex = 89
+        '
+        'txtCMManName2
+        '
+        Me.txtCMManName2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMManName2.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.txtCMManName2.Location = New System.Drawing.Point(120, 195)
+        Me.txtCMManName2.Name = "txtCMManName2"
+        Me.txtCMManName2.ReadOnly = True
+        Me.txtCMManName2.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMManName2.TabIndex = 85
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label5.Location = New System.Drawing.Point(534, 195)
+        Me.Label5.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label5.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(100, 25)
+        Me.Label5.TabIndex = 88
+        Me.Label5.Text = "휴 대 폰"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label7.Location = New System.Drawing.Point(272, 195)
+        Me.Label7.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label7.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(100, 25)
+        Me.Label7.TabIndex = 86
+        Me.Label7.Text = "전화번호"
+        Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label20.Location = New System.Drawing.Point(10, 195)
+        Me.Label20.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label20.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(100, 25)
+        Me.Label20.TabIndex = 84
+        Me.Label20.Text = "담당자성명"
+        Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtCMManTel2
+        '
+        Me.txtCMManTel2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMManTel2.Location = New System.Drawing.Point(382, 195)
+        Me.txtCMManTel2.Name = "txtCMManTel2"
+        Me.txtCMManTel2.ReadOnly = True
+        Me.txtCMManTel2.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMManTel2.TabIndex = 87
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label22.Location = New System.Drawing.Point(683, 104)
+        Me.Label22.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label22.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(100, 25)
+        Me.Label22.TabIndex = 74
+        Me.Label22.Text = "성     명"
+        Me.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtCMLeader2
+        '
+        Me.txtCMLeader2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMLeader2.Location = New System.Drawing.Point(793, 105)
+        Me.txtCMLeader2.Name = "txtCMLeader2"
+        Me.txtCMLeader2.ReadOnly = True
+        Me.txtCMLeader2.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMLeader2.TabIndex = 75
+        Me.txtCMLeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtCMName2
+        '
+        Me.txtCMName2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMName2.Location = New System.Drawing.Point(382, 105)
+        Me.txtCMName2.Name = "txtCMName2"
+        Me.txtCMName2.ReadOnly = True
+        Me.txtCMName2.Size = New System.Drawing.Size(299, 25)
+        Me.txtCMName2.TabIndex = 73
+        '
+        'txtCMOpNumber2
+        '
+        Me.txtCMOpNumber2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMOpNumber2.Location = New System.Drawing.Point(120, 105)
+        Me.txtCMOpNumber2.Name = "txtCMOpNumber2"
+        Me.txtCMOpNumber2.ReadOnly = True
+        Me.txtCMOpNumber2.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMOpNumber2.TabIndex = 71
+        '
+        'Label32
+        '
+        Me.Label32.AutoSize = True
+        Me.Label32.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label32.Location = New System.Drawing.Point(272, 165)
+        Me.Label32.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label32.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label32.Name = "Label32"
+        Me.Label32.Size = New System.Drawing.Size(100, 25)
+        Me.Label32.TabIndex = 80
+        Me.Label32.Text = "종     목"
+        Me.Label32.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label33
+        '
+        Me.Label33.AutoSize = True
+        Me.Label33.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label33.Location = New System.Drawing.Point(10, 165)
+        Me.Label33.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label33.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(100, 25)
+        Me.Label33.TabIndex = 78
+        Me.Label33.Text = "업     태"
+        Me.Label33.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtCMAddr2
+        '
+        Me.txtCMAddr2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMAddr2.Location = New System.Drawing.Point(120, 135)
+        Me.txtCMAddr2.Name = "txtCMAddr2"
+        Me.txtCMAddr2.ReadOnly = True
+        Me.txtCMAddr2.Size = New System.Drawing.Size(674, 25)
+        Me.txtCMAddr2.TabIndex = 77
+        '
+        'Label34
+        '
+        Me.Label34.AutoSize = True
+        Me.Label34.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label34.Location = New System.Drawing.Point(10, 105)
+        Me.Label34.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label34.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(100, 25)
+        Me.Label34.TabIndex = 70
+        Me.Label34.Text = "등록번호"
+        Me.Label34.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label39
+        '
+        Me.Label39.AutoSize = True
+        Me.Label39.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label39.Location = New System.Drawing.Point(10, 136)
+        Me.Label39.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label39.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label39.Name = "Label39"
+        Me.Label39.Size = New System.Drawing.Size(100, 25)
+        Me.Label39.TabIndex = 76
+        Me.Label39.Text = "사업장주소"
+        Me.Label39.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtCMItem2
+        '
+        Me.txtCMItem2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMItem2.Location = New System.Drawing.Point(382, 165)
+        Me.txtCMItem2.Name = "txtCMItem2"
+        Me.txtCMItem2.ReadOnly = True
+        Me.txtCMItem2.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMItem2.TabIndex = 81
+        '
+        'txtCMConditions2
+        '
+        Me.txtCMConditions2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMConditions2.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.txtCMConditions2.Location = New System.Drawing.Point(120, 165)
+        Me.txtCMConditions2.Name = "txtCMConditions2"
+        Me.txtCMConditions2.ReadOnly = True
+        Me.txtCMConditions2.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMConditions2.TabIndex = 79
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label1.Location = New System.Drawing.Point(534, 225)
+        Me.Label1.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label1.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(100, 25)
+        Me.Label1.TabIndex = 96
+        Me.Label1.Text = "세     액"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'dtpIsuDe
+        '
+        Me.dtpIsuDe.CalendarFont = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpIsuDe.Location = New System.Drawing.Point(120, 225)
+        Me.dtpIsuDe.MinimumSize = New System.Drawing.Size(150, 25)
+        Me.dtpIsuDe.Name = "dtpIsuDe"
+        Me.dtpIsuDe.Size = New System.Drawing.Size(150, 25)
+        Me.dtpIsuDe.TabIndex = 93
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label2.Location = New System.Drawing.Point(272, 225)
+        Me.Label2.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label2.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(100, 25)
+        Me.Label2.TabIndex = 94
+        Me.Label2.Text = "공급가액"
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label3.Location = New System.Drawing.Point(10, 225)
+        Me.Label3.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label3.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(100, 25)
+        Me.Label3.TabIndex = 92
+        Me.Label3.Text = "작성일자"
+        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Panel6
+        '
+        Me.Panel6.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel6.Controls.Add(Me.Panel41)
+        Me.Panel6.Controls.Add(Me.Panel47)
+        Me.Panel6.Controls.Add(Me.Panel48)
+        Me.Panel6.Location = New System.Drawing.Point(10, 252)
+        Me.Panel6.Name = "Panel6"
+        Me.Panel6.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel6.TabIndex = 565
+        Me.Panel6.Visible = False
+        '
+        'Panel41
+        '
+        Me.Panel41.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel41.Location = New System.Drawing.Point(0, 62)
+        Me.Panel41.Name = "Panel41"
+        Me.Panel41.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel41.TabIndex = 392
+        Me.Panel41.Visible = False
+        '
+        'Panel47
+        '
+        Me.Panel47.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel47.Location = New System.Drawing.Point(0, 32)
+        Me.Panel47.Name = "Panel47"
+        Me.Panel47.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel47.TabIndex = 390
+        Me.Panel47.Visible = False
+        '
+        'Panel48
+        '
+        Me.Panel48.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel48.Location = New System.Drawing.Point(0, 32)
+        Me.Panel48.Name = "Panel48"
+        Me.Panel48.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel48.TabIndex = 391
+        Me.Panel48.Visible = False
+        '
+        'Panel52
+        '
+        Me.Panel52.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel52.Controls.Add(Me.Panel53)
+        Me.Panel52.Controls.Add(Me.Panel54)
+        Me.Panel52.Controls.Add(Me.Panel55)
+        Me.Panel52.Location = New System.Drawing.Point(10, 222)
+        Me.Panel52.Name = "Panel52"
+        Me.Panel52.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel52.TabIndex = 564
+        Me.Panel52.Visible = False
+        '
+        'Panel53
+        '
+        Me.Panel53.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel53.Location = New System.Drawing.Point(0, 62)
+        Me.Panel53.Name = "Panel53"
+        Me.Panel53.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel53.TabIndex = 392
+        Me.Panel53.Visible = False
+        '
+        'Panel54
+        '
+        Me.Panel54.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel54.Location = New System.Drawing.Point(0, 32)
+        Me.Panel54.Name = "Panel54"
+        Me.Panel54.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel54.TabIndex = 390
+        Me.Panel54.Visible = False
+        '
+        'Panel55
+        '
+        Me.Panel55.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel55.Location = New System.Drawing.Point(0, 32)
+        Me.Panel55.Name = "Panel55"
+        Me.Panel55.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel55.TabIndex = 391
+        Me.Panel55.Visible = False
+        '
+        'cboRqestRcptSe2
+        '
+        Me.cboRqestRcptSe2.DropDownHeight = 140
+        Me.cboRqestRcptSe2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.cboRqestRcptSe2.FormattingEnabled = True
+        Me.cboRqestRcptSe2.IntegralHeight = False
+        Me.cboRqestRcptSe2.ItemHeight = 17
+        Me.cboRqestRcptSe2.Location = New System.Drawing.Point(120, 285)
+        Me.cboRqestRcptSe2.MaximumSize = New System.Drawing.Size(150, 0)
+        Me.cboRqestRcptSe2.MinimumSize = New System.Drawing.Size(150, 0)
+        Me.cboRqestRcptSe2.Name = "cboRqestRcptSe2"
+        Me.cboRqestRcptSe2.Size = New System.Drawing.Size(150, 25)
+        Me.cboRqestRcptSe2.TabIndex = 109
+        '
+        'Panel63
+        '
+        Me.Panel63.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel63.Controls.Add(Me.Panel64)
+        Me.Panel63.Controls.Add(Me.Panel65)
+        Me.Panel63.Controls.Add(Me.Panel69)
+        Me.Panel63.Location = New System.Drawing.Point(10, 192)
+        Me.Panel63.Name = "Panel63"
+        Me.Panel63.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel63.TabIndex = 479
+        Me.Panel63.Visible = False
+        '
+        'Panel64
+        '
+        Me.Panel64.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel64.Location = New System.Drawing.Point(0, 62)
+        Me.Panel64.Name = "Panel64"
+        Me.Panel64.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel64.TabIndex = 392
+        Me.Panel64.Visible = False
+        '
+        'Panel65
+        '
+        Me.Panel65.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel65.Location = New System.Drawing.Point(0, 32)
+        Me.Panel65.Name = "Panel65"
+        Me.Panel65.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel65.TabIndex = 390
+        Me.Panel65.Visible = False
+        '
+        'Panel69
+        '
+        Me.Panel69.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel69.Location = New System.Drawing.Point(0, 32)
+        Me.Panel69.Name = "Panel69"
+        Me.Panel69.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel69.TabIndex = 391
+        Me.Panel69.Visible = False
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label15.Location = New System.Drawing.Point(10, 285)
+        Me.Label15.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label15.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(100, 25)
+        Me.Label15.TabIndex = 108
+        Me.Label15.Text = "영수청구구분"
+        Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Panel70
+        '
+        Me.Panel70.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel70.Controls.Add(Me.Panel71)
+        Me.Panel70.Controls.Add(Me.Panel72)
+        Me.Panel70.Controls.Add(Me.Panel73)
+        Me.Panel70.Location = New System.Drawing.Point(10, 162)
+        Me.Panel70.Name = "Panel70"
+        Me.Panel70.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel70.TabIndex = 474
+        Me.Panel70.Visible = False
+        '
+        'Panel71
+        '
+        Me.Panel71.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel71.Location = New System.Drawing.Point(0, 62)
+        Me.Panel71.Name = "Panel71"
+        Me.Panel71.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel71.TabIndex = 392
+        Me.Panel71.Visible = False
+        '
+        'Panel72
+        '
+        Me.Panel72.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel72.Location = New System.Drawing.Point(0, 32)
+        Me.Panel72.Name = "Panel72"
+        Me.Panel72.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel72.TabIndex = 390
+        Me.Panel72.Visible = False
+        '
+        'Panel73
+        '
+        Me.Panel73.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel73.Location = New System.Drawing.Point(0, 32)
+        Me.Panel73.Name = "Panel73"
+        Me.Panel73.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel73.TabIndex = 391
+        Me.Panel73.Visible = False
+        '
+        'btnCMSearch
+        '
+        Me.btnCMSearch.BackColor = System.Drawing.Color.White
+        Me.btnCMSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCMSearch.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnCMSearch.ForeColor = System.Drawing.SystemColors.HotTrack
+        Me.btnCMSearch.Location = New System.Drawing.Point(271, 73)
+        Me.btnCMSearch.Name = "btnCMSearch"
+        Me.btnCMSearch.Size = New System.Drawing.Size(27, 27)
+        Me.btnCMSearch.TabIndex = 69
+        Me.btnCMSearch.Text = "⌕"
+        Me.btnCMSearch.UseVisualStyleBackColor = False
+        '
+        'btnNew1
+        '
+        Me.btnNew1.BackColor = System.Drawing.SystemColors.Info
+        Me.btnNew1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnNew1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnNew1.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnNew1.Location = New System.Drawing.Point(10, 312)
+        Me.btnNew1.Name = "btnNew1"
+        Me.btnNew1.Size = New System.Drawing.Size(150, 31)
+        Me.btnNew1.TabIndex = 112
+        Me.btnNew1.Text = "신     규"
+        Me.btnNew1.UseVisualStyleBackColor = False
+        '
+        'btnDel1
+        '
+        Me.btnDel1.BackColor = System.Drawing.SystemColors.Info
+        Me.btnDel1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnDel1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnDel1.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnDel1.Location = New System.Drawing.Point(168, 312)
+        Me.btnDel1.Name = "btnDel1"
+        Me.btnDel1.Size = New System.Drawing.Size(150, 31)
+        Me.btnDel1.TabIndex = 113
+        Me.btnDel1.Text = "삭    제"
+        Me.btnDel1.UseVisualStyleBackColor = False
+        '
+        'btnSave1
+        '
+        Me.btnSave1.BackColor = System.Drawing.SystemColors.Info
+        Me.btnSave1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSave1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnSave1.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnSave1.Location = New System.Drawing.Point(326, 312)
+        Me.btnSave1.Name = "btnSave1"
+        Me.btnSave1.Size = New System.Drawing.Size(150, 31)
+        Me.btnSave1.TabIndex = 114
+        Me.btnSave1.Text = "저    장"
+        Me.btnSave1.UseVisualStyleBackColor = False
+        '
+        'txtRm
+        '
+        Me.txtRm.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtRm.Location = New System.Drawing.Point(382, 285)
+        Me.txtRm.Name = "txtRm"
+        Me.txtRm.Size = New System.Drawing.Size(704, 25)
+        Me.txtRm.TabIndex = 111
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label17.Location = New System.Drawing.Point(272, 285)
+        Me.Label17.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label17.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(100, 25)
+        Me.Label17.TabIndex = 110
+        Me.Label17.Text = "비     고"
+        Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtCMCode2
+        '
+        Me.txtCMCode2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMCode2.Location = New System.Drawing.Point(120, 74)
+        Me.txtCMCode2.Name = "txtCMCode2"
+        Me.txtCMCode2.ReadOnly = True
+        Me.txtCMCode2.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMCode2.TabIndex = 68
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label27.Location = New System.Drawing.Point(10, 75)
+        Me.Label27.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label27.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(100, 25)
+        Me.Label27.TabIndex = 67
+        Me.Label27.Text = "거래처코드"
+        Me.Label27.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Panel74
+        '
+        Me.Panel74.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel74.Controls.Add(Me.Panel75)
+        Me.Panel74.Controls.Add(Me.Panel76)
+        Me.Panel74.Controls.Add(Me.Panel77)
+        Me.Panel74.Location = New System.Drawing.Point(10, 132)
+        Me.Panel74.Name = "Panel74"
+        Me.Panel74.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel74.TabIndex = 395
+        Me.Panel74.Visible = False
+        '
+        'Panel75
+        '
+        Me.Panel75.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel75.Location = New System.Drawing.Point(0, 62)
+        Me.Panel75.Name = "Panel75"
+        Me.Panel75.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel75.TabIndex = 392
+        Me.Panel75.Visible = False
+        '
+        'Panel76
+        '
+        Me.Panel76.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel76.Location = New System.Drawing.Point(0, 32)
+        Me.Panel76.Name = "Panel76"
+        Me.Panel76.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel76.TabIndex = 390
+        Me.Panel76.Visible = False
+        '
+        'Panel77
+        '
+        Me.Panel77.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel77.Location = New System.Drawing.Point(0, 32)
+        Me.Panel77.Name = "Panel77"
+        Me.Panel77.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel77.TabIndex = 391
+        Me.Panel77.Visible = False
+        '
+        'Panel78
+        '
+        Me.Panel78.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel78.Location = New System.Drawing.Point(10, 71)
+        Me.Panel78.Name = "Panel78"
+        Me.Panel78.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel78.TabIndex = 393
+        Me.Panel78.Visible = False
+        '
+        'Panel81
+        '
+        Me.Panel81.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel81.Location = New System.Drawing.Point(10, 71)
+        Me.Panel81.Name = "Panel81"
+        Me.Panel81.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel81.TabIndex = 394
+        Me.Panel81.Visible = False
+        '
+        'Panel82
+        '
+        Me.Panel82.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel82.Controls.Add(Me.Panel83)
+        Me.Panel82.Controls.Add(Me.Panel84)
+        Me.Panel82.Controls.Add(Me.Panel94)
+        Me.Panel82.Location = New System.Drawing.Point(10, 342)
+        Me.Panel82.Name = "Panel82"
+        Me.Panel82.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel82.TabIndex = 392
+        Me.Panel82.Visible = False
+        '
+        'Panel83
+        '
+        Me.Panel83.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel83.Location = New System.Drawing.Point(0, 62)
+        Me.Panel83.Name = "Panel83"
+        Me.Panel83.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel83.TabIndex = 392
+        Me.Panel83.Visible = False
+        '
+        'Panel84
+        '
+        Me.Panel84.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel84.Location = New System.Drawing.Point(0, 32)
+        Me.Panel84.Name = "Panel84"
+        Me.Panel84.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel84.TabIndex = 390
+        Me.Panel84.Visible = False
+        '
+        'Panel94
+        '
+        Me.Panel94.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel94.Location = New System.Drawing.Point(0, 32)
+        Me.Panel94.Name = "Panel94"
+        Me.Panel94.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel94.TabIndex = 391
+        Me.Panel94.Visible = False
+        '
+        'Panel95
+        '
+        Me.Panel95.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel95.Location = New System.Drawing.Point(10, 312)
+        Me.Panel95.Name = "Panel95"
+        Me.Panel95.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel95.TabIndex = 390
+        Me.Panel95.Visible = False
+        '
+        'Panel96
+        '
+        Me.Panel96.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel96.Controls.Add(Me.Panel97)
+        Me.Panel96.Controls.Add(Me.Panel98)
+        Me.Panel96.Controls.Add(Me.Panel99)
+        Me.Panel96.Location = New System.Drawing.Point(10, 41)
+        Me.Panel96.Name = "Panel96"
+        Me.Panel96.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel96.TabIndex = 389
+        Me.Panel96.Visible = False
+        '
+        'Panel97
+        '
+        Me.Panel97.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel97.Location = New System.Drawing.Point(0, 62)
+        Me.Panel97.Name = "Panel97"
+        Me.Panel97.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel97.TabIndex = 392
+        Me.Panel97.Visible = False
+        '
+        'Panel98
+        '
+        Me.Panel98.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel98.Location = New System.Drawing.Point(0, 32)
+        Me.Panel98.Name = "Panel98"
+        Me.Panel98.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel98.TabIndex = 390
+        Me.Panel98.Visible = False
+        '
+        'Panel99
+        '
+        Me.Panel99.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel99.Location = New System.Drawing.Point(0, 32)
+        Me.Panel99.Name = "Panel99"
+        Me.Panel99.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel99.TabIndex = 391
+        Me.Panel99.Visible = False
+        '
+        'Panel100
+        '
+        Me.Panel100.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel100.Location = New System.Drawing.Point(10, 11)
+        Me.Panel100.Name = "Panel100"
+        Me.Panel100.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel100.TabIndex = 387
+        Me.Panel100.Visible = False
+        '
+        'Panel101
+        '
+        Me.Panel101.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel101.Location = New System.Drawing.Point(10, 11)
+        Me.Panel101.Name = "Panel101"
+        Me.Panel101.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel101.TabIndex = 388
+        Me.Panel101.Visible = False
+        '
+        'Label29
+        '
+        Me.Label29.AutoSize = True
+        Me.Label29.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label29.Location = New System.Drawing.Point(10, 14)
+        Me.Label29.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label29.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(100, 25)
+        Me.Label29.TabIndex = 19993
+        Me.Label29.Text = "공급받는자"
+        Me.Label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'pnlBasicInfo
+        '
+        Me.pnlBasicInfo.AutoSize = True
+        Me.pnlBasicInfo.Controls.Add(Me.txtCMCode)
+        Me.pnlBasicInfo.Controls.Add(Me.txtCMManEmail)
+        Me.pnlBasicInfo.Controls.Add(Me.Label19)
+        Me.pnlBasicInfo.Controls.Add(Me.txtCMManCell)
+        Me.pnlBasicInfo.Controls.Add(Me.txtCMManName)
+        Me.pnlBasicInfo.Controls.Add(Me.Label11)
+        Me.pnlBasicInfo.Controls.Add(Me.Label13)
+        Me.pnlBasicInfo.Controls.Add(Me.Label14)
+        Me.pnlBasicInfo.Controls.Add(Me.txtCMManTel)
+        Me.pnlBasicInfo.Controls.Add(Me.cboCMTaxImposeGubun)
+        Me.pnlBasicInfo.Controls.Add(Me.Label8)
+        Me.pnlBasicInfo.Controls.Add(Me.Panel3)
+        Me.pnlBasicInfo.Controls.Add(Me.Label36)
+        Me.pnlBasicInfo.Controls.Add(Me.txtCMLeader)
+        Me.pnlBasicInfo.Controls.Add(Me.Label35)
+        Me.pnlBasicInfo.Controls.Add(Me.txtCMName)
+        Me.pnlBasicInfo.Controls.Add(Me.txtCMOpNumber)
+        Me.pnlBasicInfo.Controls.Add(Me.Label9)
+        Me.pnlBasicInfo.Controls.Add(Me.Label10)
+        Me.pnlBasicInfo.Controls.Add(Me.txtCMAddr)
+        Me.pnlBasicInfo.Controls.Add(Me.Label12)
+        Me.pnlBasicInfo.Controls.Add(Me.Panel4)
+        Me.pnlBasicInfo.Controls.Add(Me.Label18)
+        Me.pnlBasicInfo.Controls.Add(Me.txtCMItem)
+        Me.pnlBasicInfo.Controls.Add(Me.txtCMConditions)
+        Me.pnlBasicInfo.Controls.Add(Me.Panel12)
+        Me.pnlBasicInfo.Controls.Add(Me.Panel16)
+        Me.pnlBasicInfo.Controls.Add(Me.Panel42)
+        Me.pnlBasicInfo.Controls.Add(Me.Panel66)
+        Me.pnlBasicInfo.Controls.Add(Me.Panel80)
+        Me.pnlBasicInfo.Controls.Add(Me.Panel85)
+        Me.pnlBasicInfo.Controls.Add(Me.Label31)
+        Me.pnlBasicInfo.Location = New System.Drawing.Point(10, 294)
+        Me.pnlBasicInfo.Name = "pnlBasicInfo"
+        Me.pnlBasicInfo.Size = New System.Drawing.Size(1150, 176)
+        Me.pnlBasicInfo.TabIndex = 445
+        '
+        'txtCMCode
+        '
+        Me.txtCMCode.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMCode.Location = New System.Drawing.Point(949, 44)
+        Me.txtCMCode.Name = "txtCMCode"
+        Me.txtCMCode.ReadOnly = True
+        Me.txtCMCode.Size = New System.Drawing.Size(44, 25)
+        Me.txtCMCode.TabIndex = 999992
+        Me.txtCMCode.Visible = False
+        '
+        'txtCMManEmail
+        '
+        Me.txtCMManEmail.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMManEmail.Location = New System.Drawing.Point(906, 134)
+        Me.txtCMManEmail.Name = "txtCMManEmail"
+        Me.txtCMManEmail.ReadOnly = True
+        Me.txtCMManEmail.Size = New System.Drawing.Size(180, 25)
+        Me.txtCMManEmail.TabIndex = 52
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label19.Location = New System.Drawing.Point(796, 134)
+        Me.Label19.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label19.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(100, 25)
+        Me.Label19.TabIndex = 51
+        Me.Label19.Text = "E-Mail"
+        Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtCMManCell
+        '
+        Me.txtCMManCell.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMManCell.Location = New System.Drawing.Point(644, 134)
+        Me.txtCMManCell.Name = "txtCMManCell"
+        Me.txtCMManCell.ReadOnly = True
+        Me.txtCMManCell.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMManCell.TabIndex = 50
+        '
+        'txtCMManName
+        '
+        Me.txtCMManName.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMManName.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.txtCMManName.Location = New System.Drawing.Point(120, 134)
+        Me.txtCMManName.Name = "txtCMManName"
+        Me.txtCMManName.ReadOnly = True
+        Me.txtCMManName.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMManName.TabIndex = 46
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label11.Location = New System.Drawing.Point(534, 134)
+        Me.Label11.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label11.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(100, 25)
+        Me.Label11.TabIndex = 49
+        Me.Label11.Text = "휴 대 폰"
+        Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label13.Location = New System.Drawing.Point(272, 134)
+        Me.Label13.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label13.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(100, 25)
+        Me.Label13.TabIndex = 47
+        Me.Label13.Text = "전화번호"
+        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label14.Location = New System.Drawing.Point(10, 134)
+        Me.Label14.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label14.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(100, 25)
+        Me.Label14.TabIndex = 45
+        Me.Label14.Text = "담당자성명"
+        Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtCMManTel
+        '
+        Me.txtCMManTel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMManTel.Location = New System.Drawing.Point(382, 134)
+        Me.txtCMManTel.Name = "txtCMManTel"
+        Me.txtCMManTel.ReadOnly = True
+        Me.txtCMManTel.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMManTel.TabIndex = 48
+        '
+        'cboCMTaxImposeGubun
+        '
+        Me.cboCMTaxImposeGubun.DropDownHeight = 140
+        Me.cboCMTaxImposeGubun.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.cboCMTaxImposeGubun.FormattingEnabled = True
+        Me.cboCMTaxImposeGubun.IntegralHeight = False
+        Me.cboCMTaxImposeGubun.ItemHeight = 17
+        Me.cboCMTaxImposeGubun.Location = New System.Drawing.Point(644, 103)
+        Me.cboCMTaxImposeGubun.MaximumSize = New System.Drawing.Size(150, 0)
+        Me.cboCMTaxImposeGubun.MinimumSize = New System.Drawing.Size(150, 0)
+        Me.cboCMTaxImposeGubun.Name = "cboCMTaxImposeGubun"
+        Me.cboCMTaxImposeGubun.Size = New System.Drawing.Size(150, 25)
+        Me.cboCMTaxImposeGubun.TabIndex = 44
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label8.Location = New System.Drawing.Point(534, 104)
+        Me.Label8.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label8.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(100, 25)
+        Me.Label8.TabIndex = 43
+        Me.Label8.Text = "과세형태"
+        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Panel3
+        '
+        Me.Panel3.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel3.Controls.Add(Me.Panel7)
+        Me.Panel3.Controls.Add(Me.Panel8)
+        Me.Panel3.Controls.Add(Me.Panel9)
+        Me.Panel3.Location = New System.Drawing.Point(10, 161)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel3.TabIndex = 580
+        Me.Panel3.Visible = False
+        '
+        'Panel7
+        '
+        Me.Panel7.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel7.Location = New System.Drawing.Point(0, 62)
+        Me.Panel7.Name = "Panel7"
+        Me.Panel7.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel7.TabIndex = 392
+        Me.Panel7.Visible = False
+        '
+        'Panel8
+        '
+        Me.Panel8.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel8.Location = New System.Drawing.Point(0, 32)
+        Me.Panel8.Name = "Panel8"
+        Me.Panel8.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel8.TabIndex = 390
+        Me.Panel8.Visible = False
+        '
+        'Panel9
+        '
+        Me.Panel9.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel9.Location = New System.Drawing.Point(0, 32)
+        Me.Panel9.Name = "Panel9"
+        Me.Panel9.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel9.TabIndex = 391
+        Me.Panel9.Visible = False
+        '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label36.Location = New System.Drawing.Point(683, 44)
+        Me.Label36.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label36.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(100, 25)
+        Me.Label36.TabIndex = 35
+        Me.Label36.Text = "성     명"
+        Me.Label36.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtCMLeader
+        '
+        Me.txtCMLeader.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMLeader.Location = New System.Drawing.Point(793, 44)
+        Me.txtCMLeader.Name = "txtCMLeader"
+        Me.txtCMLeader.ReadOnly = True
+        Me.txtCMLeader.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMLeader.TabIndex = 36
+        Me.txtCMLeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label35
+        '
+        Me.Label35.AutoSize = True
+        Me.Label35.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label35.Location = New System.Drawing.Point(272, 44)
+        Me.Label35.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label35.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(100, 25)
+        Me.Label35.TabIndex = 33
+        Me.Label35.Text = "상호(법인명)"
+        Me.Label35.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtCMName
+        '
+        Me.txtCMName.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMName.Location = New System.Drawing.Point(382, 44)
+        Me.txtCMName.Name = "txtCMName"
+        Me.txtCMName.ReadOnly = True
+        Me.txtCMName.Size = New System.Drawing.Size(299, 25)
+        Me.txtCMName.TabIndex = 34
+        '
+        'txtCMOpNumber
+        '
+        Me.txtCMOpNumber.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMOpNumber.Location = New System.Drawing.Point(120, 44)
+        Me.txtCMOpNumber.Name = "txtCMOpNumber"
+        Me.txtCMOpNumber.ReadOnly = True
+        Me.txtCMOpNumber.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMOpNumber.TabIndex = 32
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label18.Location = New System.Drawing.Point(10, 75)
+        Me.Label18.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label18.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(100, 25)
+        Me.Label18.TabIndex = 37
+        Me.Label18.Text = "사업장주소"
+        Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtCMItem
+        '
+        Me.txtCMItem.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMItem.Location = New System.Drawing.Point(382, 104)
+        Me.txtCMItem.Name = "txtCMItem"
+        Me.txtCMItem.ReadOnly = True
+        Me.txtCMItem.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMItem.TabIndex = 42
+        '
+        'txtCMConditions
+        '
+        Me.txtCMConditions.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCMConditions.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.txtCMConditions.Location = New System.Drawing.Point(120, 104)
+        Me.txtCMConditions.Name = "txtCMConditions"
+        Me.txtCMConditions.ReadOnly = True
+        Me.txtCMConditions.Size = New System.Drawing.Size(150, 25)
+        Me.txtCMConditions.TabIndex = 40
+        '
+        'Panel12
+        '
+        Me.Panel12.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel12.Controls.Add(Me.Panel13)
+        Me.Panel12.Controls.Add(Me.Panel14)
+        Me.Panel12.Controls.Add(Me.Panel15)
+        Me.Panel12.Location = New System.Drawing.Point(10, 101)
+        Me.Panel12.Name = "Panel12"
+        Me.Panel12.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel12.TabIndex = 395
+        Me.Panel12.Visible = False
+        '
+        'Panel13
+        '
+        Me.Panel13.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel13.Location = New System.Drawing.Point(0, 62)
+        Me.Panel13.Name = "Panel13"
+        Me.Panel13.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel13.TabIndex = 392
+        Me.Panel13.Visible = False
+        '
+        'Panel14
+        '
+        Me.Panel14.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel14.Location = New System.Drawing.Point(0, 32)
+        Me.Panel14.Name = "Panel14"
+        Me.Panel14.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel14.TabIndex = 390
+        Me.Panel14.Visible = False
+        '
+        'Panel15
+        '
+        Me.Panel15.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel15.Location = New System.Drawing.Point(0, 32)
+        Me.Panel15.Name = "Panel15"
+        Me.Panel15.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel15.TabIndex = 391
+        Me.Panel15.Visible = False
+        '
+        'Panel16
+        '
+        Me.Panel16.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel16.Location = New System.Drawing.Point(10, 71)
+        Me.Panel16.Name = "Panel16"
+        Me.Panel16.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel16.TabIndex = 393
+        Me.Panel16.Visible = False
+        '
+        'Panel42
+        '
+        Me.Panel42.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel42.Location = New System.Drawing.Point(10, 71)
+        Me.Panel42.Name = "Panel42"
+        Me.Panel42.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel42.TabIndex = 394
+        Me.Panel42.Visible = False
+        '
+        'Panel66
+        '
+        Me.Panel66.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel66.Controls.Add(Me.Panel67)
+        Me.Panel66.Controls.Add(Me.Panel68)
+        Me.Panel66.Controls.Add(Me.Panel79)
+        Me.Panel66.Location = New System.Drawing.Point(10, 41)
+        Me.Panel66.Name = "Panel66"
+        Me.Panel66.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel66.TabIndex = 389
+        Me.Panel66.Visible = False
+        '
+        'Panel67
+        '
+        Me.Panel67.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel67.Location = New System.Drawing.Point(0, 62)
+        Me.Panel67.Name = "Panel67"
+        Me.Panel67.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel67.TabIndex = 392
+        Me.Panel67.Visible = False
+        '
+        'Panel68
+        '
+        Me.Panel68.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel68.Location = New System.Drawing.Point(0, 32)
+        Me.Panel68.Name = "Panel68"
+        Me.Panel68.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel68.TabIndex = 390
+        Me.Panel68.Visible = False
+        '
+        'Panel79
+        '
+        Me.Panel79.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel79.Location = New System.Drawing.Point(0, 32)
+        Me.Panel79.Name = "Panel79"
+        Me.Panel79.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel79.TabIndex = 391
+        Me.Panel79.Visible = False
+        '
+        'Panel80
+        '
+        Me.Panel80.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel80.Location = New System.Drawing.Point(10, 11)
+        Me.Panel80.Name = "Panel80"
+        Me.Panel80.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel80.TabIndex = 387
+        Me.Panel80.Visible = False
+        '
+        'Panel85
+        '
+        Me.Panel85.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel85.Location = New System.Drawing.Point(10, 11)
+        Me.Panel85.Name = "Panel85"
+        Me.Panel85.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel85.TabIndex = 388
+        Me.Panel85.Visible = False
+        '
+        'Label31
+        '
+        Me.Label31.AutoSize = True
+        Me.Label31.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label31.Location = New System.Drawing.Point(10, 14)
+        Me.Label31.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label31.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(100, 25)
+        Me.Label31.TabIndex = 19992
+        Me.Label31.Text = "공 급 자"
+        Me.Label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'palDetail
+        '
+        Me.palDetail.Controls.Add(Me.Panel51)
+        Me.palDetail.Controls.Add(Me.Panel155)
+        Me.palDetail.ForeColor = System.Drawing.SystemColors.InfoText
+        Me.palDetail.Location = New System.Drawing.Point(129, 53)
+        Me.palDetail.Name = "palDetail"
+        Me.palDetail.Size = New System.Drawing.Size(1171, 467)
+        Me.palDetail.TabIndex = 99951
+        '
+        'Panel51
+        '
+        Me.Panel51.AutoSize = True
+        Me.Panel51.Controls.Add(Me.txtSelngTaxDtlInfoID)
+        Me.Panel51.Controls.Add(Me.cboPrdUnit)
+        Me.Panel51.Controls.Add(Me.chkVATInclsAt)
+        Me.Panel51.Controls.Add(Me.Label56)
+        Me.Panel51.Controls.Add(Me.txtSelngTaxInfoSeq)
+        Me.Panel51.Controls.Add(Me.Panel86)
+        Me.Panel51.Controls.Add(Me.Panel87)
+        Me.Panel51.Controls.Add(Me.txtSelngTaxInfoID2)
+        Me.Panel51.Controls.Add(Me.Label57)
+        Me.Panel51.Controls.Add(Me.Label58)
+        Me.Panel51.Controls.Add(Me.txtAmount2)
+        Me.Panel51.Controls.Add(Me.Label63)
+        Me.Panel51.Controls.Add(Me.txtTaxAmt2)
+        Me.Panel51.Controls.Add(Me.txtSplPc2)
+        Me.Panel51.Controls.Add(Me.Label68)
+        Me.Panel51.Controls.Add(Me.txtPrdQy)
+        Me.Panel51.Controls.Add(Me.txtPrdPc)
+        Me.Panel51.Controls.Add(Me.Label71)
+        Me.Panel51.Controls.Add(Me.Label73)
+        Me.Panel51.Controls.Add(Me.Label74)
+        Me.Panel51.Controls.Add(Me.Panel109)
+        Me.Panel51.Controls.Add(Me.Panel113)
+        Me.Panel51.Controls.Add(Me.btnPrdSearch)
+        Me.Panel51.Controls.Add(Me.btnNew2)
+        Me.Panel51.Controls.Add(Me.btnDel2)
+        Me.Panel51.Controls.Add(Me.btnSave2)
+        Me.Panel51.Controls.Add(Me.txtPrdCode)
+        Me.Panel51.Controls.Add(Me.Label78)
+        Me.Panel51.Controls.Add(Me.Label79)
+        Me.Panel51.Controls.Add(Me.txtPrdName)
+        Me.Panel51.Controls.Add(Me.Panel117)
+        Me.Panel51.Controls.Add(Me.Panel121)
+        Me.Panel51.Controls.Add(Me.Panel122)
+        Me.Panel51.Controls.Add(Me.Panel128)
+        Me.Panel51.Controls.Add(Me.Panel132)
+        Me.Panel51.Controls.Add(Me.Panel133)
+        Me.Panel51.Controls.Add(Me.Label80)
+        Me.Panel51.Location = New System.Drawing.Point(10, 246)
+        Me.Panel51.Name = "Panel51"
+        Me.Panel51.Size = New System.Drawing.Size(1150, 207)
+        Me.Panel51.TabIndex = 446
+        '
+        'txtSelngTaxDtlInfoID
+        '
+        Me.txtSelngTaxDtlInfoID.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtSelngTaxDtlInfoID.Location = New System.Drawing.Point(542, 44)
+        Me.txtSelngTaxDtlInfoID.Name = "txtSelngTaxDtlInfoID"
+        Me.txtSelngTaxDtlInfoID.ReadOnly = True
+        Me.txtSelngTaxDtlInfoID.Size = New System.Drawing.Size(150, 25)
+        Me.txtSelngTaxDtlInfoID.TabIndex = 639
+        Me.txtSelngTaxDtlInfoID.Visible = False
+        '
+        'cboPrdUnit
+        '
+        Me.cboPrdUnit.DropDownHeight = 140
+        Me.cboPrdUnit.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.cboPrdUnit.FormattingEnabled = True
+        Me.cboPrdUnit.IntegralHeight = False
+        Me.cboPrdUnit.ItemHeight = 17
+        Me.cboPrdUnit.Location = New System.Drawing.Point(120, 105)
+        Me.cboPrdUnit.MaximumSize = New System.Drawing.Size(150, 0)
+        Me.cboPrdUnit.MinimumSize = New System.Drawing.Size(150, 0)
+        Me.cboPrdUnit.Name = "cboPrdUnit"
+        Me.cboPrdUnit.Size = New System.Drawing.Size(150, 25)
+        Me.cboPrdUnit.TabIndex = 638
+        '
+        'chkVATInclsAt
+        '
+        Me.chkVATInclsAt.AutoSize = True
+        Me.chkVATInclsAt.Location = New System.Drawing.Point(829, 109)
+        Me.chkVATInclsAt.Name = "chkVATInclsAt"
+        Me.chkVATInclsAt.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.chkVATInclsAt.Size = New System.Drawing.Size(120, 16)
+        Me.chkVATInclsAt.TabIndex = 631
+        Me.chkVATInclsAt.Text = "   부가세포함여부"
+        Me.chkVATInclsAt.UseVisualStyleBackColor = True
+        '
+        'Label56
+        '
+        Me.Label56.AutoSize = True
+        Me.Label56.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label56.Location = New System.Drawing.Point(272, 44)
+        Me.Label56.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label56.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label56.Name = "Label56"
+        Me.Label56.Size = New System.Drawing.Size(100, 25)
+        Me.Label56.TabIndex = 629
+        Me.Label56.Text = "순     번"
+        Me.Label56.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtSelngTaxInfoSeq
+        '
+        Me.txtSelngTaxInfoSeq.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtSelngTaxInfoSeq.Location = New System.Drawing.Point(382, 44)
+        Me.txtSelngTaxInfoSeq.Name = "txtSelngTaxInfoSeq"
+        Me.txtSelngTaxInfoSeq.ReadOnly = True
+        Me.txtSelngTaxInfoSeq.Size = New System.Drawing.Size(30, 25)
+        Me.txtSelngTaxInfoSeq.TabIndex = 628
+        Me.txtSelngTaxInfoSeq.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Panel86
+        '
+        Me.Panel86.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel86.Location = New System.Drawing.Point(10, 101)
+        Me.Panel86.Name = "Panel86"
+        Me.Panel86.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel86.TabIndex = 626
+        Me.Panel86.Visible = False
+        '
+        'Panel87
+        '
+        Me.Panel87.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel87.Location = New System.Drawing.Point(10, 101)
+        Me.Panel87.Name = "Panel87"
+        Me.Panel87.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel87.TabIndex = 627
+        Me.Panel87.Visible = False
+        '
+        'txtSelngTaxInfoID2
+        '
+        Me.txtSelngTaxInfoID2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtSelngTaxInfoID2.Location = New System.Drawing.Point(120, 44)
+        Me.txtSelngTaxInfoID2.Name = "txtSelngTaxInfoID2"
+        Me.txtSelngTaxInfoID2.ReadOnly = True
+        Me.txtSelngTaxInfoID2.Size = New System.Drawing.Size(150, 25)
+        Me.txtSelngTaxInfoID2.TabIndex = 625
+        '
+        'Label57
+        '
+        Me.Label57.AutoSize = True
+        Me.Label57.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label57.Location = New System.Drawing.Point(10, 45)
+        Me.Label57.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label57.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label57.Name = "Label57"
+        Me.Label57.Size = New System.Drawing.Size(100, 25)
+        Me.Label57.TabIndex = 624
+        Me.Label57.Text = "계산서일련번호"
+        Me.Label57.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label58
+        '
+        Me.Label58.AutoSize = True
+        Me.Label58.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label58.Location = New System.Drawing.Point(272, 105)
+        Me.Label58.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label58.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label58.Name = "Label58"
+        Me.Label58.Size = New System.Drawing.Size(100, 25)
+        Me.Label58.TabIndex = 623
+        Me.Label58.Text = "단     가"
+        Me.Label58.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtAmount2
+        '
+        Me.txtAmount2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtAmount2.Location = New System.Drawing.Point(644, 135)
+        Me.txtAmount2.Name = "txtAmount2"
+        Me.txtAmount2.ReadOnly = True
+        Me.txtAmount2.Size = New System.Drawing.Size(180, 25)
+        Me.txtAmount2.TabIndex = 613
+        Me.txtAmount2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label63
+        '
+        Me.Label63.AutoSize = True
+        Me.Label63.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label63.Location = New System.Drawing.Point(534, 135)
+        Me.Label63.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label63.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label63.Name = "Label63"
+        Me.Label63.Size = New System.Drawing.Size(100, 25)
+        Me.Label63.TabIndex = 612
+        Me.Label63.Text = "합계금액"
+        Me.Label63.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtTaxAmt2
+        '
+        Me.txtTaxAmt2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtTaxAmt2.Location = New System.Drawing.Point(382, 135)
+        Me.txtTaxAmt2.Name = "txtTaxAmt2"
+        Me.txtTaxAmt2.ReadOnly = True
+        Me.txtTaxAmt2.Size = New System.Drawing.Size(150, 25)
+        Me.txtTaxAmt2.TabIndex = 611
+        Me.txtTaxAmt2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'txtSplPc2
+        '
+        Me.txtSplPc2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtSplPc2.Location = New System.Drawing.Point(120, 135)
+        Me.txtSplPc2.Name = "txtSplPc2"
+        Me.txtSplPc2.ReadOnly = True
+        Me.txtSplPc2.Size = New System.Drawing.Size(150, 25)
+        Me.txtSplPc2.TabIndex = 610
+        Me.txtSplPc2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label68
+        '
+        Me.Label68.AutoSize = True
+        Me.Label68.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label68.Location = New System.Drawing.Point(534, 105)
+        Me.Label68.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label68.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label68.Name = "Label68"
+        Me.Label68.Size = New System.Drawing.Size(100, 25)
+        Me.Label68.TabIndex = 601
+        Me.Label68.Text = "수     량"
+        Me.Label68.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtPrdQy
+        '
+        Me.txtPrdQy.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtPrdQy.Location = New System.Drawing.Point(644, 105)
+        Me.txtPrdQy.Name = "txtPrdQy"
+        Me.txtPrdQy.Size = New System.Drawing.Size(30, 25)
+        Me.txtPrdQy.TabIndex = 600
+        Me.txtPrdQy.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'txtPrdPc
+        '
+        Me.txtPrdPc.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtPrdPc.Location = New System.Drawing.Point(382, 105)
+        Me.txtPrdPc.Name = "txtPrdPc"
+        Me.txtPrdPc.Size = New System.Drawing.Size(150, 25)
+        Me.txtPrdPc.TabIndex = 599
+        Me.txtPrdPc.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label71
+        '
+        Me.Label71.AutoSize = True
+        Me.Label71.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label71.Location = New System.Drawing.Point(10, 105)
+        Me.Label71.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label71.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label71.Name = "Label71"
+        Me.Label71.Size = New System.Drawing.Size(100, 25)
+        Me.Label71.TabIndex = 594
+        Me.Label71.Text = "단     위"
+        Me.Label71.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label73
+        '
+        Me.Label73.AutoSize = True
+        Me.Label73.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label73.Location = New System.Drawing.Point(272, 135)
+        Me.Label73.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label73.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label73.Name = "Label73"
+        Me.Label73.Size = New System.Drawing.Size(100, 25)
+        Me.Label73.TabIndex = 570
+        Me.Label73.Text = "세     액"
+        Me.Label73.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label74
+        '
+        Me.Label74.AutoSize = True
+        Me.Label74.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label74.Location = New System.Drawing.Point(10, 136)
+        Me.Label74.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label74.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label74.Name = "Label74"
+        Me.Label74.Size = New System.Drawing.Size(100, 25)
+        Me.Label74.TabIndex = 567
+        Me.Label74.Text = "공급가액"
+        Me.Label74.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Panel109
+        '
+        Me.Panel109.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel109.Controls.Add(Me.Panel110)
+        Me.Panel109.Controls.Add(Me.Panel111)
+        Me.Panel109.Controls.Add(Me.Panel112)
+        Me.Panel109.Location = New System.Drawing.Point(10, 192)
+        Me.Panel109.Name = "Panel109"
+        Me.Panel109.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel109.TabIndex = 479
+        Me.Panel109.Visible = False
+        '
+        'Panel110
+        '
+        Me.Panel110.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel110.Location = New System.Drawing.Point(0, 62)
+        Me.Panel110.Name = "Panel110"
+        Me.Panel110.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel110.TabIndex = 392
+        Me.Panel110.Visible = False
+        '
+        'Panel111
+        '
+        Me.Panel111.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel111.Location = New System.Drawing.Point(0, 32)
+        Me.Panel111.Name = "Panel111"
+        Me.Panel111.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel111.TabIndex = 390
+        Me.Panel111.Visible = False
+        '
+        'Panel112
+        '
+        Me.Panel112.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel112.Location = New System.Drawing.Point(0, 32)
+        Me.Panel112.Name = "Panel112"
+        Me.Panel112.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel112.TabIndex = 391
+        Me.Panel112.Visible = False
+        '
+        'Panel113
+        '
+        Me.Panel113.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel113.Controls.Add(Me.Panel114)
+        Me.Panel113.Controls.Add(Me.Panel115)
+        Me.Panel113.Controls.Add(Me.Panel116)
+        Me.Panel113.Location = New System.Drawing.Point(10, 162)
+        Me.Panel113.Name = "Panel113"
+        Me.Panel113.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel113.TabIndex = 474
+        Me.Panel113.Visible = False
+        '
+        'Panel114
+        '
+        Me.Panel114.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel114.Location = New System.Drawing.Point(0, 62)
+        Me.Panel114.Name = "Panel114"
+        Me.Panel114.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel114.TabIndex = 392
+        Me.Panel114.Visible = False
+        '
+        'Panel115
+        '
+        Me.Panel115.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel115.Location = New System.Drawing.Point(0, 32)
+        Me.Panel115.Name = "Panel115"
+        Me.Panel115.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel115.TabIndex = 390
+        Me.Panel115.Visible = False
+        '
+        'Panel116
+        '
+        Me.Panel116.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel116.Location = New System.Drawing.Point(0, 32)
+        Me.Panel116.Name = "Panel116"
+        Me.Panel116.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel116.TabIndex = 391
+        Me.Panel116.Visible = False
+        '
+        'btnPrdSearch
+        '
+        Me.btnPrdSearch.BackColor = System.Drawing.Color.White
+        Me.btnPrdSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnPrdSearch.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnPrdSearch.ForeColor = System.Drawing.SystemColors.HotTrack
+        Me.btnPrdSearch.Location = New System.Drawing.Point(271, 74)
+        Me.btnPrdSearch.Name = "btnPrdSearch"
+        Me.btnPrdSearch.Size = New System.Drawing.Size(27, 27)
+        Me.btnPrdSearch.TabIndex = 473
+        Me.btnPrdSearch.Text = "⌕"
+        Me.btnPrdSearch.UseVisualStyleBackColor = False
+        '
+        'btnNew2
+        '
+        Me.btnNew2.BackColor = System.Drawing.SystemColors.Info
+        Me.btnNew2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnNew2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnNew2.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnNew2.Location = New System.Drawing.Point(10, 162)
+        Me.btnNew2.Name = "btnNew2"
+        Me.btnNew2.Size = New System.Drawing.Size(150, 31)
+        Me.btnNew2.TabIndex = 471
+        Me.btnNew2.Text = "신     규"
+        Me.btnNew2.UseVisualStyleBackColor = False
+        '
+        'btnDel2
+        '
+        Me.btnDel2.BackColor = System.Drawing.SystemColors.Info
+        Me.btnDel2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnDel2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnDel2.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnDel2.Location = New System.Drawing.Point(168, 162)
+        Me.btnDel2.Name = "btnDel2"
+        Me.btnDel2.Size = New System.Drawing.Size(150, 31)
+        Me.btnDel2.TabIndex = 470
+        Me.btnDel2.Text = "삭    제"
+        Me.btnDel2.UseVisualStyleBackColor = False
+        '
+        'btnSave2
+        '
+        Me.btnSave2.BackColor = System.Drawing.SystemColors.Info
+        Me.btnSave2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSave2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnSave2.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnSave2.Location = New System.Drawing.Point(326, 162)
+        Me.btnSave2.Name = "btnSave2"
+        Me.btnSave2.Size = New System.Drawing.Size(150, 31)
+        Me.btnSave2.TabIndex = 469
+        Me.btnSave2.Text = "저    장"
+        Me.btnSave2.UseVisualStyleBackColor = False
+        '
+        'txtPrdCode
+        '
+        Me.txtPrdCode.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtPrdCode.Location = New System.Drawing.Point(382, 75)
+        Me.txtPrdCode.Name = "txtPrdCode"
+        Me.txtPrdCode.ReadOnly = True
+        Me.txtPrdCode.Size = New System.Drawing.Size(150, 25)
+        Me.txtPrdCode.TabIndex = 427
+        '
+        'Label78
+        '
+        Me.Label78.AutoSize = True
+        Me.Label78.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label78.Location = New System.Drawing.Point(272, 75)
+        Me.Label78.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label78.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label78.Name = "Label78"
+        Me.Label78.Size = New System.Drawing.Size(100, 25)
+        Me.Label78.TabIndex = 426
+        Me.Label78.Text = "품목코드"
+        Me.Label78.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label79
+        '
+        Me.Label79.AutoSize = True
+        Me.Label79.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label79.Location = New System.Drawing.Point(10, 75)
+        Me.Label79.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label79.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label79.Name = "Label79"
+        Me.Label79.Size = New System.Drawing.Size(100, 25)
+        Me.Label79.TabIndex = 425
+        Me.Label79.Text = "품     목"
+        Me.Label79.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtPrdName
+        '
+        Me.txtPrdName.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtPrdName.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.txtPrdName.Location = New System.Drawing.Point(120, 75)
+        Me.txtPrdName.Name = "txtPrdName"
+        Me.txtPrdName.ReadOnly = True
+        Me.txtPrdName.Size = New System.Drawing.Size(150, 25)
+        Me.txtPrdName.TabIndex = 424
+        '
+        'Panel117
+        '
+        Me.Panel117.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel117.Controls.Add(Me.Panel118)
+        Me.Panel117.Controls.Add(Me.Panel119)
+        Me.Panel117.Controls.Add(Me.Panel120)
+        Me.Panel117.Location = New System.Drawing.Point(10, 132)
+        Me.Panel117.Name = "Panel117"
+        Me.Panel117.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel117.TabIndex = 395
+        Me.Panel117.Visible = False
+        '
+        'Panel118
+        '
+        Me.Panel118.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel118.Location = New System.Drawing.Point(0, 62)
+        Me.Panel118.Name = "Panel118"
+        Me.Panel118.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel118.TabIndex = 392
+        Me.Panel118.Visible = False
+        '
+        'Panel119
+        '
+        Me.Panel119.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel119.Location = New System.Drawing.Point(0, 32)
+        Me.Panel119.Name = "Panel119"
+        Me.Panel119.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel119.TabIndex = 390
+        Me.Panel119.Visible = False
+        '
+        'Panel120
+        '
+        Me.Panel120.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel120.Location = New System.Drawing.Point(0, 32)
+        Me.Panel120.Name = "Panel120"
+        Me.Panel120.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel120.TabIndex = 391
+        Me.Panel120.Visible = False
+        '
+        'Panel121
+        '
+        Me.Panel121.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel121.Location = New System.Drawing.Point(10, 71)
+        Me.Panel121.Name = "Panel121"
+        Me.Panel121.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel121.TabIndex = 393
+        Me.Panel121.Visible = False
+        '
+        'Panel122
+        '
+        Me.Panel122.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel122.Location = New System.Drawing.Point(10, 71)
+        Me.Panel122.Name = "Panel122"
+        Me.Panel122.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel122.TabIndex = 394
+        Me.Panel122.Visible = False
+        '
+        'Panel128
+        '
+        Me.Panel128.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel128.Controls.Add(Me.Panel129)
+        Me.Panel128.Controls.Add(Me.Panel130)
+        Me.Panel128.Controls.Add(Me.Panel131)
+        Me.Panel128.Location = New System.Drawing.Point(10, 41)
+        Me.Panel128.Name = "Panel128"
+        Me.Panel128.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel128.TabIndex = 389
+        Me.Panel128.Visible = False
+        '
+        'Panel129
+        '
+        Me.Panel129.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel129.Location = New System.Drawing.Point(0, 62)
+        Me.Panel129.Name = "Panel129"
+        Me.Panel129.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel129.TabIndex = 392
+        Me.Panel129.Visible = False
+        '
+        'Panel130
+        '
+        Me.Panel130.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel130.Location = New System.Drawing.Point(0, 32)
+        Me.Panel130.Name = "Panel130"
+        Me.Panel130.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel130.TabIndex = 390
+        Me.Panel130.Visible = False
+        '
+        'Panel131
+        '
+        Me.Panel131.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel131.Location = New System.Drawing.Point(0, 32)
+        Me.Panel131.Name = "Panel131"
+        Me.Panel131.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel131.TabIndex = 391
+        Me.Panel131.Visible = False
+        '
+        'Panel132
+        '
+        Me.Panel132.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel132.Location = New System.Drawing.Point(10, 11)
+        Me.Panel132.Name = "Panel132"
+        Me.Panel132.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel132.TabIndex = 387
+        Me.Panel132.Visible = False
+        '
+        'Panel133
+        '
+        Me.Panel133.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel133.Location = New System.Drawing.Point(10, 11)
+        Me.Panel133.Name = "Panel133"
+        Me.Panel133.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel133.TabIndex = 388
+        Me.Panel133.Visible = False
+        '
+        'Label80
+        '
+        Me.Label80.AutoSize = True
+        Me.Label80.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label80.Location = New System.Drawing.Point(10, 14)
+        Me.Label80.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label80.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label80.Name = "Label80"
+        Me.Label80.Size = New System.Drawing.Size(100, 25)
+        Me.Label80.TabIndex = 385
+        Me.Label80.Text = "상세내역"
+        Me.Label80.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Panel155
+        '
+        Me.Panel155.AutoSize = True
+        Me.Panel155.Controls.Add(Me.lstDetail)
+        Me.Panel155.Controls.Add(Me.Panel156)
+        Me.Panel155.Controls.Add(Me.Panel157)
+        Me.Panel155.Controls.Add(Me.Panel158)
+        Me.Panel155.Controls.Add(Me.Label93)
+        Me.Panel155.Location = New System.Drawing.Point(10, 12)
+        Me.Panel155.Name = "Panel155"
+        Me.Panel155.Size = New System.Drawing.Size(1150, 235)
+        Me.Panel155.TabIndex = 440
+        '
+        'lstDetail
+        '
+        Me.lstDetail.AllowUserToAddRows = False
+        Me.lstDetail.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
+        Me.lstDetail.BackgroundColor = System.Drawing.Color.White
+        Me.lstDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.lstDetail.GridColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.lstDetail.Location = New System.Drawing.Point(10, 42)
+        Me.lstDetail.Name = "lstDetail"
+        Me.lstDetail.ReadOnly = True
+        Me.lstDetail.RowHeadersVisible = False
+        Me.lstDetail.RowTemplate.Height = 23
+        Me.lstDetail.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.lstDetail.Size = New System.Drawing.Size(1130, 184)
+        Me.lstDetail.TabIndex = 390
+        '
+        'Panel156
+        '
+        Me.Panel156.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel156.Location = New System.Drawing.Point(10, 41)
+        Me.Panel156.Name = "Panel156"
+        Me.Panel156.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel156.TabIndex = 389
+        Me.Panel156.Visible = False
+        '
+        'Panel157
+        '
+        Me.Panel157.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel157.Location = New System.Drawing.Point(10, 11)
+        Me.Panel157.Name = "Panel157"
+        Me.Panel157.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel157.TabIndex = 387
+        Me.Panel157.Visible = False
+        '
+        'Panel158
+        '
+        Me.Panel158.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel158.Location = New System.Drawing.Point(10, 11)
+        Me.Panel158.Name = "Panel158"
+        Me.Panel158.Size = New System.Drawing.Size(1130, 1)
+        Me.Panel158.TabIndex = 388
+        Me.Panel158.Visible = False
+        '
+        'Label93
+        '
+        Me.Label93.AutoSize = True
+        Me.Label93.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label93.Location = New System.Drawing.Point(10, 14)
+        Me.Label93.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label93.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label93.Name = "Label93"
+        Me.Label93.Size = New System.Drawing.Size(100, 25)
+        Me.Label93.TabIndex = 385
+        Me.Label93.Text = "상세목록"
+        Me.Label93.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Frm_Selng_Tax_Info
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScroll = True
+        Me.Controls.Add(Me.palDetail)
+        Me.Controls.Add(Me.palMain)
+        Me.Controls.Add(Me.Color_Label)
+        Me.Controls.Add(Me.tab_Detail)
+        Me.Controls.Add(Me.Di_Panel2)
+        Me.Controls.Add(Me.tab_Main)
+        Me.Name = "Frm_Selng_Tax_Info"
+        Me.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.Size = New System.Drawing.Size(2090, 1594)
+        Me.pnlSearch1.ResumeLayout(False)
+        Me.pnlSearch1.PerformLayout()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel4.ResumeLayout(False)
+        Me.pnlResultGrid.ResumeLayout(False)
+        Me.pnlResultGrid.PerformLayout()
+        Me.palMain.ResumeLayout(False)
+        Me.palMain.PerformLayout()
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
+        Me.Panel6.ResumeLayout(False)
+        Me.Panel52.ResumeLayout(False)
+        Me.Panel63.ResumeLayout(False)
+        Me.Panel70.ResumeLayout(False)
+        Me.Panel74.ResumeLayout(False)
+        Me.Panel82.ResumeLayout(False)
+        Me.Panel96.ResumeLayout(False)
+        Me.pnlBasicInfo.ResumeLayout(False)
+        Me.pnlBasicInfo.PerformLayout()
+        Me.Panel3.ResumeLayout(False)
+        Me.Panel12.ResumeLayout(False)
+        Me.Panel66.ResumeLayout(False)
+        Me.palDetail.ResumeLayout(False)
+        Me.palDetail.PerformLayout()
+        Me.Panel51.ResumeLayout(False)
+        Me.Panel51.PerformLayout()
+        Me.Panel109.ResumeLayout(False)
+        Me.Panel113.ResumeLayout(False)
+        Me.Panel117.ResumeLayout(False)
+        Me.Panel128.ResumeLayout(False)
+        Me.Panel155.ResumeLayout(False)
+        Me.Panel155.PerformLayout()
+        CType(Me.lstDetail, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents pnlSearch1 As Panel
+    Friend WithEvents dtpRegDateTo As DateTimePicker
+    Friend WithEvents Label6 As Label
+    Friend WithEvents dtpRegDateFrom As DateTimePicker
+    Friend WithEvents btnItemSearch11 As Button
+    Friend WithEvents lblSearchItem12 As Label
+    Friend WithEvents lblSearchItem11 As Label
+    Friend WithEvents txtSearchItem11 As TextBox
+    Friend WithEvents btnSearch As Button
+    Friend WithEvents Panel43 As Panel
+    Friend WithEvents Panel44 As Panel
+    Friend WithEvents Panel57 As Panel
+    Friend WithEvents Panel31 As Panel
+    Friend WithEvents Panel40 As Panel
+    Friend WithEvents Label25 As Label
+    Friend WithEvents lstMain As DataGridView
+    Friend WithEvents Color_Label As Label
+    Friend WithEvents Panel30 As Panel
+    Friend WithEvents Label9 As Label
+    Friend WithEvents Label10 As Label
+    Friend WithEvents txtCMAddr As TextBox
+    Friend WithEvents Label12 As Label
+    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel10 As Panel
+    Friend WithEvents Panel11 As Panel
+    Friend WithEvents pnlResultGrid As Panel
+    Friend WithEvents tab_Detail As Button
+    Friend WithEvents Di_Panel2 As Panel
+    Friend WithEvents tab_Main As Button
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
+    Friend WithEvents SaveFileDialog1 As SaveFileDialog
+    Friend WithEvents palMain As Panel
+    Friend WithEvents pnlBasicInfo As Panel
+    Friend WithEvents Label18 As Label
+    Friend WithEvents txtCMItem As TextBox
+    Friend WithEvents txtCMConditions As TextBox
+    Friend WithEvents Panel12 As Panel
+    Friend WithEvents Panel13 As Panel
+    Friend WithEvents Panel14 As Panel
+    Friend WithEvents Panel15 As Panel
+    Friend WithEvents Panel16 As Panel
+    Friend WithEvents Panel42 As Panel
+    Friend WithEvents Panel66 As Panel
+    Friend WithEvents Panel67 As Panel
+    Friend WithEvents Panel68 As Panel
+    Friend WithEvents Panel79 As Panel
+    Friend WithEvents Panel80 As Panel
+    Friend WithEvents Panel85 As Panel
+    Friend WithEvents Label31 As Label
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Label1 As Label
+    Friend WithEvents dtpIsuDe As DateTimePicker
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel41 As Panel
+    Friend WithEvents Panel47 As Panel
+    Friend WithEvents Panel48 As Panel
+    Friend WithEvents Panel52 As Panel
+    Friend WithEvents Panel53 As Panel
+    Friend WithEvents Panel54 As Panel
+    Friend WithEvents Panel55 As Panel
+    Friend WithEvents cboRqestRcptSe2 As ComboBox
+    Friend WithEvents Panel63 As Panel
+    Friend WithEvents Panel64 As Panel
+    Friend WithEvents Panel65 As Panel
+    Friend WithEvents Panel69 As Panel
+    Friend WithEvents Label15 As Label
+    Friend WithEvents Panel70 As Panel
+    Friend WithEvents Panel71 As Panel
+    Friend WithEvents Panel72 As Panel
+    Friend WithEvents Panel73 As Panel
+    Friend WithEvents btnCMSearch As Button
+    Friend WithEvents btnNew1 As Button
+    Friend WithEvents btnDel1 As Button
+    Friend WithEvents btnSave1 As Button
+    Friend WithEvents txtRm As TextBox
+    Friend WithEvents Label17 As Label
+    Friend WithEvents txtCMCode2 As TextBox
+    Friend WithEvents Label27 As Label
+    Friend WithEvents Panel74 As Panel
+    Friend WithEvents Panel75 As Panel
+    Friend WithEvents Panel76 As Panel
+    Friend WithEvents Panel77 As Panel
+    Friend WithEvents Panel78 As Panel
+    Friend WithEvents Panel81 As Panel
+    Friend WithEvents Panel82 As Panel
+    Friend WithEvents Panel83 As Panel
+    Friend WithEvents Panel84 As Panel
+    Friend WithEvents Panel94 As Panel
+    Friend WithEvents Panel95 As Panel
+    Friend WithEvents Panel96 As Panel
+    Friend WithEvents Panel97 As Panel
+    Friend WithEvents Panel98 As Panel
+    Friend WithEvents Panel99 As Panel
+    Friend WithEvents Panel100 As Panel
+    Friend WithEvents Panel101 As Panel
+    Friend WithEvents Label29 As Label
+    Friend WithEvents Label36 As Label
+    Friend WithEvents txtCMLeader As TextBox
+    Friend WithEvents Label35 As Label
+    Friend WithEvents txtCMName As TextBox
+    Friend WithEvents txtCMOpNumber As TextBox
+    Friend WithEvents txtCMManEmail As TextBox
+    Friend WithEvents Label19 As Label
+    Friend WithEvents txtCMManCell As TextBox
+    Friend WithEvents txtCMManName As TextBox
+    Friend WithEvents Label11 As Label
+    Friend WithEvents Label13 As Label
+    Friend WithEvents Label14 As Label
+    Friend WithEvents txtCMManTel As TextBox
+    Friend WithEvents cboCMTaxImposeGubun As ComboBox
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel7 As Panel
+    Friend WithEvents Panel8 As Panel
+    Friend WithEvents Panel9 As Panel
+    Friend WithEvents Panel45 As Panel
+    Friend WithEvents txtReceivableAmount As TextBox
+    Friend WithEvents Label45 As Label
+    Friend WithEvents txtNoteAmount As TextBox
+    Friend WithEvents txtCashAmount As TextBox
+    Friend WithEvents Label46 As Label
+    Friend WithEvents Label47 As Label
+    Friend WithEvents Label48 As Label
+    Friend WithEvents txtCheckAmount As TextBox
+    Friend WithEvents txtAmount As TextBox
+    Friend WithEvents Label44 As Label
+    Friend WithEvents txtTaxAmt As TextBox
+    Friend WithEvents txtSplPc As TextBox
+    Friend WithEvents txtCMManEmail2 As TextBox
+    Friend WithEvents Label4 As Label
+    Friend WithEvents txtCMManCell2 As TextBox
+    Friend WithEvents txtCMManName2 As TextBox
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Label20 As Label
+    Friend WithEvents txtCMManTel2 As TextBox
+    Friend WithEvents Label22 As Label
+    Friend WithEvents txtCMLeader2 As TextBox
+    Friend WithEvents txtCMName2 As TextBox
+    Friend WithEvents txtCMOpNumber2 As TextBox
+    Friend WithEvents Label32 As Label
+    Friend WithEvents Label33 As Label
+    Friend WithEvents txtCMAddr2 As TextBox
+    Friend WithEvents Label34 As Label
+    Friend WithEvents Label39 As Label
+    Friend WithEvents txtCMItem2 As TextBox
+    Friend WithEvents txtCMConditions2 As TextBox
+    Friend WithEvents Label54 As Label
+    Friend WithEvents txtBHo As TextBox
+    Friend WithEvents Label52 As Label
+    Friend WithEvents Label53 As Label
+    Friend WithEvents txtBKw As TextBox
+    Friend WithEvents Panel46 As Panel
+    Friend WithEvents Panel49 As Panel
+    Friend WithEvents txtSelngTaxInfoID As TextBox
+    Friend WithEvents Label50 As Label
+    Friend WithEvents Label49 As Label
+    Friend WithEvents palDetail As Panel
+    Friend WithEvents Panel51 As Panel
+    Friend WithEvents Label56 As Label
+    Friend WithEvents txtSelngTaxInfoSeq As TextBox
+    Friend WithEvents Panel86 As Panel
+    Friend WithEvents Panel87 As Panel
+    Friend WithEvents txtSelngTaxInfoID2 As TextBox
+    Friend WithEvents Label57 As Label
+    Friend WithEvents Label58 As Label
+    Friend WithEvents txtAmount2 As TextBox
+    Friend WithEvents Label63 As Label
+    Friend WithEvents txtTaxAmt2 As TextBox
+    Friend WithEvents txtSplPc2 As TextBox
+    Friend WithEvents Label68 As Label
+    Friend WithEvents txtPrdQy As TextBox
+    Friend WithEvents txtPrdPc As TextBox
+    Friend WithEvents Label71 As Label
+    Friend WithEvents Label73 As Label
+    Friend WithEvents Label74 As Label
+    Friend WithEvents Panel109 As Panel
+    Friend WithEvents Panel110 As Panel
+    Friend WithEvents Panel111 As Panel
+    Friend WithEvents Panel112 As Panel
+    Friend WithEvents Panel113 As Panel
+    Friend WithEvents Panel114 As Panel
+    Friend WithEvents Panel115 As Panel
+    Friend WithEvents Panel116 As Panel
+    Friend WithEvents btnPrdSearch As Button
+    Friend WithEvents btnNew2 As Button
+    Friend WithEvents btnDel2 As Button
+    Friend WithEvents btnSave2 As Button
+    Friend WithEvents txtPrdCode As TextBox
+    Friend WithEvents Label78 As Label
+    Friend WithEvents Label79 As Label
+    Friend WithEvents txtPrdName As TextBox
+    Friend WithEvents Panel117 As Panel
+    Friend WithEvents Panel118 As Panel
+    Friend WithEvents Panel119 As Panel
+    Friend WithEvents Panel120 As Panel
+    Friend WithEvents Panel121 As Panel
+    Friend WithEvents Panel122 As Panel
+    Friend WithEvents Panel128 As Panel
+    Friend WithEvents Panel129 As Panel
+    Friend WithEvents Panel130 As Panel
+    Friend WithEvents Panel131 As Panel
+    Friend WithEvents Panel132 As Panel
+    Friend WithEvents Panel133 As Panel
+    Friend WithEvents Label80 As Label
+    Friend WithEvents Panel155 As Panel
+    Friend WithEvents lstDetail As DataGridView
+    Friend WithEvents Panel156 As Panel
+    Friend WithEvents Panel157 As Panel
+    Friend WithEvents Panel158 As Panel
+    Friend WithEvents Label93 As Label
+    Friend WithEvents chkVATInclsAt As CheckBox
+    Friend WithEvents txtSearchItem12 As TextBox
+    Friend WithEvents txtCMCode As TextBox
+    Friend WithEvents txtSnNo As TextBox
+    Friend WithEvents cboCalcSe As ComboBox
+    Friend WithEvents Label16 As Label
+    Friend WithEvents txtSiNo As TextBox
+    Friend WithEvents txtSelngId As TextBox
+    Friend WithEvents cboPrdUnit As ComboBox
+    Friend WithEvents txtSelngTaxDtlInfoID As TextBox
+End Class

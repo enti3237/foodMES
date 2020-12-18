@@ -1,0 +1,314 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+
+Public Class Frm_CC_Report1
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+    Dim Excel_Check As Boolean
+
+    Private Sub Frm_CC_Report1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT a1,a5,a13,a17,a18,a23,a20,a3,a21,a10
+           FROM  test with(NOLOCK)"
+
+
+
+
+        Re_Count = DB_Select(DBT)
+        DataGridView1.DataSource = DBT
+
+
+
+
+
+        'DateTimePicker1.Value = DateTime.Now.AddYears(-1).ToString("yyyy") + "-" + "01-01"
+        'DateTimePicker2.Value = DateTime.Now.ToString("yyyy-MM-dd")
+        'Grid_CR_Load()
+        'GanttChart_Load()
+    End Sub
+
+
+    'Private Function GanttChart_Load()
+    '    ' 간트차트 사용법
+    '    data_ganta()
+
+    '    Dim i As Integer
+
+    '    With GanttChart3
+    '        .FromDate = DateTimePicker1.Value
+    '        .ToDate = DateTimePicker2.Value
+
+
+
+    '        Dim lst As New List(Of BarInformation)
+
+    '        For i = 0 To DataGridView1.Rows.Count - 1
+    '            lst.Add(New BarInformation(DataGridView1.Rows(i).Cells("CR_Name").Value.ToString(),
+    '                                        Convert.ToDateTime(DataGridView1.Rows(i).Cells("CR_Date").Value.ToString()),
+    '                                        Convert.ToDateTime(DataGridView1.Rows(i).Cells("CR_Day_Reg_Fsh").Value.ToString()),
+    '                                         Color.Gray, Color.LightGray, i))
+    '        Next
+    '        'lst.Add(New BarInformation("Row 2", New Date(2009, 1, 1), New Date(2009, 7, 1), Color.Gray, Color.LightGray, 1))
+    '        'lst.Add(New BarInformation("Row 3", New Date(2009, 5, 1), New Date(2009, 8, 1), Color.Gray, Color.LightGray, 2))
+    '        'lst.Add(New BarInformation("Row 2", New Date(2009, 10, 1), New Date(2009, 12, 1), Color.Gray, Color.LightGray, 3))
+    '        'lst.Add(New BarInformation("Row 1", New Date(2009, 8, 1), New Date(2009, 11, 1), Color.Gray, Color.LightGray, 4))
+
+    '        For Each bar As BarInformation In lst
+    '            .AddChartBar(bar.RowText, bar, bar.FromTime, bar.ToTime, bar.Color, bar.HoverColor, bar.Index)
+    '        Next
+
+    '    End With
+    '    'GanttChart3.FromDate = New Date(2009, 1, 1, 0, 0, 0)
+    '    'GanttChart3.ToDate = New Date(2010, 12, 31, 23, 59, 59)
+
+    '    Me.Dock = DockStyle.Fill
+    '    Me.BringToFront()
+
+    'End Function
+    Private Sub Grid_CR_Load()
+
+        Dim i As Integer
+
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT * FROM Contract where CR_Code != ''"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.RowCount = 0
+
+        If Re_Count > 0 Then
+            DataGridView1.RowCount = Re_Count
+            For i = 0 To DataGridView1.RowCount - 1
+
+                DataGridView1.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString 'CR NO
+                DataGridView1.Rows(i).Cells("CRS_Code").Value = DBT.Rows(i)("CRS_Code").ToString 'CRS NO
+                DataGridView1.Rows(i).Cells("CR_Name").Value = DBT.Rows(i)("CR_Name").ToString '공정명
+                DataGridView1.Rows(i).Cells("CR_Customer_Name").Value = DBT.Rows(i)("CR_Customer_Name").ToString '발주처
+                DataGridView1.Rows(i).Cells("CR_Condition").Value = DBT.Rows(i)("CR_Condition").ToString '계약형태
+                DataGridView1.Rows(i).Cells("CRS_Announcement").Value = DBT.Rows(i)("CRS_Announcement").ToString '공고번호
+                DataGridView1.Rows(i).Cells("CR_Manager_CR").Value = DBT.Rows(i)("CR_Manager_CR").ToString '영업팀담당자
+                DataGridView1.Rows(i).Cells("CR_Manager_PO").Value = DBT.Rows(i)("CR_Manager_PO").ToString '공정관리자
+                DataGridView1.Rows(i).Cells("CR_Date_Order").Value = DBT.Rows(i)("CR_Date_Order").ToString '제조의뢰일
+                DataGridView1.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString '계약일
+                DataGridView1.Rows(i).Cells("CR_Day_Reg_Fsh").Value = DBT.Rows(i)("CR_Day_Reg_Fsh").ToString '계약납기일
+                DataGridView1.Rows(i).Cells("CR_Date_Plan").Value = DBT.Rows(i)("CR_Date_Plan").ToString '목표납기일
+                DataGridView1.Rows(i).Cells("CR_Gold").Value = DBT.Rows(i)("CR_Gold").ToString '계약금액
+                DataGridView1.Rows(i).Cells("CRS_Grade").Value = DBT.Rows(i)("CRS_Grade1").ToString + " / " + DBT.Rows(i)("CRS_Grade2").ToString + " / " + DBT.Rows(i)("CRS_Grade3").ToString '등급
+
+            Next
+        End If
+        DataGridView1.ClearSelection()
+
+    End Sub
+
+
+
+    'Private Sub Button13_Click(sender As Object, e As EventArgs)
+    '    Dim i As Integer
+    '    Dim DBT As DataTable
+    '    DBT = Nothing
+
+    '    StrSQL = "SELECT * FROM Contract Where CR_Code != '' and CR_Code Like '%" & TextBox15.Text & "%'"
+    '    Re_Count = DB_Select(DBT)
+
+    '    DataGridView1.RowCount = 0
+
+    '    If Re_Count > 0 Then
+    '        DataGridView1.RowCount = Re_Count
+    '        For i = 0 To DataGridView1.RowCount - 1
+
+    '            DataGridView1.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString 'CR NO
+    '            DataGridView1.Rows(i).Cells("CRS_Code").Value = DBT.Rows(i)("CRS_Code").ToString 'CRS NO
+    '            DataGridView1.Rows(i).Cells("CR_Name").Value = DBT.Rows(i)("CR_Name").ToString '공정명
+    '            DataGridView1.Rows(i).Cells("CR_Customer_Name").Value = DBT.Rows(i)("CR_Customer_Name").ToString '발주처
+    '            DataGridView1.Rows(i).Cells("CR_Condition").Value = DBT.Rows(i)("CR_Condition").ToString '계약형태
+    '            DataGridView1.Rows(i).Cells("CRS_Announcement").Value = DBT.Rows(i)("CRS_Announcement").ToString '공고번호
+    '            DataGridView1.Rows(i).Cells("CR_Manager_CR").Value = DBT.Rows(i)("CR_Manager_CR").ToString '영업팀담당자
+    '            DataGridView1.Rows(i).Cells("CR_Manager_PO").Value = DBT.Rows(i)("CR_Manager_PO").ToString '공정관리자
+    '            DataGridView1.Rows(i).Cells("CR_Date_Order").Value = DBT.Rows(i)("CR_Date_Order").ToString '제조의뢰일
+    '            DataGridView1.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString '계약일
+    '            DataGridView1.Rows(i).Cells("CR_Day_Reg_Fsh").Value = DBT.Rows(i)("CR_Day_Reg_Fsh").ToString '계약납기일
+    '            DataGridView1.Rows(i).Cells("CR_Date_Plan").Value = DBT.Rows(i)("CR_Date_Plan").ToString '목표납기일
+    '            DataGridView1.Rows(i).Cells("CR_Gold").Value = DBT.Rows(i)("CR_Gold").ToString '계약금액
+    '            DataGridView1.Rows(i).Cells("CRS_Grade").Value = DBT.Rows(i)("CRS_Grade1").ToString + " / " + DBT.Rows(i)("CRS_Grade2").ToString + " / " + DBT.Rows(i)("CRS_Grade3").ToString '등급
+
+    '        Next
+    '    End If
+    '    DataGridView1.ClearSelection()
+    'End Sub
+
+    'Private Sub Button16_Click(sender As Object, e As EventArgs)
+    '    Dim i As Integer
+    '    Dim DBT As DataTable
+    '    DBT = Nothing
+
+    '    StrSQL = "SELECT * FROM Contract Where CR_Code != '' and CR_Name Like '%" & Search_Text.Text & "%'"
+    '    Re_Count = DB_Select(DBT)
+
+    '    DataGridView1.RowCount = 0
+
+    '    If Re_Count > 0 Then
+    '        DataGridView1.RowCount = Re_Count
+    '        For i = 0 To DataGridView1.RowCount - 1
+
+    '            DataGridView1.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString 'CR NO
+    '            DataGridView1.Rows(i).Cells("CRS_Code").Value = DBT.Rows(i)("CRS_Code").ToString 'CRS NO
+    '            DataGridView1.Rows(i).Cells("CR_Name").Value = DBT.Rows(i)("CR_Name").ToString '공정명
+    '            DataGridView1.Rows(i).Cells("CR_Customer_Name").Value = DBT.Rows(i)("CR_Customer_Name").ToString '발주처
+    '            DataGridView1.Rows(i).Cells("CR_Condition").Value = DBT.Rows(i)("CR_Condition").ToString '계약형태
+    '            DataGridView1.Rows(i).Cells("CRS_Announcement").Value = DBT.Rows(i)("CRS_Announcement").ToString '공고번호
+    '            DataGridView1.Rows(i).Cells("CR_Manager_CR").Value = DBT.Rows(i)("CR_Manager_CR").ToString '영업팀담당자
+    '            DataGridView1.Rows(i).Cells("CR_Manager_PO").Value = DBT.Rows(i)("CR_Manager_PO").ToString '공정관리자
+    '            DataGridView1.Rows(i).Cells("CR_Date_Order").Value = DBT.Rows(i)("CR_Date_Order").ToString '제조의뢰일
+    '            DataGridView1.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString '계약일
+    '            DataGridView1.Rows(i).Cells("CR_Day_Reg_Fsh").Value = DBT.Rows(i)("CR_Day_Reg_Fsh").ToString '계약납기일
+    '            DataGridView1.Rows(i).Cells("CR_Date_Plan").Value = DBT.Rows(i)("CR_Date_Plan").ToString '목표납기일
+    '            DataGridView1.Rows(i).Cells("CR_Gold").Value = DBT.Rows(i)("CR_Gold").ToString '계약금액
+    '            DataGridView1.Rows(i).Cells("CRS_Grade").Value = DBT.Rows(i)("CRS_Grade1").ToString + " / " + DBT.Rows(i)("CRS_Grade2").ToString + " / " + DBT.Rows(i)("CRS_Grade3").ToString '등급
+
+    '        Next
+    '    End If
+    '    DataGridView1.ClearSelection()
+    '  End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+
+        ''JOB_No 검색버튼을 눌렀을때 
+
+
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT a1,a5,a13,a10,a17,a13,a23,a20,a3,a21
+        '   FROM  test with(NOLOCK)
+        '  where  a1 Like '%" & TextBox16.Text & "%'"
+
+
+
+        'Re_Count = DB_Select(DBT)
+        'DataGridView1.DataSource = DBT
+
+
+
+
+    End Sub
+
+
+
+    'Dim i As Integer
+    'Dim DBT As DataTable
+    'DBT = Nothing
+
+    'StrSQL = "SELECT * FROM Contract Where CR_Code != '' and CR_Customer_Name Like '%" & Search_Text.Text & "%'"
+    'Re_Count = DB_Select(DBT)
+
+    'DataGridView1.RowCount = 0
+
+    'If Re_Count > 0 Then
+    '    DataGridView1.RowCount = Re_Count
+    '    For i = 0 To DataGridView1.RowCount - 1
+
+    '        DataGridView1.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString 'CR NO
+    '        DataGridView1.Rows(i).Cells("CRS_Code").Value = DBT.Rows(i)("CRS_Code").ToString 'CRS NO
+    '        DataGridView1.Rows(i).Cells("CR_Name").Value = DBT.Rows(i)("CR_Name").ToString '공정명
+    '        DataGridView1.Rows(i).Cells("CR_Customer_Name").Value = DBT.Rows(i)("CR_Customer_Name").ToString '발주처
+    '        DataGridView1.Rows(i).Cells("CR_Condition").Value = DBT.Rows(i)("CR_Condition").ToString '계약형태
+    '        DataGridView1.Rows(i).Cells("CRS_Announcement").Value = DBT.Rows(i)("CRS_Announcement").ToString '공고번호
+    '        DataGridView1.Rows(i).Cells("CR_Manager_CR").Value = DBT.Rows(i)("CR_Manager_CR").ToString '영업팀담당자
+    '        DataGridView1.Rows(i).Cells("CR_Manager_PO").Value = DBT.Rows(i)("CR_Manager_PO").ToString '공정관리자
+    '        DataGridView1.Rows(i).Cells("CR_Date_Order").Value = DBT.Rows(i)("CR_Date_Order").ToString '제조의뢰일
+    '        DataGridView1.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString '계약일
+    '        DataGridView1.Rows(i).Cells("CR_Day_Reg_Fsh").Value = DBT.Rows(i)("CR_Day_Reg_Fsh").ToString '계약납기일
+    '        DataGridView1.Rows(i).Cells("CR_Date_Plan").Value = DBT.Rows(i)("CR_Date_Plan").ToString '목표납기일
+    '        DataGridView1.Rows(i).Cells("CR_Gold").Value = DBT.Rows(i)("CR_Gold").ToString '계약금액
+    '        DataGridView1.Rows(i).Cells("CRS_Grade").Value = DBT.Rows(i)("CRS_Grade1").ToString + " / " + DBT.Rows(i)("CRS_Grade2").ToString + " / " + DBT.Rows(i)("CRS_Grade3").ToString '등급
+
+    '    Next
+    'End If
+    'DataGridView1.ClearSelection()
+    '  End Sub
+
+    'Private Sub Button15_Click(sender As Object, e As EventArgs)
+    '    Dim i As Integer
+    '    Dim DBT As DataTable
+    '    DBT = Nothing
+
+    '    StrSQL = "SELECT * FROM Contract Where CR_Code != '' and CRS_Announcement Like '%" & TextBox18.Text & "%'"
+    '    Re_Count = DB_Select(DBT)
+
+    '    DataGridView1.RowCount = 0
+
+    '    If Re_Count > 0 Then
+    '        DataGridView1.RowCount = Re_Count
+    '        For i = 0 To DataGridView1.RowCount - 1
+
+    '            DataGridView1.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString 'CR NO
+    '            DataGridView1.Rows(i).Cells("CRS_Code").Value = DBT.Rows(i)("CRS_Code").ToString 'CRS NO
+    '            DataGridView1.Rows(i).Cells("CR_Name").Value = DBT.Rows(i)("CR_Name").ToString '공정명
+    '            DataGridView1.Rows(i).Cells("CR_Customer_Name").Value = DBT.Rows(i)("CR_Customer_Name").ToString '발주처
+    '            DataGridView1.Rows(i).Cells("CR_Condition").Value = DBT.Rows(i)("CR_Condition").ToString '계약형태
+    '            DataGridView1.Rows(i).Cells("CRS_Announcement").Value = DBT.Rows(i)("CRS_Announcement").ToString '공고번호
+    '            DataGridView1.Rows(i).Cells("CR_Manager_CR").Value = DBT.Rows(i)("CR_Manager_CR").ToString '영업팀담당자
+    '            DataGridView1.Rows(i).Cells("CR_Manager_PO").Value = DBT.Rows(i)("CR_Manager_PO").ToString '공정관리자
+    '            DataGridView1.Rows(i).Cells("CR_Date_Order").Value = DBT.Rows(i)("CR_Date_Order").ToString '제조의뢰일
+    '            DataGridView1.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString '계약일
+    '            DataGridView1.Rows(i).Cells("CR_Day_Reg_Fsh").Value = DBT.Rows(i)("CR_Day_Reg_Fsh").ToString '계약납기일
+    '            DataGridView1.Rows(i).Cells("CR_Date_Plan").Value = DBT.Rows(i)("CR_Date_Plan").ToString '목표납기일
+    '            DataGridView1.Rows(i).Cells("CR_Gold").Value = DBT.Rows(i)("CR_Gold").ToString '계약금액
+    '            DataGridView1.Rows(i).Cells("CRS_Grade").Value = DBT.Rows(i)("CRS_Grade1").ToString + " / " + DBT.Rows(i)("CRS_Grade2").ToString + " / " + DBT.Rows(i)("CRS_Grade3").ToString '등급
+
+    '        Next
+    '    End If
+    '    DataGridView1.ClearSelection()
+    'End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+
+
+    End Sub
+
+
+
+    '    Dim i As Integer
+    '    Dim DBT As DataTable
+    '    DBT = Nothing
+
+    '    StrSQL = "SELECT * FROM Contract Where CR_Code != '' and CR_Day_Reg_Fsh Like '%" & TextBox17.Text & "%'"
+    '    Re_Count = DB_Select(DBT)
+
+    '    DataGridView1.RowCount = 0
+
+    '    If Re_Count > 0 Then
+    '        DataGridView1.RowCount = Re_Count
+    '        For i = 0 To DataGridView1.RowCount - 1
+
+    '            DataGridView1.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString 'CR NO
+    '            DataGridView1.Rows(i).Cells("CRS_Code").Value = DBT.Rows(i)("CRS_Code").ToString 'CRS NO
+    '            DataGridView1.Rows(i).Cells("CR_Name").Value = DBT.Rows(i)("CR_Name").ToString '공정명
+    '            DataGridView1.Rows(i).Cells("CR_Customer_Name").Value = DBT.Rows(i)("CR_Customer_Name").ToString '발주처
+    '            DataGridView1.Rows(i).Cells("CR_Condition").Value = DBT.Rows(i)("CR_Condition").ToString '계약형태
+    '            DataGridView1.Rows(i).Cells("CRS_Announcement").Value = DBT.Rows(i)("CRS_Announcement").ToString '공고번호
+    '            DataGridView1.Rows(i).Cells("CR_Manager_CR").Value = DBT.Rows(i)("CR_Manager_CR").ToString '영업팀담당자
+    '            DataGridView1.Rows(i).Cells("CR_Manager_PO").Value = DBT.Rows(i)("CR_Manager_PO").ToString '공정관리자
+    '            DataGridView1.Rows(i).Cells("CR_Date_Order").Value = DBT.Rows(i)("CR_Date_Order").ToString '제조의뢰일
+    '            DataGridView1.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString '계약일
+    '            DataGridView1.Rows(i).Cells("CR_Day_Reg_Fsh").Value = DBT.Rows(i)("CR_Day_Reg_Fsh").ToString '계약납기일
+    '            DataGridView1.Rows(i).Cells("CR_Date_Plan").Value = DBT.Rows(i)("CR_Date_Plan").ToString '목표납기일
+    '            DataGridView1.Rows(i).Cells("CR_Gold").Value = DBT.Rows(i)("CR_Gold").ToString '계약금액
+    '            DataGridView1.Rows(i).Cells("CRS_Grade").Value = DBT.Rows(i)("CRS_Grade1").ToString + " / " + DBT.Rows(i)("CRS_Grade2").ToString + " / " + DBT.Rows(i)("CRS_Grade3").ToString '등급
+
+    '        Next
+    '    End If
+    '    DataGridView1.ClearSelection()
+    'End Sub
+
+
+
+End Class

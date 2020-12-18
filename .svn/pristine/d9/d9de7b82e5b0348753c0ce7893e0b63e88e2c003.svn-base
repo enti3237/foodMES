@@ -1,0 +1,339 @@
+﻿Public Class Frm_LA_Order2
+
+    Dim tblPS As New DataTable
+
+    Private Sub fnFrmTblLoad()
+        tblPS = fnGetTableStructure("dbo.PS_Order_Plan")
+    End Sub
+    Private Sub Frm_LA_Order2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = True
+        palDetail.Visible = False
+
+        comboSatUp2(cboCustomer2, "0001")
+        fnFrmTblLoad()
+        btnSearch.PerformClick()
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles btnMain.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = True
+        palDetail.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles btnDetail.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        palDetail.Visible = True
+
+    End Sub
+
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles btnJobSearch.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo.Text = pop1.result
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub PS_Main_Load()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        Try
+            StrSQL = "Select PS_Job_No, CR_Name, PS_Code, PS_Rev_No, PS_Prepared, PS_Prepare_Date From PS_Order_Plan with(NOLOCK), CR_Contract with(NOLOCK) where PS_Job_No = CR_Code"
+            Re_Count = DB_Select(DBT)
+
+            lstMain.DataSource = DBT
+            If Re_Count > 0 Then
+
+            End If
+            lstMain.ClearSelection()
+        Catch ex As Exception
+            MsgBox(ex)
+            Exit Sub
+        End Try
+    End Sub
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        If e.RowIndex >= 0 Then
+            txtJobNo2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Job_No").Value.ToString
+            txtJobName2.Text = lstMain.Rows(e.RowIndex).Cells("CR_Name").Value.ToString
+            txtPSNo2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Code").Value.ToString
+            txtRev2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Rev_No").Value.ToString
+            txtPSName2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Name").Value.ToString
+            txtCustomer2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Prchs_Company_Code2").Value.ToString
+            cboCustomer2.SelectedValue = lstMain.Rows(e.RowIndex).Cells("PS_Prchs_Company_Code").Value.ToString
+            txtClass2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Code_Class").Value.ToString
+            txtITM2.Text = lstMain.Rows(e.RowIndex).Cells("PS_ITM_SVC_Desc").Value.ToString
+            txtManager2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Manager").Value.ToString
+            txtBigo2.Text = lstMain.Rows(e.RowIndex).Cells("PS_Bigo").Value.ToString
+        End If
+
+    End Sub
+
+    Private Sub lstMain_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellDoubleClick
+        'Label_Color(btnDetail, Color_Label, Di_Panel2)
+        'palMain.Visible = False
+        'palDetail.Visible = True
+
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "Select PS_Name, CM_Name, PS_Code_Class, PS_ITM_SVC_Desc, PS_Bigo From PS_Order_Plan with(NOLOCK), Company with(NOLOCK) where PS_Prchs_Company_Code=CM_Code And
+        '            PS_Code='" & lstMain.Rows(e.RowIndex).Cells("PS_Code").Value.ToString & "' And PS_Rev_No='" & lstMain.Rows(e.RowIndex).Cells("PS_Rev_No").Value.ToString & "'"
+        'Re_Count = DB_Select(DBT)
+
+        'If Re_Count > 0 Then
+        '    txtPSName.Text = DBT.Rows(0)("PS_Name").ToString
+        '    txtComparny.Text = DBT.Rows(0)("CM_Name").ToString
+        '    txtClass.Text = DBT.Rows(0)("PS_Code_Class").ToString
+        '    txtITMSVC.Text = DBT.Rows(0)("PS_ITM_SVC_Desc").ToString
+        '    txtBigo.Text = DBT.Rows(0)("PS_Bigo").ToString
+        'End If
+
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = " Select CR_Name, PS_Code,  PS_Rev_No, PS_Name, PS_Job_No, PS_Code_Class, PS_ITM_SVC_Desc, PS_Manager, PS_Bigo, PS_Prepared, PS_Prepare_Date, PS_Updated, PS_Update_Date, PS_Received, PS_Receive_Date,
+(select CM_Name From Company where CM_Code = PS.PS_Prchs_Company_Code) as PS_Prchs_Company_Code2, PS_Prchs_Company_Code
+From PS_Order_Plan PS with(NOLOCK), CR_Contract CR with(NOLOCK) 
+                    where PS_Job_No = CR_Code and
+PS.PS_Rev_No = ( select isnull(max(PS_Rev_No),1) from PS_Order_Plan where PS_Code = PS.PS_Code) and
+CR.CR_Rev_No = ( select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code) and
+                                                                    PS_Job_No Like '%" & txtJobNo.Text & "%' And
+                                                                     CR_Name Like '%" & txtJobName.Text & "%' And
+                                                                     PS_Code Like '%" & txtPSNo.Text & "%' order by CR_Code "
+
+        Console.WriteLine(StrSQL)
+
+        'MsgBox(StrSQL)
+
+        Re_Count = DB_Select(DBT)
+        lstMain.DataSource = DBT
+        lstMain.ClearSelection()
+
+        showRevLog("Frm_LA_Order2", DBT, lstRev)
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        txtJobNo2.Text = ""
+        txtJobName2.Text = ""
+        txtPSNo2.Text = ""
+        txtRev2.Text = ""
+        txtPSName2.Text = ""
+        txtCustomer2.Text = ""
+        cboCustomer2.Text = ""
+        txtClass2.Text = ""
+        txtITM2.Text = ""
+        txtManager2.Text = ""
+        txtBigo2.Text = ""
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        Dim DBT As DataTable
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+        Dim histLogStr As String
+
+        DBT = Nothing
+        If MessageBox.Show(txtPSNo2.Text + " 의 내용을 삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If txtPSNo2.Text <> "" Then
+
+                StrSQL = "Delete PS_Order_Plan where PS_Code = '" & txtPSNo2.Text & "' And
+                                                        PS_Rev_No = '" & txtRev2.Text & "'"
+                Re_Count = DB_Execute()
+                If Re_Count > 0 Then
+                    MsgBox("삭제 완료")
+                    'hsim 20200515 처리 이력
+                    histLogStr = "사용자 " & logInUserName & " PS 삭제 : " & txtPSNo2.Text & " - " & txtPSName2.Text
+                    Man_Log("Frm_LA_Order2", "PS 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+                    btnSearch.PerformClick()
+                End If
+            Else
+                MsgBox("선택된 PS가 없습니다")
+            End If
+        End If
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        If InputCheck(txtCustomer2.Text, "발주처를 선택해주세요.") = 1 Then
+            Exit Sub
+        End If
+        If InputCheck(txtJobNo2.Text, "JOB을 선택해주세요.") = 1 Then
+            Exit Sub
+        End If
+
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        Try
+
+            StrSQL = "SELECT * from PS_Order_Plan where PS_Code = '" & txtPSNo2.Text & "' And PS_Rev_No = (SELECT max(PS_Rev_No) from PS_Order_Plan where PS_Code = '" & txtPSNo2.Text & "')"
+            Re_Count = DB_Select(DBT)
+
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblPS)
+            '#2. 입력자료 입력
+            For i = 0 To tblPS.Rows.Count - 1
+
+                Select Case tblPS.Rows(i).Item(0).ToString
+
+                    Case "PS_Code"
+                        If txtPSNo2.Text <> "" Then
+                            tblPS.Rows(i).Item(11) = txtPSNo2.Text
+                        Else
+                            tblPS.Rows(i).Item(11) = PK_Make("PS_Order_Plan")
+                        End If
+                    Case "PS_Rev_No"
+                        If txtPSNo2.Text <> "" Then
+                            tblPS.Rows(i).Item(11) = txtRev2.Text
+                        Else
+                            tblPS.Rows(i).Item(11) = 1
+                        End If
+                    Case "PS_Name"
+                        tblPS.Rows(i).Item(11) = txtPSName2.Text
+                    Case "PS_Job_No"
+                        tblPS.Rows(i).Item(11) = txtJobNo2.Text
+                    Case "PS_Prchs_Company_Code"
+                        tblPS.Rows(i).Item(11) = cboCustomer2.SelectedValue
+                    Case "PS_Code_Class"
+                        tblPS.Rows(i).Item(11) = txtClass2.Text
+                    Case "PS_ITM_SVC_Desc"
+                        tblPS.Rows(i).Item(11) = txtITM2.Text
+                    Case "PS_Manager"
+                        tblPS.Rows(i).Item(11) = txtManager2.Text
+                    Case "PS_Bigo"
+                        tblPS.Rows(i).Item(11) = txtBigo2.Text
+
+                    Case "PS_Prepared"
+                        If Re_Count > 0 Then
+                            tblPS.Rows(i).Item(11) = DBT.Rows(0)("PS_Prepared").ToString
+                        Else
+                            tblPS.Rows(i).Item(11) = logInUserName
+                        End If
+                    Case "PS_Prepare_Date"
+                        If Re_Count > 0 Then
+                            tblPS.Rows(i).Item(11) = DBT.Rows(0)("PS_Prepare_Date").ToString
+                        Else
+                            tblPS.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                    Case "PS_Updated"
+                        If Re_Count > 0 Then
+                            tblPS.Rows(i).Item(11) = logInUserName
+                        End If
+                    Case "PS_Update_Date"
+                        If Re_Count > 0 Then
+                            tblPS.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                End Select
+            Next
+
+            If Re_Count > 0 Then
+
+                Re_Count2 = fnTableUpdate("dbo.PS_Order_Plan", tblPS)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            Else
+
+                Re_Count2 = fnTableInsert("dbo.PS_Order_Plan", tblPS)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " PS 정보 수정 : " & txtPSNo2.Text & " - " & txtPSName2.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " PS 정보 신규 입력 : " & txtPSNo2.Text & " - " & txtPSName2.Text
+            End If
+            Man_Log("Frm_LA_Order2", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+            'hsim 20200515 개정이력 조회 갱신
+            showRevLog("Frm_LA_Order2", DBT2, lstRev)
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+
+        btnSearch.PerformClick()
+        btnAdd.PerformClick()
+
+    End Sub
+
+    Private Sub btnJobSearch2_Click(sender As Object, e As EventArgs) Handles btnJobSearch2.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString
+            txtJobName2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Name").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnCustomerSearch_Click(sender As Object, e As EventArgs) Handles btnCustomerSearch.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Customer_POP = New Frm_Customer_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            cboDBT.Columns.Add("CM_Code")
+            cboDBT.Columns.Add("CM_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            txtCustomer2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            cboCustomer2.DataSource = cboDBT
+            cboCustomer2.ValueMember = "CM_Code"
+            cboCustomer2.DisplayMember = "CM_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+End Class

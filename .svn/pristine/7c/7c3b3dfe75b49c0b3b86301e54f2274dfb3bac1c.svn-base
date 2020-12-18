@@ -1,0 +1,27 @@
+﻿Public Class Frm_MJ_Report6
+    Private Sub Frm_MJ_Report6_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Panel1.Top = 40
+        Panel1.Left = 10
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT a1,a6,a17,a13,a12,a11,a10,a3
+           FROM  test with(NOLOCK)"
+
+
+
+
+        Re_Count = DB_Select(DBT)
+        DataGridView1.DataSource = DBT
+
+
+
+    End Sub
+End Class

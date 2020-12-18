@@ -1,0 +1,876 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_Customer
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.Customer_Grid = New System.Windows.Forms.DataGridView()
+        Me.Di_Panel1 = New System.Windows.Forms.Panel()
+        Me.Search_Combo = New System.Windows.Forms.ComboBox()
+        Me.Search_Text = New System.Windows.Forms.TextBox()
+        Me.Search_Com = New System.Windows.Forms.Button()
+        Me.Insert_Com = New System.Windows.Forms.Button()
+        Me.Delete_Com = New System.Windows.Forms.Button()
+        Me.Save_Com = New System.Windows.Forms.Button()
+        Me.Panel_Menu = New System.Windows.Forms.Panel()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Info_Tx13 = New System.Windows.Forms.TextBox()
+        Me.Info_La13 = New System.Windows.Forms.Button()
+        Me.Info_Tx12 = New System.Windows.Forms.TextBox()
+        Me.Info_La12 = New System.Windows.Forms.Button()
+        Me.Info_Tx11 = New System.Windows.Forms.TextBox()
+        Me.Info_La11 = New System.Windows.Forms.Button()
+        Me.Info_Tx10 = New System.Windows.Forms.TextBox()
+        Me.Info_La10 = New System.Windows.Forms.Button()
+        Me.Info_Tx9 = New System.Windows.Forms.TextBox()
+        Me.Info_La9 = New System.Windows.Forms.Button()
+        Me.Info_Tx8 = New System.Windows.Forms.TextBox()
+        Me.Info_La8 = New System.Windows.Forms.Button()
+        Me.Info_Tx7 = New System.Windows.Forms.TextBox()
+        Me.Info_La7 = New System.Windows.Forms.Button()
+        Me.Info_Tx6 = New System.Windows.Forms.TextBox()
+        Me.Info_La6 = New System.Windows.Forms.Button()
+        Me.Info_Tx5 = New System.Windows.Forms.TextBox()
+        Me.Info_La5 = New System.Windows.Forms.Button()
+        Me.Info_Tx4 = New System.Windows.Forms.TextBox()
+        Me.Info_La4 = New System.Windows.Forms.Button()
+        Me.Info_Tx3 = New System.Windows.Forms.TextBox()
+        Me.Info_La3 = New System.Windows.Forms.Button()
+        Me.Info_Tx2 = New System.Windows.Forms.TextBox()
+        Me.Info_La2 = New System.Windows.Forms.Button()
+        Me.Info_Tx1 = New System.Windows.Forms.TextBox()
+        Me.Info_La1 = New System.Windows.Forms.Button()
+        Me.Info_Tx0 = New System.Windows.Forms.TextBox()
+        Me.Info_La0 = New System.Windows.Forms.Button()
+        Me.Info_Tx14 = New System.Windows.Forms.TextBox()
+        Me.Info_La14 = New System.Windows.Forms.Button()
+        Me.Info_Tx15 = New System.Windows.Forms.TextBox()
+        Me.Info_La15 = New System.Windows.Forms.Button()
+        Me.Info_Tx16 = New System.Windows.Forms.TextBox()
+        Me.Info_La16 = New System.Windows.Forms.Button()
+        Me.Info_Tx17 = New System.Windows.Forms.TextBox()
+        Me.Info_La17 = New System.Windows.Forms.Button()
+        Me.Info_Tx18 = New System.Windows.Forms.TextBox()
+        Me.Info_La18 = New System.Windows.Forms.Button()
+        Me.Info_Tx19 = New System.Windows.Forms.TextBox()
+        Me.Info_La19 = New System.Windows.Forms.Button()
+        Me.Info_Tx20 = New System.Windows.Forms.TextBox()
+        Me.Info_La20 = New System.Windows.Forms.Button()
+        Me.Info_Tx23 = New System.Windows.Forms.TextBox()
+        Me.Info_La23 = New System.Windows.Forms.Button()
+        Me.Info_Tx22 = New System.Windows.Forms.TextBox()
+        Me.Info_La22 = New System.Windows.Forms.Button()
+        Me.Info_Tx21 = New System.Windows.Forms.TextBox()
+        Me.Info_La21 = New System.Windows.Forms.Button()
+        Me.Btn_Save = New System.Windows.Forms.Button()
+        CType(Me.Customer_Grid, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel_Menu.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'Customer_Grid
+        '
+        Me.Customer_Grid.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Customer_Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.Customer_Grid.Location = New System.Drawing.Point(13, 99)
+        Me.Customer_Grid.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Customer_Grid.Name = "Customer_Grid"
+        Me.Customer_Grid.RowTemplate.Height = 23
+        Me.Customer_Grid.Size = New System.Drawing.Size(307, 515)
+        Me.Customer_Grid.TabIndex = 24
+        '
+        'Di_Panel1
+        '
+        Me.Di_Panel1.BackColor = System.Drawing.Color.CornflowerBlue
+        Me.Di_Panel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Di_Panel1.Location = New System.Drawing.Point(0, 89)
+        Me.Di_Panel1.Margin = New System.Windows.Forms.Padding(0)
+        Me.Di_Panel1.Name = "Di_Panel1"
+        Me.Di_Panel1.Size = New System.Drawing.Size(1366, 2)
+        Me.Di_Panel1.TabIndex = 25
+        '
+        'Search_Combo
+        '
+        Me.Search_Combo.Font = New System.Drawing.Font("맑은 고딕", 10.0!)
+        Me.Search_Combo.FormattingEnabled = True
+        Me.Search_Combo.Location = New System.Drawing.Point(13, 9)
+        Me.Search_Combo.Margin = New System.Windows.Forms.Padding(2)
+        Me.Search_Combo.Name = "Search_Combo"
+        Me.Search_Combo.Size = New System.Drawing.Size(142, 31)
+        Me.Search_Combo.TabIndex = 8
+        '
+        'Search_Text
+        '
+        Me.Search_Text.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Search_Text.Location = New System.Drawing.Point(13, 46)
+        Me.Search_Text.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Search_Text.Name = "Search_Text"
+        Me.Search_Text.Size = New System.Drawing.Size(141, 29)
+        Me.Search_Text.TabIndex = 10
+        '
+        'Search_Com
+        '
+        Me.Search_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Search_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Search_Com.ForeColor = System.Drawing.Color.Black
+        Me.Search_Com.Location = New System.Drawing.Point(161, 10)
+        Me.Search_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Search_Com.Name = "Search_Com"
+        Me.Search_Com.Size = New System.Drawing.Size(113, 68)
+        Me.Search_Com.TabIndex = 11
+        Me.Search_Com.Text = "검색"
+        Me.Search_Com.UseVisualStyleBackColor = False
+        '
+        'Insert_Com
+        '
+        Me.Insert_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Insert_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Insert_Com.Location = New System.Drawing.Point(401, 9)
+        Me.Insert_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Insert_Com.Name = "Insert_Com"
+        Me.Insert_Com.Size = New System.Drawing.Size(112, 68)
+        Me.Insert_Com.TabIndex = 12
+        Me.Insert_Com.Text = "추가"
+        Me.Insert_Com.UseVisualStyleBackColor = False
+        '
+        'Delete_Com
+        '
+        Me.Delete_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Delete_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Delete_Com.Location = New System.Drawing.Point(520, 10)
+        Me.Delete_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Delete_Com.Name = "Delete_Com"
+        Me.Delete_Com.Size = New System.Drawing.Size(112, 68)
+        Me.Delete_Com.TabIndex = 13
+        Me.Delete_Com.Text = "삭제"
+        Me.Delete_Com.UseVisualStyleBackColor = False
+        '
+        'Save_Com
+        '
+        Me.Save_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Save_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Save_Com.ForeColor = System.Drawing.Color.Black
+        Me.Save_Com.Location = New System.Drawing.Point(281, 9)
+        Me.Save_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Save_Com.Name = "Save_Com"
+        Me.Save_Com.Size = New System.Drawing.Size(113, 68)
+        Me.Save_Com.TabIndex = 14
+        Me.Save_Com.Text = "저장"
+        Me.Save_Com.UseVisualStyleBackColor = False
+        '
+        'Panel_Menu
+        '
+        Me.Panel_Menu.Controls.Add(Me.Button1)
+        Me.Panel_Menu.Controls.Add(Me.Save_Com)
+        Me.Panel_Menu.Controls.Add(Me.Delete_Com)
+        Me.Panel_Menu.Controls.Add(Me.Insert_Com)
+        Me.Panel_Menu.Controls.Add(Me.Search_Com)
+        Me.Panel_Menu.Controls.Add(Me.Search_Text)
+        Me.Panel_Menu.Controls.Add(Me.Search_Combo)
+        Me.Panel_Menu.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel_Menu.Location = New System.Drawing.Point(0, 0)
+        Me.Panel_Menu.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel_Menu.Name = "Panel_Menu"
+        Me.Panel_Menu.Size = New System.Drawing.Size(1366, 89)
+        Me.Panel_Menu.TabIndex = 22
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Button1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button1.Location = New System.Drawing.Point(639, 10)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(112, 68)
+        Me.Button1.TabIndex = 15
+        Me.Button1.Text = "거래처등록"
+        Me.Button1.UseVisualStyleBackColor = False
+        Me.Button1.Visible = False
+        '
+        'Info_Tx13
+        '
+        Me.Info_Tx13.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx13.Location = New System.Drawing.Point(1479, 266)
+        Me.Info_Tx13.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx13.Name = "Info_Tx13"
+        Me.Info_Tx13.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx13.TabIndex = 139
+        '
+        'Info_La13
+        '
+        Me.Info_La13.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La13.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La13.ForeColor = System.Drawing.Color.Black
+        Me.Info_La13.Location = New System.Drawing.Point(1310, 264)
+        Me.Info_La13.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La13.Name = "Info_La13"
+        Me.Info_La13.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La13.TabIndex = 138
+        Me.Info_La13.Text = "상세 정보"
+        Me.Info_La13.UseVisualStyleBackColor = False
+        '
+        'Info_Tx12
+        '
+        Me.Info_Tx12.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx12.Location = New System.Drawing.Point(1136, 266)
+        Me.Info_Tx12.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx12.Name = "Info_Tx12"
+        Me.Info_Tx12.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx12.TabIndex = 137
+        '
+        'Info_La12
+        '
+        Me.Info_La12.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La12.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La12.ForeColor = System.Drawing.Color.Black
+        Me.Info_La12.Location = New System.Drawing.Point(967, 266)
+        Me.Info_La12.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La12.Name = "Info_La12"
+        Me.Info_La12.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La12.TabIndex = 136
+        Me.Info_La12.Text = "상세 정보"
+        Me.Info_La12.UseVisualStyleBackColor = False
+        '
+        'Info_Tx11
+        '
+        Me.Info_Tx11.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx11.Location = New System.Drawing.Point(1826, 225)
+        Me.Info_Tx11.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx11.Name = "Info_Tx11"
+        Me.Info_Tx11.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx11.TabIndex = 135
+        '
+        'Info_La11
+        '
+        Me.Info_La11.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La11.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La11.ForeColor = System.Drawing.Color.Black
+        Me.Info_La11.Location = New System.Drawing.Point(1656, 223)
+        Me.Info_La11.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La11.Name = "Info_La11"
+        Me.Info_La11.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La11.TabIndex = 134
+        Me.Info_La11.Text = "상세 정보"
+        Me.Info_La11.UseVisualStyleBackColor = False
+        '
+        'Info_Tx10
+        '
+        Me.Info_Tx10.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx10.Location = New System.Drawing.Point(1479, 228)
+        Me.Info_Tx10.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx10.Name = "Info_Tx10"
+        Me.Info_Tx10.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx10.TabIndex = 133
+        '
+        'Info_La10
+        '
+        Me.Info_La10.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La10.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La10.ForeColor = System.Drawing.Color.Black
+        Me.Info_La10.Location = New System.Drawing.Point(1310, 225)
+        Me.Info_La10.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La10.Name = "Info_La10"
+        Me.Info_La10.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La10.TabIndex = 132
+        Me.Info_La10.Text = "상세 정보"
+        Me.Info_La10.UseVisualStyleBackColor = False
+        '
+        'Info_Tx9
+        '
+        Me.Info_Tx9.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx9.Location = New System.Drawing.Point(1136, 225)
+        Me.Info_Tx9.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx9.Name = "Info_Tx9"
+        Me.Info_Tx9.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx9.TabIndex = 131
+        '
+        'Info_La9
+        '
+        Me.Info_La9.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La9.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La9.ForeColor = System.Drawing.Color.Black
+        Me.Info_La9.Location = New System.Drawing.Point(967, 223)
+        Me.Info_La9.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La9.Name = "Info_La9"
+        Me.Info_La9.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La9.TabIndex = 130
+        Me.Info_La9.Text = "상세 정보"
+        Me.Info_La9.UseVisualStyleBackColor = False
+        '
+        'Info_Tx8
+        '
+        Me.Info_Tx8.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx8.Location = New System.Drawing.Point(1826, 184)
+        Me.Info_Tx8.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx8.Name = "Info_Tx8"
+        Me.Info_Tx8.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx8.TabIndex = 129
+        '
+        'Info_La8
+        '
+        Me.Info_La8.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La8.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La8.ForeColor = System.Drawing.Color.Black
+        Me.Info_La8.Location = New System.Drawing.Point(1656, 181)
+        Me.Info_La8.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La8.Name = "Info_La8"
+        Me.Info_La8.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La8.TabIndex = 128
+        Me.Info_La8.Text = "상세 정보"
+        Me.Info_La8.UseVisualStyleBackColor = False
+        '
+        'Info_Tx7
+        '
+        Me.Info_Tx7.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx7.Location = New System.Drawing.Point(1479, 186)
+        Me.Info_Tx7.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx7.Name = "Info_Tx7"
+        Me.Info_Tx7.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx7.TabIndex = 127
+        '
+        'Info_La7
+        '
+        Me.Info_La7.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La7.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La7.ForeColor = System.Drawing.Color.Black
+        Me.Info_La7.Location = New System.Drawing.Point(1310, 184)
+        Me.Info_La7.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La7.Name = "Info_La7"
+        Me.Info_La7.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La7.TabIndex = 126
+        Me.Info_La7.Text = "상세 정보"
+        Me.Info_La7.UseVisualStyleBackColor = False
+        '
+        'Info_Tx6
+        '
+        Me.Info_Tx6.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx6.Location = New System.Drawing.Point(1136, 184)
+        Me.Info_Tx6.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx6.Name = "Info_Tx6"
+        Me.Info_Tx6.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx6.TabIndex = 125
+        '
+        'Info_La6
+        '
+        Me.Info_La6.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La6.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La6.ForeColor = System.Drawing.Color.Black
+        Me.Info_La6.Location = New System.Drawing.Point(967, 182)
+        Me.Info_La6.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La6.Name = "Info_La6"
+        Me.Info_La6.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La6.TabIndex = 124
+        Me.Info_La6.Text = "상세 정보"
+        Me.Info_La6.UseVisualStyleBackColor = False
+        '
+        'Info_Tx5
+        '
+        Me.Info_Tx5.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx5.Location = New System.Drawing.Point(1826, 143)
+        Me.Info_Tx5.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx5.Name = "Info_Tx5"
+        Me.Info_Tx5.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx5.TabIndex = 123
+        '
+        'Info_La5
+        '
+        Me.Info_La5.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La5.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La5.ForeColor = System.Drawing.Color.Black
+        Me.Info_La5.Location = New System.Drawing.Point(1656, 140)
+        Me.Info_La5.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La5.Name = "Info_La5"
+        Me.Info_La5.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La5.TabIndex = 122
+        Me.Info_La5.Text = "상세 정보"
+        Me.Info_La5.UseVisualStyleBackColor = False
+        '
+        'Info_Tx4
+        '
+        Me.Info_Tx4.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx4.Location = New System.Drawing.Point(1479, 145)
+        Me.Info_Tx4.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx4.Name = "Info_Tx4"
+        Me.Info_Tx4.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx4.TabIndex = 121
+        '
+        'Info_La4
+        '
+        Me.Info_La4.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La4.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La4.ForeColor = System.Drawing.Color.Black
+        Me.Info_La4.Location = New System.Drawing.Point(1310, 143)
+        Me.Info_La4.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La4.Name = "Info_La4"
+        Me.Info_La4.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La4.TabIndex = 120
+        Me.Info_La4.Text = "상세 정보"
+        Me.Info_La4.UseVisualStyleBackColor = False
+        '
+        'Info_Tx3
+        '
+        Me.Info_Tx3.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx3.Location = New System.Drawing.Point(1136, 143)
+        Me.Info_Tx3.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx3.Name = "Info_Tx3"
+        Me.Info_Tx3.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx3.TabIndex = 119
+        '
+        'Info_La3
+        '
+        Me.Info_La3.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La3.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La3.ForeColor = System.Drawing.Color.Black
+        Me.Info_La3.Location = New System.Drawing.Point(967, 140)
+        Me.Info_La3.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La3.Name = "Info_La3"
+        Me.Info_La3.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La3.TabIndex = 118
+        Me.Info_La3.Text = "상세 정보"
+        Me.Info_La3.UseVisualStyleBackColor = False
+        '
+        'Info_Tx2
+        '
+        Me.Info_Tx2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx2.Location = New System.Drawing.Point(1826, 99)
+        Me.Info_Tx2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx2.Name = "Info_Tx2"
+        Me.Info_Tx2.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx2.TabIndex = 117
+        '
+        'Info_La2
+        '
+        Me.Info_La2.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La2.ForeColor = System.Drawing.Color.Black
+        Me.Info_La2.Location = New System.Drawing.Point(1656, 97)
+        Me.Info_La2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La2.Name = "Info_La2"
+        Me.Info_La2.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La2.TabIndex = 116
+        Me.Info_La2.Text = "상세 정보"
+        Me.Info_La2.UseVisualStyleBackColor = False
+        '
+        'Info_Tx1
+        '
+        Me.Info_Tx1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx1.Location = New System.Drawing.Point(1479, 102)
+        Me.Info_Tx1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx1.Name = "Info_Tx1"
+        Me.Info_Tx1.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx1.TabIndex = 115
+        '
+        'Info_La1
+        '
+        Me.Info_La1.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La1.ForeColor = System.Drawing.Color.Black
+        Me.Info_La1.Location = New System.Drawing.Point(1310, 99)
+        Me.Info_La1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La1.Name = "Info_La1"
+        Me.Info_La1.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La1.TabIndex = 114
+        Me.Info_La1.Text = "상세 정보"
+        Me.Info_La1.UseVisualStyleBackColor = False
+        '
+        'Info_Tx0
+        '
+        Me.Info_Tx0.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx0.Location = New System.Drawing.Point(1136, 102)
+        Me.Info_Tx0.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx0.Name = "Info_Tx0"
+        Me.Info_Tx0.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx0.TabIndex = 113
+        '
+        'Info_La0
+        '
+        Me.Info_La0.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La0.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La0.ForeColor = System.Drawing.Color.Black
+        Me.Info_La0.Location = New System.Drawing.Point(967, 99)
+        Me.Info_La0.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La0.Name = "Info_La0"
+        Me.Info_La0.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La0.TabIndex = 112
+        Me.Info_La0.Text = "수주코드"
+        Me.Info_La0.UseVisualStyleBackColor = False
+        '
+        'Info_Tx14
+        '
+        Me.Info_Tx14.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx14.Location = New System.Drawing.Point(1825, 269)
+        Me.Info_Tx14.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx14.Name = "Info_Tx14"
+        Me.Info_Tx14.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx14.TabIndex = 155
+        '
+        'Info_La14
+        '
+        Me.Info_La14.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La14.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La14.ForeColor = System.Drawing.Color.Black
+        Me.Info_La14.Location = New System.Drawing.Point(1656, 267)
+        Me.Info_La14.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La14.Name = "Info_La14"
+        Me.Info_La14.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La14.TabIndex = 154
+        Me.Info_La14.Text = "상세 정보"
+        Me.Info_La14.UseVisualStyleBackColor = False
+        '
+        'Info_Tx15
+        '
+        Me.Info_Tx15.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx15.Location = New System.Drawing.Point(1136, 309)
+        Me.Info_Tx15.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx15.Name = "Info_Tx15"
+        Me.Info_Tx15.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx15.TabIndex = 158
+        '
+        'Info_La15
+        '
+        Me.Info_La15.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La15.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La15.ForeColor = System.Drawing.Color.Black
+        Me.Info_La15.Location = New System.Drawing.Point(967, 308)
+        Me.Info_La15.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La15.Name = "Info_La15"
+        Me.Info_La15.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La15.TabIndex = 157
+        Me.Info_La15.Text = "상세 정보"
+        Me.Info_La15.UseVisualStyleBackColor = False
+        '
+        'Info_Tx16
+        '
+        Me.Info_Tx16.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx16.Location = New System.Drawing.Point(1479, 306)
+        Me.Info_Tx16.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx16.Name = "Info_Tx16"
+        Me.Info_Tx16.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx16.TabIndex = 161
+        '
+        'Info_La16
+        '
+        Me.Info_La16.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La16.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La16.ForeColor = System.Drawing.Color.Black
+        Me.Info_La16.Location = New System.Drawing.Point(1310, 304)
+        Me.Info_La16.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La16.Name = "Info_La16"
+        Me.Info_La16.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La16.TabIndex = 160
+        Me.Info_La16.Text = "상세 정보"
+        Me.Info_La16.UseVisualStyleBackColor = False
+        '
+        'Info_Tx17
+        '
+        Me.Info_Tx17.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx17.Location = New System.Drawing.Point(1825, 306)
+        Me.Info_Tx17.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx17.Name = "Info_Tx17"
+        Me.Info_Tx17.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx17.TabIndex = 164
+        '
+        'Info_La17
+        '
+        Me.Info_La17.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La17.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La17.ForeColor = System.Drawing.Color.Black
+        Me.Info_La17.Location = New System.Drawing.Point(1656, 304)
+        Me.Info_La17.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La17.Name = "Info_La17"
+        Me.Info_La17.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La17.TabIndex = 163
+        Me.Info_La17.Text = "상세 정보"
+        Me.Info_La17.UseVisualStyleBackColor = False
+        '
+        'Info_Tx18
+        '
+        Me.Info_Tx18.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx18.Location = New System.Drawing.Point(1136, 351)
+        Me.Info_Tx18.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx18.Name = "Info_Tx18"
+        Me.Info_Tx18.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx18.TabIndex = 167
+        '
+        'Info_La18
+        '
+        Me.Info_La18.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La18.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La18.ForeColor = System.Drawing.Color.Black
+        Me.Info_La18.Location = New System.Drawing.Point(967, 350)
+        Me.Info_La18.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La18.Name = "Info_La18"
+        Me.Info_La18.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La18.TabIndex = 166
+        Me.Info_La18.Text = "상세 정보"
+        Me.Info_La18.UseVisualStyleBackColor = False
+        '
+        'Info_Tx19
+        '
+        Me.Info_Tx19.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx19.Location = New System.Drawing.Point(1479, 347)
+        Me.Info_Tx19.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx19.Name = "Info_Tx19"
+        Me.Info_Tx19.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx19.TabIndex = 170
+        '
+        'Info_La19
+        '
+        Me.Info_La19.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La19.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La19.ForeColor = System.Drawing.Color.Black
+        Me.Info_La19.Location = New System.Drawing.Point(1310, 346)
+        Me.Info_La19.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La19.Name = "Info_La19"
+        Me.Info_La19.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La19.TabIndex = 169
+        Me.Info_La19.Text = "상세 정보"
+        Me.Info_La19.UseVisualStyleBackColor = False
+        '
+        'Info_Tx20
+        '
+        Me.Info_Tx20.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx20.Location = New System.Drawing.Point(1825, 347)
+        Me.Info_Tx20.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx20.Name = "Info_Tx20"
+        Me.Info_Tx20.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx20.TabIndex = 173
+        '
+        'Info_La20
+        '
+        Me.Info_La20.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La20.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La20.ForeColor = System.Drawing.Color.Black
+        Me.Info_La20.Location = New System.Drawing.Point(1656, 346)
+        Me.Info_La20.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La20.Name = "Info_La20"
+        Me.Info_La20.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La20.TabIndex = 172
+        Me.Info_La20.Text = "상세 정보"
+        Me.Info_La20.UseVisualStyleBackColor = False
+        '
+        'Info_Tx23
+        '
+        Me.Info_Tx23.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx23.Location = New System.Drawing.Point(1825, 389)
+        Me.Info_Tx23.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx23.Name = "Info_Tx23"
+        Me.Info_Tx23.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx23.TabIndex = 182
+        '
+        'Info_La23
+        '
+        Me.Info_La23.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La23.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La23.ForeColor = System.Drawing.Color.Black
+        Me.Info_La23.Location = New System.Drawing.Point(1656, 388)
+        Me.Info_La23.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La23.Name = "Info_La23"
+        Me.Info_La23.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La23.TabIndex = 181
+        Me.Info_La23.Text = "상세 정보"
+        Me.Info_La23.UseVisualStyleBackColor = False
+        '
+        'Info_Tx22
+        '
+        Me.Info_Tx22.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx22.Location = New System.Drawing.Point(1479, 389)
+        Me.Info_Tx22.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx22.Name = "Info_Tx22"
+        Me.Info_Tx22.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx22.TabIndex = 179
+        '
+        'Info_La22
+        '
+        Me.Info_La22.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La22.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La22.ForeColor = System.Drawing.Color.Black
+        Me.Info_La22.Location = New System.Drawing.Point(1310, 388)
+        Me.Info_La22.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La22.Name = "Info_La22"
+        Me.Info_La22.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La22.TabIndex = 178
+        Me.Info_La22.Text = "상세 정보"
+        Me.Info_La22.UseVisualStyleBackColor = False
+        '
+        'Info_Tx21
+        '
+        Me.Info_Tx21.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_Tx21.Location = New System.Drawing.Point(1136, 393)
+        Me.Info_Tx21.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_Tx21.Name = "Info_Tx21"
+        Me.Info_Tx21.Size = New System.Drawing.Size(156, 29)
+        Me.Info_Tx21.TabIndex = 176
+        '
+        'Info_La21
+        '
+        Me.Info_La21.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Info_La21.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Info_La21.ForeColor = System.Drawing.Color.Black
+        Me.Info_La21.Location = New System.Drawing.Point(967, 392)
+        Me.Info_La21.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Info_La21.Name = "Info_La21"
+        Me.Info_La21.Size = New System.Drawing.Size(162, 34)
+        Me.Info_La21.TabIndex = 175
+        Me.Info_La21.Text = "상세 정보"
+        Me.Info_La21.UseVisualStyleBackColor = False
+        '
+        'Btn_Save
+        '
+        Me.Btn_Save.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Btn_Save.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Btn_Save.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Save.Location = New System.Drawing.Point(967, 434)
+        Me.Btn_Save.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Btn_Save.Name = "Btn_Save"
+        Me.Btn_Save.Size = New System.Drawing.Size(1014, 34)
+        Me.Btn_Save.TabIndex = 183
+        Me.Btn_Save.Text = "저장"
+        Me.Btn_Save.UseVisualStyleBackColor = False
+        '
+        'Frm_Customer
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Btn_Save)
+        Me.Controls.Add(Me.Info_Tx23)
+        Me.Controls.Add(Me.Info_La23)
+        Me.Controls.Add(Me.Info_Tx22)
+        Me.Controls.Add(Me.Info_La22)
+        Me.Controls.Add(Me.Info_Tx21)
+        Me.Controls.Add(Me.Info_La21)
+        Me.Controls.Add(Me.Info_Tx20)
+        Me.Controls.Add(Me.Info_La20)
+        Me.Controls.Add(Me.Info_Tx19)
+        Me.Controls.Add(Me.Info_La19)
+        Me.Controls.Add(Me.Info_Tx18)
+        Me.Controls.Add(Me.Info_La18)
+        Me.Controls.Add(Me.Info_Tx17)
+        Me.Controls.Add(Me.Info_La17)
+        Me.Controls.Add(Me.Info_Tx16)
+        Me.Controls.Add(Me.Info_La16)
+        Me.Controls.Add(Me.Info_Tx15)
+        Me.Controls.Add(Me.Info_La15)
+        Me.Controls.Add(Me.Info_Tx14)
+        Me.Controls.Add(Me.Info_La14)
+        Me.Controls.Add(Me.Info_Tx13)
+        Me.Controls.Add(Me.Info_La13)
+        Me.Controls.Add(Me.Info_Tx12)
+        Me.Controls.Add(Me.Info_La12)
+        Me.Controls.Add(Me.Info_Tx11)
+        Me.Controls.Add(Me.Info_La11)
+        Me.Controls.Add(Me.Info_Tx10)
+        Me.Controls.Add(Me.Info_La10)
+        Me.Controls.Add(Me.Info_Tx9)
+        Me.Controls.Add(Me.Info_La9)
+        Me.Controls.Add(Me.Info_Tx8)
+        Me.Controls.Add(Me.Info_La8)
+        Me.Controls.Add(Me.Info_Tx7)
+        Me.Controls.Add(Me.Info_La7)
+        Me.Controls.Add(Me.Info_Tx6)
+        Me.Controls.Add(Me.Info_La6)
+        Me.Controls.Add(Me.Info_Tx5)
+        Me.Controls.Add(Me.Info_La5)
+        Me.Controls.Add(Me.Info_Tx4)
+        Me.Controls.Add(Me.Info_La4)
+        Me.Controls.Add(Me.Info_Tx3)
+        Me.Controls.Add(Me.Info_La3)
+        Me.Controls.Add(Me.Info_Tx2)
+        Me.Controls.Add(Me.Info_La2)
+        Me.Controls.Add(Me.Info_Tx1)
+        Me.Controls.Add(Me.Info_La1)
+        Me.Controls.Add(Me.Info_Tx0)
+        Me.Controls.Add(Me.Info_La0)
+        Me.Controls.Add(Me.Di_Panel1)
+        Me.Controls.Add(Me.Panel_Menu)
+        Me.Controls.Add(Me.Customer_Grid)
+        Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Name = "Frm_Customer"
+        Me.Size = New System.Drawing.Size(1366, 638)
+        CType(Me.Customer_Grid, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel_Menu.ResumeLayout(False)
+        Me.Panel_Menu.PerformLayout()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+
+    Friend WithEvents Customer_Grid As DataGridView
+    Friend WithEvents Di_Panel1 As Panel
+    Friend WithEvents Search_Combo As ComboBox
+    Friend WithEvents Search_Text As TextBox
+    Friend WithEvents Search_Com As Button
+    Friend WithEvents Insert_Com As Button
+    Friend WithEvents Delete_Com As Button
+    Friend WithEvents Save_Com As Button
+    Friend WithEvents Panel_Menu As Panel
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Info_Tx13 As TextBox
+    Friend WithEvents Info_La13 As Button
+    Friend WithEvents Info_Tx12 As TextBox
+    Friend WithEvents Info_La12 As Button
+    Friend WithEvents Info_Tx11 As TextBox
+    Friend WithEvents Info_La11 As Button
+    Friend WithEvents Info_Tx10 As TextBox
+    Friend WithEvents Info_La10 As Button
+    Friend WithEvents Info_Tx9 As TextBox
+    Friend WithEvents Info_La9 As Button
+    Friend WithEvents Info_Tx8 As TextBox
+    Friend WithEvents Info_La8 As Button
+    Friend WithEvents Info_Tx7 As TextBox
+    Friend WithEvents Info_La7 As Button
+    Friend WithEvents Info_Tx6 As TextBox
+    Friend WithEvents Info_La6 As Button
+    Friend WithEvents Info_Tx5 As TextBox
+    Friend WithEvents Info_La5 As Button
+    Friend WithEvents Info_Tx4 As TextBox
+    Friend WithEvents Info_La4 As Button
+    Friend WithEvents Info_Tx3 As TextBox
+    Friend WithEvents Info_La3 As Button
+    Friend WithEvents Info_Tx2 As TextBox
+    Friend WithEvents Info_La2 As Button
+    Friend WithEvents Info_Tx1 As TextBox
+    Friend WithEvents Info_La1 As Button
+    Friend WithEvents Info_Tx0 As TextBox
+    Friend WithEvents Info_La0 As Button
+    Friend WithEvents Info_Tx14 As TextBox
+    Friend WithEvents Info_La14 As Button
+    Friend WithEvents Info_Tx15 As TextBox
+    Friend WithEvents Info_La15 As Button
+    Friend WithEvents Info_Tx16 As TextBox
+    Friend WithEvents Info_La16 As Button
+    Friend WithEvents Info_Tx17 As TextBox
+    Friend WithEvents Info_La17 As Button
+    Friend WithEvents Info_Tx18 As TextBox
+    Friend WithEvents Info_La18 As Button
+    Friend WithEvents Info_Tx19 As TextBox
+    Friend WithEvents Info_La19 As Button
+    Friend WithEvents Info_Tx20 As TextBox
+    Friend WithEvents Info_La20 As Button
+    Friend WithEvents Info_Tx23 As TextBox
+    Friend WithEvents Info_La23 As Button
+    Friend WithEvents Info_Tx22 As TextBox
+    Friend WithEvents Info_La22 As Button
+    Friend WithEvents Info_Tx21 As TextBox
+    Friend WithEvents Info_La21 As Button
+    Friend WithEvents Btn_Save As Button
+End Class

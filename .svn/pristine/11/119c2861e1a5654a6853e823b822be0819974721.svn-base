@@ -1,0 +1,709 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Public Class Frm_QC_Export
+    Dim QC_Label As String = "출하검사"
+    Dim Grid_Display_Ch As Boolean
+
+    Dim Grid_Info_Row As Integer
+    Dim Grid_Info_Col As Integer
+
+    Dim Grid_Main_Row As Integer
+    Dim Grid_Main_Col As Integer
+
+
+
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+
+
+    Dim Excel_Check As Boolean
+
+
+    Private Sub Frm_QC_Travel_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+
+        Com_QC.Text = QC_Label
+        Grid_Code_Setup()
+        Grid_Info_Setup()
+        Grid_Main_Setup()
+
+        Search_Combo.Items.Add("코드")
+        Search_Combo.Items.Add("날짜")
+        Search_Combo.Text = "코드"
+
+        Main_Panel.Top = 136
+        Main_Panel.Left = 389
+
+        Excel_Panel.Top = 136
+        Excel_Panel.Left = 389
+
+        Main_Panel.Visible = True
+        Excel_Panel.Visible = False
+        Print_Com.Visible = False
+    End Sub
+    Public Function Grid_Code_Setup() As Boolean
+        Grid_Color(Grid_Code)
+
+        Grid_Code.AllowUserToAddRows = False
+        Grid_Code.RowTemplate.Height = 24
+        Grid_Code.ColumnCount = 3
+        Grid_Code.RowCount = 1
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Code.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.RowHeadersWidth = 10
+        Grid_Code.Columns(0).Width = 100
+        Grid_Code.Columns(1).Width = 110
+        Grid_Code.Columns(2).Width = 110
+
+        Grid_Code.Columns(0).HeaderText = "코드"
+        Grid_Code.Columns(1).HeaderText = "날짜"
+        Grid_Code.Columns(2).HeaderText = "검사자"
+
+        Dim i As Integer
+        For i = 0 To Grid_Code.ColumnCount - 1
+            Grid_Code.Columns(i).ReadOnly = True
+        Next i
+        Grid_Code_Setup = True
+    End Function
+
+    Public Function Grid_Info_Setup() As Boolean
+
+        Grid_Color(Grid_Info)
+
+
+        Grid_Info.AllowUserToAddRows = False
+        Grid_Info.RowTemplate.Height = 24
+        Grid_Info.ColumnCount = 2
+        Grid_Info.RowCount = 9
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Info.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Grid_Info.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Info.RowHeadersWidth = 10
+        Grid_Info.Columns(0).Width = 100
+        Grid_Info.Columns(1).Width = 240
+        Grid_Info.Columns(0).HeaderText = "구분"
+        Grid_Info.Columns(1).HeaderText = "내용"
+
+        Grid_Info.Item(0, 0).Value = "코드"
+        Grid_Info.Item(0, 1).Value = "제품코드"
+        Grid_Info.Item(0, 2).Value = "품명"
+        Grid_Info.Item(0, 3).Value = "종류"
+        Grid_Info.Item(0, 4).Value = "담당자"
+        Grid_Info.Item(0, 5).Value = "일자"
+        Grid_Info.Item(0, 6).Value = "시간"
+        Grid_Info.Item(0, 7).Value = "Tool"
+        Grid_Info.Item(0, 8).Value = "비고"
+
+
+        'Grid_Info.Columns(0).ReadOnly = True
+        'Grid_Info.Columns(1).ReadOnly = True
+        Grid_Info.Rows(0).ReadOnly = True
+        Grid_Info.Rows(1).ReadOnly = True
+        Grid_Info.Rows(2).ReadOnly = True
+        Grid_Info.Rows(3).ReadOnly = True
+        Grid_Info.Rows(4).ReadOnly = False
+
+
+        Grid_Info_Setup = True
+    End Function
+
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs) Handles Search_Com.Click
+        Grid_Code_Display()
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+            Main_Panel.Visible = True
+            Grid_Info_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+            Grid_Main_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+        End If
+
+    End Sub
+    Public Function Grid_Code_Display() As Boolean
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        Grid_Code.RowCount = 1
+        Select Case Search_Combo.Text
+            Case "코드"
+                StrSQL = "Select QUALITY_Code, QUALITY_Date, QUALITY_Name From QUALITY with(NOLOCK) Where QUALITY_Type = '" & QC_Label & "' and QUALITY_Code Like '%" & Search_Text.Text & "%'  Order  By QUALITY_Code DESC"
+            Case "날짜"
+                StrSQL = "Select QUALITY_Code, QUALITY_Date, QUALITY_Name From QUALITY with(NOLOCK) Where QUALITY_Type = '" & QC_Label & "' and QUALITY_Date Like '%" & Search_Text.Text & "%' Or QUALITY_Date Is Null Order By QUALITY_Date"
+        End Select
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Grid_Code.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                For j = 0 To Grid_Code.ColumnCount - 1
+                    Grid_Code.Item(j, i).Value = DBT.Rows(i).Item(j)
+                Next j
+            Next i
+        Else
+            Grid_Code.RowCount = 1
+            For j = 0 To Grid_Code.ColumnCount - 1
+                Grid_Code.Item(j, 0).Value = ""
+            Next j
+        End If
+        Grid_Code_Display = True
+        Grid_Code.ClearSelection()
+    End Function
+
+    Private Sub Insert_Com_Click(sender As Object, e As EventArgs) Handles Insert_Com.Click
+        '새로운 코드 추가
+        Dim DBT As New DataTable
+        Dim JP_Code As Long
+        Dim My_Date As String
+        Dim My_Time As String
+
+        StrSQL = "Select GETDATE() "
+        Re_Count = DB_Select(DBT)
+
+
+        If Re_Count = 0 Then
+            Exit Sub
+        Else
+            My_Date = DBT.Rows(0).Item(0)
+            JP_Code = Mid(My_Date, 1, 4) & Mid(My_Date, 6, 2) & Mid(My_Date, 9, 2)
+            My_Time = DateTime.Now.ToString("HH:mm:ss")
+            My_Date = Mid(My_Date, 1, 4) & "-" & Mid(My_Date, 6, 2) & "-" & Mid(My_Date, 9, 2)
+        End If
+
+
+        StrSQL = "Select QUALITY_Code From QUALITY with(NOLOCK) Where QUALITY_CODE Like  'QC" & JP_Code & "%' Order By QUALITY_Code Desc "
+        Re_Count = DB_Select(DBT)
+        If Re_Count = 0 Then
+            JP_Code = JP_Code & "001"
+        Else
+            JP_Code = JP_Code & Format(Val(Mid(DBT.Rows(0).Item(0), 11, 3)) + 1, "00#")
+        End If
+
+        '추가한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Insert into QUALITY (QUALITY_Code, QUALITY_Date, QUALITY_Time, QUALITY_Name, QUALITY_Type)  Values ('QC" & JP_Code & "', '" & My_Date & "','" & My_Time & "','" & Frm_Main.Text_Man_Name.Text & "','" & QC_Label & "' )"
+        Re_Count = DB_Execute()
+        Grid_Code_Display()
+        Main_Panel.Visible = True
+        Grid_Info_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+        Grid_Main_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+
+    End Sub
+    Public Function Grid_Info_Display(Code As String) As Boolean
+        Grid_Display_Ch = False
+
+        Grid_Info_Display = True
+        Dim DBT As New DataTable
+        Dim i As Integer
+        StrSQL = "Select * From QUALITY With(NOLOCK) Where QUALITY_Code = '" & Code & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Columns.Count - 1
+                Grid_Info.Item(1, i).Value = DBT.Rows(0).Item(i).ToString
+            Next i
+        Else
+            For i = 0 To DBT.Columns.Count - 1
+                Grid_Info.Item(1, i).Value = ""
+            Next i
+        End If
+        Grid_Display_Ch = True
+
+    End Function
+    Public Function Grid_Main_Setup() As Boolean
+        Grid_Color(Grid_Main)
+
+        Grid_Main.AllowUserToAddRows = False
+        Grid_Main.RowTemplate.Height = 24
+        Grid_Main.ColumnCount = 11
+        Grid_Main.RowCount = 1
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Main.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.RowHeadersWidth = 10
+        Grid_Main.Columns(0).Width = 60
+
+        Grid_Main.Columns(0).HeaderText = "순번"
+        Grid_Main.Columns(1).HeaderText = "검사항목"
+        Grid_Main.Columns(2).HeaderText = "검사규격"
+        Grid_Main.Columns(3).HeaderText = "검사수준"
+        Grid_Main.Columns(4).HeaderText = "AQL"
+        Grid_Main.Columns(5).HeaderText = "시료1"
+        Grid_Main.Columns(6).HeaderText = "시료2"
+        Grid_Main.Columns(7).HeaderText = "시료3"
+        Grid_Main.Columns(8).HeaderText = "시료4"
+        Grid_Main.Columns(9).HeaderText = "시료5"
+        Grid_Main.Columns(10).HeaderText = "비고"
+
+
+        Dim i As Integer
+        For i = 1 To Grid_Main.ColumnCount - 1
+            Grid_Main.Columns(i).Width = 80
+            'Grid_QUALITY.Columns(i).ReadOnly = True
+        Next i
+
+        '일자 표시
+        Dim My_Date_Date As Date
+        Dim My_Date As String
+        Dim DBT As New DataTable
+        StrSQL = "Select GETDATE() "
+        Re_Count = DB_Select(DBT)
+        If Re_Count = 0 Then
+            Exit Function
+        Else
+            My_Date = DBT.Rows(0).Item(0)
+            My_Date_Date = My_Date
+            My_Date = Mid(My_Date, 1, 4) & "-" & Mid(My_Date, 6, 2) & "-" & Mid(My_Date, 9, 2)
+        End If
+
+
+
+        Grid_Main_Setup = True
+    End Function
+
+    Public Function Grid_Main_Display(Code As String) As Boolean
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        Grid_Display_Ch = False
+        Grid_Main.RowCount = 1
+        StrSQL = "Select *  From QUALITY_List with(NOLOCK)  Where QUALITY_Code = '" & Code & "' Order By Convert(Decimal,QUALITY_Sun)"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Grid_Main.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                For j = 1 To Grid_Main.ColumnCount
+                    Grid_Main.Item(j - 1, i).Value = DBT.Rows(i).Item(j).ToString
+                Next j
+            Next i
+        Else
+            Grid_Main.RowCount = 1
+            For j = 0 To Grid_Main.ColumnCount - 1
+                Grid_Main.Item(j, 0).Value = ""
+            Next j
+        End If
+        Grid_Display_Ch = True
+        Grid_Main_Display = True
+
+    End Function
+
+    Private Sub Com_QC_Click(sender As Object, e As EventArgs) Handles Com_QC.Click
+
+        Print_Com.Visible = False
+
+        If Excel_Check = True Then
+            xlbook.Close()
+            xlapp.Quit()
+            xlsheet = Nothing
+            xlbook = Nothing
+            xlapp = Nothing
+            releaseObject(xlsheet)
+            releaseObject(xlbook)
+            releaseObject(xlapp)
+            Excel_Check = False
+        End If
+
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+        Label_Color(sender, Color_Label, Di_Panel2)
+        '판넬 보이기
+        Main_Panel.Visible = True
+        Excel_Panel.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles Com_Excel.Click
+
+
+        Print_Com.Visible = True
+
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+        Label_Color(sender, Color_Label, Di_Panel2)
+        '판넬 보이기
+        Main_Panel.Visible = False
+        Excel_Panel.Visible = True
+
+
+
+        If Excel_Check = True Then
+            xlbook.Close()
+            xlapp.Quit()
+            xlsheet = Nothing
+            xlbook = Nothing
+            xlapp = Nothing
+            releaseObject(xlsheet)
+            releaseObject(xlbook)
+            releaseObject(xlapp)
+            Excel_Check = False
+
+        End If
+        '여기서 처리
+
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+
+        xlapp = New Excel.Application
+        xlbook = xlapp.Workbooks.Open(Application.StartupPath & "\excel\출하검사.xlsx")
+        xlsheet = xlbook.ActiveSheet
+        xlapp.DisplayAlerts = False
+        xlapp.WindowState = Excel.XlWindowState.xlMinimized
+        xlapp.Visible = False
+        xlapp.DisplayFormulaBar = False
+        xlapp.DisplayStatusBar = False
+
+        xlapp.ActiveWindow.DisplayWorkbookTabs = False
+        xlapp.ActiveWindow.DisplayHeadings = False
+
+        SetParent(xlapp.Hwnd, Excel_Panel.Handle)
+        SendMessage(xlapp.Hwnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0)
+
+        '검사일자
+        xlsheet.Cells(2, 19).Value = Grid_Info.Item(1, 5).Value
+        '검사시간
+        xlsheet.Cells(3, 19).Value = Grid_Info.Item(1, 6).Value
+        '코드
+        xlsheet.Cells(4, 3).Value = Grid_Info.Item(1, 0).Value
+        '품명
+        xlsheet.Cells(4, 11).Value = Grid_Info.Item(1, 2).Value
+        '담당자
+        xlsheet.Cells(6, 3).Value = Grid_Info.Item(1, 4).Value
+        '특이사항
+        xlsheet.Cells(6, 11).Value = Grid_Info.Item(1, 8).Value
+
+        '리스트
+        For i = 0 To Grid_Main.RowCount - 1
+            xlsheet.Cells(10 + i, 2).Value = Grid_Main.Item(0, i).Value.ToString
+            xlsheet.Cells(10 + i, 3).Value = Grid_Main.Item(1, i).Value.ToString
+            xlsheet.Cells(10 + i, 6).Value = Grid_Main.Item(2, i).Value.ToString
+            xlsheet.Cells(10 + i, 8).Value = Grid_Main.Item(3, i).Value.ToString
+            xlsheet.Cells(10 + i, 10).Value = Grid_Main.Item(4, i).Value.ToString
+            xlsheet.Cells(10 + i, 12).Value = Grid_Main.Item(5, i).Value.ToString
+            xlsheet.Cells(10 + i, 14).Value = Grid_Main.Item(6, i).Value.ToString
+            xlsheet.Cells(10 + i, 16).Value = Grid_Main.Item(7, i).Value.ToString
+            xlsheet.Cells(10 + i, 18).Value = Grid_Main.Item(8, i).Value.ToString
+            xlsheet.Cells(10 + i, 20).Value = Grid_Main.Item(9, i).Value.ToString
+        Next i
+
+        'xlbook.SaveAs(Application.StartupPath & "\Excel\QC\" & Format(Now, "yyyyMMddHHmmss") & ".xlsx")
+
+
+        Excel_Panel.Visible = True
+
+    End Sub
+
+
+    Private Sub Print_Com_Click(sender As Object, e As EventArgs) Handles Print_Com.Click
+        xlsheet.Print
+    End Sub
+
+    Private Sub Grid_Info_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Info.CellValueChanged
+        If Grid_Display_Ch = True Then
+            Grid_Info.CurrentRow.HeaderCell.Value = "*"
+        End If
+
+    End Sub
+    Private Sub Grid_Info_MouseClick(sender As Object, e As MouseEventArgs) Handles Grid_Info.MouseClick
+        '선택되었을때 처리
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) < 1 Then
+            Exit Sub
+        End If
+        'Car_Code 선택 처리
+        Grid_Info_Row = Grid_Info.CurrentCell.RowIndex
+        Grid_Info_Col = Grid_Info.CurrentCell.ColumnIndex
+        Grid_Info_Combo.Visible = False
+        If Grid_Info_Row < 0 Then
+            Exit Sub
+        End If
+        If Grid_Info_Col < 0 Then
+            Exit Sub
+        End If
+        Dim i As Integer
+        Dim WW As Long
+        Dim DBT As New DataTable
+        If Grid_Info_Col = 1 Then
+            Select Case Grid_Info_Row
+                Case 1
+                    StrSQL = "Select PRODUCT_Code  From Product with(NOLOCK) Order By PRODUCT_Code"
+                    Re_Count = DB_Select(DBT)
+                    Grid_Info_Combo.Items.Clear()
+                    If Re_Count <> 0 Then
+                        For i = 0 To Re_Count - 1
+                            Grid_Info_Combo.Items.Add(DBT.Rows(i)("PL_Code"))
+                        Next i
+                    End If
+                    Grid_Info_Combo.Top = Grid_Info.Top + Grid_Info.ColumnHeadersHeight + (Grid_Info_Row) * 24
+                    WW = 0
+                    For i = 0 To Grid_Info_Col - 1
+                        WW = WW + Grid_Info.Columns(i).Width
+                    Next
+
+                    Grid_Info_Combo.Left = Grid_Info.Left + Grid_Info.RowHeadersWidth + WW
+                    Grid_Info_Combo.Width = Grid_Info.Columns(Grid_Info_Col).Width
+                    Grid_Info_Combo.Text = Grid_Info.CurrentCell.Value.ToString
+                    Grid_Info_Combo.BackColor = Grid_Info.RowsDefaultCellStyle.BackColor
+                    Grid_Info_Combo.Visible = True
+                    Grid_Info_Combo.Focus()
+                Case 2
+                    StrSQL = "Select PRODUCT_Name  From Product with(NOLOCK) Order By PRODUCT_Name"
+                    Re_Count = DB_Select(DBT)
+                    Grid_Info_Combo.Items.Clear()
+                    If Re_Count <> 0 Then
+                        For i = 0 To Re_Count - 1
+                            Grid_Info_Combo.Items.Add(DBT.Rows(i)("PRODUCT_Name"))
+                        Next i
+                    End If
+                    Grid_Info_Combo.Top = Grid_Info.Top + Grid_Info.ColumnHeadersHeight + (Grid_Info_Row) * 24
+                    WW = 0
+                    For i = 0 To Grid_Info_Col - 1
+                        WW = WW + Grid_Info.Columns(i).Width
+                    Next
+
+                    Grid_Info_Combo.Left = Grid_Info.Left + Grid_Info.RowHeadersWidth + WW
+                    Grid_Info_Combo.Width = Grid_Info.Columns(Grid_Info_Col).Width
+                    Grid_Info_Combo.Text = Grid_Info.CurrentCell.Value.ToString
+                    Grid_Info_Combo.BackColor = Grid_Info.RowsDefaultCellStyle.BackColor
+                    Grid_Info_Combo.Visible = True
+                    Grid_Info_Combo.Focus()
+
+                Case Else
+                    Exit Sub
+            End Select
+        End If
+
+
+    End Sub
+    Private Sub Grid_Info_Scroll(sender As Object, e As ScrollEventArgs) Handles Grid_Info.Scroll
+        Grid_Info_Combo.Visible = False
+
+    End Sub
+
+    Private Sub Grid_Info_Combo_LostFocus(sender As Object, e As EventArgs) Handles Grid_Info_Combo.LostFocus
+        Grid_Info_Combo.Visible = False
+
+    End Sub
+
+    Private Sub Grid_Info_Combo_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles Grid_Info_Combo.SelectionChangeCommitted
+
+        Dim i As Integer
+        Grid_Info.Item(Grid_Info_Col, Grid_Info_Row).Value = Grid_Info_Combo.SelectedItem.ToString()
+        Grid_Info_Combo.Visible = False
+
+        Dim DBT As New DataTable
+        Select Case Grid_Info_Row
+            Case 1
+                StrSQL = "Select PRODUCT_Name  From Product with(NOLOCK) Where PRODUCT_Code  = '" & Grid_Info_Combo.SelectedItem.ToString() & "'"
+                Re_Count = DB_Select(DBT)
+                Grid_Info_Combo.Items.Clear()
+                If Re_Count <> 0 Then
+                    Grid_Info.Item(Grid_Info_Col, Grid_Info_Row + 1).Value = DBT.Rows(0)("PRODUCT_Name")
+                    Grid_Info.Rows(Grid_Info_Row + 1).HeaderCell.Value = "*"
+                End If
+            Case 2
+                StrSQL = "Select PRODUCT_Code From Product with(NOLOCK) Where PRODUCT_Name  = '" & Grid_Info_Combo.SelectedItem.ToString() & "'"
+                Re_Count = DB_Select(DBT)
+                Grid_Info_Combo.Items.Clear()
+                If Re_Count <> 0 Then
+                    Grid_Info.Item(Grid_Info_Col, Grid_Info_Row - 1).Value = DBT.Rows(0)("PRODUCT_Code")
+                    Grid_Info.Rows(Grid_Info_Row - 1).HeaderCell.Value = "*"
+                End If
+        End Select
+        '입력된 값이 있으면 빠져나간다.
+        If Grid_Main.RowCount > 1 Then
+            Exit Sub
+        End If
+        '입력된 값이 없고 제품 콤보를 선택하면
+        '기존에 입력 된 값이 있으면 자동으로 가져와서 숫자만 입력하도록 한다.
+        Grid_Display_Ch = False
+
+        Dim DBT1 As New DataTable
+        StrSQL = "Select MAX(QUALITY_Code) as QUALITY_Code From QUALITY with(NOLOCK) Where QUALITY_PRODUCT_Code = '" & Grid_Info.Item(Grid_Info_Col, 1).Value & "' and QUALITY_Type = '" & QC_Label & "'"
+        Re_Count = DB_Select(DBT1)
+        If Re_Count <> 0 Then
+            Dim DBT2 As New DataTable
+            StrSQL = "Select QUALITY_Sun,QUALITY_Item,QUALITY_Method,QUALITY_Level,QUALITY_AQL From QUALITY_LIST with(NOLOCK) Where QUALITY_Code = '" & DBT1.Rows(0)("QUALITY_Code") & "'"
+            Re_Count = DB_Select(DBT2)
+            If Re_Count <> 0 Then
+                For i = 0 To Re_Count - 1
+                    '추가한다
+                    StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                    StrSQL = StrSQL & "Insert into QUALITY_LIST (QUALITY_Code,QUALITY_Sun,QUALITY_Item,QUALITY_Method,QUALITY_Level,QUALITY_AQL) Values ('" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "', '" & DBT2.Rows(i)("QUALITY_Sun") & "', '" & DBT2.Rows(i)("QUALITY_Item") & "', '" & DBT2.Rows(i)("QUALITY_Method") & "', '" & DBT2.Rows(i)("QUALITY_Level") & "', '" & DBT2.Rows(i)("QUALITY_AQL") & "')"
+                    DB_Execute()
+                Next
+            End If
+        End If
+        '보여주기
+        Grid_Main_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+        Grid_Display_Ch = True
+        '저장
+        Save_Com.PerformClick()
+
+    End Sub
+
+    Private Sub Save_Com_Click(sender As Object, e As EventArgs) Handles Save_Com.Click
+        'Grid_Info 를 저장 한다.
+        'DataBase에서 필드 이름 가지고 오기
+
+        Dim Table_Name As String
+        Dim j As Long
+        Dim DBT As DataTable = Nothing
+        Dim Field_Name(500) As String
+        Dim i As Integer
+        j = 0
+        For i = 1 To Grid_Info.RowCount - 1
+            If Grid_Info.Rows(i).HeaderCell.Value = "*" Then
+                j = 1
+            End If
+        Next i
+        If j = 0 Then
+            Exit Sub
+        End If
+
+
+        Table_Name = "QUALITY_List"
+        j = 0
+        StrSQL = "Select sys.Columns.Name From sys.Tables with(NOLOCK) , sys.Columns with(NOLOCK) Where sys.Tables.name = '" & Table_Name & "' And sys.Tables.Object_id = sys.Columns.Object_id Order By sys.Columns.column_id"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                Field_Name(j) = DBT.Rows(i)("Name").ToString
+                j = j + 1
+            Next i
+        End If
+        j = j - 1
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "UPDATE " & Table_Name & " SET "
+        Field_Name(500) = "Ok"
+        For i = 1 To j
+            If Grid_Info.Rows(i).HeaderCell.Value = "*" Then
+                If Field_Name(500) = "" Then
+                    StrSQL = StrSQL & ","
+                End If
+                StrSQL = StrSQL & " " & Table_Name & "." & Field_Name(i) & " = '" & Replace(Grid_Info.Item(1, i).Value, "'", "''") & "'"
+                If Field_Name(500) = "Ok" Then
+                    Field_Name(500) = ""
+                End If
+            End If
+        Next i
+        StrSQL = StrSQL & " WHERE " & Table_Name & "." & Field_Name(0) & " = '" & Grid_Info.Item(1, 0).Value & "'"
+        Re_Count = DB_Execute()
+
+    End Sub
+
+    Private Sub Insert__Main_Click(sender As Object, e As EventArgs) Handles Insert__Main.Click
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Grid_Display_Ch = False
+
+        Dim DBT As New DataTable
+        Dim Db_Sun As Long
+        StrSQL = "Select QUALITY_Sun From QUALITY_LIST with(NOLOCK) Where QUALITY_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "' Order By Convert(Decimal,QUALITY_Sun) Desc "
+        Re_Count = DB_Select(DBT)
+        If Re_Count = 0 Then
+            Db_Sun = 1
+        Else
+            Db_Sun = DBT.Rows(0).Item(0) + 1
+        End If
+
+        '추가한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Insert into QUALITY_LIST (QUALITY_Code, QUALITY_Sun)  Values ('" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "', '" & Db_Sun & "')"
+        Re_Count = DB_Execute()
+        Grid_Main_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+        Grid_Display_Ch = True
+
+    End Sub
+
+    Private Sub Delete__Main_Click(sender As Object, e As EventArgs) Handles Delete__Main.Click
+        '해당 칼럼 삭제
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Grid_Display_Ch = False
+        Dim i As Integer
+        '삭제한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Delete QUALITY Where QUALITY_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "' And  QUALITY_Sun = '" & Grid_Main.Item(0, Grid_Main.CurrentCell.RowIndex).Value & "'"
+        Re_Count = DB_Execute()
+
+        For i = Grid_Main.CurrentCell.RowIndex + 1 To Grid_Main.RowCount - 1
+            '수정한다
+            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+            StrSQL = StrSQL & "Update QUALITY Set QUALITY_Sun = '" & i & "' Where QUALITY_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "' And  QUALITY_Sun = '" & i + 1 & "'"
+            Re_Count = DB_Execute()
+        Next i
+        '선택된 갈럼값을 가지고 온다
+        Grid_Main_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+        Grid_Display_Ch = True
+    End Sub
+
+    Private Sub Save_Main_Click(sender As Object, e As EventArgs) Handles Save_Main.Click
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Dim i As Integer
+
+        Grid_Display_Ch = False
+        For i = 0 To Grid_Main.Rows.Count - 1
+            If Grid_Main.Rows(i).HeaderCell.Value = "*" Then
+                'Update
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "update QUALITY_LIST Set QUALITY_Item = '" & Grid_Main.Item(1, i).Value &
+                       "', QUALITY_Method = '" & Grid_Main.Item(2, i).Value &
+                       "', QUALITY_Level = '" & Grid_Main.Item(3, i).Value &
+                       "', QUALITY_AQL = '" & Grid_Main.Item(4, i).Value &
+                       "', QUALITY_X01 = '" & Grid_Main.Item(5, i).Value &
+                       "', QUALITY_X02 = '" & Grid_Main.Item(6, i).Value &
+                       "', QUALITY_X03 = '" & Grid_Main.Item(7, i).Value &
+                       "', QUALITY_X04 = '" & Grid_Main.Item(8, i).Value &
+                       "', QUALITY_X05 = '" & Grid_Main.Item(9, i).Value &
+                       "', QUALITY_Bigo = '" & Grid_Main.Item(10, i).Value &
+                       "' where QUALITY_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value &
+                       "' And QUALITY_Sun = '" & Grid_Main.Item(0, i).Value & "'"
+                Re_Count = DB_Execute()
+                Grid_Main.Rows(i).HeaderCell.Value = ""
+                MsgBox("저장되었습니다")
+            End If
+        Next i
+        Grid_Display_Ch = True
+
+    End Sub
+    Private Sub Grid_Main_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Main.CellValueChanged
+        If Grid_Display_Ch = True Then
+            Grid_Main.CurrentRow.HeaderCell.Value = "*"
+        End If
+
+    End Sub
+
+    Private Sub Grid_Code_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Code.CellEnter
+
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+            Grid_Info_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+            Grid_Main_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+        End If
+
+    End Sub
+
+    Private Sub Grid_Info_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Info.CellContentClick
+
+    End Sub
+
+    Private Sub Grid_Info_Combo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Grid_Info_Combo.SelectedIndexChanged
+
+    End Sub
+End Class

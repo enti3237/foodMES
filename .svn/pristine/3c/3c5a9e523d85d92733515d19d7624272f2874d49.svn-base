@@ -1,0 +1,974 @@
+﻿Public Class Frm_CT_Plan
+
+    Dim file_path As String = ""
+    Dim file_name As String = ""
+
+    'hsim 20200508 사용 테이블 저장용 변수 선언
+    '#1. 사용자 테이블
+    Dim tblCtPlan As New DataTable
+    Dim tblCtPlanList As New DataTable
+
+    Private Sub Frm_CT_Plan_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = True
+        palDetail.Visible = False
+
+        '#1. 사용자 테이블
+        tblCtPlan = fnGetTableStructure("CT_Plan")
+        tblCtPlanList = fnGetTableStructure("CT_Plan_List")
+
+        comboSatUp(cboITMUnit, "1050")
+        CT_Load()
+    End Sub
+
+    Private Sub Com_CTPlan_Click(sender As Object, e As EventArgs) Handles btnMain.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = True
+        palDetail.Visible = False
+    End Sub
+
+    Private Sub Com_CTPlanList_Click(sender As Object, e As EventArgs) Handles btnDetail.Click
+        If txtCPCode2.Text = "" Or txtRev.Text = "" Then
+            MsgBox("CP조회후 이동이 가능합니다.")
+            Exit Sub
+        End If
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        palDetail.Visible = True
+
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = " SELECT a.CT_List_Code CT_List_Code, a.CT_Code CT_Code, a.CT_Rev_No CT_Rev_No, a.CT_Sun CT_Sun, " &
+                 "        a.CT_Itm_Name CT_Itm_Name, a.CT_BO_List_Code CT_BO_List_Code, a.CT_CR_List_Code CT_CR_List_Code, a.CT_DV_Code CT_DV_Code,  " &
+                 "        a.CT_Itm_Form CT_Itm_Form, a.CT_Itm_Method CT_Itm_Method, a.CT_Itm_Standard CT_Itm_Standard, a.CT_Itm_Size CT_Itm_Size, " &
+                 "        a.CT_Itm_Qty CT_Itm_Qty, a.CT_Itm_Unit CT_Itm_Unit, a.CT_Itm_Bigo CT_Itm_Bigo " &
+                 ", (select CR_PL_Code from CR_Contract_List where CR_List_Code = a.CT_CR_List_Code) As CT_CR_PL_Code " &
+                 ", (select CR_PL_Name from CR_Contract_List where CR_List_Code = a.CT_CR_List_Code) As CT_CR_List_Name " &
+                 ", (select BO_Itm_Name from BO_BOM_List where BO_List_Code = a.CT_BO_List_Code) As CT_BO_List_Name " &
+                 ", (select BO_Code from BO_BOM_List where BO_List_Code = a.CT_BO_List_Code) As BO_Code " &
+                 ", (select BO_Rev_No from BO_BOM_List where BO_List_Code = a.CT_BO_List_Code) As BO_Rev_No " &
+                 ", (select BO_Sun from BO_BOM_List where BO_List_Code = a.CT_BO_List_Code) As BO_Sun " &
+                 " FROM CT_Plan_List a " &
+                 " Where a.CT_Code = '" & txtCPCode2.Text & "'" &
+                 " And a.CT_Rev_No = " & txtRev.Text &
+                 " order By a.CT_Sun ASC "
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstDetail.DataSource = DBT
+            lstDetail.ClearSelection()
+        End If
+
+        txtCTListCode3.Text = DBT.Rows(0)("CT_List_Code").ToString
+        txtCTCode3.Text = DBT.Rows(0)("CT_Code").ToString
+        txtCTRevNo3.Text = DBT.Rows(0)("CT_Rev_No").ToString
+        txtSun3.Text = DBT.Rows(0)("CT_Sun").ToString
+        txtBOMCode3.Text = DBT.Rows(0)("BO_Code").ToString
+        txtBOMRev3.Text = DBT.Rows(0)("BO_Rev_No").ToString
+        txtBOMSun3.Text = DBT.Rows(0)("BO_Sun").ToString
+        lblBOListCode.Text = DBT.Rows(0)("CT_BO_List_Code").ToString
+        lblCRListCode.Text = DBT.Rows(0)("CT_CR_List_Code").ToString
+        txtPLName3.Text = DBT.Rows(0)("CT_CR_List_Name").ToString
+        cboPLName3.SelectedValue = DBT.Rows(0)("CT_CR_List_Code").ToString
+        txtDWGCode3.Text = DBT.Rows(0)("CT_DV_Code").ToString
+        txtForm3.Text = DBT.Rows(0)("CT_Itm_Form").ToString
+        txtMethod3.Text = DBT.Rows(0)("CT_Itm_Method").ToString
+        txtStandard3.Text = DBT.Rows(0)("CT_Itm_Standard").ToString
+        txtSize3.Text = DBT.Rows(0)("CT_Itm_Size").ToString
+        txtQty3.Text = DBT.Rows(0)("CT_Itm_Qty").ToString
+        cboITMUnit.SelectedValue = DBT.Rows(0)("CT_Itm_Unit").ToString
+        txtCTBigo3.Text = DBT.Rows(0)("CT_Itm_Bigo").ToString
+    End Sub
+
+
+    Private Sub CT_Load()
+
+        Dim DBT As DataTable, DBT2 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+
+        '#0. 임시변수 초기화
+        Dim tblData1 As Tuple(Of String, String)
+        Dim tblData2 As Tuple(Of String, String)
+        Dim tblData3 As Tuple(Of String, String)
+        Dim tblData4 As Tuple(Of String, String)
+        Dim selectStr1 As New String("")
+        Dim whereStr1 As New String("")
+        Dim whereStr2 As New String("")
+        Dim whereStr3 As New String("")
+        Dim whereStr4 As New String("")
+        Dim whereStrExtra As New String("")
+        Dim tmpColumn As New String("")
+
+        Try
+
+            '#1. select column List
+            For z = 0 To tblCtPlan.Rows.Count - 1
+                tmpColumn = tblCtPlan.Rows(z).Item(0).ToString
+                If tmpColumn.Equals("CT_Code") Or
+                tmpColumn.Equals("CT_Rev_No") Or
+                tmpColumn.Equals("CT_Name") Or
+                tmpColumn.Equals("CT_Reg_Date") Or
+                tmpColumn.Equals("CT_MT_List_Code") Or
+                tmpColumn.Equals("CT_MT_HEAT_LOT_No") Or
+                tmpColumn.Equals("CT_Manager") Or
+                tmpColumn.Equals("CT_Bigo") Or
+                tmpColumn.Equals("CT_Prepare_Date") Or
+                tmpColumn.Equals("CT_Prepared") Then
+                    selectStr1 += tblCtPlan.TableName & "." & tmpColumn
+                    If z < tblCtPlan.Rows.Count - 1 Then
+                        selectStr1 += ", "
+                    End If
+                End If
+                If z = tblCtPlan.Rows.Count - 1 And selectStr1.EndsWith(", ") Then
+                    selectStr1 = selectStr1.Substring(0, selectStr1.Length - 2)
+                End If
+            Next
+
+            '#1-1. select column추가 (예: code명 조회)
+            selectStr1 += ", (select MT_Item from MT_Material_List where CT_Plan.CT_MT_List_Code <> '' And MT_List_Code = CT_Plan.CT_MT_List_Code) As CT_MT_List_Name " 'CP대상 자재항목 ID
+            selectStr1 += ", (select Man_Name from Man where Man_Code = CT_Plan.CT_Manager ) As CT_Manager_Name " 'CP 담당자명
+
+            '#2. where condition
+            whereStr1 = " And CT_Plan.CT_Code Like '%" & txtCTCode.Text & "%'" &
+                    " And CT_Plan.CT_Rev_No = (select isnull(max(CT_Rev_No),1) from CT_Plan where CT_Code = CT_Plan.CT_Code Group BY CT_Code) "
+            whereStr2 = " And CT_Plan_list.CT_DV_Code Like '%" & txtDWG.Text & "%'" &
+                    " And CT_Plan_List.CT_Sun = (select isnull(max(CT_Sun),1) from CT_Plan_List where CT_Code = CT_Plan.CT_Code And CT_Rev_No = CT_Plan.CT_Rev_No Group by CT_Code, CT_Rev_No) "
+            whereStr3 = " And CT_Plan_list.CT_DV_Code Like '%" & txtDWG.Text & "%'"
+            whereStr4 = " And CR_Contract.CR_Code Like '%" & txtJobNo.Text & "%' " &
+                    " order by  CT_Plan.CT_Code, CT_Plan.CT_Rev_No, CT_Plan.CT_Prepare_Date"
+            whereStrExtra = " order by  CT_Plan.CT_Code, CT_Plan.CT_Rev_No, CT_Plan.CT_Prepare_Date"
+
+            '#3. 변수 조합
+            tblData1 = New Tuple(Of String, String)(selectStr1, whereStr1)
+            tblData2 = New Tuple(Of String, String)(String.Empty, whereStr2)
+            tblData3 = New Tuple(Of String, String)(String.Empty, whereStr3)
+            tblData4 = New Tuple(Of String, String)(String.Empty, whereStr4)
+
+            '#3-1. 세부항목이 없는 경우 기본 정보만으로 조회
+            StrSQL = "Select isnull(count(*),0) from CT_Plan_List CPL where CPL.CT_Code = '" & txtCTCode.Text & "' and CPL.CT_Rev_No = (select isnull(max(CT_Rev_No),1) from CT_Plan where CT_Code = CPL.CT_Code)  "
+            Re_Count = DB_Execute()
+            DB_Execute()
+
+            If Re_Count > 0 Then
+
+                DBT = fnExecSelectSql(4, ' ByVal tblCnt As Integer
+                                "CT_Plan", 'ByVal tblNm1 As String
+                                "CT_Plan_List", 'ByVal tblNm2 As String
+                                "CR_Contract_List", 'ByVal tblNm3 As String
+                                "CR_Contract", 'ByVal tblNm4 As String
+                                "", 'ByVal tblNm5 As String
+                                "", 'ByVal tblNm6 As String
+                                tblData1, 'ByVal tblData1 As Tuple(Of String, String)
+                                tblData2, 'ByVal tblData1 As Tuple(Of String, String)
+                                tblData3,   'ByVal tblData3 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData4 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData5 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData6 As Tuple(Of String, String)
+                                "2",   'ByVal joinCond1 As String
+                                "2",   'ByVal joinCond2 As String
+                                "",   'ByVal joinCond3 As String
+                                "",   'ByVal joinCond4 As String
+                                "",   'ByVal joinCond5 As String
+                                " ON CT_Plan.CT_Code = CT_Plan.CT_Code AND CT_Plan_List.CT_Rev_No = CT_Plan_List.CT_Rev_No ",   'ByVal joinCondStr1 As String
+                                " ON CT_Plan_List.CT_CR_List_Code = CR_Contract_List.CR_List_Code ",   'ByVal joinCondStr2 As String
+                                " ON CR_Contract_List.CR_Code = CR_Contract.CR_Code And CR_Contract_List.CR_Rev_No = CR_Contract.CR_Rev_No",   'ByVal joinCondStr3 As String
+                                "",   'ByVal joinCondStr4 As String
+                                ""    'ByVal joinCondStr5 As String
+                                )
+
+            Else
+
+                whereStr1 = whereStr1 + whereStrExtra
+                DBT = fnExecSelectSql(2, ' ByVal tblCnt As Integer
+                                "CT_Plan", 'ByVal tblNm1 As String
+                                "", 'ByVal tblNm2 As String
+                                "", 'ByVal tblNm3 As String
+                                "", 'ByVal tblNm4 As String
+                                "", 'ByVal tblNm5 As String
+                                "", 'ByVal tblNm6 As String
+                                tblData1, 'ByVal tblData1 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData1 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData3 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData4 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData5 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData6 As Tuple(Of String, String)
+                                "",   'ByVal joinCond1 As String
+                                "",   'ByVal joinCond2 As String
+                                "",   'ByVal joinCond3 As String
+                                "",   'ByVal joinCond4 As String
+                                "",   'ByVal joinCond5 As String
+                                "",   'ByVal joinCondStr1 As String
+                                "",   'ByVal joinCondStr2 As String
+                                "",   'ByVal joinCondStr3 As String
+                                "",   'ByVal joinCondStr4 As String
+                                ""    'ByVal joinCondStr5 As String
+                                )
+
+            End If
+
+            lstMain.DataSource = DBT
+            lstMain.ClearSelection()
+
+            'hsim 20200517 이력 내역 조회
+            showRevLog("Frm_CT_Plan", DBT2, lstRev)
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Exit Sub
+        End Try
+
+    End Sub
+
+    Private Sub lstMain_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellDoubleClick
+
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        palDetail.Visible = True
+
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = " SELECT a.CT_List_Code CT_List_Code, a.CT_Code CT_Code, a.CT_Rev_No CT_Rev_No, a.CT_Sun CT_Sun, " &
+                 "        a.CT_Itm_Name CT_Itm_Name, a.CT_BO_List_Code CT_BO_List_Code, a.CT_CR_List_Code CT_CR_List_Code, a.CT_DV_Code CT_DV_Code,  " &
+                 "        a.CT_Itm_Form CT_Itm_Form, a.CT_Itm_Method CT_Itm_Method, a.CT_Itm_Standard CT_Itm_Standard, a.CT_Itm_Size CT_Itm_Size, " &
+                 "        a.CT_Itm_Qty CT_Itm_Qty, a.CT_Itm_Unit CT_Itm_Unit, a.CT_Itm_Bigo CT_Itm_Bigo " &
+                 ", (select CR_PL_Code from CR_Contract_List where CR_List_Code = a.CT_CR_List_Code) As CT_CR_PL_Code " &
+                 ", (select CR_PL_Name from CR_Contract_List where CR_List_Code = a.CT_CR_List_Code) As CT_CR_List_Name " &
+                 ", (select BO_Itm_Name from BO_BOM_List where BO_List_Code = a.CT_BO_List_Code) As CT_BO_List_Name " &
+                 ", (select BO_Code from BO_BOM_List where BO_List_Code = a.CT_BO_List_Code) As BO_Code " &
+                 ", (select BO_Rev_No from BO_BOM_List where BO_List_Code = a.CT_BO_List_Code) As BO_Rev_No " &
+                 ", (select BO_Sun from BO_BOM_List where BO_List_Code = a.CT_BO_List_Code) As BO_Sun " &
+                 ", (select BO_Itm_Code from BO_BOM_List where BO_List_Code = a.CT_BO_List_Code) As BO_Itm_Code " &
+                 ", (select BO_Itm_Name from BO_BOM_List where BO_List_Code = a.CT_BO_List_Code) As BO_Itm_Name " &
+                 " FROM CT_Plan_List a " &
+                 " Where a.CT_Code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CT_Code").Value.ToString & "' " &
+                 " And a.CT_Rev_No = " & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CT_Rev_No").Value.ToString &
+                 " order By a.CT_Sun ASC "
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstDetail.DataSource = DBT
+            lstDetail.ClearSelection()
+        End If
+
+        txtCTListCode3.Text = DBT.Rows(0)("CT_List_Code").ToString
+        txtCTCode3.Text = DBT.Rows(0)("CT_Code").ToString
+        txtCTRevNo3.Text = DBT.Rows(0)("CT_Rev_No").ToString
+        txtSun3.Text = DBT.Rows(0)("CT_Sun").ToString
+        txtBOMCode3.Text = DBT.Rows(0)("BO_Code").ToString
+        txtBOMRev3.Text = DBT.Rows(0)("BO_Rev_No").ToString
+        txtBOMSun3.Text = DBT.Rows(0)("BO_Sun").ToString
+        txtBOItmCode3.Text = DBT.Rows(0)("BO_Itm_Code").ToString
+        txtBOItmName3.Text = DBT.Rows(0)("BO_Itm_Name").ToString
+        lblBOListCode.Text = DBT.Rows(0)("CT_BO_List_Code").ToString
+        lblCRListCode.Text = DBT.Rows(0)("CT_CR_List_Code").ToString
+        txtPLName3.Text = DBT.Rows(0)("CT_CR_List_Name").ToString
+        cboPLName3.SelectedValue = DBT.Rows(0)("CT_CR_List_Code").ToString
+        txtDWGCode3.Text = DBT.Rows(0)("CT_DV_Code").ToString
+        txtForm3.Text = DBT.Rows(0)("CT_Itm_Form").ToString
+        txtMethod3.Text = DBT.Rows(0)("CT_Itm_Method").ToString
+        txtStandard3.Text = DBT.Rows(0)("CT_Itm_Standard").ToString
+        txtSize3.Text = DBT.Rows(0)("CT_Itm_Size").ToString
+        txtQty3.Text = DBT.Rows(0)("CT_Itm_Qty").ToString
+        cboITMUnit.SelectedValue = DBT.Rows(0)("CT_Itm_Unit").ToString
+        txtCTBigo3.Text = DBT.Rows(0)("CT_Itm_Bigo").ToString
+    End Sub
+
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles btnJobSearch.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString
+            txtJobName.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Name").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        If e.RowIndex >= 0 Then
+            txtCPCode2.Text = lstMain.Rows(e.RowIndex).Cells("CT_Code").Value.ToString
+            txtRev.Text = lstMain.Rows(e.RowIndex).Cells("CT_Rev_No").Value.ToString
+            dtpRegDate2.Text = lstMain.Rows(e.RowIndex).Cells("CT_Prepare_Date").Value.ToString
+            txtCPName2.Text = lstMain.Rows(e.RowIndex).Cells("CT_Name").Value.ToString
+            txtCTManager.Text = lstMain.Rows(e.RowIndex).Cells("CT_Manager_Name").Value.ToString
+            '담당자 combo setting
+            Dim cboDBT As New DataTable()
+            cboDBT.Columns.Add("Man_Code")
+            cboDBT.Columns.Add("Man_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = lstMain.Rows(e.RowIndex).Cells("CT_Manager").Value.ToString
+            cboDBT.Rows(0).Item(1) = lstMain.Rows(e.RowIndex).Cells("CT_Manager_Name").Value.ToString
+            cboCTManager.SelectedValue = lstMain.Rows(e.RowIndex).Cells("CT_Manager").Value.ToString
+            cboCTManager.DataSource = cboDBT
+            cboCTManager.ValueMember = "Man_Code"
+            cboCTManager.DisplayMember = "Man_Name"
+            '담당자 combo setting (끝)
+            cboCTMTItm.SelectedValue = lstMain.Rows(e.RowIndex).Cells("CT_MT_LIst_Code").Value.ToString
+            txtCTMTListCode2.Text = lstMain.Rows(e.RowIndex).Cells("CT_MT_LIst_Code").Value.ToString
+            txtCTMTListName2.Text = lstMain.Rows(e.RowIndex).Cells("CT_MT_LIst_Name").Value.ToString
+            txtCTMTHEATLotNo.Text = lstMain.Rows(e.RowIndex).Cells("CT_MT_HEAT_LOT_No").Value.ToString
+            txtCTBigo.Text = lstMain.Rows(e.RowIndex).Cells("CT_Bigo").Value.ToString
+        End If
+
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        CT_Load()
+    End Sub
+
+    Private Sub btnJobSearch2_Click(sender As Object, e As EventArgs) Handles btnJobSearch2.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo3.Text = pop1.result
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        txtCPCode2.Text = ""
+        txtCPName2.Text = ""
+        txtRev.Text = "1"
+        dtpRegDate2.Value = DateTime.Now().ToString
+        txtCTManager.Text = ""
+        txtCTMTListName2.Text = ""
+        txtCTBigo.Text = ""
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+        Dim DBT As DataTable
+        DBT = Nothing
+        If MessageBox.Show(txtCPCode2.Text + " 를 삭제하시겠습니까?" & vbCrLf & "상세 내용도 함께 삭제합니다", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If txtCPCode2.Text <> "" Then
+                StrSQL = "Delete CT_Plan where CT_Code = '" & txtCPCode2.Text & "' and CT_Rev_No = " & txtRev.Text & " "
+                Re_Count = DB_Execute()
+                StrSQL = "Delete CT_Plan_List where CT_Code = '" & txtCPCode2.Text & "' and CT_Rev_No = " & txtRev.Text & " "
+                DB_Execute()
+                If Re_Count > 0 Then
+                    MsgBox("삭제 완료")
+                End If
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " CP 정보 삭제 : " & txtCPCode2.Text & "-" & txtRev.Text
+                Man_Log("Frm_CT_Plan", "CP 정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+            Else
+                MsgBox("선택된 CP No. 가 없습니다")
+            End If
+            CT_Load()
+        End If
+    End Sub
+
+    Private Sub btnDelete2_Click(sender As Object, e As EventArgs) Handles btnDelete2.Click
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+        Dim DBT As DataTable
+        DBT = Nothing
+        If MessageBox.Show("삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If txtCTCode3.Text <> "" Then
+                StrSQL = "Delete CT_Plan_List where BO_Code = '" & txtCTCode3.Text & "' and CT_Rev_No = '" & lstDetail.Rows(lstDetail.CurrentCell.RowIndex).Cells("CT_Rev_No").Value.ToString & "' and CT_Sun = " & txtSun3.Text
+                Re_Count = DB_Execute()
+                If Re_Count > 0 Then
+                    MsgBox("삭제 완료")
+                End If
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " CP 항목 삭제 : " & txtCTCode3.Text & "-" &
+                                 lstDetail.Rows(lstDetail.CurrentCell.RowIndex).Cells("CT_Rev_No").Value.ToString & "-" & txtSun3.Text
+                Man_Log("Frm_CT_Plan", "CP 항목 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+            Else
+                MsgBox("선택된 CP No. 가 없습니다")
+            End If
+            CT_Load()
+        End If
+        btnAdd2.PerformClick()
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim i%
+        Dim DBT As DataTable, DBT2 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        Try
+
+            StrSQL = "SELECT * from CT_Plan where CT_Code = '" & txtCPCode2.Text & "' And CT_Rev_No = (SELECT max(CT_Rev_No) from CT_Plan where CT_Code = '" & txtCPCode2.Text & "' and CT_Rev_No = '" & txtRev.Text & "')"
+            Re_Count = DB_Select(DBT)
+
+            StrSQL = "SELECT * from CT_Plan where CT_Code = '" & txtCPCode2.Text & "' And CT_Rev_No = (SELECT max(CT_Rev_No) from CT_Plan where CT_Code = '" & txtCPCode2.Text & "')"
+            Re_Count2 = DB_Select(DBT2)
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblCtPlan)
+            '#2. 입력자료 입력
+            For i = 0 To tblCtPlan.Rows.Count - 1
+
+                Select Case tblCtPlan.Rows(i).Item(0).ToString
+
+                    Case "CT_Code"
+                        If txtCPCode2.Text <> "" Then
+                            tblCtPlan.Rows(i).Item(11) = txtCPCode2.Text
+                        Else
+                            tblCtPlan.Rows(i).Item(11) = PK_Make("CT_Plan")
+                        End If
+                    Case "CT_Rev_No"
+                        If txtRev.Text <> "" Then
+                            tblCtPlan.Rows(i).Item(11) = txtRev.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT.Rows(0)("CT_Rev_No").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT2.Rows(0)("CT_Rev_No").ToString
+                        Else
+                            tblCtPlan.Rows(i).Item(11) = 1
+                        End If
+                    Case "CT_Name"
+                        If txtCPName2.Text <> "" Then
+                            tblCtPlan.Rows(i).Item(11) = txtCPName2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT.Rows(0)("CT_Name").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT2.Rows(0)("CT_Name").ToString
+                        End If
+                    Case "CT_PL_Code"
+                        If txtCTMTListName2.Text <> "" Then
+                            tblCtPlan.Rows(i).Item(11) = cboCTMTItm.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT.Rows(0)("CT_PL_Code").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT2.Rows(0)("CT_PL_Code").ToString
+                        End If
+                    Case "CT_Reg_Date"
+                        If dtpRegDate2.Text <> "" Then
+                            tblCtPlan.Rows(i).Item(11) = dtpRegDate2.Value.ToString(fmtStr)
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT.Rows(0)("CT_Reg_Date").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT2.Rows(0)("CT_Reg_Date").ToString
+                        End If
+                    Case "CT_Manager"
+                        If txtCTManager.Text <> "" Then
+                            tblCtPlan.Rows(i).Item(11) = cboCTManager.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT.Rows(0)("CT_Manager").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT2.Rows(0)("CT_Manager").ToString
+                        End If
+                    Case "CT_MT_List_Code"
+                        If txtCTMTListCode2.Text <> "" Then
+                            tblCtPlan.Rows(i).Item(11) = txtCTMTListCode2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT.Rows(0)("CT_MT_List_Code").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT2.Rows(0)("CT_MT_List_Code").ToString
+                        End If
+                    Case "CT_MT_HEAT_LOT_No"
+                        If txtCTMTHEATLotNo.Text <> "" Then
+                            tblCtPlan.Rows(i).Item(11) = txtCTMTHEATLotNo.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT.Rows(0)("CT_MT_HEAT_LOT_No").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT2.Rows(0)("CT_MT_HEAT_LOT_No").ToString
+                        End If
+                    Case "CT_Bigo"
+                        If txtCTBigo.Text <> "" Then
+                            tblCtPlan.Rows(i).Item(11) = txtCTBigo.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT.Rows(0)("CT_Bigo").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT2.Rows(0)("CT_Bigo").ToString
+                        End If
+                    Case "CT_Prepared"
+                        If Re_Count > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT.Rows(0)("CT_Prepared").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCtPlan.Rows(i).Item(11) = DBT2.Rows(0)("CT_Prepared").ToString
+                            Else
+                                tblCtPlan.Rows(i).Item(11) = logInUserName
+                            End If
+                        End If
+                    Case "CT_Prepare_Date"
+                        If Re_Count > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT.Rows(0)("CT_Prepare_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCtPlan.Rows(i).Item(11) = DBT2.Rows(0)("CT_Prepare_Date").ToString
+                            Else
+                                tblCtPlan.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                            End If
+                        End If
+                    Case "CT_Updated"
+                        If Re_Count > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT.Rows(0)("CT_Updated").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCtPlan.Rows(i).Item(11) = DBT2.Rows(0)("CT_Updated").ToString
+                            Else
+                                tblCtPlan.Rows(i).Item(11) = logInUserName
+                            End If
+                        End If
+                    Case "CT_Update_Date"
+                        If Re_Count > 0 Then
+                            tblCtPlan.Rows(i).Item(11) = DBT.Rows(0)("CT_Update_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCtPlan.Rows(i).Item(11) = DBT2.Rows(0)("CT_Update_Date").ToString
+                            Else
+                                tblCtPlan.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                            End If
+                        End If
+                End Select
+            Next
+
+
+
+            If Re_Count > 0 Then
+                Re_Count2 = fnTableUpdate("dbo.CT_Plan", tblCtPlan)
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+            Else
+                Re_Count2 = fnTableInsert("dbo.CT_Plan", tblCtPlan)
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " CP 정보 수정 : " & txtCPName2.Text & "-" & txtRev.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " CP 정보 신규 입력 : " & txtCPName2.Text & "-" & txtRev.Text
+            End If
+            Man_Log("Frm_CT_Plan", prcType, loginID & "-" & logInUserName, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+
+        CT_Load()
+    End Sub
+
+    Private Sub btnSave2_Click(sender As Object, e As EventArgs) Handles btnSave2.Click
+        Dim i%
+        Dim DBT As DataTable, DBT2 As DataTable, DBT3 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+        DBT3 = Nothing
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        Dim tmpSun As String
+
+        Try
+
+            StrSQL = "SELECT * from CT_Plan_List where CT_Code = '" & txtCTCode3.Text & "' And CT_Rev_No = (SELECT max(CT_Rev_No) from CT_Plan_List where CT_Code = '" & txtCTCode3.Text & "' and CT_Rev_No = '" & txtCTRevNo3.Text & "')"
+            Re_Count = DB_Select(DBT)
+
+            StrSQL = "SELECT * from CT_Plan_List where CT_Code = '" & txtCTCode3.Text & "' And CT_Rev_No = (SELECT max(CT_Rev_No) from CT_Plan_List where CT_Code = '" & txtCTCode3.Text & "')"
+            Re_Count2 = DB_Select(DBT2)
+
+            StrSQL = "SELECT isnull(Max(CT_Sun),1) from CT_Plan_List where CT_Code = '" & txtCTCode3.Text & "' And CT_Rev_No = (SELECT max(CT_Rev_No) from CT_Plan_List where CT_Code = '" & txtCTCode3.Text & "' and CT_Rev_No = '" & txtCTRevNo3.Text & "')"
+            tmpSun = DB_Select(DBT3)
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblCtPlanList)
+            '#2. 입력자료 입력
+            For i = 0 To tblCtPlanList.Rows.Count - 1
+
+                Select Case tblCtPlanList.Rows(i).Item(0).ToString
+
+                    Case "CT_List_Code"
+                        If txtCTListCode3.Text <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = txtCTListCode3.Text
+                        Else
+                            tblCtPlanList.Rows(i).Item(11) = PK_Make("CT_Plan_List")
+                        End If
+                    Case "CT_Code"
+                        If txtCTCode3.Text <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = txtCTCode3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Code").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Code").ToString
+                        End If
+                    Case "CT_Rev_No"
+                        If txtCTRevNo3.Text <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = txtCTRevNo3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Rev_No").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Rev_No").ToString
+                        Else
+                            tblCtPlanList.Rows(i).Item(11) = 1
+                        End If
+                    Case "CT_Sun"
+                        If txtSun3.Text <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = txtSun3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Sun").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Sun").ToString
+                        Else
+                            tblCtPlanList.Rows(i).Item(11) = tmpSun
+                        End If
+                    Case "CT_CR_List_Code"
+                        If lblCRListCode.Text <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = lblCRListCode.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_CR_List_Code").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_CR_List_Code").ToString
+                        End If
+                    Case "CT_BO_List_Code"
+                        If lblBOListCode.Text <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = lblBOListCode.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_BO_List_Code").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_BO_List_Code").ToString
+                        End If
+                    Case "CT_DV_Code"
+                        If txtDWGCode3.Text <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = txtDWGCode3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_DV_Code").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_DV_Code").ToString
+                        End If
+                    Case "CT_Itm_Name"
+                        If txtITMName3.Text <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = txtITMName3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Itm_Name").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Itm_Name").ToString
+                        End If
+                    Case "CT_Itm_Form"
+                        If txtForm3.Text <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = txtForm3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Itm_Form").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Itm_Form").ToString
+                        End If
+                    Case "CT_Itm_Method"
+                        If txtMethod3.Text <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = txtMethod3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Itm_Method").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Itm_Method").ToString
+                        End If
+                    Case "CT_Itm_Standard"
+                        If txtStandard3.Text <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = txtStandard3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Itm_Standard").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Itm_Standard").ToString
+                        End If
+                    Case "CT_Itm_Size"
+                        If txtSize3.Text <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = txtSize3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Itm_Size").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Itm_Size").ToString
+                        End If
+                    Case "CT_Itm_Unit"
+                        If cboITMUnit.SelectedValue <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = cboITMUnit.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Itm_Unit").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Itm_Unit").ToString
+                        End If
+                    Case "CT_Itm_Qty"
+                        If txtQty3.Text <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = txtQty3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Itm_Qty").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Itm_Qty").ToString
+                        End If
+                    Case "CT_Itm_Bigo"
+                        If txtCTBigo3.Text <> "" Then
+                            tblCtPlanList.Rows(i).Item(11) = txtCTBigo3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Itm_Bigo").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Itm_Bigo").ToString
+                        End If
+                    Case "CT_Prepared"
+                        If Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Prepared").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Prepared").ToString
+                            Else
+                                tblCtPlanList.Rows(i).Item(11) = loginID
+                            End If
+                        End If
+                    Case "CT_Prepare_Date"
+                        If Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Prepare_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Prepare_Date").ToString
+                            Else
+                                tblCtPlanList.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                            End If
+                        End If
+                    Case "CT_Updated"
+                        If Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Updated").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Updated").ToString
+                            Else
+                                tblCtPlanList.Rows(i).Item(11) = loginID
+                            End If
+                        End If
+                    Case "CT_Update_Date"
+                        If Re_Count > 0 Then
+                            tblCtPlanList.Rows(i).Item(11) = DBT.Rows(0)("CT_Update_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCtPlanList.Rows(i).Item(11) = DBT2.Rows(0)("CT_Update_Date").ToString
+                            Else
+                                tblCtPlanList.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                            End If
+                        End If
+                End Select
+            Next
+
+            If Re_Count > 0 Then
+                Re_Count2 = fnTableUpdate("dbo.CT_Plan_List", tblCtPlanList)
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+            Else
+                Re_Count2 = fnTableInsert("dbo.CT_Plan_List", tblCtPlanList)
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " CP 항목 정보 수정 : " & txtCTCode3.Text & "-" & txtCTRevNo3.Text & "-" & txtSun3.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " CP 항목정보 신규 입력 : " & txtCTCode3.Text & "-" & txtCTRevNo3.Text & "-" & txtSun3.Text
+            End If
+            Man_Log("Frm_CT_Plan", prcType, loginID & "-" & logInUserName, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+        CT_Load()
+
+    End Sub
+
+    Private Sub btnManSearch_Click(sender As Object, e As EventArgs) Handles btnManSearch.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Man_POP = New Frm_Man_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            cboDBT.Columns.Add("Man_Code")
+            cboDBT.Columns.Add("Man_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            txtCTManager.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            cboCTManager.SelectedValue = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Code").Value.ToString
+            cboCTManager.DataSource = cboDBT
+            cboCTManager.ValueMember = "Man_Code"
+            cboCTManager.DisplayMember = "Man_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+    Private Sub btnPLSearch_Click(sender As Object, e As EventArgs) Handles btnPLSearch.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_MT_Itm_POP = New Frm_MT_Itm_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            cboDBT.Columns.Add("MT_list_Code")
+            cboDBT.Columns.Add("MT_Item")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("MT_list_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("MT_Item").Value.ToString
+            txtCTMTListName2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("MT_Item").Value.ToString
+            txtCTMTListCode2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("MT_list_Code").Value.ToString
+            cboCTMTItm.DataSource = cboDBT
+            cboCTMTItm.ValueMember = "MT_list_Code"
+            cboCTMTItm.DisplayMember = "MT_Item"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnPLSearch3_Click(sender As Object, e As EventArgs) Handles btnPLSearch3.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_PL_POP = New Frm_PL_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            cboDBT.Columns.Add("CR_PL_Code")
+            cboDBT.Columns.Add("CR_PL_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_PL_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_PL_Name").Value.ToString
+            txtPLName3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_PL_Name").Value.ToString
+            txtPLCode3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_PL_Code").Value.ToString
+            lblCRListCode.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_List_Code").Value.ToString
+            cboCTMTItm.DataSource = cboDBT
+            cboCTMTItm.ValueMember = "CR_PL_Code"
+            cboCTMTItm.DisplayMember = "CR_PL_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnDWGSearch_Click(sender As Object, e As EventArgs) Handles btnDWGSearch.Click
+        Dim pop1 As Frm_DV_POP = New Frm_DV_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtDWGCode3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("DV_Code").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnBOMItmSearch_Click(sender As Object, e As EventArgs) Handles btnBOMItmSearch.Click
+        Dim pop1 As Frm_BOM_Itm_POP = New Frm_BOM_Itm_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            txtBOMCode3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("BO_Code").Value.ToString
+            txtBOMRev3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("BO_Rev_No").Value.ToString
+            txtBOMSun3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("BO_Sun").Value.ToString
+            lblBOListCode.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("BO_List_Code").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnAdd2_Click(sender As Object, e As EventArgs) Handles btnAdd2.Click
+
+        Dim DBT As DataTable
+        DBT = Nothing
+        Dim tmpSun As String
+
+        StrSQL = "SELECT isnull(Max(CT_Sun),1) from CT_Plan_List where CT_Code = '" & txtCTCode3.Text & "' And CT_Rev_No = (SELECT max(CT_Rev_No) from CT_Plan_List where CT_Code = '" & txtCTCode3.Text & "' and CT_Rev_No = '" & txtCTRevNo3.Text & "')"
+        tmpSun = DB_Select(DBT)
+
+        txtCTCode3.Text = txtCPCode2.Text
+        txtCTRevNo3.Text = txtRev.Text
+        txtSun3.Text = tmpSun
+        txtBOMCode3.Text = ""
+        txtBOMRev3.Text = ""
+        txtBOMSun3.Text = ""
+        lblBOListCode.Text = ""
+        lblCRListCode.Text = ""
+        txtPLName3.Text = ""
+        txtPLCode3.Text = ""
+        cboPLName3.Items.Clear()
+        txtDWGCode3.Text = ""
+        txtForm3.Text = ""
+        txtMethod3.Text = ""
+        txtStandard3.Text = ""
+        txtSize3.Text = ""
+        txtQty3.Text = ""
+        cboITMUnit.Text = ""
+        txtCTBigo3.Text = ""
+    End Sub
+
+    Private Sub btnDVCodeSearch2_Click(sender As Object, e As EventArgs) Handles btnDVCodeSearch2.Click
+        Dim pop1 As Frm_DV_POP = New Frm_DV_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            txtDWG.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("DV_Code").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub lstDetail_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstDetail.CellClick
+        If e.RowIndex >= 0 Then
+            txtCTListCode3.Text = lstDetail.Rows(e.RowIndex).Cells("CT_List_Code").Value.ToString
+            txtCTCode3.Text = lstDetail.Rows(e.RowIndex).Cells("CT_Code2").Value.ToString
+            txtCTRevNo3.Text = lstDetail.Rows(e.RowIndex).Cells("CT_Rev_No2").Value.ToString
+            txtSun3.Text = lstDetail.Rows(e.RowIndex).Cells("CT_Sun").Value.ToString
+            txtBOMCode3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Code").Value.ToString
+            txtBOMRev3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Rev_No").Value.ToString
+            txtBOMSun3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Sun").Value.ToString
+            lblBOListCode.Text = lstDetail.Rows(e.RowIndex).Cells("CT_BO_List_Code").Value.ToString
+            lblCRListCode.Text = lstDetail.Rows(e.RowIndex).Cells("CT_CR_List_Code").Value.ToString
+            txtBOItmName3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Itm_Name").Value.ToString
+            txtBOItmCode3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Itm_Code").Value.ToString
+            txtPLName3.Text = lstDetail.Rows(e.RowIndex).Cells("CT_CR_List_Name").Value.ToString
+            txtPLCode3.Text = lstDetail.Rows(e.RowIndex).Cells("CT_CR_List_Code").Value.ToString
+            txtITMName3.Text = lstDetail.Rows(e.RowIndex).Cells("CT_Itm_Name").Value.ToString
+            cboPLName3.Items.Clear()
+            txtDWGCode3.Text = lstDetail.Rows(e.RowIndex).Cells("CT_DV_Code").Value.ToString
+            txtForm3.Text = lstDetail.Rows(e.RowIndex).Cells("CT_Itm_Form").Value.ToString
+            txtMethod3.Text = lstDetail.Rows(e.RowIndex).Cells("CT_Itm_Method").Value.ToString
+            txtStandard3.Text = lstDetail.Rows(e.RowIndex).Cells("CT_Itm_Standard").Value.ToString
+            txtSize3.Text = lstDetail.Rows(e.RowIndex).Cells("CT_Itm_Size").Value.ToString
+            txtQty3.Text = lstDetail.Rows(e.RowIndex).Cells("CT_Itm_Unit").Value.ToString
+            cboITMUnit.Text = lstDetail.Rows(e.RowIndex).Cells("CT_Itm_Qty").Value.ToString
+            txtCTBigo3.Text = lstDetail.Rows(e.RowIndex).Cells("CT_Itm_Bigo").Value.ToString
+        End If
+
+    End Sub
+End Class

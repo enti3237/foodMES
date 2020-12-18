@@ -1,0 +1,194 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_Menu_Log
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.TextBox15 = New System.Windows.Forms.TextBox()
+        Me.TextBox16 = New System.Windows.Forms.TextBox()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.Panel24 = New System.Windows.Forms.Panel()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Act_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Form_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Action = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Act_Man = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Act_Bigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Panel1.SuspendLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.Label16)
+        Me.Panel1.Controls.Add(Me.Label15)
+        Me.Panel1.Controls.Add(Me.TextBox15)
+        Me.Panel1.Controls.Add(Me.TextBox16)
+        Me.Panel1.Controls.Add(Me.Button14)
+        Me.Panel1.Controls.Add(Me.Panel24)
+        Me.Panel1.Controls.Add(Me.DataGridView1)
+        Me.Panel1.Location = New System.Drawing.Point(10, 40)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1660, 867)
+        Me.Panel1.TabIndex = 152
+        '
+        'Label16
+        '
+        Me.Label16.Location = New System.Drawing.Point(255, 46)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(76, 25)
+        Me.Label16.TabIndex = 99998
+        Me.Label16.Text = "수정자"
+        Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label15
+        '
+        Me.Label15.Location = New System.Drawing.Point(14, 46)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(76, 25)
+        Me.Label15.TabIndex = 99997
+        Me.Label15.Text = "메뉴명"
+        Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TextBox15
+        '
+        Me.TextBox15.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox15.Location = New System.Drawing.Point(95, 46)
+        Me.TextBox15.Name = "TextBox15"
+        Me.TextBox15.Size = New System.Drawing.Size(150, 25)
+        Me.TextBox15.TabIndex = 304
+        '
+        'TextBox16
+        '
+        Me.TextBox16.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox16.Location = New System.Drawing.Point(335, 46)
+        Me.TextBox16.Name = "TextBox16"
+        Me.TextBox16.Size = New System.Drawing.Size(150, 25)
+        Me.TextBox16.TabIndex = 302
+        '
+        'Button14
+        '
+        Me.Button14.BackColor = System.Drawing.Color.White
+        Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button14.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button14.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button14.Location = New System.Drawing.Point(1465, 45)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(150, 27)
+        Me.Button14.TabIndex = 301
+        Me.Button14.Text = "검      색"
+        Me.Button14.UseVisualStyleBackColor = False
+        '
+        'Panel24
+        '
+        Me.Panel24.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel24.Location = New System.Drawing.Point(16, 85)
+        Me.Panel24.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel24.Name = "Panel24"
+        Me.Panel24.Size = New System.Drawing.Size(1600, 1)
+        Me.Panel24.TabIndex = 299
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Act_Date, Me.Form_Name, Me.Action, Me.Act_Man, Me.Act_Bigo})
+        Me.DataGridView1.Location = New System.Drawing.Point(16, 103)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.ReadOnly = True
+        Me.DataGridView1.RowHeadersVisible = False
+        Me.DataGridView1.RowTemplate.Height = 23
+        Me.DataGridView1.Size = New System.Drawing.Size(1600, 732)
+        Me.DataGridView1.TabIndex = 0
+        '
+        'Act_Date
+        '
+        Me.Act_Date.DataPropertyName = "Act_Date"
+        Me.Act_Date.HeaderText = "작업일자"
+        Me.Act_Date.Name = "Act_Date"
+        Me.Act_Date.ReadOnly = True
+        Me.Act_Date.Width = 250
+        '
+        'Form_Name
+        '
+        Me.Form_Name.DataPropertyName = "Form_Name"
+        Me.Form_Name.HeaderText = "작업화면"
+        Me.Form_Name.Name = "Form_Name"
+        Me.Form_Name.ReadOnly = True
+        Me.Form_Name.Width = 250
+        '
+        'Action
+        '
+        Me.Action.DataPropertyName = "Action"
+        Me.Action.HeaderText = "작업"
+        Me.Action.Name = "Action"
+        Me.Action.ReadOnly = True
+        Me.Action.Width = 200
+        '
+        'Act_Man
+        '
+        Me.Act_Man.DataPropertyName = "Act_Man"
+        Me.Act_Man.HeaderText = "작업자"
+        Me.Act_Man.Name = "Act_Man"
+        Me.Act_Man.ReadOnly = True
+        Me.Act_Man.Width = 200
+        '
+        'Act_Bigo
+        '
+        Me.Act_Bigo.DataPropertyName = "Act_Bigo"
+        Me.Act_Bigo.HeaderText = "작업비고"
+        Me.Act_Bigo.Name = "Act_Bigo"
+        Me.Act_Bigo.ReadOnly = True
+        Me.Act_Bigo.Width = 680
+        '
+        'Frm_Menu_Log
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Panel1)
+        Me.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Name = "Frm_Menu_Log"
+        Me.Size = New System.Drawing.Size(1667, 957)
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents TextBox15 As TextBox
+    Friend WithEvents TextBox16 As TextBox
+    Friend WithEvents Button14 As Button
+    Friend WithEvents Panel24 As Panel
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents Label16 As Label
+    Friend WithEvents Label15 As Label
+    Friend WithEvents Act_Date As DataGridViewTextBoxColumn
+    Friend WithEvents Form_Name As DataGridViewTextBoxColumn
+    Friend WithEvents Action As DataGridViewTextBoxColumn
+    Friend WithEvents Act_Man As DataGridViewTextBoxColumn
+    Friend WithEvents Act_Bigo As DataGridViewTextBoxColumn
+End Class

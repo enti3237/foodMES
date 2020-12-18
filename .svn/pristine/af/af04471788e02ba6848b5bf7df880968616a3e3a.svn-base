@@ -1,0 +1,32 @@
+﻿Public Class Frm_PD_Report10
+    Private Sub Frm_PD_Report8_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Panel_List.Top = 40
+        Panel_List.Left = 10
+        Panel41.Top = 40
+        Panel41.Left = 10
+
+        Panel_List.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles Com_Contract.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel_List.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles Com_Excel.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel_List.Visible = False
+        Panel41.Visible = True
+    End Sub
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+
+    End Sub
+End Class

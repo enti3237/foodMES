@@ -1,0 +1,189 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Public Class Frm_CC_Report6
+    Dim xls As New Excel.Application
+    Dim xworkbook As Excel.Workbook
+    Dim xworksheet As Excel.Worksheet
+    Dim xRange As Excel.Range
+
+    Private Sub Frm_CC_Report6_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        year()
+
+        Button14.PerformClick()
+    End Sub
+
+    Private Sub Grid_CR_Load()
+
+        'Dim i As Integer
+
+
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "select A.CR_Code,A.CR_Code,B.CM_Name,C.CL_PL_Code,C.CL_PL_Name,A.CRS_Code,A.CRS_Grade1,A.CRS_Grade2,A.CRS_Grade3,A.CR_Order_Date,A.CR_Order_Date,A.CR_Date,A.CR_Due_Date,A.CR_Gold,
+        'A.CR_Manager_CR, C.CL_QTY, C.CL_Unit_Amount, C.CL_Total 
+        'From CR_Contract A, CR_Contract_List C, Company B 
+        'Where A.CR_Code = B.CM_Code And A.CR_Code = C.CL_Code And '" & ComboBox1.Text & "'=SUBSTRING(CR_Due_Date,0,3)order by A.CR_Code"
+
+
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView1.RowCount = 0
+
+        'If Re_Count > 0 Then
+        '    DataGridView1.RowCount = Re_Count
+        '    For i = 0 To DataGridView1.RowCount - 1
+
+        '        DataGridView1.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString 'CR_Code
+        '        DataGridView1.Rows(i).Cells("CR_Name").Value = DBT.Rows(i)("CR_Name").ToString 'job명
+        '        DataGridView1.Rows(i).Cells("CM_Name").Value = DBT.Rows(i)("CM_Name").ToString '발주처
+        '        DataGridView1.Rows(i).Cells("CL_PL_Code").Value = DBT.Rows(i)("CL_PL_Code").ToString '자재식별번호
+        '        DataGridView1.Rows(i).Cells(" CL_PL_Name").Value = DBT.Rows(i)(" CL_PL_Name").ToString '제품명
+        '        DataGridView1.Rows(i).Cells("CRS_Code").Value = DBT.Rows(i)("CRS_Code").ToString '계약번호
+        '        DataGridView1.Rows(i).Cells("CRS_Grade").Value = DBT.Rows(i)("CRS_Grade").ToString '등급
+        '        DataGridView1.Rows(i).Cells("CR_Order_Date").Value = DBT.Rows(i)("CR_Order_Date").ToString '제조의뢰일
+        '        DataGridView1.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString '계약일
+        '        DataGridView1.Rows(i).Cells("CR_Day_Reg_Fsh").Value = DBT.Rows(i)("CR_Day_Reg_Fsh").ToString '계약납기일
+        '        DataGridView1.Rows(i).Cells("CR_Gold").Value = DBT.Rows(i)("CR_Gold").ToString '계약금액
+        '        DataGridView1.Rows(i).Cells("CR_Manager_CR").Value = DBT.Rows(i)("CR_Manager_CR").ToString '영업담당자
+        '        DataGridView1.Rows(i).Cells("CL_QTY").Value = DBT.Rows(i)("CL_QTY").ToString ' 수량
+        '        DataGridView1.Rows(i).Cells("CL_Unit_Amount").Value = DBT.Rows(i)("CL_Unit_Amount").ToString ' 단가
+        '        DataGridView1.Rows(i).Cells("CL_Total").Value = DBT.Rows(i)("CL_Total").ToString '소계
+
+
+        '        DataGridView1.Rows(i).Cells("CRS_Grade").Value = DBT.Rows(i)("CRS_Grade1").ToString + " / " + DBT.Rows(i)("CRS_Grade2").ToString + " / " + DBT.Rows(i)("CRS_Grade3").ToString '등급
+
+        '    Next
+        'End If
+        'DataGridView1.ClearSelection()
+
+    End Sub
+
+    Private Sub year()
+        Dim i As Integer
+        For i = 2000 To 2050
+            ComboBox1.Items.Add(i.ToString)
+        Next
+
+        ComboBox1.SelectedItem = DateTime.Today.ToString("yyyy")
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+
+        Dim i As Integer
+
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "select CR.CR_Code, CR_Name, CM_Name, CR_PL_Code, CR_PL_Name, CRS_Code, CRS_Grade1, CRS_Grade2, CRS_Grade3, CR_Order_Date, CR.CR_Date, CR_Due_Date, CR_Gold,
+        CR_Manager, CR_QTY, CR_Unit_Amount, CR_Total 
+        From CR_Contract CR, CR_Contract_List CL, Company 
+        where 1=1
+and CR.CR_Rev_No = (select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code)
+and CL.CR_Rev_No = (select isnull(max(CR_Rev_No),1) from CR_Contract_List where CR_Code = CL.CR_Code)
+and CM_Code = CR_Customer_Code 
+and CR.CR_Code = CL.CR_Code
+And SUBSTRING(CR_Due_Date,1,4) = '" & ComboBox1.Text & "' 
+order by CR.CR_Code"
+
+
+        Re_Count = DB_Select(DBT)
+
+        Grid_Main.RowCount = 0
+
+        If Re_Count > 0 Then
+            Grid_Main.RowCount = Re_Count
+            For i = 0 To Grid_Main.RowCount - 1
+
+                Grid_Main.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString 'CR_Code
+                Grid_Main.Rows(i).Cells("CR_Name").Value = DBT.Rows(i)("CR_Name").ToString 'job명
+                Grid_Main.Rows(i).Cells("CM_Name").Value = DBT.Rows(i)("CM_Name").ToString '발주처
+                Grid_Main.Rows(i).Cells("CR_PL_Code").Value = DBT.Rows(i)("CR_PL_Code").ToString '자재식별번호
+                Grid_Main.Rows(i).Cells("CR_PL_Name").Value = DBT.Rows(i)("CR_PL_Name").ToString '제품명
+                Grid_Main.Rows(i).Cells("CRS_Code").Value = DBT.Rows(i)("CRS_Code").ToString '계약번호
+                Grid_Main.Rows(i).Cells("CR_Order_Date").Value = DBT.Rows(i)("CR_Order_Date").ToString '제조의뢰일
+                Grid_Main.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString '계약일
+                Grid_Main.Rows(i).Cells("CR_Due_Date").Value = DBT.Rows(i)("CR_Due_Date").ToString '계약납기일
+                Grid_Main.Rows(i).Cells("CR_Gold").Value = DBT.Rows(i)("CR_Gold").ToString '계약금액
+                Grid_Main.Rows(i).Cells("CR_Manager_CR").Value = DBT.Rows(i)("CR_Manager").ToString '영업담당자
+                Grid_Main.Rows(i).Cells("CR_QTY").Value = DBT.Rows(i)("CR_QTY").ToString ' 수량
+                Grid_Main.Rows(i).Cells("CR_Unit_Amount").Value = DBT.Rows(i)("CR_Unit_Amount").ToString ' 단가
+                Grid_Main.Rows(i).Cells("CR_Total").Value = DBT.Rows(i)("CR_Total").ToString '소계
+
+
+                Grid_Main.Rows(i).Cells("CRS_Grade").Value = DBT.Rows(i)("CRS_Grade1").ToString + "  " + DBT.Rows(i)("CRS_Grade2").ToString + "  " + DBT.Rows(i)("CRS_Grade3").ToString '등급
+
+            Next
+        End If
+        Grid_Main.ClearSelection()
+
+        'lstMain.DataSource = DBT
+
+        ' lstMain.ClearSelection()
+
+
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        If Grid_Main.Rows.Count > 0 Then
+            excel_Save()
+        End If
+    End Sub
+
+
+    Private Sub excel_Save()
+        Dim i As Integer
+        xls = New Excel.Application
+        xls.Visible = False
+        xworkbook = xls.Workbooks.Open(Application.StartupPath + "\\Excel\\년별납품일정.xlsx")
+        xworksheet = xworkbook.Sheets(1)
+
+        Try
+            For i = 0 To Grid_Main.Rows.Count - 1
+                xworksheet.Range("A" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Code").Value.ToString
+                xworksheet.Range("B" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Name").Value.ToString
+                xworksheet.Range("C" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CM_Name").Value.ToString
+                xworksheet.Range("D" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_PL_Code").Value.ToString
+                xworksheet.Range("E" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_PL_Name").Value.ToString
+                xworksheet.Range("F" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CRS_Code").Value.ToString
+                xworksheet.Range("G" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CRS_Grade").Value.ToString
+                xworksheet.Range("H" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Order_Date").Value.ToString
+                xworksheet.Range("I" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Date").Value.ToString
+                xworksheet.Range("J" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Due_Date").Value.ToString
+                xworksheet.Range("K" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Gold").Value.ToString
+                xworksheet.Range("L" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Manager").Value.ToString
+                xworksheet.Range("M" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_QTY").Value.ToString
+                xworksheet.Range("N" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Unit_Amount").Value.ToString
+                xworksheet.Range("O" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Total").Value.ToString
+            Next
+            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                xls.ActiveWorkbook.SaveAs(SaveFileDialog1.FileName)
+                MsgBox("Excel 저장 완료")
+            End If
+
+
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        Finally
+            xworksheet = Nothing
+            xworkbook.Close()
+            xworkbook = Nothing
+            xls.Quit()
+
+
+            xls = Nothing
+            'releaseObject(xworksheet)
+            'releaseObject(xworkbook)
+            'releaseObject(xls)
+        End Try
+
+
+
+
+
+    End Sub
+End Class

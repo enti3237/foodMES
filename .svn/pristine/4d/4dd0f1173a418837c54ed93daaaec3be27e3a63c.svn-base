@@ -1,0 +1,1038 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_PD_Report12
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.btnDetail = New System.Windows.Forms.Button()
+        Me.Di_Panel2 = New System.Windows.Forms.Panel()
+        Me.Color_Label = New System.Windows.Forms.Label()
+        Me.btnMain = New System.Windows.Forms.Button()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.palMain = New System.Windows.Forms.Panel()
+        Me.btnJobSearch = New System.Windows.Forms.Button()
+        Me.labJobName = New System.Windows.Forms.Label()
+        Me.labJobNo = New System.Windows.Forms.Label()
+        Me.txtJobName = New System.Windows.Forms.TextBox()
+        Me.txtJobNo = New System.Windows.Forms.TextBox()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.dtpAppDate2 = New System.Windows.Forms.DateTimePicker()
+        Me.txtApp2 = New System.Windows.Forms.TextBox()
+        Me.labApp2 = New System.Windows.Forms.Label()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.dtpPreDate2 = New System.Windows.Forms.DateTimePicker()
+        Me.txtPre2 = New System.Windows.Forms.TextBox()
+        Me.labPre2 = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.dtpIssu2 = New System.Windows.Forms.DateTimePicker()
+        Me.txtIssu2 = New System.Windows.Forms.TextBox()
+        Me.labIssu2 = New System.Windows.Forms.Label()
+        Me.txtMRISNo2 = New System.Windows.Forms.TextBox()
+        Me.labMRISNo2 = New System.Windows.Forms.Label()
+        Me.txtJobName2 = New System.Windows.Forms.TextBox()
+        Me.labJobName2 = New System.Windows.Forms.Label()
+        Me.txtMRISRev2 = New System.Windows.Forms.TextBox()
+        Me.labRev3 = New System.Windows.Forms.Label()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.labDate = New System.Windows.Forms.Label()
+        Me.lstRev3 = New System.Windows.Forms.DataGridView()
+        Me.Sub_Menu = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Action = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Menu_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.txtJobNo2 = New System.Windows.Forms.TextBox()
+        Me.labMRISRev2 = New System.Windows.Forms.Label()
+        Me.Panel26 = New System.Windows.Forms.Panel()
+        Me.Panel29 = New System.Windows.Forms.Panel()
+        Me.labJobNo2 = New System.Windows.Forms.Label()
+        Me.labMRISNo = New System.Windows.Forms.Label()
+        Me.dtpDateTo = New System.Windows.Forms.DateTimePicker()
+        Me.dtpDateFrom = New System.Windows.Forms.DateTimePicker()
+        Me.btnSearch = New System.Windows.Forms.Button()
+        Me.txtMRISNo = New System.Windows.Forms.TextBox()
+        Me.lstMain = New System.Windows.Forms.DataGridView()
+        Me.MR_Job = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MR_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MR_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MR_Prepare_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Panel24 = New System.Windows.Forms.Panel()
+        Me.palDetail = New System.Windows.Forms.Panel()
+        Me.txtSun3 = New System.Windows.Forms.TextBox()
+        Me.labSun3 = New System.Windows.Forms.Label()
+        Me.txtPLName3 = New System.Windows.Forms.TextBox()
+        Me.labPLName3 = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.txtUnit4 = New System.Windows.Forms.TextBox()
+        Me.labUnit3 = New System.Windows.Forms.Label()
+        Me.txtBigo3 = New System.Windows.Forms.TextBox()
+        Me.labBigo3 = New System.Windows.Forms.Label()
+        Me.Panel25 = New System.Windows.Forms.Panel()
+        Me.btn = New System.Windows.Forms.Button()
+        Me.txtQTY3 = New System.Windows.Forms.TextBox()
+        Me.labQTY3 = New System.Windows.Forms.Label()
+        Me.Panel16 = New System.Windows.Forms.Panel()
+        Me.txtTSNo3 = New System.Windows.Forms.TextBox()
+        Me.labTSNo3 = New System.Windows.Forms.Label()
+        Me.txtSize3 = New System.Windows.Forms.TextBox()
+        Me.labSize3 = New System.Windows.Forms.Label()
+        Me.Panel17 = New System.Windows.Forms.Panel()
+        Me.txtSpec3 = New System.Windows.Forms.TextBox()
+        Me.labSpec3 = New System.Windows.Forms.Label()
+        Me.Panel18 = New System.Windows.Forms.Panel()
+        Me.lstDetail = New System.Windows.Forms.DataGridView()
+        Me.MR_Code2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MR_Sun = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MR_PL_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MR_PL_Spec = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MR_PL_Size = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MR_Unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MR_QTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MR_Ts_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MR_Bigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Di_Panel2.SuspendLayout()
+        Me.palMain.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        CType(Me.lstRev3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.palDetail.SuspendLayout()
+        CType(Me.lstDetail, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'btnDetail
+        '
+        Me.btnDetail.AutoSize = True
+        Me.btnDetail.FlatAppearance.BorderSize = 0
+        Me.btnDetail.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange
+        Me.btnDetail.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnDetail.Location = New System.Drawing.Point(126, 7)
+        Me.btnDetail.Margin = New System.Windows.Forms.Padding(0)
+        Me.btnDetail.Name = "btnDetail"
+        Me.btnDetail.Size = New System.Drawing.Size(98, 25)
+        Me.btnDetail.TabIndex = 161
+        Me.btnDetail.Text = "MRIS 접수"
+        Me.btnDetail.UseVisualStyleBackColor = True
+        '
+        'Di_Panel2
+        '
+        Me.Di_Panel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Di_Panel2.BackColor = System.Drawing.Color.Silver
+        Me.Di_Panel2.Controls.Add(Me.Color_Label)
+        Me.Di_Panel2.Location = New System.Drawing.Point(8, 35)
+        Me.Di_Panel2.Margin = New System.Windows.Forms.Padding(2)
+        Me.Di_Panel2.Name = "Di_Panel2"
+        Me.Di_Panel2.Size = New System.Drawing.Size(3191, 5)
+        Me.Di_Panel2.TabIndex = 160
+        '
+        'Color_Label
+        '
+        Me.Color_Label.Location = New System.Drawing.Point(180, 3)
+        Me.Color_Label.Name = "Color_Label"
+        Me.Color_Label.Size = New System.Drawing.Size(47, 8)
+        Me.Color_Label.TabIndex = 0
+        '
+        'btnMain
+        '
+        Me.btnMain.AutoSize = True
+        Me.btnMain.FlatAppearance.BorderSize = 0
+        Me.btnMain.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange
+        Me.btnMain.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnMain.Location = New System.Drawing.Point(8, 7)
+        Me.btnMain.Margin = New System.Windows.Forms.Padding(0)
+        Me.btnMain.Name = "btnMain"
+        Me.btnMain.Size = New System.Drawing.Size(115, 25)
+        Me.btnMain.TabIndex = 159
+        Me.btnMain.Text = "MRIS 목록"
+        Me.btnMain.UseVisualStyleBackColor = True
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        '
+        'palMain
+        '
+        Me.palMain.AutoScroll = True
+        Me.palMain.AutoSize = True
+        Me.palMain.Controls.Add(Me.btnJobSearch)
+        Me.palMain.Controls.Add(Me.labJobName)
+        Me.palMain.Controls.Add(Me.labJobNo)
+        Me.palMain.Controls.Add(Me.txtJobName)
+        Me.palMain.Controls.Add(Me.txtJobNo)
+        Me.palMain.Controls.Add(Me.GroupBox3)
+        Me.palMain.Controls.Add(Me.GroupBox2)
+        Me.palMain.Controls.Add(Me.GroupBox1)
+        Me.palMain.Controls.Add(Me.txtMRISNo2)
+        Me.palMain.Controls.Add(Me.labMRISNo2)
+        Me.palMain.Controls.Add(Me.txtJobName2)
+        Me.palMain.Controls.Add(Me.labJobName2)
+        Me.palMain.Controls.Add(Me.txtMRISRev2)
+        Me.palMain.Controls.Add(Me.labRev3)
+        Me.palMain.Controls.Add(Me.Label35)
+        Me.palMain.Controls.Add(Me.labDate)
+        Me.palMain.Controls.Add(Me.lstRev3)
+        Me.palMain.Controls.Add(Me.txtJobNo2)
+        Me.palMain.Controls.Add(Me.labMRISRev2)
+        Me.palMain.Controls.Add(Me.Panel26)
+        Me.palMain.Controls.Add(Me.Panel29)
+        Me.palMain.Controls.Add(Me.labJobNo2)
+        Me.palMain.Controls.Add(Me.labMRISNo)
+        Me.palMain.Controls.Add(Me.dtpDateTo)
+        Me.palMain.Controls.Add(Me.dtpDateFrom)
+        Me.palMain.Controls.Add(Me.btnSearch)
+        Me.palMain.Controls.Add(Me.txtMRISNo)
+        Me.palMain.Controls.Add(Me.lstMain)
+        Me.palMain.Controls.Add(Me.Panel24)
+        Me.palMain.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.palMain.Location = New System.Drawing.Point(55, 199)
+        Me.palMain.Name = "palMain"
+        Me.palMain.Size = New System.Drawing.Size(1660, 1110)
+        Me.palMain.TabIndex = 168
+        '
+        'btnJobSearch
+        '
+        Me.btnJobSearch.BackColor = System.Drawing.Color.White
+        Me.btnJobSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnJobSearch.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnJobSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnJobSearch.Location = New System.Drawing.Point(233, 14)
+        Me.btnJobSearch.Name = "btnJobSearch"
+        Me.btnJobSearch.Size = New System.Drawing.Size(31, 27)
+        Me.btnJobSearch.TabIndex = 473
+        Me.btnJobSearch.Text = "⌕"
+        Me.btnJobSearch.UseVisualStyleBackColor = False
+        '
+        'labJobName
+        '
+        Me.labJobName.AutoSize = True
+        Me.labJobName.Location = New System.Drawing.Point(273, 21)
+        Me.labJobName.Name = "labJobName"
+        Me.labJobName.Size = New System.Drawing.Size(37, 12)
+        Me.labJobName.TabIndex = 472
+        Me.labJobName.Text = "Job명"
+        '
+        'labJobNo
+        '
+        Me.labJobNo.AutoSize = True
+        Me.labJobNo.Location = New System.Drawing.Point(21, 21)
+        Me.labJobNo.Name = "labJobNo"
+        Me.labJobNo.Size = New System.Drawing.Size(45, 12)
+        Me.labJobNo.TabIndex = 471
+        Me.labJobNo.Text = "Job No"
+        '
+        'txtJobName
+        '
+        Me.txtJobName.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtJobName.Location = New System.Drawing.Point(320, 15)
+        Me.txtJobName.Name = "txtJobName"
+        Me.txtJobName.Size = New System.Drawing.Size(150, 25)
+        Me.txtJobName.TabIndex = 470
+        '
+        'txtJobNo
+        '
+        Me.txtJobNo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtJobNo.Location = New System.Drawing.Point(77, 15)
+        Me.txtJobNo.Name = "txtJobNo"
+        Me.txtJobNo.Size = New System.Drawing.Size(150, 25)
+        Me.txtJobNo.TabIndex = 469
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.dtpAppDate2)
+        Me.GroupBox3.Controls.Add(Me.txtApp2)
+        Me.GroupBox3.Controls.Add(Me.labApp2)
+        Me.GroupBox3.Location = New System.Drawing.Point(18, 658)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(648, 55)
+        Me.GroupBox3.TabIndex = 468
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "승인자"
+        '
+        'dtpAppDate2
+        '
+        Me.dtpAppDate2.Location = New System.Drawing.Point(318, 20)
+        Me.dtpAppDate2.Name = "dtpAppDate2"
+        Me.dtpAppDate2.Size = New System.Drawing.Size(200, 21)
+        Me.dtpAppDate2.TabIndex = 474
+        '
+        'txtApp2
+        '
+        Me.txtApp2.Location = New System.Drawing.Point(107, 20)
+        Me.txtApp2.Name = "txtApp2"
+        Me.txtApp2.Size = New System.Drawing.Size(200, 21)
+        Me.txtApp2.TabIndex = 465
+        '
+        'labApp2
+        '
+        Me.labApp2.AutoSize = True
+        Me.labApp2.Location = New System.Drawing.Point(19, 24)
+        Me.labApp2.Name = "labApp2"
+        Me.labApp2.Size = New System.Drawing.Size(53, 12)
+        Me.labApp2.TabIndex = 464
+        Me.labApp2.Text = "생산팀장"
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.dtpPreDate2)
+        Me.GroupBox2.Controls.Add(Me.txtPre2)
+        Me.GroupBox2.Controls.Add(Me.labPre2)
+        Me.GroupBox2.Location = New System.Drawing.Point(18, 597)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(648, 55)
+        Me.GroupBox2.TabIndex = 467
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "작성자"
+        '
+        'dtpPreDate2
+        '
+        Me.dtpPreDate2.Location = New System.Drawing.Point(318, 21)
+        Me.dtpPreDate2.Name = "dtpPreDate2"
+        Me.dtpPreDate2.Size = New System.Drawing.Size(200, 21)
+        Me.dtpPreDate2.TabIndex = 474
+        '
+        'txtPre2
+        '
+        Me.txtPre2.Location = New System.Drawing.Point(107, 21)
+        Me.txtPre2.Name = "txtPre2"
+        Me.txtPre2.Size = New System.Drawing.Size(200, 21)
+        Me.txtPre2.TabIndex = 465
+        '
+        'labPre2
+        '
+        Me.labPre2.AutoSize = True
+        Me.labPre2.Location = New System.Drawing.Point(19, 19)
+        Me.labPre2.Name = "labPre2"
+        Me.labPre2.Size = New System.Drawing.Size(89, 24)
+        Me.labPre2.TabIndex = 464
+        Me.labPre2.Text = "생산담당/" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "용접재료관리자" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.dtpIssu2)
+        Me.GroupBox1.Controls.Add(Me.txtIssu2)
+        Me.GroupBox1.Controls.Add(Me.labIssu2)
+        Me.GroupBox1.Location = New System.Drawing.Point(18, 725)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(648, 55)
+        Me.GroupBox1.TabIndex = 466
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "불출자"
+        '
+        'dtpIssu2
+        '
+        Me.dtpIssu2.Location = New System.Drawing.Point(318, 21)
+        Me.dtpIssu2.Name = "dtpIssu2"
+        Me.dtpIssu2.Size = New System.Drawing.Size(200, 21)
+        Me.dtpIssu2.TabIndex = 473
+        '
+        'txtIssu2
+        '
+        Me.txtIssu2.Location = New System.Drawing.Point(107, 21)
+        Me.txtIssu2.Name = "txtIssu2"
+        Me.txtIssu2.Size = New System.Drawing.Size(200, 21)
+        Me.txtIssu2.TabIndex = 467
+        '
+        'labIssu2
+        '
+        Me.labIssu2.AutoSize = True
+        Me.labIssu2.Location = New System.Drawing.Point(19, 25)
+        Me.labIssu2.Name = "labIssu2"
+        Me.labIssu2.Size = New System.Drawing.Size(65, 12)
+        Me.labIssu2.TabIndex = 466
+        Me.labIssu2.Text = "재료관리자"
+        '
+        'txtMRISNo2
+        '
+        Me.txtMRISNo2.Location = New System.Drawing.Point(120, 557)
+        Me.txtMRISNo2.Name = "txtMRISNo2"
+        Me.txtMRISNo2.Size = New System.Drawing.Size(322, 21)
+        Me.txtMRISNo2.TabIndex = 436
+        '
+        'labMRISNo2
+        '
+        Me.labMRISNo2.AutoSize = True
+        Me.labMRISNo2.Location = New System.Drawing.Point(20, 561)
+        Me.labMRISNo2.Name = "labMRISNo2"
+        Me.labMRISNo2.Size = New System.Drawing.Size(59, 12)
+        Me.labMRISNo2.TabIndex = 434
+        Me.labMRISNo2.Text = "MRIS No."
+        '
+        'txtJobName2
+        '
+        Me.txtJobName2.Location = New System.Drawing.Point(559, 529)
+        Me.txtJobName2.Name = "txtJobName2"
+        Me.txtJobName2.Size = New System.Drawing.Size(322, 21)
+        Me.txtJobName2.TabIndex = 433
+        '
+        'labJobName2
+        '
+        Me.labJobName2.AutoSize = True
+        Me.labJobName2.Location = New System.Drawing.Point(459, 533)
+        Me.labJobName2.Name = "labJobName2"
+        Me.labJobName2.Size = New System.Drawing.Size(37, 12)
+        Me.labJobName2.TabIndex = 432
+        Me.labJobName2.Text = "Job명"
+        '
+        'txtMRISRev2
+        '
+        Me.txtMRISRev2.Location = New System.Drawing.Point(559, 557)
+        Me.txtMRISRev2.Name = "txtMRISRev2"
+        Me.txtMRISRev2.Size = New System.Drawing.Size(145, 21)
+        Me.txtMRISRev2.TabIndex = 431
+        '
+        'labRev3
+        '
+        Me.labRev3.AutoSize = True
+        Me.labRev3.Location = New System.Drawing.Point(20, 836)
+        Me.labRev3.Name = "labRev3"
+        Me.labRev3.Size = New System.Drawing.Size(53, 12)
+        Me.labRev3.TabIndex = 374
+        Me.labRev3.Text = "개정이력"
+        '
+        'Label35
+        '
+        Me.Label35.AutoSize = True
+        Me.Label35.Location = New System.Drawing.Point(451, 52)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(14, 12)
+        Me.Label35.TabIndex = 373
+        Me.Label35.Text = "~"
+        '
+        'labDate
+        '
+        Me.labDate.AutoSize = True
+        Me.labDate.Location = New System.Drawing.Point(261, 52)
+        Me.labDate.Name = "labDate"
+        Me.labDate.Size = New System.Drawing.Size(53, 12)
+        Me.labDate.TabIndex = 371
+        Me.labDate.Text = "등록일자"
+        '
+        'lstRev3
+        '
+        Me.lstRev3.AllowUserToAddRows = False
+        Me.lstRev3.BackgroundColor = System.Drawing.Color.White
+        Me.lstRev3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.lstRev3.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Sub_Menu, Me.Column1, Me.Column2, Me.Action, Me.Man, Me.Menu_Date})
+        Me.lstRev3.Location = New System.Drawing.Point(16, 856)
+        Me.lstRev3.Name = "lstRev3"
+        Me.lstRev3.ReadOnly = True
+        Me.lstRev3.RowHeadersVisible = False
+        Me.lstRev3.RowTemplate.Height = 23
+        Me.lstRev3.Size = New System.Drawing.Size(1600, 150)
+        Me.lstRev3.TabIndex = 369
+        '
+        'Sub_Menu
+        '
+        Me.Sub_Menu.DataPropertyName = "Sub"
+        Me.Sub_Menu.HeaderText = "서브메뉴"
+        Me.Sub_Menu.Name = "Sub_Menu"
+        Me.Sub_Menu.ReadOnly = True
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "작업대상ID"
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "개정번호"
+        Me.Column2.Name = "Column2"
+        Me.Column2.ReadOnly = True
+        '
+        'Action
+        '
+        Me.Action.DataPropertyName = "Action"
+        Me.Action.HeaderText = "작업내용"
+        Me.Action.Name = "Action"
+        Me.Action.ReadOnly = True
+        '
+        'Man
+        '
+        Me.Man.DataPropertyName = "Man"
+        Me.Man.HeaderText = "사원명"
+        Me.Man.Name = "Man"
+        Me.Man.ReadOnly = True
+        '
+        'Menu_Date
+        '
+        Me.Menu_Date.DataPropertyName = "Date"
+        Me.Menu_Date.HeaderText = "개정일시"
+        Me.Menu_Date.Name = "Menu_Date"
+        Me.Menu_Date.ReadOnly = True
+        '
+        'txtJobNo2
+        '
+        Me.txtJobNo2.Location = New System.Drawing.Point(120, 529)
+        Me.txtJobNo2.Name = "txtJobNo2"
+        Me.txtJobNo2.Size = New System.Drawing.Size(322, 21)
+        Me.txtJobNo2.TabIndex = 368
+        '
+        'labMRISRev2
+        '
+        Me.labMRISRev2.AutoSize = True
+        Me.labMRISRev2.Location = New System.Drawing.Point(459, 561)
+        Me.labMRISRev2.Name = "labMRISRev2"
+        Me.labMRISRev2.Size = New System.Drawing.Size(53, 12)
+        Me.labMRISRev2.TabIndex = 367
+        Me.labMRISRev2.Text = "개정번호"
+        '
+        'Panel26
+        '
+        Me.Panel26.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel26.Location = New System.Drawing.Point(18, 553)
+        Me.Panel26.Name = "Panel26"
+        Me.Panel26.Size = New System.Drawing.Size(907, 1)
+        Me.Panel26.TabIndex = 357
+        '
+        'Panel29
+        '
+        Me.Panel29.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel29.Location = New System.Drawing.Point(18, 581)
+        Me.Panel29.Name = "Panel29"
+        Me.Panel29.Size = New System.Drawing.Size(907, 1)
+        Me.Panel29.TabIndex = 356
+        '
+        'labJobNo2
+        '
+        Me.labJobNo2.AutoSize = True
+        Me.labJobNo2.Location = New System.Drawing.Point(20, 533)
+        Me.labJobNo2.Name = "labJobNo2"
+        Me.labJobNo2.Size = New System.Drawing.Size(49, 12)
+        Me.labJobNo2.TabIndex = 355
+        Me.labJobNo2.Text = "Job No."
+        '
+        'labMRISNo
+        '
+        Me.labMRISNo.AutoSize = True
+        Me.labMRISNo.Location = New System.Drawing.Point(16, 52)
+        Me.labMRISNo.Name = "labMRISNo"
+        Me.labMRISNo.Size = New System.Drawing.Size(55, 12)
+        Me.labMRISNo.TabIndex = 312
+        Me.labMRISNo.Text = "MRIS No"
+        '
+        'dtpDateTo
+        '
+        Me.dtpDateTo.Font = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpDateTo.Location = New System.Drawing.Point(471, 47)
+        Me.dtpDateTo.Name = "dtpDateTo"
+        Me.dtpDateTo.Size = New System.Drawing.Size(125, 22)
+        Me.dtpDateTo.TabIndex = 301
+        '
+        'dtpDateFrom
+        '
+        Me.dtpDateFrom.CalendarFont = New System.Drawing.Font("굴림", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpDateFrom.Font = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpDateFrom.Location = New System.Drawing.Point(320, 47)
+        Me.dtpDateFrom.Name = "dtpDateFrom"
+        Me.dtpDateFrom.Size = New System.Drawing.Size(125, 22)
+        Me.dtpDateFrom.TabIndex = 300
+        '
+        'btnSearch
+        '
+        Me.btnSearch.BackColor = System.Drawing.Color.White
+        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSearch.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnSearch.Location = New System.Drawing.Point(1466, 45)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(150, 27)
+        Me.btnSearch.TabIndex = 294
+        Me.btnSearch.Text = "조회"
+        Me.btnSearch.UseVisualStyleBackColor = False
+        '
+        'txtMRISNo
+        '
+        Me.txtMRISNo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtMRISNo.Location = New System.Drawing.Point(77, 46)
+        Me.txtMRISNo.Name = "txtMRISNo"
+        Me.txtMRISNo.Size = New System.Drawing.Size(150, 25)
+        Me.txtMRISNo.TabIndex = 287
+        '
+        'lstMain
+        '
+        Me.lstMain.AllowUserToAddRows = False
+        Me.lstMain.AllowUserToDeleteRows = False
+        Me.lstMain.BackgroundColor = System.Drawing.Color.White
+        Me.lstMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.lstMain.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.MR_Job, Me.CR_Name, Me.MR_Code, Me.MR_Rev_No, Me.MR_Prepare_Date})
+        Me.lstMain.Location = New System.Drawing.Point(16, 103)
+        Me.lstMain.Name = "lstMain"
+        Me.lstMain.ReadOnly = True
+        Me.lstMain.RowHeadersVisible = False
+        Me.lstMain.RowTemplate.Height = 23
+        Me.lstMain.Size = New System.Drawing.Size(1600, 400)
+        Me.lstMain.TabIndex = 70
+        '
+        'MR_Job
+        '
+        Me.MR_Job.DataPropertyName = "MR_Job"
+        Me.MR_Job.HeaderText = "Job No."
+        Me.MR_Job.Name = "MR_Job"
+        Me.MR_Job.ReadOnly = True
+        '
+        'CR_Name
+        '
+        Me.CR_Name.DataPropertyName = "CR_Name"
+        Me.CR_Name.HeaderText = "Job명"
+        Me.CR_Name.Name = "CR_Name"
+        Me.CR_Name.ReadOnly = True
+        '
+        'MR_Code
+        '
+        Me.MR_Code.DataPropertyName = "MR_Code"
+        Me.MR_Code.HeaderText = "MRIS No"
+        Me.MR_Code.Name = "MR_Code"
+        Me.MR_Code.ReadOnly = True
+        '
+        'MR_Rev_No
+        '
+        Me.MR_Rev_No.DataPropertyName = "MR_Rev_No"
+        Me.MR_Rev_No.HeaderText = "MRIS 개정번호"
+        Me.MR_Rev_No.Name = "MR_Rev_No"
+        Me.MR_Rev_No.ReadOnly = True
+        '
+        'MR_Prepare_Date
+        '
+        Me.MR_Prepare_Date.DataPropertyName = "MR_Prepare_Date"
+        Me.MR_Prepare_Date.HeaderText = "등록일자"
+        Me.MR_Prepare_Date.Name = "MR_Prepare_Date"
+        Me.MR_Prepare_Date.ReadOnly = True
+        '
+        'Panel24
+        '
+        Me.Panel24.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel24.Location = New System.Drawing.Point(16, 85)
+        Me.Panel24.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel24.Name = "Panel24"
+        Me.Panel24.Size = New System.Drawing.Size(1600, 1)
+        Me.Panel24.TabIndex = 69
+        '
+        'palDetail
+        '
+        Me.palDetail.AutoScroll = True
+        Me.palDetail.Controls.Add(Me.txtSun3)
+        Me.palDetail.Controls.Add(Me.labSun3)
+        Me.palDetail.Controls.Add(Me.txtPLName3)
+        Me.palDetail.Controls.Add(Me.labPLName3)
+        Me.palDetail.Controls.Add(Me.Panel1)
+        Me.palDetail.Controls.Add(Me.txtUnit4)
+        Me.palDetail.Controls.Add(Me.labUnit3)
+        Me.palDetail.Controls.Add(Me.txtBigo3)
+        Me.palDetail.Controls.Add(Me.labBigo3)
+        Me.palDetail.Controls.Add(Me.Panel25)
+        Me.palDetail.Controls.Add(Me.btn)
+        Me.palDetail.Controls.Add(Me.txtQTY3)
+        Me.palDetail.Controls.Add(Me.labQTY3)
+        Me.palDetail.Controls.Add(Me.Panel16)
+        Me.palDetail.Controls.Add(Me.txtTSNo3)
+        Me.palDetail.Controls.Add(Me.labTSNo3)
+        Me.palDetail.Controls.Add(Me.txtSize3)
+        Me.palDetail.Controls.Add(Me.labSize3)
+        Me.palDetail.Controls.Add(Me.Panel17)
+        Me.palDetail.Controls.Add(Me.txtSpec3)
+        Me.palDetail.Controls.Add(Me.labSpec3)
+        Me.palDetail.Controls.Add(Me.Panel18)
+        Me.palDetail.Controls.Add(Me.lstDetail)
+        Me.palDetail.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.palDetail.Location = New System.Drawing.Point(94, 110)
+        Me.palDetail.Name = "palDetail"
+        Me.palDetail.Size = New System.Drawing.Size(1644, 1183)
+        Me.palDetail.TabIndex = 169
+        '
+        'txtSun3
+        '
+        Me.txtSun3.Location = New System.Drawing.Point(638, 325)
+        Me.txtSun3.Name = "txtSun3"
+        Me.txtSun3.Size = New System.Drawing.Size(322, 21)
+        Me.txtSun3.TabIndex = 443
+        '
+        'labSun3
+        '
+        Me.labSun3.AutoSize = True
+        Me.labSun3.Location = New System.Drawing.Point(512, 329)
+        Me.labSun3.Name = "labSun3"
+        Me.labSun3.Size = New System.Drawing.Size(29, 12)
+        Me.labSun3.TabIndex = 444
+        Me.labSun3.Text = "순번"
+        '
+        'txtPLName3
+        '
+        Me.txtPLName3.Location = New System.Drawing.Point(164, 325)
+        Me.txtPLName3.Name = "txtPLName3"
+        Me.txtPLName3.Size = New System.Drawing.Size(322, 21)
+        Me.txtPLName3.TabIndex = 440
+        '
+        'labPLName3
+        '
+        Me.labPLName3.AutoSize = True
+        Me.labPLName3.Location = New System.Drawing.Point(42, 329)
+        Me.labPLName3.Name = "labPLName3"
+        Me.labPLName3.Size = New System.Drawing.Size(29, 12)
+        Me.labPLName3.TabIndex = 442
+        Me.labPLName3.Text = "품명"
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel1.Location = New System.Drawing.Point(38, 350)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(928, 1)
+        Me.Panel1.TabIndex = 441
+        '
+        'txtUnit4
+        '
+        Me.txtUnit4.Location = New System.Drawing.Point(638, 390)
+        Me.txtUnit4.Name = "txtUnit4"
+        Me.txtUnit4.Size = New System.Drawing.Size(322, 21)
+        Me.txtUnit4.TabIndex = 438
+        '
+        'labUnit3
+        '
+        Me.labUnit3.AutoSize = True
+        Me.labUnit3.Location = New System.Drawing.Point(512, 394)
+        Me.labUnit3.Name = "labUnit3"
+        Me.labUnit3.Size = New System.Drawing.Size(29, 12)
+        Me.labUnit3.TabIndex = 439
+        Me.labUnit3.Text = "단위"
+        '
+        'txtBigo3
+        '
+        Me.txtBigo3.Location = New System.Drawing.Point(164, 456)
+        Me.txtBigo3.Multiline = True
+        Me.txtBigo3.Name = "txtBigo3"
+        Me.txtBigo3.Size = New System.Drawing.Size(796, 139)
+        Me.txtBigo3.TabIndex = 430
+        '
+        'labBigo3
+        '
+        Me.labBigo3.AutoSize = True
+        Me.labBigo3.Location = New System.Drawing.Point(42, 460)
+        Me.labBigo3.Name = "labBigo3"
+        Me.labBigo3.Size = New System.Drawing.Size(29, 12)
+        Me.labBigo3.TabIndex = 432
+        Me.labBigo3.Text = "비고"
+        '
+        'Panel25
+        '
+        Me.Panel25.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel25.Location = New System.Drawing.Point(38, 605)
+        Me.Panel25.Name = "Panel25"
+        Me.Panel25.Size = New System.Drawing.Size(928, 1)
+        Me.Panel25.TabIndex = 431
+        '
+        'btn
+        '
+        Me.btn.BackColor = System.Drawing.Color.White
+        Me.btn.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue
+        Me.btn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue
+        Me.btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btn.Font = New System.Drawing.Font("새굴림", 9.0!)
+        Me.btn.Location = New System.Drawing.Point(38, 615)
+        Me.btn.Margin = New System.Windows.Forms.Padding(2)
+        Me.btn.Name = "btn"
+        Me.btn.Size = New System.Drawing.Size(124, 27)
+        Me.btn.TabIndex = 401
+        Me.btn.Text = "접수"
+        Me.btn.UseVisualStyleBackColor = False
+        '
+        'txtQTY3
+        '
+        Me.txtQTY3.Location = New System.Drawing.Point(164, 424)
+        Me.txtQTY3.Name = "txtQTY3"
+        Me.txtQTY3.Size = New System.Drawing.Size(322, 21)
+        Me.txtQTY3.TabIndex = 398
+        '
+        'labQTY3
+        '
+        Me.labQTY3.AutoSize = True
+        Me.labQTY3.Location = New System.Drawing.Point(42, 428)
+        Me.labQTY3.Name = "labQTY3"
+        Me.labQTY3.Size = New System.Drawing.Size(29, 12)
+        Me.labQTY3.TabIndex = 400
+        Me.labQTY3.Text = "수량"
+        '
+        'Panel16
+        '
+        Me.Panel16.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel16.Location = New System.Drawing.Point(38, 449)
+        Me.Panel16.Name = "Panel16"
+        Me.Panel16.Size = New System.Drawing.Size(928, 1)
+        Me.Panel16.TabIndex = 399
+        '
+        'txtTSNo3
+        '
+        Me.txtTSNo3.Location = New System.Drawing.Point(638, 424)
+        Me.txtTSNo3.Name = "txtTSNo3"
+        Me.txtTSNo3.Size = New System.Drawing.Size(322, 21)
+        Me.txtTSNo3.TabIndex = 396
+        '
+        'labTSNo3
+        '
+        Me.labTSNo3.AutoSize = True
+        Me.labTSNo3.Location = New System.Drawing.Point(512, 428)
+        Me.labTSNo3.Name = "labTSNo3"
+        Me.labTSNo3.Size = New System.Drawing.Size(93, 12)
+        Me.labTSNo3.TabIndex = 397
+        Me.labTSNo3.Text = "공정관리표 번호"
+        '
+        'txtSize3
+        '
+        Me.txtSize3.Location = New System.Drawing.Point(164, 390)
+        Me.txtSize3.Name = "txtSize3"
+        Me.txtSize3.Size = New System.Drawing.Size(322, 21)
+        Me.txtSize3.TabIndex = 393
+        '
+        'labSize3
+        '
+        Me.labSize3.AutoSize = True
+        Me.labSize3.Location = New System.Drawing.Point(42, 394)
+        Me.labSize3.Name = "labSize3"
+        Me.labSize3.Size = New System.Drawing.Size(41, 12)
+        Me.labSize3.TabIndex = 395
+        Me.labSize3.Text = "사이즈"
+        '
+        'Panel17
+        '
+        Me.Panel17.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel17.Location = New System.Drawing.Point(38, 415)
+        Me.Panel17.Name = "Panel17"
+        Me.Panel17.Size = New System.Drawing.Size(928, 1)
+        Me.Panel17.TabIndex = 394
+        '
+        'txtSpec3
+        '
+        Me.txtSpec3.Location = New System.Drawing.Point(164, 357)
+        Me.txtSpec3.Name = "txtSpec3"
+        Me.txtSpec3.Size = New System.Drawing.Size(322, 21)
+        Me.txtSpec3.TabIndex = 391
+        '
+        'labSpec3
+        '
+        Me.labSpec3.AutoSize = True
+        Me.labSpec3.Location = New System.Drawing.Point(42, 361)
+        Me.labSpec3.Name = "labSpec3"
+        Me.labSpec3.Size = New System.Drawing.Size(29, 12)
+        Me.labSpec3.TabIndex = 392
+        Me.labSpec3.Text = "규격"
+        '
+        'Panel18
+        '
+        Me.Panel18.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel18.Location = New System.Drawing.Point(38, 382)
+        Me.Panel18.Name = "Panel18"
+        Me.Panel18.Size = New System.Drawing.Size(928, 1)
+        Me.Panel18.TabIndex = 389
+        '
+        'lstDetail
+        '
+        Me.lstDetail.AllowUserToAddRows = False
+        Me.lstDetail.BackgroundColor = System.Drawing.Color.White
+        Me.lstDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.lstDetail.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.MR_Code2, Me.MR_Sun, Me.MR_PL_Name, Me.MR_PL_Spec, Me.MR_PL_Size, Me.MR_Unit, Me.MR_QTY, Me.MR_Ts_Code, Me.MR_Bigo})
+        Me.lstDetail.Location = New System.Drawing.Point(38, 39)
+        Me.lstDetail.Name = "lstDetail"
+        Me.lstDetail.RowHeadersVisible = False
+        Me.lstDetail.RowTemplate.Height = 23
+        Me.lstDetail.Size = New System.Drawing.Size(1134, 268)
+        Me.lstDetail.TabIndex = 387
+        '
+        'MR_Code2
+        '
+        Me.MR_Code2.DataPropertyName = "MR_Code"
+        Me.MR_Code2.HeaderText = "MRIS No"
+        Me.MR_Code2.Name = "MR_Code2"
+        '
+        'MR_Sun
+        '
+        Me.MR_Sun.DataPropertyName = "MR_Sun"
+        Me.MR_Sun.HeaderText = "No."
+        Me.MR_Sun.Name = "MR_Sun"
+        '
+        'MR_PL_Name
+        '
+        Me.MR_PL_Name.DataPropertyName = "MR_PL_Name"
+        Me.MR_PL_Name.HeaderText = "품명"
+        Me.MR_PL_Name.Name = "MR_PL_Name"
+        '
+        'MR_PL_Spec
+        '
+        Me.MR_PL_Spec.DataPropertyName = "MR_PL_Spec"
+        Me.MR_PL_Spec.HeaderText = "규격"
+        Me.MR_PL_Spec.Name = "MR_PL_Spec"
+        '
+        'MR_PL_Size
+        '
+        Me.MR_PL_Size.DataPropertyName = "MR_PL_Size"
+        Me.MR_PL_Size.HeaderText = "사이즈"
+        Me.MR_PL_Size.Name = "MR_PL_Size"
+        '
+        'MR_Unit
+        '
+        Me.MR_Unit.DataPropertyName = "MR_Unit"
+        Me.MR_Unit.HeaderText = "단위"
+        Me.MR_Unit.Name = "MR_Unit"
+        '
+        'MR_QTY
+        '
+        Me.MR_QTY.DataPropertyName = "MR_QTY"
+        Me.MR_QTY.HeaderText = "수량"
+        Me.MR_QTY.Name = "MR_QTY"
+        '
+        'MR_Ts_Code
+        '
+        Me.MR_Ts_Code.DataPropertyName = "MR_Ts_Code"
+        Me.MR_Ts_Code.HeaderText = "공정관리표번호"
+        Me.MR_Ts_Code.Name = "MR_Ts_Code"
+        '
+        'MR_Bigo
+        '
+        Me.MR_Bigo.DataPropertyName = "MR_Bigo"
+        Me.MR_Bigo.HeaderText = "비고"
+        Me.MR_Bigo.Name = "MR_Bigo"
+        '
+        'Frm_PD_Report12
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScroll = True
+        Me.Controls.Add(Me.palDetail)
+        Me.Controls.Add(Me.palMain)
+        Me.Controls.Add(Me.btnDetail)
+        Me.Controls.Add(Me.Di_Panel2)
+        Me.Controls.Add(Me.btnMain)
+        Me.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Name = "Frm_PD_Report12"
+        Me.Size = New System.Drawing.Size(1638, 1418)
+        Me.Di_Panel2.ResumeLayout(False)
+        Me.palMain.ResumeLayout(False)
+        Me.palMain.PerformLayout()
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
+        CType(Me.lstRev3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.palDetail.ResumeLayout(False)
+        Me.palDetail.PerformLayout()
+        CType(Me.lstDetail, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+
+    Friend WithEvents btnDetail As Button
+    Friend WithEvents Di_Panel2 As Panel
+    Friend WithEvents Color_Label As Label
+    Friend WithEvents btnMain As Button
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
+    Friend WithEvents SaveFileDialog1 As SaveFileDialog
+    Friend WithEvents palMain As Panel
+    Friend WithEvents btnJobSearch As Button
+    Friend WithEvents labJobName As Label
+    Friend WithEvents labJobNo As Label
+    Friend WithEvents txtJobName As TextBox
+    Public WithEvents txtJobNo As TextBox
+    Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents dtpAppDate2 As DateTimePicker
+    Friend WithEvents txtApp2 As TextBox
+    Friend WithEvents labApp2 As Label
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents dtpPreDate2 As DateTimePicker
+    Friend WithEvents txtPre2 As TextBox
+    Friend WithEvents labPre2 As Label
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents dtpIssu2 As DateTimePicker
+    Friend WithEvents txtIssu2 As TextBox
+    Friend WithEvents labIssu2 As Label
+    Friend WithEvents txtMRISNo2 As TextBox
+    Friend WithEvents labMRISNo2 As Label
+    Friend WithEvents txtJobName2 As TextBox
+    Friend WithEvents labJobName2 As Label
+    Friend WithEvents txtMRISRev2 As TextBox
+    Friend WithEvents labRev3 As Label
+    Friend WithEvents Label35 As Label
+    Friend WithEvents labDate As Label
+    Friend WithEvents lstRev3 As DataGridView
+    Friend WithEvents Sub_Menu As DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As DataGridViewTextBoxColumn
+    Friend WithEvents Action As DataGridViewTextBoxColumn
+    Friend WithEvents Man As DataGridViewTextBoxColumn
+    Friend WithEvents Menu_Date As DataGridViewTextBoxColumn
+    Friend WithEvents txtJobNo2 As TextBox
+    Friend WithEvents labMRISRev2 As Label
+    Friend WithEvents Panel26 As Panel
+    Friend WithEvents Panel29 As Panel
+    Friend WithEvents labJobNo2 As Label
+    Friend WithEvents labMRISNo As Label
+    Friend WithEvents dtpDateTo As DateTimePicker
+    Friend WithEvents dtpDateFrom As DateTimePicker
+    Friend WithEvents btnSearch As Button
+    Public WithEvents txtMRISNo As TextBox
+    Friend WithEvents lstMain As DataGridView
+    Friend WithEvents MR_Job As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Name As DataGridViewTextBoxColumn
+    Friend WithEvents MR_Code As DataGridViewTextBoxColumn
+    Friend WithEvents MR_Rev_No As DataGridViewTextBoxColumn
+    Friend WithEvents MR_Prepare_Date As DataGridViewTextBoxColumn
+    Friend WithEvents Panel24 As Panel
+    Friend WithEvents palDetail As Panel
+    Friend WithEvents txtSun3 As TextBox
+    Friend WithEvents labSun3 As Label
+    Friend WithEvents txtPLName3 As TextBox
+    Friend WithEvents labPLName3 As Label
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents txtUnit4 As TextBox
+    Friend WithEvents labUnit3 As Label
+    Friend WithEvents txtBigo3 As TextBox
+    Friend WithEvents labBigo3 As Label
+    Friend WithEvents Panel25 As Panel
+    Friend WithEvents btn As Button
+    Friend WithEvents txtQTY3 As TextBox
+    Friend WithEvents labQTY3 As Label
+    Friend WithEvents Panel16 As Panel
+    Friend WithEvents txtTSNo3 As TextBox
+    Friend WithEvents labTSNo3 As Label
+    Friend WithEvents txtSize3 As TextBox
+    Friend WithEvents labSize3 As Label
+    Friend WithEvents Panel17 As Panel
+    Friend WithEvents txtSpec3 As TextBox
+    Friend WithEvents labSpec3 As Label
+    Friend WithEvents Panel18 As Panel
+    Friend WithEvents lstDetail As DataGridView
+    Friend WithEvents MR_Code2 As DataGridViewTextBoxColumn
+    Friend WithEvents MR_Sun As DataGridViewTextBoxColumn
+    Friend WithEvents MR_PL_Name As DataGridViewTextBoxColumn
+    Friend WithEvents MR_PL_Spec As DataGridViewTextBoxColumn
+    Friend WithEvents MR_PL_Size As DataGridViewTextBoxColumn
+    Friend WithEvents MR_Unit As DataGridViewTextBoxColumn
+    Friend WithEvents MR_QTY As DataGridViewTextBoxColumn
+    Friend WithEvents MR_Ts_Code As DataGridViewTextBoxColumn
+    Friend WithEvents MR_Bigo As DataGridViewTextBoxColumn
+End Class

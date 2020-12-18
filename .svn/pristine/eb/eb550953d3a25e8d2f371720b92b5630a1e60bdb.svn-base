@@ -1,0 +1,164 @@
+﻿Public Class Frm_Man_Pass
+    Private Sub Frm_Man_Pass_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Panel1.Top = 45
+        Panel1.Left = 10
+        Panel41.Top = 45
+        Panel41.Left = 10
+
+        Panel1.Visible = True
+        Panel41.Visible = False
+
+        Grid_Man_Load()
+
+    End Sub
+
+    Private Sub Grid_Man_Load()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT Man_Code, Man_Name, Man_Sangho, Man_Bu, Man_Gik, Man_Sex, Man_Birth, Man_Phon, Man_Car,
+                         Man_Add, Man_Level, Man_Bigo
+                    FROM Man"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+
+
+    End Sub
+
+    Private Sub text_clear()
+        TextBox101.Text = ""
+        TextBox104.Text = ""
+        TextBox98.Text = ""
+        TextBox97.Text = ""
+        TextBox89.Text = ""
+        TextBox96.Text = ""
+        DateTimePicker4.Text = ""
+        DateTimePicker3.Text = ""
+        TextBox3.Text = ""
+        TextBox1.Text = ""
+        TextBox4.Text = ""
+        TextBox5.Text = ""
+        TextBox6.Text = ""
+        TextBox88.Text = ""
+        TextBox2.Text = ""
+    End Sub
+
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles Com_Contract.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles Com_Excel.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+    End Sub
+
+    Private Sub DataGridView5_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView5.CellDoubleClick
+        Label_Color(Com_Excel, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT * FROM Man where Man_Code = '" & DataGridView5.Rows(DataGridView5.CurrentCell.RowIndex).Cells("Man_Code").Value.ToString & "'"
+        Re_Count = DB_Select(DBT)
+
+        TextBox101.Text = DBT.Rows(0)("Man_Code").ToString
+        TextBox104.Text = DBT.Rows(0)("Man_Name").ToString
+        TextBox98.Text = DBT.Rows(0)("Man_Sangho").ToString
+        TextBox97.Text = DBT.Rows(0)("Man_Bu").ToString
+        TextBox89.Text = DBT.Rows(0)("Man_Gik").ToString
+        TextBox96.Text = DBT.Rows(0)("Man_Sex").ToString
+        DateTimePicker4.Text = DBT.Rows(0)("Man_Birth").ToString
+        DateTimePicker3.Text = DBT.Rows(0)("Man_St_Day").ToString
+        TextBox3.Text = DBT.Rows(0)("Man_Phon").ToString
+        TextBox1.Text = DBT.Rows(0)("Man_Car").ToString
+        TextBox4.Text = DBT.Rows(0)("Man_Add").ToString
+        TextBox5.Text = DBT.Rows(0)("Man_Pass").ToString
+        TextBox6.Text = DBT.Rows(0)("Man_Level").ToString
+        TextBox88.Text = DBT.Rows(0)("Man_En_Day").ToString
+        TextBox2.Text = DBT.Rows(0)("Man_Bigo").ToString
+    End Sub
+
+    Private Sub Com_Can_Click(sender As Object, e As EventArgs) Handles Com_Can.Click
+        text_clear()
+        Label_Color(Com_Contract, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Com_OK_Click(sender As Object, e As EventArgs) Handles Com_OK.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT * FROM Man where Man_Code = '" & TextBox101.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            StrSQL = "Update Man Set 
+                                         Man_Pass = '" & TextBox5.Text & "'
+                                         WHERE Man_Code = '" & TextBox101.Text & "'"
+            Re_Count2 = DB_Execute()
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+        End If
+
+        Grid_Man_Load()
+        text_clear()
+        Label_Color(Com_Contract, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT Man_Code, Man_Name, Man_Sangho, Man_Bu, Man_Gik, Man_Sex, Man_Birth, Man_Phon, Man_Car,
+                         Man_Add, Man_Level, Man_Bigo
+                    FROM Man where Man_Name Like '%" & TextBox15.Text & "%'"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT Man_Code, Man_Name, Man_Sangho, Man_Bu, Man_Gik, Man_Sex, Man_Birth, Man_Phon, Man_Car,
+                         Man_Add, Man_Level, Man_Bigo
+                    FROM Man where Man_Bu Like '%" & TextBox16.Text & "%'"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT Man_Code, Man_Name, Man_Sangho, Man_Bu, Man_Gik, Man_Sex, Man_Birth, Man_Phon, Man_Car,
+                         Man_Add, Man_Level, Man_Bigo
+                    FROM Man where Man_Level Like '%" & TextBox17.Text & "%'"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+    End Sub
+End Class

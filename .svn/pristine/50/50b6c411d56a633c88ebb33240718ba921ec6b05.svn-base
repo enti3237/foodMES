@@ -1,0 +1,227 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_Customer_POP
+    Inherits System.Windows.Forms.Form
+
+    'Form은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.TextBox15 = New System.Windows.Forms.TextBox()
+        Me.CM_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CM_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CM_Leader = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CM_Op_Number = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CM_Conditions = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CM_Item = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CM_Man_Tel = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CM_Man_Cell = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CM_Man_Email = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CM_Addr = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.SystemColors.Info
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button2.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Button2.Location = New System.Drawing.Point(212, 256)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(150, 27)
+        Me.Button2.TabIndex = 325
+        Me.Button2.Text = "취    소"
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.SystemColors.Info
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button1.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Button1.Location = New System.Drawing.Point(39, 256)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(150, 27)
+        Me.Button1.TabIndex = 324
+        Me.Button1.Text = "선    택"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
+        'Button14
+        '
+        Me.Button14.BackColor = System.Drawing.SystemColors.Info
+        Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button14.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button14.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.Button14.Location = New System.Drawing.Point(737, 9)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(150, 27)
+        Me.Button14.TabIndex = 323
+        Me.Button14.Text = "조    회"
+        Me.Button14.UseVisualStyleBackColor = False
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.AllowUserToDeleteRows = False
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CM_Code, Me.CM_Name, Me.CM_Leader, Me.CM_Op_Number, Me.CM_Conditions, Me.CM_Item, Me.CM_Man_Tel, Me.CM_Man_Cell, Me.CM_Man_Email, Me.CM_Addr})
+        Me.DataGridView1.Location = New System.Drawing.Point(39, 40)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.ReadOnly = True
+        Me.DataGridView1.RowHeadersVisible = False
+        Me.DataGridView1.RowTemplate.Height = 23
+        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DataGridView1.Size = New System.Drawing.Size(848, 211)
+        Me.DataGridView1.TabIndex = 322
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(37, 15)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(53, 12)
+        Me.Label3.TabIndex = 321
+        Me.Label3.Text = "거래처명"
+        '
+        'TextBox15
+        '
+        Me.TextBox15.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox15.ForeColor = System.Drawing.SystemColors.InfoText
+        Me.TextBox15.Location = New System.Drawing.Point(92, 9)
+        Me.TextBox15.Name = "TextBox15"
+        Me.TextBox15.Size = New System.Drawing.Size(150, 25)
+        Me.TextBox15.TabIndex = 320
+        '
+        'CM_Code
+        '
+        Me.CM_Code.DataPropertyName = "CM_Code"
+        Me.CM_Code.HeaderText = "거래처코드"
+        Me.CM_Code.Name = "CM_Code"
+        Me.CM_Code.ReadOnly = True
+        '
+        'CM_Name
+        '
+        Me.CM_Name.DataPropertyName = "CM_Name"
+        Me.CM_Name.HeaderText = "거래처명"
+        Me.CM_Name.Name = "CM_Name"
+        Me.CM_Name.ReadOnly = True
+        Me.CM_Name.Width = 150
+        '
+        'CM_Leader
+        '
+        Me.CM_Leader.DataPropertyName = "CM_Leader"
+        Me.CM_Leader.HeaderText = "대표자"
+        Me.CM_Leader.Name = "CM_Leader"
+        Me.CM_Leader.ReadOnly = True
+        '
+        'CM_Op_Number
+        '
+        Me.CM_Op_Number.DataPropertyName = "CM_Op_Number"
+        Me.CM_Op_Number.HeaderText = "등록번호"
+        Me.CM_Op_Number.Name = "CM_Op_Number"
+        Me.CM_Op_Number.ReadOnly = True
+        '
+        'CM_Conditions
+        '
+        Me.CM_Conditions.DataPropertyName = "CM_Conditions"
+        Me.CM_Conditions.HeaderText = "업태"
+        Me.CM_Conditions.Name = "CM_Conditions"
+        Me.CM_Conditions.ReadOnly = True
+        Me.CM_Conditions.Width = 150
+        '
+        'CM_Item
+        '
+        Me.CM_Item.DataPropertyName = "CM_Item"
+        Me.CM_Item.FillWeight = 150.0!
+        Me.CM_Item.HeaderText = "업종"
+        Me.CM_Item.Name = "CM_Item"
+        Me.CM_Item.ReadOnly = True
+        '
+        'CM_Man_Tel
+        '
+        Me.CM_Man_Tel.DataPropertyName = "CM_Man_Tel"
+        Me.CM_Man_Tel.HeaderText = "전화번호"
+        Me.CM_Man_Tel.Name = "CM_Man_Tel"
+        Me.CM_Man_Tel.ReadOnly = True
+        Me.CM_Man_Tel.Width = 150
+        '
+        'CM_Man_Cell
+        '
+        Me.CM_Man_Cell.DataPropertyName = "CM_Man_Cell"
+        Me.CM_Man_Cell.HeaderText = "휴대폰번호"
+        Me.CM_Man_Cell.Name = "CM_Man_Cell"
+        Me.CM_Man_Cell.ReadOnly = True
+        Me.CM_Man_Cell.Width = 150
+        '
+        'CM_Man_Email
+        '
+        Me.CM_Man_Email.DataPropertyName = "CM_Man_Email"
+        Me.CM_Man_Email.HeaderText = "E-Mail"
+        Me.CM_Man_Email.Name = "CM_Man_Email"
+        Me.CM_Man_Email.ReadOnly = True
+        '
+        'CM_Addr
+        '
+        Me.CM_Addr.DataPropertyName = "CM_Addr"
+        Me.CM_Addr.HeaderText = "주소"
+        Me.CM_Addr.Name = "CM_Addr"
+        Me.CM_Addr.ReadOnly = True
+        '
+        'Frm_Customer_POP
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(924, 288)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.Button14)
+        Me.Controls.Add(Me.DataGridView1)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.TextBox15)
+        Me.ForeColor = System.Drawing.SystemColors.InfoText
+        Me.Name = "Frm_Customer_POP"
+        Me.Text = "거래처 조회"
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Button14 As Button
+    Public WithEvents DataGridView1 As DataGridView
+    Friend WithEvents Label3 As Label
+    Friend WithEvents TextBox15 As TextBox
+    Friend WithEvents CM_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CM_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CM_Leader As DataGridViewTextBoxColumn
+    Friend WithEvents CM_Op_Number As DataGridViewTextBoxColumn
+    Friend WithEvents CM_Conditions As DataGridViewTextBoxColumn
+    Friend WithEvents CM_Item As DataGridViewTextBoxColumn
+    Friend WithEvents CM_Man_Tel As DataGridViewTextBoxColumn
+    Friend WithEvents CM_Man_Cell As DataGridViewTextBoxColumn
+    Friend WithEvents CM_Man_Email As DataGridViewTextBoxColumn
+    Friend WithEvents CM_Addr As DataGridViewTextBoxColumn
+End Class

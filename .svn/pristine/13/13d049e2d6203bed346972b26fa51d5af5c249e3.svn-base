@@ -1,0 +1,858 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_PC_Stock
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.Com_Excel = New System.Windows.Forms.Button()
+        Me.Di_Panel2 = New System.Windows.Forms.Panel()
+        Me.Color_Label = New System.Windows.Forms.Label()
+        Me.Com_Contract = New System.Windows.Forms.Button()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Button12 = New System.Windows.Forms.Button()
+        Me.TextBox15 = New System.Windows.Forms.TextBox()
+        Me.Button13 = New System.Windows.Forms.Button()
+        Me.TextBox16 = New System.Windows.Forms.TextBox()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.TextBox17 = New System.Windows.Forms.TextBox()
+        Me.Panel24 = New System.Windows.Forms.Panel()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Panel41 = New System.Windows.Forms.Panel()
+        Me.ListBox2 = New System.Windows.Forms.ListBox()
+        Me.Panel6 = New System.Windows.Forms.Panel()
+        Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
+        Me.Label100 = New System.Windows.Forms.Label()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Com_Can = New System.Windows.Forms.Button()
+        Me.Com_OK = New System.Windows.Forms.Button()
+        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.DataGridView5 = New System.Windows.Forms.DataGridView()
+        Me.PS_Sun = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PS_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PS_PL_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PS_PO_Total = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PS_St_Day = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PS_St_Time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PS_En_Day = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PS_En_Time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PS_Go = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PS_Total = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PS_Er = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PS_Bigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TextBox111 = New System.Windows.Forms.TextBox()
+        Me.Panel53 = New System.Windows.Forms.Panel()
+        Me.Panel54 = New System.Windows.Forms.Panel()
+        Me.Panel55 = New System.Windows.Forms.Panel()
+        Me.TextBox113 = New System.Windows.Forms.TextBox()
+        Me.TextBox115 = New System.Windows.Forms.TextBox()
+        Me.TextBox117 = New System.Windows.Forms.TextBox()
+        Me.Label124 = New System.Windows.Forms.Label()
+        Me.Label125 = New System.Windows.Forms.Label()
+        Me.TextBox119 = New System.Windows.Forms.TextBox()
+        Me.Label126 = New System.Windows.Forms.Label()
+        Me.TextBox120 = New System.Windows.Forms.TextBox()
+        Me.TextBox121 = New System.Windows.Forms.TextBox()
+        Me.Label128 = New System.Windows.Forms.Label()
+        Me.Label130 = New System.Windows.Forms.Label()
+        Me.Label132 = New System.Windows.Forms.Label()
+        Me.Label134 = New System.Windows.Forms.Label()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.PO_JOB = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PO_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PO_PR_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PO_DE_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PO_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PO_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Di_Panel2.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel41.SuspendLayout()
+        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        '
+        'Com_Excel
+        '
+        Me.Com_Excel.AutoSize = True
+        Me.Com_Excel.FlatAppearance.BorderSize = 0
+        Me.Com_Excel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange
+        Me.Com_Excel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Com_Excel.Location = New System.Drawing.Point(139, 9)
+        Me.Com_Excel.Margin = New System.Windows.Forms.Padding(0)
+        Me.Com_Excel.Name = "Com_Excel"
+        Me.Com_Excel.Size = New System.Drawing.Size(112, 31)
+        Me.Com_Excel.TabIndex = 161
+        Me.Com_Excel.Text = "상세정보"
+        Me.Com_Excel.UseVisualStyleBackColor = True
+        '
+        'Di_Panel2
+        '
+        Me.Di_Panel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Di_Panel2.BackColor = System.Drawing.Color.Silver
+        Me.Di_Panel2.Controls.Add(Me.Color_Label)
+        Me.Di_Panel2.Location = New System.Drawing.Point(9, 44)
+        Me.Di_Panel2.Margin = New System.Windows.Forms.Padding(2)
+        Me.Di_Panel2.Name = "Di_Panel2"
+        Me.Di_Panel2.Size = New System.Drawing.Size(3851, 6)
+        Me.Di_Panel2.TabIndex = 160
+        '
+        'Color_Label
+        '
+        Me.Color_Label.Location = New System.Drawing.Point(206, 4)
+        Me.Color_Label.Name = "Color_Label"
+        Me.Color_Label.Size = New System.Drawing.Size(54, 10)
+        Me.Color_Label.TabIndex = 0
+        '
+        'Com_Contract
+        '
+        Me.Com_Contract.AutoSize = True
+        Me.Com_Contract.FlatAppearance.BorderSize = 0
+        Me.Com_Contract.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange
+        Me.Com_Contract.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Com_Contract.Location = New System.Drawing.Point(9, 9)
+        Me.Com_Contract.Margin = New System.Windows.Forms.Padding(0)
+        Me.Com_Contract.Name = "Com_Contract"
+        Me.Com_Contract.Size = New System.Drawing.Size(131, 31)
+        Me.Com_Contract.TabIndex = 159
+        Me.Com_Contract.Text = "작업지시서 목록"
+        Me.Com_Contract.UseVisualStyleBackColor = True
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.Button12)
+        Me.Panel1.Controls.Add(Me.TextBox15)
+        Me.Panel1.Controls.Add(Me.Button13)
+        Me.Panel1.Controls.Add(Me.TextBox16)
+        Me.Panel1.Controls.Add(Me.Button14)
+        Me.Panel1.Controls.Add(Me.TextBox17)
+        Me.Panel1.Controls.Add(Me.Panel24)
+        Me.Panel1.Controls.Add(Me.DataGridView1)
+        Me.Panel1.Location = New System.Drawing.Point(21, 244)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1897, 1084)
+        Me.Panel1.TabIndex = 162
+        '
+        'Button12
+        '
+        Me.Button12.BackColor = System.Drawing.Color.White
+        Me.Button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button12.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button12.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button12.Location = New System.Drawing.Point(1318, 56)
+        Me.Button12.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Button12.Name = "Button12"
+        Me.Button12.Size = New System.Drawing.Size(171, 34)
+        Me.Button12.TabIndex = 305
+        Me.Button12.Text = "공정명 검색"
+        Me.Button12.UseVisualStyleBackColor = False
+        '
+        'TextBox15
+        '
+        Me.TextBox15.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox15.Location = New System.Drawing.Point(783, 58)
+        Me.TextBox15.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox15.Name = "TextBox15"
+        Me.TextBox15.Size = New System.Drawing.Size(171, 29)
+        Me.TextBox15.TabIndex = 304
+        Me.TextBox15.Visible = False
+        '
+        'Button13
+        '
+        Me.Button13.BackColor = System.Drawing.Color.White
+        Me.Button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button13.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button13.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button13.Location = New System.Drawing.Point(961, 56)
+        Me.Button13.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Button13.Name = "Button13"
+        Me.Button13.Size = New System.Drawing.Size(171, 34)
+        Me.Button13.TabIndex = 303
+        Me.Button13.Text = "작업지시서 검색"
+        Me.Button13.UseVisualStyleBackColor = False
+        Me.Button13.Visible = False
+        '
+        'TextBox16
+        '
+        Me.TextBox16.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox16.Location = New System.Drawing.Point(1139, 58)
+        Me.TextBox16.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox16.Name = "TextBox16"
+        Me.TextBox16.Size = New System.Drawing.Size(171, 29)
+        Me.TextBox16.TabIndex = 302
+        '
+        'Button14
+        '
+        Me.Button14.BackColor = System.Drawing.Color.White
+        Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button14.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button14.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button14.Location = New System.Drawing.Point(1674, 56)
+        Me.Button14.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(171, 34)
+        Me.Button14.TabIndex = 301
+        Me.Button14.Text = "작성자 검색"
+        Me.Button14.UseVisualStyleBackColor = False
+        '
+        'TextBox17
+        '
+        Me.TextBox17.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox17.Location = New System.Drawing.Point(1496, 58)
+        Me.TextBox17.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox17.Name = "TextBox17"
+        Me.TextBox17.Size = New System.Drawing.Size(171, 29)
+        Me.TextBox17.TabIndex = 300
+        '
+        'Panel24
+        '
+        Me.Panel24.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel24.Location = New System.Drawing.Point(18, 106)
+        Me.Panel24.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel24.Name = "Panel24"
+        Me.Panel24.Size = New System.Drawing.Size(1829, 1)
+        Me.Panel24.TabIndex = 299
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.PO_JOB, Me.PO_Code, Me.PO_PR_Code, Me.PO_DE_Code, Me.PO_Date, Me.PO_Name})
+        Me.DataGridView1.Location = New System.Drawing.Point(18, 129)
+        Me.DataGridView1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.ReadOnly = True
+        Me.DataGridView1.RowHeadersVisible = False
+        Me.DataGridView1.RowTemplate.Height = 23
+        Me.DataGridView1.Size = New System.Drawing.Size(1829, 915)
+        Me.DataGridView1.TabIndex = 0
+        '
+        'Panel41
+        '
+        Me.Panel41.Controls.Add(Me.ListBox2)
+        Me.Panel41.Controls.Add(Me.Panel6)
+        Me.Panel41.Controls.Add(Me.Panel5)
+        Me.Panel41.Controls.Add(Me.Button4)
+        Me.Panel41.Controls.Add(Me.Button2)
+        Me.Panel41.Controls.Add(Me.Button3)
+        Me.Panel41.Controls.Add(Me.ListBox1)
+        Me.Panel41.Controls.Add(Me.Label100)
+        Me.Panel41.Controls.Add(Me.TextBox1)
+        Me.Panel41.Controls.Add(Me.Com_Can)
+        Me.Panel41.Controls.Add(Me.Com_OK)
+        Me.Panel41.Controls.Add(Me.Panel4)
+        Me.Panel41.Controls.Add(Me.Panel3)
+        Me.Panel41.Controls.Add(Me.Panel2)
+        Me.Panel41.Controls.Add(Me.DataGridView5)
+        Me.Panel41.Controls.Add(Me.TextBox111)
+        Me.Panel41.Controls.Add(Me.Panel53)
+        Me.Panel41.Controls.Add(Me.Panel54)
+        Me.Panel41.Controls.Add(Me.Panel55)
+        Me.Panel41.Controls.Add(Me.TextBox113)
+        Me.Panel41.Controls.Add(Me.TextBox115)
+        Me.Panel41.Controls.Add(Me.TextBox117)
+        Me.Panel41.Controls.Add(Me.Label124)
+        Me.Panel41.Controls.Add(Me.Label125)
+        Me.Panel41.Controls.Add(Me.TextBox119)
+        Me.Panel41.Controls.Add(Me.Label126)
+        Me.Panel41.Controls.Add(Me.TextBox120)
+        Me.Panel41.Controls.Add(Me.TextBox121)
+        Me.Panel41.Controls.Add(Me.Label128)
+        Me.Panel41.Controls.Add(Me.Label130)
+        Me.Panel41.Controls.Add(Me.Label132)
+        Me.Panel41.Controls.Add(Me.Label134)
+        Me.Panel41.Location = New System.Drawing.Point(123, 139)
+        Me.Panel41.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel41.Name = "Panel41"
+        Me.Panel41.Size = New System.Drawing.Size(1897, 1012)
+        Me.Panel41.TabIndex = 163
+        '
+        'ListBox2
+        '
+        Me.ListBox2.FormattingEnabled = True
+        Me.ListBox2.ItemHeight = 15
+        Me.ListBox2.Location = New System.Drawing.Point(1312, 738)
+        Me.ListBox2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.ListBox2.Name = "ListBox2"
+        Me.ListBox2.Size = New System.Drawing.Size(171, 169)
+        Me.ListBox2.TabIndex = 317
+        Me.ListBox2.Visible = False
+        '
+        'Panel6
+        '
+        Me.Panel6.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel6.Location = New System.Drawing.Point(22, 915)
+        Me.Panel6.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel6.Name = "Panel6"
+        Me.Panel6.Size = New System.Drawing.Size(1257, 1)
+        Me.Panel6.TabIndex = 316
+        '
+        'Panel5
+        '
+        Me.Panel5.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel5.Location = New System.Drawing.Point(22, 720)
+        Me.Panel5.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel5.Name = "Panel5"
+        Me.Panel5.Size = New System.Drawing.Size(1257, 1)
+        Me.Panel5.TabIndex = 315
+        '
+        'Button4
+        '
+        Me.Button4.BackColor = System.Drawing.Color.White
+        Me.Button4.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue
+        Me.Button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue
+        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button4.Font = New System.Drawing.Font("새굴림", 9.0!)
+        Me.Button4.Location = New System.Drawing.Point(1136, 805)
+        Me.Button4.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(142, 34)
+        Me.Button4.TabIndex = 314
+        Me.Button4.Text = "파일 다운로드"
+        Me.Button4.UseVisualStyleBackColor = False
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.White
+        Me.Button2.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue
+        Me.Button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("새굴림", 9.0!)
+        Me.Button2.Location = New System.Drawing.Point(1136, 872)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(142, 34)
+        Me.Button2.TabIndex = 313
+        Me.Button2.Text = "파일 삭제"
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'Button3
+        '
+        Me.Button3.BackColor = System.Drawing.Color.White
+        Me.Button3.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue
+        Me.Button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue
+        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button3.Font = New System.Drawing.Font("새굴림", 9.0!)
+        Me.Button3.Location = New System.Drawing.Point(1136, 738)
+        Me.Button3.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(142, 34)
+        Me.Button3.TabIndex = 312
+        Me.Button3.Text = "파일 저장"
+        Me.Button3.UseVisualStyleBackColor = False
+        '
+        'ListBox1
+        '
+        Me.ListBox1.FormattingEnabled = True
+        Me.ListBox1.ItemHeight = 15
+        Me.ListBox1.Location = New System.Drawing.Point(175, 738)
+        Me.ListBox1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.ListBox1.Name = "ListBox1"
+        Me.ListBox1.Size = New System.Drawing.Size(914, 169)
+        Me.ListBox1.TabIndex = 311
+        '
+        'Label100
+        '
+        Me.Label100.AutoSize = True
+        Me.Label100.Location = New System.Drawing.Point(29, 770)
+        Me.Label100.Name = "Label100"
+        Me.Label100.Size = New System.Drawing.Size(37, 15)
+        Me.Label100.TabIndex = 310
+        Me.Label100.Text = "파일"
+        Me.Label100.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(759, 245)
+        Me.TextBox1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(114, 25)
+        Me.TextBox1.TabIndex = 303
+        Me.TextBox1.Visible = False
+        '
+        'Com_Can
+        '
+        Me.Com_Can.BackColor = System.Drawing.Color.White
+        Me.Com_Can.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue
+        Me.Com_Can.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue
+        Me.Com_Can.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Com_Can.Font = New System.Drawing.Font("새굴림", 9.0!)
+        Me.Com_Can.Location = New System.Drawing.Point(352, 945)
+        Me.Com_Can.Margin = New System.Windows.Forms.Padding(2)
+        Me.Com_Can.Name = "Com_Can"
+        Me.Com_Can.Size = New System.Drawing.Size(142, 34)
+        Me.Com_Can.TabIndex = 302
+        Me.Com_Can.Text = "취소"
+        Me.Com_Can.UseVisualStyleBackColor = False
+        '
+        'Com_OK
+        '
+        Me.Com_OK.BackColor = System.Drawing.Color.White
+        Me.Com_OK.FlatAppearance.BorderColor = System.Drawing.Color.CornflowerBlue
+        Me.Com_OK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue
+        Me.Com_OK.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Com_OK.Font = New System.Drawing.Font("새굴림", 9.0!)
+        Me.Com_OK.Location = New System.Drawing.Point(175, 945)
+        Me.Com_OK.Margin = New System.Windows.Forms.Padding(2)
+        Me.Com_OK.Name = "Com_OK"
+        Me.Com_OK.Size = New System.Drawing.Size(142, 34)
+        Me.Com_OK.TabIndex = 301
+        Me.Com_OK.Text = "추가 / 업데이트"
+        Me.Com_OK.UseVisualStyleBackColor = False
+        '
+        'Panel4
+        '
+        Me.Panel4.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel4.Location = New System.Drawing.Point(22, 436)
+        Me.Panel4.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Size = New System.Drawing.Size(1257, 1)
+        Me.Panel4.TabIndex = 300
+        '
+        'Panel3
+        '
+        Me.Panel3.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel3.Location = New System.Drawing.Point(22, 319)
+        Me.Panel3.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(1257, 1)
+        Me.Panel3.TabIndex = 299
+        '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel2.Location = New System.Drawing.Point(22, 279)
+        Me.Panel2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(1257, 1)
+        Me.Panel2.TabIndex = 298
+        '
+        'DataGridView5
+        '
+        Me.DataGridView5.AllowUserToAddRows = False
+        Me.DataGridView5.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView5.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.PS_Sun, Me.PS_Name, Me.PS_PL_Name, Me.PS_PO_Total, Me.PS_St_Day, Me.PS_St_Time, Me.PS_En_Day, Me.PS_En_Time, Me.PS_Go, Me.PS_Total, Me.PS_Er, Me.PS_Bigo})
+        Me.DataGridView5.Location = New System.Drawing.Point(22, 15)
+        Me.DataGridView5.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.DataGridView5.Name = "DataGridView5"
+        Me.DataGridView5.ReadOnly = True
+        Me.DataGridView5.RowHeadersVisible = False
+        Me.DataGridView5.RowTemplate.Height = 23
+        Me.DataGridView5.Size = New System.Drawing.Size(1714, 208)
+        Me.DataGridView5.TabIndex = 143
+        '
+        'PS_Sun
+        '
+        Me.PS_Sun.DataPropertyName = "PS_Sun"
+        Me.PS_Sun.HeaderText = "No"
+        Me.PS_Sun.Name = "PS_Sun"
+        Me.PS_Sun.ReadOnly = True
+        '
+        'PS_Name
+        '
+        Me.PS_Name.DataPropertyName = "PS_Name"
+        Me.PS_Name.HeaderText = "담당자"
+        Me.PS_Name.Name = "PS_Name"
+        Me.PS_Name.ReadOnly = True
+        '
+        'PS_PL_Name
+        '
+        Me.PS_PL_Name.DataPropertyName = "PS_PL_Name"
+        Me.PS_PL_Name.HeaderText = "제품명"
+        Me.PS_PL_Name.Name = "PS_PL_Name"
+        Me.PS_PL_Name.ReadOnly = True
+        Me.PS_PL_Name.Width = 250
+        '
+        'PS_PO_Total
+        '
+        Me.PS_PO_Total.DataPropertyName = "PS_PO_Total"
+        Me.PS_PO_Total.HeaderText = "지시수량"
+        Me.PS_PO_Total.Name = "PS_PO_Total"
+        Me.PS_PO_Total.ReadOnly = True
+        '
+        'PS_St_Day
+        '
+        Me.PS_St_Day.DataPropertyName = "PS_St_Day"
+        Me.PS_St_Day.HeaderText = "시작일자"
+        Me.PS_St_Day.Name = "PS_St_Day"
+        Me.PS_St_Day.ReadOnly = True
+        '
+        'PS_St_Time
+        '
+        Me.PS_St_Time.DataPropertyName = "PS_St_Time"
+        Me.PS_St_Time.HeaderText = "시작시간"
+        Me.PS_St_Time.Name = "PS_St_Time"
+        Me.PS_St_Time.ReadOnly = True
+        '
+        'PS_En_Day
+        '
+        Me.PS_En_Day.DataPropertyName = "PS_En_Day"
+        Me.PS_En_Day.HeaderText = "완료일자"
+        Me.PS_En_Day.Name = "PS_En_Day"
+        Me.PS_En_Day.ReadOnly = True
+        '
+        'PS_En_Time
+        '
+        Me.PS_En_Time.DataPropertyName = "PS_En_Time"
+        Me.PS_En_Time.HeaderText = "완료시간"
+        Me.PS_En_Time.Name = "PS_En_Time"
+        Me.PS_En_Time.ReadOnly = True
+        '
+        'PS_Go
+        '
+        Me.PS_Go.DataPropertyName = "PS_Go"
+        Me.PS_Go.HeaderText = "투입량"
+        Me.PS_Go.Name = "PS_Go"
+        Me.PS_Go.ReadOnly = True
+        '
+        'PS_Total
+        '
+        Me.PS_Total.DataPropertyName = "PS_Total"
+        Me.PS_Total.HeaderText = "생산수량"
+        Me.PS_Total.Name = "PS_Total"
+        Me.PS_Total.ReadOnly = True
+        '
+        'PS_Er
+        '
+        Me.PS_Er.DataPropertyName = "PS_Er"
+        Me.PS_Er.HeaderText = "불량수량"
+        Me.PS_Er.Name = "PS_Er"
+        Me.PS_Er.ReadOnly = True
+        '
+        'PS_Bigo
+        '
+        Me.PS_Bigo.DataPropertyName = "PS_Bigo"
+        Me.PS_Bigo.HeaderText = "비고"
+        Me.PS_Bigo.Name = "PS_Bigo"
+        Me.PS_Bigo.ReadOnly = True
+        '
+        'TextBox111
+        '
+        Me.TextBox111.Location = New System.Drawing.Point(175, 526)
+        Me.TextBox111.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox111.Multiline = True
+        Me.TextBox111.Name = "TextBox111"
+        Me.TextBox111.Size = New System.Drawing.Size(914, 165)
+        Me.TextBox111.TabIndex = 139
+        '
+        'Panel53
+        '
+        Me.Panel53.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel53.Location = New System.Drawing.Point(22, 475)
+        Me.Panel53.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel53.Name = "Panel53"
+        Me.Panel53.Size = New System.Drawing.Size(1257, 1)
+        Me.Panel53.TabIndex = 138
+        '
+        'Panel54
+        '
+        Me.Panel54.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel54.Location = New System.Drawing.Point(22, 398)
+        Me.Panel54.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel54.Name = "Panel54"
+        Me.Panel54.Size = New System.Drawing.Size(1257, 1)
+        Me.Panel54.TabIndex = 38
+        '
+        'Panel55
+        '
+        Me.Panel55.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel55.Location = New System.Drawing.Point(22, 358)
+        Me.Panel55.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel55.Name = "Panel55"
+        Me.Panel55.Size = New System.Drawing.Size(1257, 1)
+        Me.Panel55.TabIndex = 38
+        '
+        'TextBox113
+        '
+        Me.TextBox113.Location = New System.Drawing.Point(175, 444)
+        Me.TextBox113.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox113.Multiline = True
+        Me.TextBox113.Name = "TextBox113"
+        Me.TextBox113.Size = New System.Drawing.Size(571, 25)
+        Me.TextBox113.TabIndex = 34
+        '
+        'TextBox115
+        '
+        Me.TextBox115.Location = New System.Drawing.Point(175, 406)
+        Me.TextBox115.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox115.Multiline = True
+        Me.TextBox115.Name = "TextBox115"
+        Me.TextBox115.Size = New System.Drawing.Size(571, 25)
+        Me.TextBox115.TabIndex = 32
+        '
+        'TextBox117
+        '
+        Me.TextBox117.Location = New System.Drawing.Point(175, 368)
+        Me.TextBox117.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox117.Multiline = True
+        Me.TextBox117.Name = "TextBox117"
+        Me.TextBox117.Size = New System.Drawing.Size(571, 25)
+        Me.TextBox117.TabIndex = 30
+        '
+        'Label124
+        '
+        Me.Label124.AutoSize = True
+        Me.Label124.Location = New System.Drawing.Point(19, 251)
+        Me.Label124.Name = "Label124"
+        Me.Label124.Size = New System.Drawing.Size(52, 15)
+        Me.Label124.TabIndex = 6
+        Me.Label124.Text = "제품명"
+        Me.Label124.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label125
+        '
+        Me.Label125.AutoSize = True
+        Me.Label125.Location = New System.Drawing.Point(19, 292)
+        Me.Label125.Name = "Label125"
+        Me.Label125.Size = New System.Drawing.Size(67, 15)
+        Me.Label125.TabIndex = 7
+        Me.Label125.Text = "지시수량"
+        Me.Label125.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TextBox119
+        '
+        Me.TextBox119.Location = New System.Drawing.Point(175, 328)
+        Me.TextBox119.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox119.Multiline = True
+        Me.TextBox119.Name = "TextBox119"
+        Me.TextBox119.Size = New System.Drawing.Size(571, 25)
+        Me.TextBox119.TabIndex = 28
+        '
+        'Label126
+        '
+        Me.Label126.AutoSize = True
+        Me.Label126.Location = New System.Drawing.Point(19, 332)
+        Me.Label126.Name = "Label126"
+        Me.Label126.Size = New System.Drawing.Size(52, 15)
+        Me.Label126.TabIndex = 8
+        Me.Label126.Text = "투입량"
+        Me.Label126.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'TextBox120
+        '
+        Me.TextBox120.Location = New System.Drawing.Point(175, 288)
+        Me.TextBox120.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox120.Multiline = True
+        Me.TextBox120.Name = "TextBox120"
+        Me.TextBox120.Size = New System.Drawing.Size(571, 25)
+        Me.TextBox120.TabIndex = 27
+        '
+        'TextBox121
+        '
+        Me.TextBox121.Location = New System.Drawing.Point(175, 248)
+        Me.TextBox121.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox121.Multiline = True
+        Me.TextBox121.Name = "TextBox121"
+        Me.TextBox121.Size = New System.Drawing.Size(571, 25)
+        Me.TextBox121.TabIndex = 26
+        '
+        'Label128
+        '
+        Me.Label128.AutoSize = True
+        Me.Label128.Location = New System.Drawing.Point(19, 372)
+        Me.Label128.Name = "Label128"
+        Me.Label128.Size = New System.Drawing.Size(67, 15)
+        Me.Label128.TabIndex = 10
+        Me.Label128.Text = "생산수량"
+        Me.Label128.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label130
+        '
+        Me.Label130.AutoSize = True
+        Me.Label130.Location = New System.Drawing.Point(19, 411)
+        Me.Label130.Name = "Label130"
+        Me.Label130.Size = New System.Drawing.Size(67, 15)
+        Me.Label130.TabIndex = 12
+        Me.Label130.Text = "불량수량"
+        Me.Label130.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label132
+        '
+        Me.Label132.AutoSize = True
+        Me.Label132.Location = New System.Drawing.Point(19, 449)
+        Me.Label132.Name = "Label132"
+        Me.Label132.Size = New System.Drawing.Size(52, 15)
+        Me.Label132.TabIndex = 14
+        Me.Label132.Text = "담당자"
+        Me.Label132.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label134
+        '
+        Me.Label134.AutoSize = True
+        Me.Label134.Location = New System.Drawing.Point(19, 558)
+        Me.Label134.Name = "Label134"
+        Me.Label134.Size = New System.Drawing.Size(105, 15)
+        Me.Label134.TabIndex = 16
+        Me.Label134.Text = "Remarks(비고)"
+        Me.Label134.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'PO_JOB
+        '
+        Me.PO_JOB.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.PO_JOB.DataPropertyName = "a1"
+        Me.PO_JOB.HeaderText = "JOB No"
+        Me.PO_JOB.Name = "PO_JOB"
+        Me.PO_JOB.ReadOnly = True
+        '
+        'PO_Code
+        '
+        Me.PO_Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.PO_Code.DataPropertyName = "a7"
+        Me.PO_Code.HeaderText = "품명"
+        Me.PO_Code.Name = "PO_Code"
+        Me.PO_Code.ReadOnly = True
+        '
+        'PO_PR_Code
+        '
+        Me.PO_PR_Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.PO_PR_Code.DataPropertyName = "a13"
+        Me.PO_PR_Code.HeaderText = "공정명"
+        Me.PO_PR_Code.Name = "PO_PR_Code"
+        Me.PO_PR_Code.ReadOnly = True
+        '
+        'PO_DE_Code
+        '
+        Me.PO_DE_Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.PO_DE_Code.DataPropertyName = "a24"
+        Me.PO_DE_Code.HeaderText = "부품명"
+        Me.PO_DE_Code.Name = "PO_DE_Code"
+        Me.PO_DE_Code.ReadOnly = True
+        '
+        'PO_Date
+        '
+        Me.PO_Date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.PO_Date.DataPropertyName = "a3"
+        Me.PO_Date.HeaderText = "등록일"
+        Me.PO_Date.Name = "PO_Date"
+        Me.PO_Date.ReadOnly = True
+        '
+        'PO_Name
+        '
+        Me.PO_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.PO_Name.DataPropertyName = "a10"
+        Me.PO_Name.HeaderText = "작성자"
+        Me.PO_Name.Name = "PO_Name"
+        Me.PO_Name.ReadOnly = True
+        '
+        'Frm_PC_Stock
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.Panel41)
+        Me.Controls.Add(Me.Com_Excel)
+        Me.Controls.Add(Me.Di_Panel2)
+        Me.Controls.Add(Me.Com_Contract)
+        Me.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Name = "Frm_PC_Stock"
+        Me.Size = New System.Drawing.Size(2154, 1138)
+        Me.Di_Panel2.ResumeLayout(False)
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel41.ResumeLayout(False)
+        Me.Panel41.PerformLayout()
+        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
+    Friend WithEvents Com_Excel As Button
+    Friend WithEvents Di_Panel2 As Panel
+    Friend WithEvents Color_Label As Label
+    Friend WithEvents Com_Contract As Button
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Button12 As Button
+    Friend WithEvents TextBox15 As TextBox
+    Friend WithEvents Button13 As Button
+    Friend WithEvents TextBox16 As TextBox
+    Friend WithEvents Button14 As Button
+    Friend WithEvents TextBox17 As TextBox
+    Friend WithEvents Panel24 As Panel
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents Panel41 As Panel
+    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents Com_Can As Button
+    Friend WithEvents Com_OK As Button
+    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents DataGridView5 As DataGridView
+    Friend WithEvents TextBox111 As TextBox
+    Friend WithEvents Panel53 As Panel
+    Friend WithEvents Panel54 As Panel
+    Friend WithEvents Panel55 As Panel
+    Friend WithEvents TextBox113 As TextBox
+    Friend WithEvents TextBox115 As TextBox
+    Friend WithEvents TextBox117 As TextBox
+    Friend WithEvents Label124 As Label
+    Friend WithEvents Label125 As Label
+    Friend WithEvents TextBox119 As TextBox
+    Friend WithEvents Label126 As Label
+    Friend WithEvents TextBox120 As TextBox
+    Friend WithEvents TextBox121 As TextBox
+    Friend WithEvents Label128 As Label
+    Friend WithEvents Label130 As Label
+    Friend WithEvents Label132 As Label
+    Friend WithEvents Label134 As Label
+    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Button4 As Button
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button3 As Button
+    Friend WithEvents ListBox1 As ListBox
+    Friend WithEvents Label100 As Label
+    Friend WithEvents ListBox2 As ListBox
+    Friend WithEvents SaveFileDialog1 As SaveFileDialog
+    Friend WithEvents PS_Sun As DataGridViewTextBoxColumn
+    Friend WithEvents PS_Name As DataGridViewTextBoxColumn
+    Friend WithEvents PS_PL_Name As DataGridViewTextBoxColumn
+    Friend WithEvents PS_PO_Total As DataGridViewTextBoxColumn
+    Friend WithEvents PS_St_Day As DataGridViewTextBoxColumn
+    Friend WithEvents PS_St_Time As DataGridViewTextBoxColumn
+    Friend WithEvents PS_En_Day As DataGridViewTextBoxColumn
+    Friend WithEvents PS_En_Time As DataGridViewTextBoxColumn
+    Friend WithEvents PS_Go As DataGridViewTextBoxColumn
+    Friend WithEvents PS_Total As DataGridViewTextBoxColumn
+    Friend WithEvents PS_Er As DataGridViewTextBoxColumn
+    Friend WithEvents PS_Bigo As DataGridViewTextBoxColumn
+    Friend WithEvents PO_JOB As DataGridViewTextBoxColumn
+    Friend WithEvents PO_Code As DataGridViewTextBoxColumn
+    Friend WithEvents PO_PR_Code As DataGridViewTextBoxColumn
+    Friend WithEvents PO_DE_Code As DataGridViewTextBoxColumn
+    Friend WithEvents PO_Date As DataGridViewTextBoxColumn
+    Friend WithEvents PO_Name As DataGridViewTextBoxColumn
+End Class

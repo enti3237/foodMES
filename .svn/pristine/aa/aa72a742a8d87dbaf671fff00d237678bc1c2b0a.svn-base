@@ -1,0 +1,90 @@
+﻿Public Class Frm_PD_Report12
+    Private Sub Frm_PD_Report8_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = True
+        palDetail.Visible = False
+
+    End Sub
+
+    Private Sub MR_Load()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT MR_Job, CR_Name, MR_Code, MR_Rev_No, MR_Prepare_Date FROM CR_Contract with(NOLOCK), MR_Order with(NOLOCK) where MR_Job = CR_Code order by MR_Job"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstMain.DataSource = DBT
+        End If
+
+        lstMain.ClearSelection()
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles btnMain.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = True
+        palDetail.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles btnDetail.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        palDetail.Visible = True
+    End Sub
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT * FROM CR_Contract with(NOLOCK), MR_Order with(NOLOCK) where MR_Job = CR_Code And MR_Code = '" & txtMRISNo2.Text & "' And MR_Rev_No = '" & txtMRISRev2.Text & "' order by MR_Job"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            txtJobNo2.Text = DBT.Rows(0)("MR_Job").ToString
+            txtJobName2.Text = DBT.Rows(0)("CR_Name").ToString
+            txtMRISNo2.Text = DBT.Rows(0)("MR_Code").ToString
+            txtMRISRev2.Text = DBT.Rows(0)("MR_Rev_No").ToString
+            txtPre2.Text = DBT.Rows(0)("MR_Prepared").ToString
+            dtpPreDate2.Text = DBT.Rows(0)("MR_Prepare_Date").ToString
+            txtApp2.Text = DBT.Rows(0)("MR_Approved").ToString
+            dtpAppDate2.Text = DBT.Rows(0)("MR_Approve_Date").ToString
+            txtIssu2.Text = DBT.Rows(0)("MR_Issued").ToString
+            dtpIssu2.Text = DBT.Rows(0)("MR_Issue_Date").ToString
+        End If
+    End Sub
+
+    Private Sub lstMain_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellDoubleClick
+        Label_Color(btnDetail, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        palDetail.Visible = True
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT MR_Code, MR_Sun, MR_PL_Name, MR_PL_Spec, MR_PL_Size, MR_Unit, MR_QTY, MR_Ts_Code, MR_Bigo FROM MR_Order_List with(NOLOCK) where MR_Code = '" & lstMain.Rows(e.RowIndex).Cells("MR_Code").Value.ToString & "' order by MR_Sun"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstDetail.DataSource = DBT
+            lstDetail.ClearSelection()
+        End If
+    End Sub
+
+    Private Sub lstDetail_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstDetail.CellClick
+        txtPLName3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_PL_Name").Value.ToString
+        txtSun3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_Sun").Value.ToString
+        txtSpec3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_PL_Spec").Value.ToString
+        txtSize3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_PL_Size").Value.ToString
+        txtUnit4.Text = lstDetail.Rows(e.RowIndex).Cells("MR_Unit").Value.ToString
+        txtQTY3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_QTY").Value.ToString
+        txtTSNo3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_Ts_Code").Value.ToString
+        txtBigo3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_Bigo").Value.ToString
+    End Sub
+End Class

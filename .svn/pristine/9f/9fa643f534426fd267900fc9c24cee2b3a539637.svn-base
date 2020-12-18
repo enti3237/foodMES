@@ -1,0 +1,167 @@
+﻿Public Class Frm_QC_Base
+    Dim QC_Label As String = "불량유형"
+
+    Private Sub Frm_QC_Base_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        'Grid_Code_Setup()
+
+        Search_Combo.Items.Add("장비")
+        Search_Combo.Items.Add("유형")
+        Search_Combo.Text = "장비"
+
+    End Sub
+    Public Function Grid_Code_Setup() As Boolean
+        Grid_Color(Grid_Code)
+
+        Grid_Code.AllowUserToAddRows = False
+        Grid_Code.RowTemplate.Height = 24
+        Grid_Code.ColumnCount = 6
+        Grid_Code.RowCount = 1
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Code.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(3).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(4).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+
+        Grid_Code.RowHeadersWidth = 10
+        Grid_Code.Columns(0).Width = 110
+        Grid_Code.Columns(1).Width = 110
+        Grid_Code.Columns(2).Width = 110
+        Grid_Code.Columns(3).Width = 110
+        Grid_Code.Columns(4).Width = 110
+        Grid_Code.Columns(5).Width = 110
+
+        Grid_Code.Columns(0).HeaderText = "코드"
+        Grid_Code.Columns(1).HeaderText = "장비"
+        Grid_Code.Columns(2).HeaderText = "순번"
+        Grid_Code.Columns(3).HeaderText = "유형"
+        Grid_Code.Columns(4).HeaderText = "구분"
+        Grid_Code.Columns(5).HeaderText = "비고"
+
+        Grid_Code_Setup = True
+    End Function
+
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs) Handles Search_Com.Click
+        Grid_Code_Display()
+
+    End Sub
+    Public Function Grid_Code_Display() As Boolean
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        Grid_Code.RowCount = 1
+        Select Case Search_Combo.Text
+            Case "장비"
+                StrSQL = "Select QB_Code,QB_Device,QB_Sun,QB_Case,QB_Gubun,QB_Bigo From QC_Base with(NOLOCK) Where QB_Device Like '" & Search_Text.Text & "%' Order By QB_Device,QB_Sun"
+            Case "유형"
+                StrSQL = "Select QB_Code,QB_Device,QB_Sun,QB_Case,QB_Gubun,QB_Bigo From QC_Base with(NOLOCK) Where QB_Case Like '" & Search_Text.Text & "%' Order By QB_Device,QB_Sun"
+        End Select
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Grid_Code.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                For j = 0 To Grid_Code.ColumnCount - 1
+                    Grid_Code.Item(j, i).Value = DBT.Rows(i).Item(j)
+                Next j
+            Next i
+        Else
+            Grid_Code.RowCount = 1
+            For j = 0 To Grid_Code.ColumnCount - 1
+                Grid_Code.Item(j, 0).Value = ""
+            Next j
+        End If
+        Grid_Code_Display = True
+    End Function
+
+    Private Sub Save_Com_Click(sender As Object, e As EventArgs) Handles Save_Com.Click
+        'Grid_Code 를 저장 한다.
+        'DataBase에서 필드 이름 가지고 오기
+
+        Dim Table_Name As String
+        Dim j As Long
+        Dim DBT As DataTable = Nothing
+        Dim Field_Name(500) As String
+        Dim i As Integer
+        j = 0
+        For i = 1 To Grid_Code.RowCount - 1
+            If Grid_Code.Rows(i).HeaderCell.Value = "*" Then
+                j = 1
+            End If
+        Next i
+        If j = 0 Then
+            Exit Sub
+        End If
+
+
+        Table_Name = "QC_Base"
+        j = 0
+        StrSQL = "Select sys.Columns.Name From sys.Tables with(NOLOCK) , sys.Columns with(NOLOCK) Where sys.Tables.name = '" & Table_Name & "' And sys.Tables.Object_id = sys.Columns.Object_id Order By sys.Columns.column_id"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                Field_Name(j) = DBT.Rows(i)("Name").ToString
+                j = j + 1
+            Next i
+        End If
+        j = j - 1
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "UPDATE " & Table_Name & " SET "
+        Field_Name(500) = "Ok"
+        For i = 1 To j
+            If Grid_Code.Rows(i).HeaderCell.Value = "*" Then
+                If Field_Name(500) = "" Then
+                    StrSQL = StrSQL & ","
+                End If
+                StrSQL = StrSQL & " " & Table_Name & "." & Field_Name(i) & " = '" & Replace(Grid_Code.Item(1, i).Value, "'", "''") & "'"
+                If Field_Name(500) = "Ok" Then
+                    Field_Name(500) = ""
+                End If
+            End If
+        Next i
+        StrSQL = StrSQL & " WHERE " & Table_Name & "." & Field_Name(0) & " = '" & Grid_Code.Item(1, 0).Value & "'"
+        Re_Count = DB_Execute()
+
+    End Sub
+
+    Private Sub Insert_Com_Click(sender As Object, e As EventArgs) Handles Insert_Com.Click
+        '새로운 코드 추가
+        Dim DBT As New DataTable
+        Dim JP_Code As Long
+        Dim My_Date As String
+        Dim My_Time As String
+
+        StrSQL = "Select GETDATE() "
+        Re_Count = DB_Select(DBT)
+
+
+        If Re_Count = 0 Then
+            Exit Sub
+        Else
+            My_Date = DBT.Rows(0).Item(0)
+            JP_Code = Mid(My_Date, 1, 4) & Mid(My_Date, 6, 2) & Mid(My_Date, 9, 2)
+            My_Time = Mid(My_Date, 12, 8)
+            My_Date = Mid(My_Date, 1, 4) & "-" & Mid(My_Date, 6, 2) & "-" & Mid(My_Date, 9, 2)
+        End If
+
+
+        StrSQL = "Select top (1) QB_Code From QC_Base with(NOLOCK) Order By QB_Code Desc "
+        Re_Count = DB_Select(DBT)
+        If Re_Count = 0 Then
+            JP_Code = JP_Code & "001"
+        Else
+            JP_Code = JP_Code & Format(Val(Mid(DBT.Rows(0).Item(0), 11, 3)) + 1, "00#")
+        End If
+
+        '추가한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Insert into QC_Base (QB_Code,QB_Device,QB_Sun,QB_Case,QB_Gubun,QB_Bigo)  Values ('QB" & JP_Code & "', '', '', '', '', '')"
+        Re_Count = DB_Execute()
+        Grid_Code_Display()
+    End Sub
+End Class

@@ -1,0 +1,52 @@
+﻿Public Class Frm_PL_POP
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = " Select CL.CR_List_Code, CL.CR_Code, CL.CR_Rev_No, CL.CR_Sun, CL.CR_PL_Code, CL.CR_PL_Name, CR.CR_Name CR_Name " &
+                 " From CR_Contract_List CL, CR_Contract CR " &
+                 " Where 1 = 1 " &
+                 " And CL.CR_Rev_No = (Select isnull(max(CR_Rev_No), 1)  " &
+                 "                     From CR_Contract_List        " &
+                 "                     Where CR_Code = CL.CR_Code)  " &
+                 " And CL.CR_Code Like '%" & TextBox15.Text & "%' " &
+                 " And CR.CR_Name Like '%" & TextBox16.Text & "%' " &
+                 " And CL.CR_Code = CR.CR_Code " &
+                 " And CL.CR_Rev_No = CR.CR_Rev_No " &
+                 " order by CL.CR_Code, CL.CR_Rev_No, CL.CR_Sun "
+
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+        DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Me.Close()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.DialogResult = DialogResult.OK
+    End Sub
+
+    Private Sub btnJobSearch_Click(sender As Object, e As EventArgs) Handles btnJobSearch.Click
+
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            cboDBT.Columns.Add("CR_Code")
+            cboDBT.Columns.Add("CR_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Name").Value.ToString
+            TextBox15.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString
+            TextBox16.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Name").Value.ToString
+            'cboCustomer2.DataSource = cboDBT
+            'cboCustomer2.ValueMember = "CR_Code"
+            'cboCustomer2.DisplayMember = "CR_Name"
+        End If
+        pop1.Dispose()
+
+    End Sub
+End Class

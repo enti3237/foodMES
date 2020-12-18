@@ -1,0 +1,65 @@
+﻿Public Class Frm_PD_Report6
+    Private Sub Frm_PD_Report6_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT a5,a3,a20,a4,a8
+           FROM  test with(NOLOCK) "
+
+        Re_Count = DB_Select(DBT)
+        DataGridView5.DataSource = DBT
+        'Grid_PD_Load()
+    End Sub
+
+    Private Sub Grid_PD_Load()
+        Dim i As Integer
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT CS_JOB_Code, CS_Date, CS_ID, CS_Spec, CS_Size, CS_Qty, CS_Inven_Qty, CS_Bigo 
+                    FROM CM_Stock"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+
+    End Sub
+
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT CS_JOB_Code, CS_Date, CS_ID, CS_Spec, CS_Size, CS_Qty, CS_Inven_Qty, CS_Bigo 
+        '            FROM CM_Stock where CS_JOB_Code Like '%" & TextBox15.Text & "%'"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView5.DataSource = DBT
+        'DataGridView5.ClearSelection()
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT CS_JOB_Code, CS_Date, CS_ID, CS_Spec, CS_Size, CS_Qty, CS_Inven_Qty, CS_Bigo 
+        '            FROM CM_Stock where CS_ID Like '%" & TextBox16.Text & "%'"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView5.DataSource = DBT
+        'DataGridView5.ClearSelection()
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT CS_JOB_Code, CS_Date, CS_ID, CS_Spec, CS_Size, CS_Qty, CS_Inven_Qty, CS_Bigo 
+        '            FROM CM_Stock where CS_Bigo Like '%" & TextBox17.Text & "%'"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView5.DataSource = DBT
+        'DataGridView5.ClearSelection()
+    End Sub
+End Class

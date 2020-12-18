@@ -1,0 +1,264 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+
+Public Class Frm_Deliver_Tag
+    Dim xls As New Excel.Application
+    Dim xworkbook As Excel.Workbook
+    Dim xworksheet As Excel.Worksheet
+    Dim xRange As Excel.Range
+    Dim xlotno As String
+    Private Sub Frm_Deliver_Tag_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Panel_Jaje.Top = 40
+        Panel_Jaje.Left = 10
+        Panel_List.Top = 40
+        Panel_List.Left = 10
+
+        Panel_List.Visible = True
+        Panel_Jaje.Visible = True
+
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT a19,a1,a6,a7,a8,a9,a10,a3
+        FROM  test with(NOLOCK)"
+
+        Re_Count = DB_Select(DBT)
+        DataGridView5.DataSource = DBT
+
+        'Tag_Lode()
+        'Setup()
+        'text_clear()
+    End Sub
+
+    Private Sub Setup()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        'CRS_NO, 공정명 콤보박스 부여
+        StrSQL = "SELECT CRS_Announcement FROM Contract_CRS where CRS_Announcement != ''"
+        Re_Count = DB_Select(DBT)
+
+        Dim i As Integer
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                ComboBox1.Items.Add(DBT.Rows(i)("CRS_Announcement").ToString)
+
+            Next
+            ComboBox1.SelectedIndex = 0
+        End If
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles Com_Contract.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel_List.Visible = True
+        Panel_Jaje.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles Com_Excel.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel_List.Visible = False
+        Panel_Jaje.Visible = True
+    End Sub
+
+    Private Sub Tag_Lode()
+        Dim DBT As DataTable
+        Dim i As Integer
+
+        DBT = Nothing
+
+        StrSQL = StrSQL = "SELECT a19,a1,a6,a7,a8,a9,a10,a3
+        FROM  test with(NOLOCK)"
+
+        Re_Count = DB_Select(DBT)
+        DataGridView5.DataSource = DBT
+
+        'DBT = Nothing
+        'StrSQL = "SELECT '' No, DT_Code, DT_CS_Code, DT_CS_Name, DT_QTY, DT_Unit, DT_Manager, DT_Date from Deliver_Tag"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView5.DataSource = DBT
+        'DataGridView5.ClearSelection()
+
+        'For i = 0 To DBT.Rows.Count - 1
+        '    DataGridView5.Rows(i).Cells("No").Value = i + 1
+        '  Next
+
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Label_Color(Com_Contract, Color_Label, Di_Panel2)
+        Panel_List.Visible = True
+        Panel_Jaje.Visible = False
+    End Sub
+
+    Private Sub text_clear()
+        ComboBox1.Text = ""
+        TextBox7.Text = ""
+        TextBox3.Text = ""
+        TextBox1.Text = ""
+        TextBox5.Text = ""
+        TextBox6.Text = ""
+        TextBox9.Text = ""
+        TextBox10.Text = ""
+        TextBox2.Text = ""
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Dim DBT As DataTable
+        Dim sun As Integer
+        DBT = Nothing
+        StrSQL = "select DT_Sun from Deliver_Tag order by DT_Sun desc"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            sun = Convert.ToInt32(DBT.Rows(0)("DT_Sun").ToString) + 1
+        Else
+            sun = 1
+        End If
+
+        StrSQL = "INSERT INTO Deliver_Tag(DT_Code,DT_Grade,DT_Sun,DT_CS_Code,DT_CS_Name,
+                                          DT_CS_Spec, DT_QTY, DT_Material, DT_Unit,
+                                          DT_Manager, DT_Date) VALUES(
+                                          '" & ComboBox1.Text & "','" & TextBox7.Text & "','" & sun.ToString & "','" & TextBox9.Text & "','" & TextBox1.Text & "',
+                                          '" & TextBox5.Text & "','" & TextBox10.Text & "','" & TextBox6.Text & "','" & TextBox2.Text & "',
+                                          '" & TextBox3.Text & "','" & DateTime.Today & "')"
+
+        Re_Count = DB_Execute()
+        If Re_Count > 0 Then
+            MsgBox("추가 완료")
+
+        Else
+            MsgBox("추가 실패")
+        End If
+
+    End Sub
+
+    Private Sub DataGridView5_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView5.CellDoubleClick, DataGridView1.CellDoubleClick
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+        StrSQL = "SELECT * from Deliver_Tag where DT_Code = '" & DataGridView5.Rows(e.RowIndex).Cells("DT_Code").Value.ToString & "'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            Grid_Main.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                Grid_Main.Rows(i).Cells("DT_Sun").Value = DBT.Rows(i)("DT_Sun").ToString
+                Grid_Main.Rows(i).Cells("DT_CS_Code2").Value = DBT.Rows(i)("DT_CS_Code").ToString
+                Grid_Main.Rows(i).Cells("DT_CS_Name2").Value = DBT.Rows(i)("DT_CS_Name").ToString
+                Grid_Main.Rows(i).Cells("DT_CS_Spec2").Value = DBT.Rows(i)("DT_CS_Spec").ToString
+                Grid_Main.Rows(i).Cells("DT_Material2").Value = DBT.Rows(i)("DT_Material").ToString
+                Grid_Main.Rows(i).Cells("DT_QTY2").Value = DBT.Rows(i)("DT_QTY").ToString
+                Grid_Main.Rows(i).Cells("DT_Unit2").Value = DBT.Rows(i)("DT_Unit").ToString
+            Next
+
+            ComboBox1.Text = DBT.Rows(0)("DT_Code").ToString
+            TextBox7.Text = DBT.Rows(0)("DT_Grade").ToString
+            TextBox3.Text = DBT.Rows(0)("DT_Manager").ToString
+        End If
+
+
+        Label_Color(Com_Excel, Color_Label, Di_Panel2)
+        Panel_List.Visible = False
+        Panel_Jaje.Visible = True
+
+    End Sub
+
+    Private Sub Grid_Main_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Main.CellClick
+        TextBox1.Text = Grid_Main.Rows(e.RowIndex).Cells("DT_CS_Name2").Value.ToString
+        TextBox5.Text = Grid_Main.Rows(e.RowIndex).Cells("DT_CS_Spec2").Value.ToString
+        TextBox6.Text = Grid_Main.Rows(e.RowIndex).Cells("DT_Material2").Value.ToString
+        TextBox9.Text = Grid_Main.Rows(e.RowIndex).Cells("DT_CS_Code2").Value.ToString
+        TextBox10.Text = Grid_Main.Rows(e.RowIndex).Cells("DT_QTY2").Value.ToString
+        TextBox2.Text = Grid_Main.Rows(e.RowIndex).Cells("DT_Unit2").Value.ToString
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+
+        Dim i As Integer
+        xls.Visible = True
+        xworkbook = xls.Workbooks.Open(Application.StartupPath + "\\납품태그\\대.xlsx")
+        xworksheet = xworkbook.Sheets(1)
+
+        xworksheet.Range("E1").Value = ComboBox1.Text
+        xworksheet.Range("K1").Value = TextBox9.Text
+        xworksheet.Range("E5").Value = "1 of " + TextBox10.Text + " " + TextBox2.Text
+        xworksheet.Range("K5").Value = TextBox7.Text
+        xworksheet.Range("E9").Value = TextBox1.Text
+        xworksheet.Range("E13").Value = TextBox5.Text
+        xworksheet.Range("E17").Value = TextBox6.Text
+        xworksheet.Range("A1:M28").Copy()
+
+        If Convert.ToInt32(TextBox10.Text) > 1 Then
+            For i = 1 To Convert.ToInt32(TextBox10.Text) - 1
+                xworksheet.Range("A" + ((i * 29) + 1).ToString + ":M" + ((i * 29) + 28).ToString).Value = xworksheet.Range("A1:M28").Value
+                xworksheet.Range("A" + ((i * 29) + 1).ToString + ":M" + ((i * 29) + 28).ToString).PasteSpecial()
+                xworksheet.Range("E" + ((i * 29) + 5).ToString).Value = (i + 1).ToString + " of " + TextBox10.Text + " " + TextBox2.Text
+            Next
+        End If
+        'xworksheet.Range("A30:M57").Value = xworksheet.Range("A1:M28").Value
+        'xworksheet.Range("A30:M57").PasteSpecial()
+        xworksheet.Range("A1").Select()
+
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        Dim i As Integer
+        xls.Visible = True
+        xworkbook = xls.Workbooks.Open(Application.StartupPath + "\\납품태그\\중.xlsx")
+        xworksheet = xworkbook.Sheets(1)
+
+        xworksheet.Range("E1").Value = ComboBox1.Text
+        xworksheet.Range("K1").Value = TextBox9.Text
+        xworksheet.Range("E3").Value = "1 of " + TextBox10.Text + " " + TextBox2.Text
+        xworksheet.Range("K3").Value = TextBox7.Text
+        xworksheet.Range("E5").Value = TextBox1.Text
+        xworksheet.Range("E7").Value = TextBox5.Text
+        xworksheet.Range("E9").Value = TextBox6.Text
+        xworksheet.Range("A1:M14").Copy()
+
+        If Convert.ToInt32(TextBox10.Text) > 1 Then
+            For i = 1 To Convert.ToInt32(TextBox10.Text) - 1
+                xworksheet.Range("A" + ((i * 15) + 1).ToString + ":M" + ((i * 15) + 14).ToString).Value = xworksheet.Range("A1:M14").Value
+                xworksheet.Range("A" + ((i * 15) + 1).ToString + ":M" + ((i * 15) + 14).ToString).PasteSpecial()
+                xworksheet.Range("E" + ((i * 15) + 3).ToString).Value = (i + 1).ToString + " of " + TextBox10.Text + " " + TextBox2.Text
+            Next
+        End If
+        'xworksheet.Range("A30:M57").Value = xworksheet.Range("A1:M28").Value
+        'xworksheet.Range("A30:M57").PasteSpecial()
+        xworksheet.Range("A1").Select()
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Dim i As Integer
+        xls.Visible = True
+        xworkbook = xls.Workbooks.Open(Application.StartupPath + "\\납품태그\\소.xlsx")
+        xworksheet = xworkbook.Sheets(1)
+
+        xworksheet.Range("D1").Value = ComboBox1.Text
+        xworksheet.Range("H1").Value = TextBox9.Text
+        xworksheet.Range("D2").Value = "1 of " + TextBox10.Text + " " + TextBox2.Text
+        xworksheet.Range("H2").Value = TextBox7.Text
+        xworksheet.Range("D3").Value = TextBox1.Text
+        xworksheet.Range("D4").Value = TextBox5.Text
+        xworksheet.Range("D5").Value = TextBox6.Text
+        xworksheet.Range("A1:I7").Copy()
+
+        If Convert.ToInt32(TextBox10.Text) > 1 Then
+            For i = 1 To Convert.ToInt32(TextBox10.Text) - 1
+                xworksheet.Range("A" + ((i * 8) + 1).ToString + ":I" + ((i * 8) + 7).ToString).Value = xworksheet.Range("A1:I7").Value
+                xworksheet.Range("A" + ((i * 8) + 1).ToString + ":I" + ((i * 8) + 7).ToString).PasteSpecial()
+                xworksheet.Range("D" + ((i * 8) + 2).ToString).Value = (i + 1).ToString + " of " + TextBox10.Text + " " + TextBox2.Text
+            Next
+        End If
+        'xworksheet.Range("A30:M57").Value = xworksheet.Range("A1:M28").Value
+        'xworksheet.Range("A30:M57").PasteSpecial()
+        xworksheet.Range("A1").Select()
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+
+    End Sub
+End Class

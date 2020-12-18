@@ -1,0 +1,94 @@
+﻿Public Class UCFrm9
+    Private Sub UCFrm9_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Grid_Color(DataGridView1)
+        Grid_Color(DataGridView2)
+        Grid_Color(DataGridView3)
+        Grid_Color(DataGridView4)
+        Grid_Color(DataGridView5)
+        Grid_Color(DataGridView6)
+
+        DataGridView1.RowHeadersWidth = 10
+        DataGridView2.RowHeadersWidth = 10
+        DataGridView3.RowHeadersWidth = 10
+        DataGridView4.RowHeadersWidth = 10
+        DataGridView5.RowHeadersWidth = 10
+        DataGridView6.RowHeadersWidth = 10
+
+        DataGridView1_Setup()
+    End Sub
+
+    Private Sub DataGridView1_Setup()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT DISTINCT PRDCD, PRDNM FROM Plan_List"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+    End Sub
+
+    Private Sub DataGridView2_Setup(PRDCE As String)
+        Dim DBT As DataTable
+        DBT = Nothing
+        StrSQL = "SELECT PRDCD, ITMCD, ITMNM, ITMSP, SIZE, QTY FROM Plan_List Where PRDCD = '" & PRDCE & "'"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView2.DataSource = DBT
+    End Sub
+
+    Private Sub DataGridView3_Setup(PRDCE As String, ITMCD As String)
+        Dim DBT As DataTable
+        DBT = Nothing
+        StrSQL = "SELECT WHRQSTPLANDATE, DRWPLANDATE, CPPLANDATE, PRPLANDATE, PSPLANDATE FROM Plan_List Where PRDCD = '" & PRDCE & "' AND ITMCD = '" & ITMCD & "'"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView3.DataSource = DBT
+    End Sub
+
+    Private Sub DataGridView4_Setup(PRDCE As String, ITMCD As String)
+        Dim DBT As DataTable
+        DBT = Nothing
+        StrSQL = "SELECT POPLANDATE, VENDORNM, DELIVERYPLACE, RIRPLANDATE FROM Plan_List Where PRDCD = '" & PRDCE & "' AND ITMCD = '" & ITMCD & "'"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView4.DataSource = DBT
+    End Sub
+
+    Private Sub DataGridView5_Setup(PRDCE As String, ITMCD As String)
+        Dim DBT As DataTable
+        DBT = Nothing
+        StrSQL = "SELECT RIRRQSTDATE, QAENDPLANDATE FROM Plan_List Where PRDCD = '" & PRDCE & "' AND ITMCD = '" & ITMCD & "'"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+    End Sub
+
+    Private Sub DataGridView6_Setup(PRDCE As String, ITMCD As String)
+        Dim DBT As DataTable
+        DBT = Nothing
+        StrSQL = "SELECT MRISPLANDATE, WHPLACE FROM Plan_List Where PRDCD = '" & PRDCE & "' AND ITMCD = '" & ITMCD & "'"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView6.DataSource = DBT
+    End Sub
+
+    Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellClick
+        Dim PRDCE As String
+        PRDCE = DataGridView1.Rows(e.RowIndex).Cells("PRDCD").Value.ToString
+        DataGridView2_Setup(PRDCE)
+    End Sub
+
+    Private Sub DataGridView2_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellClick
+        Dim ITMCD As String
+        Dim PRDCE As String
+        PRDCE = DataGridView2.Rows(e.RowIndex).Cells("PRDCD2").Value.ToString
+        ITMCD = DataGridView2.Rows(e.RowIndex).Cells("ITMCD").Value.ToString
+        DataGridView3_Setup(PRDCE, ITMCD)
+        DataGridView4_Setup(PRDCE, ITMCD)
+        DataGridView5_Setup(PRDCE, ITMCD)
+        DataGridView6_Setup(PRDCE, ITMCD)
+    End Sub
+End Class

@@ -1,0 +1,118 @@
+﻿Public Class UCFrm6
+    Private Sub UCFrm6_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        DataGridView1_Setup()
+        DataGridView2_Setup()
+
+        DataGridView1.ClearSelection()
+        DataGridView2.ClearSelection()
+
+
+        Search_Combo.Items.Add("부서명")
+        Search_Combo.Items.Add("사원번호")
+        Search_Combo.Items.Add("사원명")
+        Search_Combo.Text = "부서명"
+
+    End Sub
+
+    Private Sub DataGridView2_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellClick
+        If e.ColumnIndex = Column7.Index Then
+            DataGridView2.Rows(e.RowIndex).Cells(2).Value = "읽기"
+        End If
+
+        If e.ColumnIndex = Column8.Index Then
+            DataGridView2.Rows(e.RowIndex).Cells(2).Value = "읽기쓰기"
+        End If
+
+        If e.ColumnIndex = Column9.Index Then
+            DataGridView2.Rows(e.RowIndex).Cells(2).Value = "사용불가"
+        End If
+    End Sub
+
+    Private Sub DataGridView1_Setup()
+        Grid_Color(DataGridView1)
+
+        DataGridView1.RowHeadersWidth = 10
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT Man_Code, Man_Name, Man_Bu FROM Man"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+    End Sub
+
+    Private Sub DataGridView1_Search()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        Select Case Search_Combo.Text
+            Case "부서명"
+                StrSQL = "Select Man_Code, Man_Name, Man_Bu From Man Where Man_Bu Like '%" & Search_Text.Text & "%'"
+            Case "사원번호"
+                StrSQL = "Select Man_Code, Man_Name, Man_Bu From Man Where Man_Code Like '%" & Search_Text.Text & "%'"
+            Case "사원명"
+                StrSQL = "Select Man_Code, Man_Name, Man_Bu From Man Where Man_Name Like '%" & Search_Text.Text & "%'"
+        End Select
+
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+    End Sub
+
+    Private Sub DataGridView2_Setup()
+        Grid_Color(DataGridView2)
+
+        DataGridView2.RowHeadersWidth = 10
+        DataGridView2.Columns(0).Width = 150
+        DataGridView2.Columns(1).Width = 150
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT * FROM Menu_Setup_무진기연"
+        Re_Count = DB_Select(DBT)
+
+        Dim i As Integer
+        Dim j As Integer
+        Dim k As Integer
+        k = 0
+        If Re_Count > 0 Then
+            For i = 0 To 8
+                For j = 2 To DBT.Columns.Count - 1
+                    If DBT.Rows(i)(j).ToString IsNot "" Then
+                        DataGridView2.RowCount += 1
+                        DataGridView2.Rows(k).Cells("Column5").Value = DBT.Rows(i)(j).ToString
+                        k += 1
+                    End If
+                Next
+            Next
+
+            k = 0
+
+            For i = 0 To 8
+                For j = 2 To DBT.Columns.Count - 1
+                    If DBT.Rows(i)(j).ToString IsNot "" Then
+                        DataGridView2.Rows(k).Cells("Column4").Value = DBT.Rows(i + 13)(j).ToString
+                        k += 1
+                    End If
+                Next
+            Next
+
+
+            For i = 0 To DataGridView2.RowCount - 1
+                DataGridView2.Rows(i).Cells(3).Value = "✔"
+                DataGridView2.Rows(i).Cells(4).Value = "✔"
+                DataGridView2.Rows(i).Cells(5).Value = "✔"
+                DataGridView2.Rows(i).Cells(2).Value = "사용불가"
+            Next
+
+        End If
+    End Sub
+
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs) Handles Search_Com.Click
+        DataGridView1_Search()
+    End Sub
+End Class

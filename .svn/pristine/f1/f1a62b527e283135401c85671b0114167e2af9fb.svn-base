@@ -1,0 +1,228 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_PL_POP
+    Inherits System.Windows.Forms.Form
+
+    'Form은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.CR_List_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CL_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CL_Sun = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CL_PL_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CL_PL_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.TextBox15 = New System.Windows.Forms.TextBox()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.TextBox16 = New System.Windows.Forms.TextBox()
+        Me.btnJobSearch = New System.Windows.Forms.Button()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Button14
+        '
+        Me.Button14.BackColor = System.Drawing.Color.White
+        Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button14.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button14.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button14.Location = New System.Drawing.Point(741, 53)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(150, 27)
+        Me.Button14.TabIndex = 323
+        Me.Button14.Text = "조회"
+        Me.Button14.UseVisualStyleBackColor = False
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.AllowUserToDeleteRows = False
+        Me.DataGridView1.AllowUserToResizeColumns = False
+        Me.DataGridView1.AllowUserToResizeRows = False
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CR_List_Code, Me.CL_Code, Me.CR_Rev_No, Me.CL_Sun, Me.CL_PL_Code, Me.CL_PL_Name})
+        Me.DataGridView1.Location = New System.Drawing.Point(43, 84)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.ReadOnly = True
+        Me.DataGridView1.RowHeadersVisible = False
+        Me.DataGridView1.RowTemplate.Height = 23
+        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DataGridView1.Size = New System.Drawing.Size(848, 211)
+        Me.DataGridView1.TabIndex = 322
+        '
+        'CR_List_Code
+        '
+        Me.CR_List_Code.DataPropertyName = "CR_List_Code"
+        Me.CR_List_Code.HeaderText = "Job 물품 항목ID"
+        Me.CR_List_Code.Name = "CR_List_Code"
+        Me.CR_List_Code.ReadOnly = True
+        Me.CR_List_Code.Width = 130
+        '
+        'CL_Code
+        '
+        Me.CL_Code.DataPropertyName = "CL_Code"
+        Me.CL_Code.HeaderText = "JOB No"
+        Me.CL_Code.Name = "CL_Code"
+        Me.CL_Code.ReadOnly = True
+        '
+        'CR_Rev_No
+        '
+        Me.CR_Rev_No.DataPropertyName = "CR_Rev_No"
+        Me.CR_Rev_No.HeaderText = "Job개정번호"
+        Me.CR_Rev_No.Name = "CR_Rev_No"
+        Me.CR_Rev_No.ReadOnly = True
+        '
+        'CL_Sun
+        '
+        Me.CL_Sun.DataPropertyName = "CL_Sun"
+        Me.CL_Sun.HeaderText = "순번"
+        Me.CL_Sun.Name = "CL_Sun"
+        Me.CL_Sun.ReadOnly = True
+        '
+        'CL_PL_Code
+        '
+        Me.CL_PL_Code.DataPropertyName = "CL_PL_Code"
+        Me.CL_PL_Code.HeaderText = "제품코드"
+        Me.CL_PL_Code.Name = "CL_PL_Code"
+        Me.CL_PL_Code.ReadOnly = True
+        '
+        'CL_PL_Name
+        '
+        Me.CL_PL_Name.DataPropertyName = "CL_PL_Name"
+        Me.CL_PL_Name.HeaderText = "제품명"
+        Me.CL_PL_Name.Name = "CL_PL_Name"
+        Me.CL_PL_Name.ReadOnly = True
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(41, 59)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(45, 12)
+        Me.Label3.TabIndex = 321
+        Me.Label3.Text = "Job No"
+        '
+        'TextBox15
+        '
+        Me.TextBox15.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox15.Location = New System.Drawing.Point(92, 53)
+        Me.TextBox15.Name = "TextBox15"
+        Me.TextBox15.Size = New System.Drawing.Size(150, 25)
+        Me.TextBox15.TabIndex = 320
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.White
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button2.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button2.Location = New System.Drawing.Point(216, 322)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(150, 27)
+        Me.Button2.TabIndex = 327
+        Me.Button2.Text = "취소"
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.White
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button1.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button1.Location = New System.Drawing.Point(43, 322)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(150, 27)
+        Me.Button1.TabIndex = 326
+        Me.Button1.Text = "선택"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(311, 59)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(37, 12)
+        Me.Label1.TabIndex = 329
+        Me.Label1.Text = "Job명"
+        '
+        'TextBox16
+        '
+        Me.TextBox16.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox16.Location = New System.Drawing.Point(362, 53)
+        Me.TextBox16.Name = "TextBox16"
+        Me.TextBox16.Size = New System.Drawing.Size(150, 25)
+        Me.TextBox16.TabIndex = 328
+        '
+        'btnJobSearch
+        '
+        Me.btnJobSearch.BackColor = System.Drawing.Color.White
+        Me.btnJobSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnJobSearch.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnJobSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnJobSearch.Location = New System.Drawing.Point(247, 52)
+        Me.btnJobSearch.Name = "btnJobSearch"
+        Me.btnJobSearch.Size = New System.Drawing.Size(31, 27)
+        Me.btnJobSearch.TabIndex = 378
+        Me.btnJobSearch.Text = "⌕"
+        Me.btnJobSearch.UseVisualStyleBackColor = False
+        '
+        'Frm_PL_POP
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(934, 450)
+        Me.Controls.Add(Me.btnJobSearch)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.TextBox16)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.Button14)
+        Me.Controls.Add(Me.DataGridView1)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.TextBox15)
+        Me.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Name = "Frm_PL_POP"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "계약 품목 조회"
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents Button14 As Button
+    Public WithEvents DataGridView1 As DataGridView
+    Friend WithEvents Label3 As Label
+    Friend WithEvents TextBox15 As TextBox
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Label1 As Label
+    Friend WithEvents TextBox16 As TextBox
+    Friend WithEvents CR_List_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CL_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Rev_No As DataGridViewTextBoxColumn
+    Friend WithEvents CL_Sun As DataGridViewTextBoxColumn
+    Friend WithEvents CL_PL_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CL_PL_Name As DataGridViewTextBoxColumn
+    Friend WithEvents btnJobSearch As Button
+End Class

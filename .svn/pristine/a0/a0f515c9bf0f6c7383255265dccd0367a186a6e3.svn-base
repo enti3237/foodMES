@@ -1,0 +1,202 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class UserControl1
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.Panel_List = New System.Windows.Forms.Panel()
+        Me.Search_Com = New System.Windows.Forms.Button()
+        Me.Search_Text = New System.Windows.Forms.TextBox()
+        Me.Search_Combo = New System.Windows.Forms.ComboBox()
+        Me.txtUnderLine1 = New System.Windows.Forms.Panel()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Panel_List.SuspendLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Panel_List
+        '
+        Me.Panel_List.Controls.Add(Me.DataGridView1)
+        Me.Panel_List.Controls.Add(Me.txtUnderLine1)
+        Me.Panel_List.Controls.Add(Me.Search_Com)
+        Me.Panel_List.Controls.Add(Me.Search_Text)
+        Me.Panel_List.Controls.Add(Me.Search_Combo)
+        Me.Panel_List.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel_List.Location = New System.Drawing.Point(75, 29)
+        Me.Panel_List.Name = "Panel_List"
+        Me.Panel_List.Size = New System.Drawing.Size(939, 784)
+        Me.Panel_List.TabIndex = 0
+        '
+        'Search_Com
+        '
+        Me.Search_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Search_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Search_Com.ForeColor = System.Drawing.Color.Black
+        Me.Search_Com.Location = New System.Drawing.Point(153, 13)
+        Me.Search_Com.Name = "Search_Com"
+        Me.Search_Com.Size = New System.Drawing.Size(108, 54)
+        Me.Search_Com.TabIndex = 14
+        Me.Search_Com.Text = "검색"
+        Me.Search_Com.UseVisualStyleBackColor = False
+        '
+        'Search_Text
+        '
+        Me.Search_Text.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Search_Text.Location = New System.Drawing.Point(16, 42)
+        Me.Search_Text.Name = "Search_Text"
+        Me.Search_Text.Size = New System.Drawing.Size(132, 25)
+        Me.Search_Text.TabIndex = 13
+        '
+        'Search_Combo
+        '
+        Me.Search_Combo.Font = New System.Drawing.Font("맑은 고딕", 10.0!)
+        Me.Search_Combo.FormattingEnabled = True
+        Me.Search_Combo.Location = New System.Drawing.Point(16, 13)
+        Me.Search_Combo.Margin = New System.Windows.Forms.Padding(2)
+        Me.Search_Combo.Name = "Search_Combo"
+        Me.Search_Combo.Size = New System.Drawing.Size(132, 25)
+        Me.Search_Combo.TabIndex = 12
+        '
+        'txtUnderLine1
+        '
+        Me.txtUnderLine1.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.txtUnderLine1.Location = New System.Drawing.Point(16, 85)
+        Me.txtUnderLine1.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtUnderLine1.Name = "txtUnderLine1"
+        Me.txtUnderLine1.Size = New System.Drawing.Size(886, 1)
+        Me.txtUnderLine1.TabIndex = 69
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column2, Me.Column3, Me.Column4, Me.Column5, Me.Column6, Me.Column7, Me.Column8, Me.Column9, Me.Column10, Me.Column11, Me.Column12})
+        Me.DataGridView1.Location = New System.Drawing.Point(16, 103)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.RowTemplate.Height = 23
+        Me.DataGridView1.Size = New System.Drawing.Size(891, 458)
+        Me.DataGridView1.TabIndex = 70
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "CRS No"
+        Me.Column1.Name = "Column1"
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "공정명"
+        Me.Column2.Name = "Column2"
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "발주처"
+        Me.Column3.Name = "Column3"
+        '
+        'Column4
+        '
+        Me.Column4.HeaderText = "계약형태"
+        Me.Column4.Name = "Column4"
+        '
+        'Column5
+        '
+        Me.Column5.HeaderText = "검토목적"
+        Me.Column5.Name = "Column5"
+        '
+        'Column6
+        '
+        Me.Column6.HeaderText = "공고번호"
+        Me.Column6.Name = "Column6"
+        '
+        'Column7
+        '
+        Me.Column7.HeaderText = "영업팀 담당자"
+        Me.Column7.Name = "Column7"
+        '
+        'Column8
+        '
+        Me.Column8.HeaderText = "계약납기일"
+        Me.Column8.Name = "Column8"
+        '
+        'Column9
+        '
+        Me.Column9.HeaderText = "배포일"
+        Me.Column9.Name = "Column9"
+        '
+        'Column10
+        '
+        Me.Column10.HeaderText = "회신마감일"
+        Me.Column10.Name = "Column10"
+        '
+        'Column11
+        '
+        Me.Column11.HeaderText = "입찰일시"
+        Me.Column11.Name = "Column11"
+        '
+        'Column12
+        '
+        Me.Column12.HeaderText = "등급"
+        Me.Column12.Name = "Column12"
+        '
+        'UserControl1
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Panel_List)
+        Me.Name = "UserControl1"
+        Me.Size = New System.Drawing.Size(1256, 628)
+        Me.Panel_List.ResumeLayout(False)
+        Me.Panel_List.PerformLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Panel_List As Panel
+    Friend WithEvents Search_Com As Button
+    Friend WithEvents Search_Text As TextBox
+    Friend WithEvents Search_Combo As ComboBox
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents txtUnderLine1 As Panel
+    Friend WithEvents Column1 As DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As DataGridViewTextBoxColumn
+    Friend WithEvents Column3 As DataGridViewTextBoxColumn
+    Friend WithEvents Column4 As DataGridViewTextBoxColumn
+    Friend WithEvents Column5 As DataGridViewTextBoxColumn
+    Friend WithEvents Column6 As DataGridViewTextBoxColumn
+    Friend WithEvents Column7 As DataGridViewTextBoxColumn
+    Friend WithEvents Column8 As DataGridViewTextBoxColumn
+    Friend WithEvents Column9 As DataGridViewTextBoxColumn
+    Friend WithEvents Column10 As DataGridViewTextBoxColumn
+    Friend WithEvents Column11 As DataGridViewTextBoxColumn
+    Friend WithEvents Column12 As DataGridViewTextBoxColumn
+End Class

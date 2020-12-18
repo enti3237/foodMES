@@ -1,0 +1,1191 @@
+﻿Imports System.Data.SqlClient
+Imports System.Text
+Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.Security.Cryptography
+
+
+Module Main_Module
+    'hsim 20200423 시스템 참조 프로퍼티 정의
+    Public rm As Resources.ResourceManager = New Resources.ResourceManager("SmartFactory.Resources", System.Reflection.Assembly.GetExecutingAssembly())
+    'hsim 20200513 전역변수 설정
+    Public loginID As String
+    Public logInUserName As String
+    Public loginUserDept As String
+    Public loginUserGik As String
+    'hsim 20200624 Main->관련 화면 이동시 필요 변수
+    Public tmpArg1 As String
+    Public tmpArg2 As String
+    Public tmpArg3 As String
+    Public tmpArg4 As String
+    Public tmpArg5 As String
+    'hsim 20200716 개발/운영 구분(개발자 FreePass ID부여)
+    'Public IsPrd As New String(rm.GetString("ISPrd"))
+    Public IsPrd As New String(My.Resources.AppResource.IsPrd)
+
+    Public Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+    Public Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hwnd As Long, ByVal nIndex As Long) As Long
+    Public Declare Auto Function SetParent Lib "user32.dll" (ByVal hWndChild As IntPtr, ByVal hWndNewParent As IntPtr) As Integer
+    Public Declare Auto Function SendMessage Lib "user32.dll" (ByVal hWnd As IntPtr, ByVal Msg As Integer, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
+    Public Const WM_SYSCOMMAND As Integer = 274
+    Public Const SC_MAXIMIZE As Integer = 61488
+    Public Const GWL_STYLE = -16
+    Public Const WS_CAPTION = &HC00000
+    Public Const WS_THICKFRAME = &H40000
+
+    Public Co(3) As Integer
+    Public cmd As New SqlCommand
+    Public DBcon As New SqlConnection
+    Public StrSQL As String
+    Public Re_Count As Long
+    Public Re_Count2 As Long
+
+    Public Re_Str As Boolean
+    Public Setup_Data(0 To 10) As String
+
+
+    'Public Menu_String(18, 10) As String
+    Public Menu_String(24, 22) As String
+
+    Public Function Man_Log(Form_name As String, Action As String, Man As String, Bigo As String, actDate As String)
+        StrSQL = "insert into Man_Log(Form_Name, Action, Act_Man, Act_Bigo, Act_Date) Values
+                                     ('" & Form_name & "', '" & Action & "', '" & Man & "', '" & Bigo & "','" & DateTime.Now.ToString & "')"
+        DB_Execute()
+
+    End Function
+
+    Public Function showRevLog(Form_Name As String, ByRef inDBT As DataTable, ByRef inGrd As DataGridView)
+
+        StrSQL = " SELECT ML.Act_Date AS Act_Date, ML.Form_Name AS Form_Name, ML.Action AS Action, " &
+                 " (select Man_Name from Man where Man_Code = ML.Act_Man) Act_Man, " &
+                 " ML.Act_Bigo AS Act_Bigo " &
+                 " FROM Man_Log ML where ML.Form_Name = '" & Form_Name & "' order by ML.Act_Date desc "
+        Re_Count = DB_Select(inDBT)
+
+        inGrd.DataSource = inDBT
+
+    End Function
+
+    Public Function getNameToCode(inTblName As String,
+                                  inCodeName As String,
+                                  inCodeNameVal As String,
+                                  outCode As String) As String
+        Dim DBT As DataTable
+        DBT = Nothing
+        Dim retCodeVal As String
+
+        StrSQL = "SELECT " & outCode & " FROM " & inTblName & " where trim(" & inCodeName & ") = '" & inCodeNameVal & "'"
+        Re_Count = DB_Select(DBT)
+        retCodeVal = DBT.Rows(0).Item(outCode)
+
+        Return retCodeVal
+
+    End Function
+
+
+    Public Function Show_Pop_CR()
+        Dim Cr_Pop As Frm_CR_POP = New Frm_CR_POP
+        Cr_Pop.ShowDialog()
+
+
+    End Function
+
+    Public Function DB_Open(DB_Srt As String) As Boolean
+        DBcon.ConnectionString = DB_Srt
+        Try
+            DBcon.Open()
+            DB_Open = True
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            DB_Open = False
+        End Try
+    End Function
+    Public Function PK_Make(ByRef tblNm As String) As String
+        PK_Make = Nothing
+        cmd.Parameters.Clear()
+        Dim DBtable As New DataTable
+        cmd.Connection = DBcon
+        cmd.CommandType = CommandType.StoredProcedure
+        cmd.CommandText = "getTablePK"
+        cmd.Parameters.Add("@tblNm", SqlDbType.NVarChar, 30)
+        cmd.Parameters.Add("@newKey", SqlDbType.NVarChar, 30)
+        cmd.Parameters("@tblNm").Value = tblNm
+        cmd.Parameters("@newKey").Direction = ParameterDirection.Output
+        cmd.ExecuteNonQuery()
+        'Dim DBAdapter As New SqlDataAdapter(cmd)
+        'DBAdapter.Fill(DBtable)
+        'PK_Make = DBtable.Rows(0)(0).ToString
+        PK_Make = cmd.Parameters("@newKey").Value.ToString
+    End Function
+    Public Function DB_Select(ByRef DBT As DataTable) As Long
+        Dim DBtable As New DataTable
+        Dim DBAdapter As New SqlDataAdapter(StrSQL, DBcon)
+        DBAdapter.Fill(DBtable)
+        DBT = DBtable
+        DB_Select = DBtable.Rows.Count
+
+    End Function
+    Public Function OBJ_Back_Color(Obj As Object) As Boolean
+        Col_Str(Setup_Data(3))
+        Obj.BackColor = Color.FromArgb(Co(1), Co(2), Co(3))
+        OBJ_Back_Color = True
+    End Function
+    Public Function Col_Str(Color_Data As String) As Boolean
+        Co(1) = Val("&H" & Mid(Color_Data, 1, 2))
+        Co(2) = Val("&H" & Mid(Color_Data, 3, 2))
+        Co(3) = Val("&H" & Mid(Color_Data, 5, 2))
+        Col_Str = True
+    End Function
+    Public Function OBJ_MouseOver_Color(Obj As Object) As Boolean
+        Col_Str(Setup_Data(3))
+        Obj.FlatAppearance.MouseOverBackColor = Color.FromArgb(Co(1), Co(2), Co(3))
+        OBJ_MouseOver_Color = True
+    End Function
+    Public Function DB_Execute() As Long
+
+        Dim DBcmd As New SqlCommand(StrSQL, DBcon)
+        DB_Execute = 0
+
+        Try
+            DB_Execute = DBcmd.ExecuteNonQuery()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Function
+
+    Public Function DB_Execute2(QueryType As String) As Long
+
+        Using transaction As SqlTransaction = DBcon.BeginTransaction
+
+            Dim DBcmd As New SqlCommand(StrSQL, DBcon)
+            DBcmd.Transaction = transaction
+            DB_Execute2 = 0
+
+            Try
+                DB_Execute2 = DBcmd.ExecuteNonQuery()
+                'hsim 20200602 실행 쿼리 Commit
+                If QueryType = "INSERT" Or QueryType = "DELETE" Then
+                    transaction.Commit()
+                End If
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                transaction.Rollback()
+            End Try
+
+        End Using
+
+    End Function
+    Public Function Label_Color(Com_Box As Object, Color_Label As Object, Di_Panel2 As Object) As Boolean
+
+
+        Col_Str(Setup_Data(3))
+        Color_Label.BackColor = Color.FromArgb(Co(1), Co(2), Co(3))
+
+        'Color_Label.BackColor = Color.DarkOrange
+
+
+        Color_Label.Width = Com_Box.width
+        Color_Label.Left = Com_Box.left - Di_Panel2.Left
+        Color_Label.Top = 0
+        Label_Color = True
+
+
+
+    End Function
+    Public Function HexStr2Array(ByVal msg As String) As Byte()
+        msg = msg.Replace(" ", "")
+
+        Dim combuffer As Byte() = New Byte(msg.Length \ 2 - 1) {}
+        For i As Integer = 0 To msg.Length - 1 Step 2
+            combuffer(i \ 2) = CByte(Convert.ToByte(msg.Substring(i, 2), 16))
+        Next
+
+        Return combuffer
+    End Function
+    Public Function Array2HexStr(ByVal comByte As Byte()) As String
+        Dim builder As New StringBuilder(comByte.Length * 3)
+        For Each data As Byte In comByte
+            builder.Append((Convert.ToString(data, 16).PadLeft(2, "0")))
+        Next
+        Return builder.ToString().ToUpper()
+    End Function
+    Public Function Grid_Color(Obj As DataGridView) As Boolean
+
+        Obj.EnableHeadersVisualStyles = False
+        Obj.AllowUserToAddRows = False
+        Obj.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing
+        Col_Str(Setup_Data(4))
+        Obj.GridColor = Color.FromArgb(Co(1), Co(2), Co(3))
+        Obj.BackgroundColor = Color.FromArgb(Co(1), Co(2), Co(3))
+        Col_Str(Setup_Data(5))
+        Obj.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(Co(1), Co(2), Co(3))
+        Col_Str(Setup_Data(6))
+        Obj.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(Co(1), Co(2), Co(3))
+        Col_Str(Setup_Data(7))
+        Obj.RowsDefaultCellStyle.BackColor = Color.FromArgb(Co(1), Co(2), Co(3))
+        Col_Str(Setup_Data(8))
+        Obj.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(Co(1), Co(2), Co(3))
+        Grid_Color = True
+    End Function
+    Public Function PIc_Pic(Pic As Object, File_Name As String) As Boolean
+        Pic.Refresh()
+        Pic.Image = Image.FromFile(File_Name)
+        PIc_Pic = True
+    End Function
+
+    Public Function releaseObject(ByVal obj As Object)
+        Try
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(obj)
+            obj = Nothing
+        Catch ex As Exception
+            obj = Nothing
+        Finally
+            GC.Collect()
+        End Try
+        releaseObject = True
+    End Function
+
+    Public Function Grid_Info_Display(Grid As DataGridView, SQL_String As String) As Boolean
+        Dim DBT As New DataTable
+        Dim i As Integer
+        StrSQL = SQL_String
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Columns.Count - 1
+                Grid.Item(1, i).Value = DBT.Rows(0).Item(i).ToString
+            Next i
+        Else
+            For i = 0 To DBT.Columns.Count - 1
+                Grid.Item(1, i).Value = ""
+            Next i
+        End If
+
+        Grid_Info_Display = True
+
+    End Function
+    Public Function Grid_Info_Save(Grid As DataGridView, Table_Name As String) As Boolean
+        Dim j As Long
+        Dim DBT As DataTable = Nothing
+        Dim Field_Name(500) As String
+        Dim i As Integer
+        j = 0
+        For i = 1 To Grid.RowCount - 1
+            If Grid.Rows(i).HeaderCell.Value = "*" Then
+                j = 1
+            End If
+        Next i
+        If j = 0 Then
+            Grid_Info_Save = False
+            Exit Function
+        End If
+        j = 0
+        StrSQL = "Select sys.Columns.Name From sys.Tables with(NOLOCK) , sys.Columns with(NOLOCK) Where sys.Tables.name = '" & Table_Name & "' And sys.Tables.Object_id = sys.Columns.Object_id Order By sys.Columns.column_id"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                Field_Name(j) = DBT.Rows(i)("Name").ToString
+                j = j + 1
+            Next i
+        End If
+        j = j - 1
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "UPDATE " & Table_Name & " SET "
+        Field_Name(500) = "Ok"
+        For i = 1 To j
+            If Grid.Rows(i).HeaderCell.Value = "*" Then
+                If Field_Name(500) = "" Then
+                    StrSQL = StrSQL & ","
+                End If
+                StrSQL = StrSQL & " " & Table_Name & "." & Field_Name(i) & " = '" & Replace(Grid.Item(1, i).Value, "'", "''") & "'"
+                If Field_Name(500) = "Ok" Then
+                    Field_Name(500) = ""
+                End If
+            End If
+        Next i
+        StrSQL = StrSQL & " WHERE " & Table_Name & "." & Field_Name(0) & " = '" & Grid.Item(1, 0).Value & "'"
+        Re_Count = DB_Execute()
+        Grid_Info_Save = True
+
+    End Function
+    Public Function Data_Col_Count(Data_Str As String, ByVal Data_Dim() As String) As Long
+        Dim i As Long
+        Dim j As Long
+        Dim UU As String
+        Data_Col_Count = 0
+        j = 0
+        UU = ""
+        For i = 1 To Len(Data_Str)
+            If Mid(Data_Str, i, 1) = "|" Then
+                Data_Col_Count = Data_Col_Count + 1
+                j = j + 1
+                Data_Dim(j) = UU
+                UU = ""
+            Else
+                UU = UU & Mid(Data_Str, i, 1)
+            End If
+        Next i
+
+        If Data_Col_Count = 0 Then
+        Else
+            Data_Col_Count = Data_Col_Count + 1
+            Data_Dim(Data_Col_Count) = UU
+        End If
+        Data_Col_Count = Data_Col_Count
+    End Function
+    Public Function Data_Col_Count_Str(Data_Str As String, ByVal Data_Dim() As String) As Long
+        Dim i As Long
+        Dim j As Long
+        Dim UU As String
+        Data_Col_Count_Str = 0
+        j = 0
+        UU = ""
+        For i = 1 To Len(Data_Str)
+            If Mid(Data_Str, i, 1) = "," Then
+                Data_Col_Count_Str = Data_Col_Count_Str + 1
+                j = j + 1
+                Data_Dim(j) = UU
+                UU = ""
+            Else
+                UU = UU & Mid(Data_Str, i, 1)
+            End If
+        Next i
+
+        If Data_Col_Count_Str = 0 Then
+        Else
+            Data_Col_Count_Str = Data_Col_Count_Str + 1
+            Data_Dim(Data_Col_Count_Str) = UU
+        End If
+        Data_Col_Count_Str = Data_Col_Count_Str
+    End Function
+    Public Function Count_Pro(Pro_Code As String, Go_Code As String, Go_C As String, To_C As String, Er_C As String) As Boolean
+        Dim PP_G_Sun As String
+        Dim PP_G_Amount As String
+        Dim DBT As DataTable = Nothing
+        Dim DBT2 As DataTable = Nothing
+
+
+        PP_G_Sun = "0"
+        PP_G_Amount = "0"
+        StrSQL = "Select PP_Sun, PP_Amount From Product_Process With(NOLOCK) Where PP_Code = '" & Pro_Code & "' And PP_Pro_Code = '" & Go_Code & "' "
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            PP_G_Sun = DBT.Rows(0)("PP_Sun")
+            PP_G_Amount = DBT.Rows(0)("PP_Amount")
+        End If
+        If PP_G_Sun = "0" Then
+        Else
+            '변경
+            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+            StrSQL = StrSQL & "Update Product_Process Set PP_Amount = '" & Val(PP_G_Amount) + Val(To_C) & "' Where PP_Code = '" & Pro_Code & "' And PP_Sun = '" & PP_G_Sun & "'"
+            Re_Count = DB_Execute()
+            If PP_G_Sun = "1" Then
+                '조합리스트의 마지막을 가지고 온다.
+                StrSQL = "Select  PL_Sub_Code, PL_Qty from Product_BOM With(NOLOCK) Where PL_Code = '" & Pro_Code & "'"
+                Re_Count = DB_Select(DBT)
+                If Re_Count > 0 Then
+                    For i = 0 To Re_Count - 1
+                        StrSQL = "Select  PP_Sun from Product_Process With(NOLOCK) Where PP_Code = '" & DBT.Rows(i)("PL_Sub_Code") & "' Order By Convert(Decimal,PP_Sun) Desc"
+                        Re_Count2 = DB_Select(DBT2)
+                        If Re_Count2 > 0 Then
+                            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                            StrSQL = StrSQL & "Update Product_Process Set PP_Amount =  Convert(Decimal,PP_Amount)  - " & Val(Go_C) * Val(DBT.Rows(i)("PL_Qty")) & "  Where PP_Code = '" & DBT.Rows(i)("PL_Sub_Code") & "' And PP_Sun = '" & DBT2.Rows(0)("PP_Sun") & "'"
+                            Re_Count = DB_Execute()
+                        End If
+                    Next i
+                End If
+            Else
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "Update Product_Process Set PP_Amount = Convert(Decimal,PP_Amount)  - " & Val(Go_C) & " Where PP_Code = '" & Pro_Code & "' And PP_Sun = '" & Val(PP_G_Sun) - 1 & "'"
+                Re_Count = DB_Execute()
+            End If
+        End If
+
+        Count_Pro = True
+
+    End Function
+    Public Function Count_Pro_M(Pro_Code As String, Go_Code As String, Go_C As String, To_C As String, Er_C As String) As Boolean
+        Dim PP_G_Sun As String
+        Dim PP_G_Amount As String
+        Dim DBT As DataTable = Nothing
+        Dim DBT2 As DataTable = Nothing
+
+
+        PP_G_Sun = "0"
+        PP_G_Amount = "0"
+        StrSQL = "Select PP_Sun, PP_Amount From Product_Process With(NOLOCK) Where PP_Code = '" & Pro_Code & "' And PP_Pro_Code = '" & Go_Code & "' "
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            PP_G_Sun = DBT.Rows(0)("PP_Sun")
+            PP_G_Amount = DBT.Rows(0)("PP_Amount")
+        End If
+        If PP_G_Sun = "0" Then
+        Else
+            '변경
+            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+            StrSQL = StrSQL & "Update Product_Process Set PP_Amount = '" & Val(PP_G_Amount) - Val(To_C) & "' Where PP_Code = '" & Pro_Code & "' And PP_Sun = '" & PP_G_Sun & "'"
+            Re_Count = DB_Execute()
+            If PP_G_Sun = "1" Then
+                '조합리스트의 마지막을 가지고 온다.
+                StrSQL = "Select  PL_Sub_Code, PL_Qty from Product_BOM With(NOLOCK) Where PL_Code = '" & Pro_Code & "'"
+                Re_Count = DB_Select(DBT)
+                If Re_Count > 0 Then
+                    For i = 0 To Re_Count - 1
+                        StrSQL = "Select  PP_Sun from Product_Process With(NOLOCK) Where PP_Code = '" & DBT.Rows(i)("PL_Sub_Code") & "' Order By Convert(Decimal,PP_Sun) Desc"
+                        Re_Count2 = DB_Select(DBT2)
+                        If Re_Count2 > 0 Then
+                            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                            StrSQL = StrSQL & "Update Product_Process Set PP_Amount =  Convert(Decimal,PP_Amount)  + " & Val(Go_C) * Val(DBT.Rows(i)("PL_Qty")) & "  Where PP_Code = '" & DBT.Rows(i)("PL_Sub_Code") & "' And PP_Sun = '" & DBT2.Rows(0)("PP_Sun") & "'"
+                            Re_Count = DB_Execute()
+                        End If
+                    Next i
+                End If
+            Else
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "Update Product_Process Set PP_Amount = Convert(Decimal,PP_Amount)  + " & Val(Go_C) & " Where PP_Code = '" & Pro_Code & "' And PP_Sun = '" & Val(PP_G_Sun) - 1 & "'"
+                Re_Count = DB_Execute()
+            End If
+        End If
+
+        Count_Pro_M = True
+
+    End Function
+
+    '20200423 hsim 다중 테이블 Column List 조회 기능
+    Public Function fnGetTableStructure(ByVal tblNm As String) As DataTable
+        '전달된 Table들의 Structure(Column Name , Type, Length)를 구한다.
+        Dim sqlDA As New SqlDataAdapter
+        Dim sqlCM As New SqlCommand
+        Dim dsRtn As New DataSet
+        Dim rtnTbl As New DataTable
+
+        Dim i%, j%, k%, l%
+        ''''''''''''''''''''''''''
+
+        sqlDA.SelectCommand = sqlCM
+        sqlCM.CommandText = "SP_HELP" ' SQL의 System Procedure
+        sqlCM.CommandType = CommandType.StoredProcedure
+        sqlCM.Connection = DBcon
+
+        sqlCM.Parameters.Add(New SqlParameter("@objname", SqlDbType.NVarChar, 776))
+
+        Dim tmpPKStr As String
+        Dim tmpPKList() As String
+        Dim tmpPKStr2 As String
+
+        Dim dDS As New DataSet
+        sqlCM.Parameters("@objname").Value = tblNm
+        sqlDA.Fill(dDS) ' DS.Tables(1) 컬럼 리스트, DS.Tables(5) 인덱스 정보, DS.Tables(6) PK정보
+        'dDS.Tables(1).TableName = dDS.Tables(0).Rows(0).Item(1).ToString & "." & dDS.Tables(0).Rows(0).Item(0).ToString '"TableStructure"
+        dDS.Tables(1).TableName = dDS.Tables(0).Rows(0).Item(0).ToString
+        'MsgBox("TableName :" & dDS.Tables(1).TableName)
+        'hsim 20200510 PK여부와 값을 추가해 줌
+        dDS.Tables(1).Columns.Add()
+        dDS.Tables(1).Columns(10).ColumnName = "PK"
+        dDS.Tables(1).Columns.Add()
+        dDS.Tables(1).Columns(11).ColumnName = "value"
+
+        'hsim 20200722 PK없는 테이블 오류 수정
+        If dDS.Tables.Count > 6 Then
+            dDS.Tables(6).TableName = "PKList"
+
+            For j = 0 To dDS.Tables(6).Rows.Count - 1
+                tmpPKStr = dDS.Tables(6).Rows(j).Item(1).ToString
+                If tmpPKStr.EndsWith("PK") Then '이름은 반드시 PK로 끝나야 한다
+                    'PK목록 저장
+                    tmpPKList = dDS.Tables(6).Rows(j).Item(6).ToString.Replace(" ", "").Split(",")
+                    For k = 0 To tmpPKList.Count - 1
+                        tmpPKStr2 = tmpPKList(k).ToString 'PK Item Column
+                        For l = 0 To dDS.Tables(1).Rows.Count - 1
+                            If dDS.Tables(1).Rows(l).Item(0).ToString = tmpPKStr2 Then
+                                dDS.Tables(1).Rows(l).Item(10) = k + 1 'PK순번
+                            End If
+                        Next
+                    Next
+                End If
+            Next
+        End If
+
+        rtnTbl = dDS.Tables(1).Copy
+        Return rtnTbl 'DataTable 형태로 Return
+
+    End Function
+
+
+    '20200429 hsim 단일 테이블 Insert 기능
+    Public Function fnTableInsert(ByVal tblNm As String, ByVal insTbl As DataTable) As Int32
+
+        '테이블 명 : tblNm
+        '컬럼명 / 자료형 / 길이 / Null허용 여부 / PK순번 / 값
+
+        Dim tmpSqlText1 As String 'Column List
+        Dim tmpSqlText2 As String 'Value List
+        Dim rtnCnt As Int32
+
+        Dim j%
+
+        Using comm As New SqlCommand()
+            With comm
+                .Connection = DBcon
+                .CommandType = CommandType.Text
+                .CommandText = "insert into " + tblNm
+                '초기화
+                tmpSqlText1 = "("
+                tmpSqlText2 = " values("
+                For j = 0 To insTbl.Rows.Count - 1
+                    tmpSqlText1 += insTbl.Rows(j).Item(0).ToString
+                    If j < insTbl.Rows.Count - 1 Then
+                        tmpSqlText1 += ","
+                    End If
+                    '자료형 확인하여 적절한 형태로 변환
+                    If insTbl.Rows(j).Item(1).ToString.Contains("int") Or
+                       insTbl.Rows(j).Item(1).ToString.Contains("decimal") Or
+                       insTbl.Rows(j).Item(1).ToString.Contains("numeric") Or
+                       insTbl.Rows(j).Item(1).ToString.Contains("float") Or
+                       insTbl.Rows(j).Item(1).ToString.Contains("money") Or
+                       insTbl.Rows(j).Item(1).ToString.Contains("real") Or
+                        insTbl.Rows(j).Item(1).ToString.Contains("date") Or
+                        insTbl.Rows(j).Item(1).ToString.Contains("datetime") Then
+                        tmpSqlText2 += insTbl.Rows(j).Item(11).ToString
+                    Else
+                        tmpSqlText2 += "'" + insTbl.Rows(j).Item(11).ToString + "'"
+                    End If
+                    If j < insTbl.Rows.Count - 1 Then
+                        tmpSqlText2 += ","
+                    End If
+                Next
+                '끝처리
+                tmpSqlText1 += ")"
+                tmpSqlText2 += ")"
+                .CommandText = .CommandText + tmpSqlText1 + tmpSqlText2
+                'MsgBox("SQL문 : " + .CommandText)
+                Console.WriteLine("SQL문 : " + .CommandText)
+
+            End With
+            Try
+                rtnCnt = comm.ExecuteNonQuery()
+            Catch ex As SqlException
+                MsgBox("테이블명 " + tblNm + "에 정보 입력 도중 오류가 발생하였습니다.\n" + ex.Message)
+                Return -1
+            End Try
+        End Using
+
+        Return rtnCnt
+
+    End Function
+
+
+    '20200429 hsim 단일 테이블 Update 기능
+    Public Function fnTableUpdate(ByVal tblNm As String, ByVal insTbl As DataTable) As Int32
+
+        '테이블 명 : tblNm
+        '컬럼명 / 자료형 / 길이 / Null허용 여부 / PK순번 / 값
+
+        Dim tmpSqlText1 As String 'Column List
+        Dim tmpSqlText2 As String 'Value List
+        Dim rtnCnt As Int32
+
+        Dim j%
+
+        Using comm As New SqlCommand()
+
+            With comm
+                .Connection = DBcon
+                .CommandType = CommandType.Text
+                .CommandText = "update " + tblNm + " set "
+                '초기화
+                tmpSqlText1 = ""
+                tmpSqlText2 = " where 1=1 "
+                For j = 0 To insTbl.Rows.Count - 1
+
+                    If Trim(insTbl.Rows(j).Item(10).ToString) <> "" And
+                       Trim(insTbl.Rows(j).Item(10).ToString) > "0" Then
+
+                        ' #1. 필드명
+                        tmpSqlText2 += " and " + insTbl.Rows(j).Item(0).ToString + " = "
+                        ' #2. 필드값
+                        '자료형 확인하여 적절한 형태로 변환
+                        If insTbl.Rows(j).Item(1).ToString.Contains("int") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("decimal") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("numeric") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("float") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("money") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("real") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("date") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("datetime") Then
+                            tmpSqlText2 += insTbl.Rows(j).Item(11).ToString
+                        Else
+                            tmpSqlText2 += "'" + insTbl.Rows(j).Item(11).ToString + "'"
+                        End If
+
+                    Else
+
+                        ' #1. 필드명
+                        tmpSqlText1 += insTbl.Rows(j).Item(0).ToString
+                        tmpSqlText1 += " = "
+
+                        ' #2. 필드값
+                        '자료형 확인하여 적절한 형태로 변환
+                        If insTbl.Rows(j).Item(1).ToString.Contains("int") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("decimal") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("numeric") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("float") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("money") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("real") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("date") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("datetime") Then
+                            tmpSqlText1 += insTbl.Rows(j).Item(11).ToString
+                        Else
+                            tmpSqlText1 += "'" + insTbl.Rows(j).Item(11).ToString + "'"
+                        End If
+                        If j < insTbl.Rows.Count - 1 Then
+                            tmpSqlText1 += ","
+                        End If
+
+                    End If
+
+                Next
+
+                .CommandText = .CommandText + tmpSqlText1 + tmpSqlText2
+                'MsgBox("SQL문 : " + .CommandText)
+                Console.WriteLine("SQL문 : " + .CommandText)
+
+            End With
+
+            Try
+                rtnCnt = comm.ExecuteNonQuery()
+            Catch ex As SqlException
+                MsgBox("테이블명 " + tblNm + "에 정보 수정 도중 오류가 발생하였습니다.\n" + ex.Message)
+                Return -1
+            End Try
+
+        End Using
+
+        Return rtnCnt
+
+    End Function
+
+    '20200429 hsim 단일 테이블 Delete 기능
+    Public Function fnTableDelete(ByVal tblNm As String, ByVal insTbl As DataTable) As Int32
+
+        '테이블 명 : tblNm
+        '컬럼명 / 자료형 / 길이 / Null허용 여부 / PK순번 / 값
+
+        Dim sqlDA As New SqlDataAdapter
+        Dim tmpSqlText1 As String 'Column List
+        Dim tmpSqlText2 As String 'Value List
+        Dim rtnCnt As Int32
+
+        Dim j%
+
+        Using comm As New SqlCommand
+
+            With comm
+                .Connection = DBcon
+                .CommandType = CommandType.Text
+                .CommandText = "delete from " + tblNm
+                '초기화
+                tmpSqlText1 = " where 1=1 "
+                For j = 0 To insTbl.Rows.Count - 1
+
+                    If Trim(insTbl.Rows(j).Item(10).ToString) <> "" And
+                       Trim(insTbl.Rows(j).Item(10).ToString) > "0" Then
+
+                        ' #1. 필드명
+                        tmpSqlText1 += " and " + insTbl.Rows(j).Item(0).ToString + " = "
+                        ' #2. 필드값
+                        '자료형 확인하여 적절한 형태로 변환
+                        If insTbl.Rows(j).Item(1).ToString.Contains("int") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("decimal") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("numeric") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("float") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("money") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("real") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("date") Or
+                           insTbl.Rows(j).Item(1).ToString.Contains("datetime") Then
+                            tmpSqlText1 += insTbl.Rows(j).Item(11).ToString
+                        Else
+                            tmpSqlText1 += "'" + insTbl.Rows(j).Item(11).ToString + "'"
+                        End If
+
+                    End If
+
+                Next
+
+                .CommandText = .CommandText + tmpSqlText1
+                'MsgBox("SQL문 : " + .CommandText)
+                Console.WriteLine("SQL문 : " + .CommandText)
+
+            End With
+
+            Try
+                rtnCnt = comm.ExecuteNonQuery()
+            Catch ex As SqlException
+                MsgBox("테이블명 " + tblNm + "에 정보 삭제 도중 오류가 발생하였습니다.\n" + ex.Message)
+                Return -1
+            End Try
+
+        End Using
+
+        Return rtnCnt
+
+    End Function
+
+    '20200429 hsim 단일 테이블 Select SQL 생성 기능
+    '유의사항 : where조건에 들어가는 필드명은 반드시 '테이블명.필드명'이 되어야 한다. (규칙사항)
+    Public Function fnTableSelectSql(ByVal tblNm As String, ByVal insRows As DataRow(), ByVal whrCond As String) As Tuple(Of String, String)
+
+        '테이블 명 : tblNm
+        '컬럼명 / 자료형 / 길이 / Null허용 여부 / PK순번 / 값
+
+        Dim tmpSqlText1 As String 'Column List
+        Dim tmpSqlText2 As String 'Where Condition
+        Dim retTuple As Tuple(Of String, String)
+
+        Dim j%
+
+        '초기화
+        tmpSqlText1 = "select "
+        tmpSqlText2 = whrCond
+        'tmpSqlText2 = " where 1=1 and " + whrCond
+
+        Try
+
+            For j = 0 To insRows.Length - 1
+
+                ' #1. 필드명
+                tmpSqlText1 += tblNm + "." + insRows(j).Item(0).ToString
+                If j < insRows.Length - 1 Then
+                    tmpSqlText1 += ","
+                End If
+
+            Next
+
+            tmpSqlText1 += " from " + tblNm
+
+        Catch ex As Exception
+
+            MsgBox("테이블명 " + tblNm + "에 정보 조회 Query 생성 도중 오류가 발생하였습니다.\n" + ex.Message)
+
+        End Try
+
+        'MsgBox("SQL문 : " + tmpSqlText1 + "\n" + "Where조건 : " + tmpSqlText2)
+        Console.WriteLine("SQL문 : " + tmpSqlText1 + "\n" + "Where조건 : " + tmpSqlText2)
+
+        retTuple = New Tuple(Of String, String)(tmpSqlText1, tmpSqlText2)
+
+        Return retTuple
+
+    End Function
+
+    '20200429 hsim 테이블 Select SQL 실행 기능
+    '인자 참조
+    'tblCnt : 조회대상 테이블 갯수
+    'tblNm1~6 : 테이블명 1~6
+    'tblData1~6 : 테이블데이터 1~6 (필드목록 / where 조건)
+    'whrCond1~6 : 테이블 조건식 1~6
+    'joinCond1~5 : 테이블 조인유형 (0: inner join, 1: left outer join, 2: right outer join, 3: full outer join)
+    '유의사항 : where조건에 들어가는 필드명은 반드시 '테이블명.필드명'이 되어야 한다. (규칙사항)
+    Public Function fnExecSelectSql(ByVal tblCnt As Integer,
+                                    ByRef tblNm1 As String, ByRef tblnm2 As String, ByRef tblNm3 As String, ByRef tblnm4 As String, ByRef tblNm5 As String, ByRef tblnm6 As String,
+                                    ByVal tblData1 As Tuple(Of String, String), ByVal tblData2 As Tuple(Of String, String), ByVal tblData3 As Tuple(Of String, String),
+                                    ByVal tblData4 As Tuple(Of String, String), ByVal tblData5 As Tuple(Of String, String), ByVal tblData6 As Tuple(Of String, String),
+                                    ByVal joinCond1 As String, ByVal joinCond2 As String, ByVal joinCond3 As String, ByVal joinCond4 As String, ByVal joinCond5 As String,
+                                    ByVal joinCondStr1 As String, ByVal joinCondStr2 As String, ByVal joinCondStr3 As String, ByVal joinCondStr4 As String, ByVal joinCondStr5 As String
+                                    ) As DataTable
+
+        '테이블 명 : tblNm
+        '컬럼명 / 자료형 / 길이 / Null허용 여부 / PK순번 / 값
+
+        Dim sqlDA As New SqlDataAdapter
+        Dim sqlCM As New SqlCommand
+        Dim tmpSqlText1 As String 'Column List
+        Dim tmpSqlText2 As String 'Table & Join Condition
+        Dim tmpSqlText3 As String 'Where Clause
+
+        Dim i%, j%
+
+        Dim dataTbl As DataTable
+        Dim dataColumn As DataColumn
+        Dim tmpTblNm1 As String
+        Dim tmpTblNm2 As String
+        Dim tmpTblJoinCond As String
+        Dim tmpTblJoinCondStr As String
+        Dim joinTypeStr As String
+        Dim rtnTbl As New DataTable
+
+        Dim ChkTmpSqlText1 As String
+
+        dataTbl = New DataTable("tableList")
+        '순번
+        dataColumn = New DataColumn("Seq", System.Type.GetType("System.Int32"))
+        dataTbl.Columns.Add(dataColumn)
+        '테이블명
+        dataColumn = New DataColumn("TableName", System.Type.GetType("System.String"))
+        dataTbl.Columns.Add(dataColumn)
+
+        joinTypeStr = ""
+
+        '#0. 테이블명을 배열로 삽입
+        For i = 0 To tblCnt - 1
+
+            'tmpTblNm1 = "tblnm" & (i + 1).ToString 'tblnm1
+            Select Case (i + 1)
+                Case 1
+                    tmpTblNm1 = tblNm1
+                Case 2
+                    tmpTblNm1 = tblnm2
+                Case 3
+                    tmpTblNm1 = tblNm3
+                Case 4
+                    tmpTblNm1 = tblnm4
+                Case 5
+                    tmpTblNm1 = tblNm5
+                Case 6
+                    tmpTblNm1 = tblnm6
+            End Select
+            dataTbl.Rows.Add((i + 1).ToString, tmpTblNm1)
+            'MsgBox("현재 총 행 수:" & dataTbl.Rows.Count)
+            'MsgBox("현재 입력대상 테이블 명:" & tmpTblNm1)
+            'MsgBox("현재 입력대상 자료:" & dataTbl.Rows(i).Item(0) & "-" & dataTbl.Rows(i).Item(1))
+
+        Next
+
+        Using sqlCM 'comm As New SqlCommand()
+
+            sqlDA.SelectCommand = sqlCM
+            sqlCM.Connection = DBcon
+            sqlCM.CommandType = CommandType.Text
+            sqlCM.CommandText = ""
+
+            '초기화
+            tmpSqlText1 = " select "
+            tmpSqlText2 = " from "
+            tmpSqlText3 = " where 1=1 "
+
+            For j = 0 To tblCnt - 1
+
+                '#1. SQL Column List 추가
+
+                Select Case (j + 1)
+                    Case 1
+                        ChkTmpSqlText1 = tblData1.Item1
+                    Case 2
+                        ChkTmpSqlText1 = tblData2.Item1
+                    Case 3
+                        ChkTmpSqlText1 = tblData3.Item1
+                    Case 4
+                        ChkTmpSqlText1 = tblData4.Item1
+                    Case 5
+                        ChkTmpSqlText1 = tblData5.Item1
+                    Case 6
+                        ChkTmpSqlText1 = tblData6.Item1
+                End Select
+
+                If j < 0 And j < tblCnt - 1 Then
+
+                    If ChkTmpSqlText1.Length > 1 Then
+                        tmpSqlText1 += ", "
+                    End If
+                    If Not (tmpSqlText3.EndsWith("and ")) Then
+                        tmpSqlText3 += " and "
+                    End If
+                End If
+
+                Select Case (j + 1)
+                    Case 1
+                        tmpSqlText1 += ChkTmpSqlText1
+                        tmpSqlText3 += tblData1.Item2
+                    Case 2
+                        tmpSqlText1 += ChkTmpSqlText1
+                        tmpSqlText3 += tblData2.Item2
+                    Case 3
+                        tmpSqlText1 += ChkTmpSqlText1
+                        tmpSqlText3 += tblData3.Item2
+                    Case 4
+                        tmpSqlText1 += ChkTmpSqlText1
+                        tmpSqlText3 += tblData4.Item2
+                    Case 5
+                        tmpSqlText1 += ChkTmpSqlText1
+                        tmpSqlText3 += tblData5.Item2
+                    Case 6
+                        tmpSqlText1 += ChkTmpSqlText1
+                        tmpSqlText3 += tblData6.Item2
+                End Select
+
+                '#2. Join조건 추가
+                tmpTblNm1 = Trim(dataTbl.Rows(j).Item(1))
+
+                If tblCnt = 1 Then
+
+                    tmpSqlText2 += tmpTblNm1
+
+                ElseIf j < tblCnt - 1 Then
+
+                    tmpTblNm2 = Trim(dataTbl.Rows(j + 1).Item(1))
+
+                    Select Case (j + 1)
+                        Case 1
+                            tmpTblJoinCond = joinCond1
+                            tmpTblJoinCondStr = joinCondStr1
+                        Case 2
+                            tmpTblJoinCond = joinCond2
+                            tmpTblJoinCondStr = joinCondStr2
+                        Case 3
+                            tmpTblJoinCond = joinCond3
+                            tmpTblJoinCondStr = joinCondStr3
+                        Case 4
+                            tmpTblJoinCond = joinCond4
+                            tmpTblJoinCondStr = joinCondStr4
+                        Case 5
+                            tmpTblJoinCond = joinCond5
+                            tmpTblJoinCondStr = joinCondStr5
+                    End Select
+
+                    Select Case tmpTblJoinCond
+                        Case "0"
+                            joinTypeStr = " join "
+                        Case "1"
+                            joinTypeStr = " left outer join "
+                        Case "2"
+                            joinTypeStr = " right outer join "
+                        Case "3"
+                            joinTypeStr = " full outer join "
+                    End Select
+
+                    If j = 0 Then
+                        tmpSqlText2 += tmpTblNm1 + joinTypeStr + tmpTblNm2
+                    Else
+                        tmpSqlText2 += joinTypeStr + tmpTblNm2
+                    End If
+                    tmpSqlText2 += tmpTblJoinCondStr
+
+                End If
+
+            Next
+
+            sqlCM.CommandText += tmpSqlText1 + tmpSqlText2 + tmpSqlText3
+            'MsgBox("SQL문 : " + sqlCM.CommandText)
+            Console.WriteLine("SQL문 : " + sqlCM.CommandText)
+
+            Try
+                sqlDA.Fill(rtnTbl)
+            Catch ex As SqlException
+                MsgBox("테이블" + tblNm1 + "/" +
+                                      tblnm2 + "/" +
+                                      tblNm3 + "/" +
+                                      tblnm4 + "/" +
+                                      tblNm5 + "/" +
+                                      tblnm6 + "/" + "에 정보 조회 도중 오류가 발생하였습니다 : " + ex.Message)
+                Exit Function
+            End Try
+
+        End Using
+
+        Return rtnTbl
+
+    End Function
+
+    Public Function clearTblRowValues(ByVal insTbl As DataTable) As Boolean
+
+        For j = 0 To insTbl.Rows.Count - 1
+
+            insTbl.Rows(j).Item(11) = ""
+
+        Next
+
+        Return True
+
+    End Function
+
+    '콤보박스 item 셋업
+    Public Function comboSetUp(ByVal comboName As ComboBox, ByVal Base_Sel As String)
+
+        '콤보박스이름,구분
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = "Select Base_Sel, Base_Sun, Base_Code_Name From Base_Code with(NOLOCK) where Base_Sel = '" & Base_Sel & "' order by Base_Sun"
+        Re_Count = DB_Select(DBT)
+        comboName.Items.Clear()
+        'For i = 0 To DBT.Rows.Count - 1
+        'comboName.Items.Add(DBT.Rows(i)("Base_Code_Name"))
+        'comboName.Items.Add(New KeyValuePair(Of String, String)(DBT.Rows(i)("Base_Sun"), DBT.Rows(i)("Base_Code_Name")))
+        'newItem.Value = DataTable2.Rows(i).Item(1)
+        'newItem.Text = DataTable2.Rows(i).Item(2)
+        'SITEComboBox.Items.Add(newItem)
+        'Next
+        comboName.DisplayMember = "Base_Code_Name"
+        comboName.ValueMember = "Base_Sun"
+        comboName.DataSource = DBT
+
+    End Function
+
+    '콤보박스 item 셋업base_Code
+    Public Function comboSetUp1(comboName As ComboBox, Base_Sel As String)
+
+        '콤보박스이름,구분
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = "Select Base_Code, Base_Code_Name From Base_Code with(NOLOCK) where Base_Sel_Code = '" & Base_Sel & "' order by Base_Sun"
+        Re_Count = DB_Select(DBT)
+        comboName.Items.Clear()
+        For i = 0 To DBT.Rows.Count - 1
+            comboName.Items.Add(DBT.Rows(i)("Base_Code_Name"))
+        Next
+        comboName.DataSource = DBT
+        comboName.DisplayMember = "Base_Code_Name"
+        comboName.ValueMember = "Base_Code"
+
+    End Function
+
+    '콤보박스 item 셋업2 company
+    Public Function comboSatUp2(comboName As ComboBox, Base_Sel As String)
+        '콤보박스이름,구분
+        Dim DBT As DataTable
+        DBT = Nothing
+        StrSQL = "Select CM_Code, CM_Name From Company with(NOLOCK) where CM_Group = '" & Base_Sel & "' order by CM_Code"
+        Re_Count = DB_Select(DBT)
+        comboName.Items.Clear()
+        For i = 0 To DBT.Rows.Count - 1
+            comboName.Items.Add(DBT.Rows(i)("CM_Name"))
+        Next
+
+        comboName.DataSource = DBT
+        comboName.DisplayMember = "CM_Name"
+        comboName.ValueMember = "CM_Code"
+
+
+    End Function
+
+    Public Function GenerateSHA256String(ByVal inputString) As String
+        Dim sha256 As SHA256 = SHA256Managed.Create()
+        Dim bytes As Byte() = Encoding.UTF8.GetBytes(inputString)
+        Dim hash As Byte() = sha256.ComputeHash(bytes)
+        Dim stringBuilder As New StringBuilder()
+
+        For i As Integer = 0 To hash.Length - 1
+            stringBuilder.Append(hash(i).ToString("X2"))
+        Next
+
+        Return stringBuilder.ToString()
+    End Function
+
+    '인풋 체크
+    Public Function InputCheck(check As String, msg As String) As Integer
+        Dim i As Integer = 0
+        If check = "" Then
+            MsgBox(msg)
+            i = 1
+            Return i
+        End If
+    End Function
+
+    Public Function getTableDetails(tblList As String) As DataTable
+        Dim DBT As DataTable
+        DBT = Nothing
+        'Column Comment가져오기
+        StrSQL = " SELECT      A.Table_Name Table_Name, C.Value Table_Description,  " &
+                "             A.Column_Name Column_Name, A.Data_Type Data_Type,  " &
+                "             isNULL(CAST(A.Character_Maximum_Length as VARCHAR),  " &
+                "                 CAST(A.Numeric_Precision as VARCHAR) + ',' + CAST(A.Numeric_Scale as VARCHAR)) Column_Length,  " &
+                "             A.Column_Default Column_Default,  " &
+                "             CASE  " &
+                "             WHEN    A.Is_Nullable   = 'YES' THEN 'Y' " &
+                "             ELSE    'N'  " &
+                "             END Is_Nullable, " &
+                "             B.value Column_Description   " &
+                " FROM        INFORMATION_SCHEMA.ColumnS A    " &
+                " LEFT JOIN   SYS.EXTENDED_PROPERTIES B    " &
+                " ON          B.Major_Id      = OBJECT_ID(A.Table_Name)   " &
+                " AND         B.Minor_Id      = A.Ordinal_Position    " &
+                " LEFT JOIN   (    " &
+                "             SELECT  OBJECT_ID(Objname) Table_Id,Value    " &
+                "             FROM    ::FN_LISTEXTENDEDPROPERTY(NULL, 'user','dbo','Table',NULL, NULL, NULL)    " &
+                "             ) c    " &
+                " ON          C.Table_id  = OBJECT_ID(A.Table_Name)    " &
+                " WHERE       A.Table_Name in " & tblList &
+                " ORDER BY    A.Table_Name, A.Ordinal_Position    "
+        Re_Count = DB_Select(DBT)
+        'Console.WriteLine("StrSQL=>" & StrSQL)
+        'Console.WriteLine("getTableDetails=>" & Re_Count & "-" & DBT.Rows.Count)
+        Return DBT
+    End Function
+
+    Public Function findColumnComment(searchColumn As String, tgtDBT As DataTable) As String
+        Dim rtnStr As New String("")
+        Dim tmpColumnName As String
+        Dim i As Int32
+        'Console.WriteLine("tgtDBT.Rows.Count=>" & tgtDBT.Rows.Count)
+        For i = 0 To tgtDBT.Rows.Count - 1
+            tmpColumnName = tgtDBT.Rows(i).Item(2).ToString
+            'Console.WriteLine("searchColumn:" & searchColumn & "-" & "tmpColumnName:" & tmpColumnName)
+            If searchColumn = tmpColumnName Then
+                rtnStr = tgtDBT.Rows(i).Item(7).ToString
+                Exit For
+            End If
+        Next
+        Return rtnStr
+    End Function
+
+    Public Function getCustomerInfo(inCustomerCd As String) As DataTable
+        '콤보박스이름,구분
+        Dim DBT As DataTable
+        DBT = Nothing
+        StrSQL = "Select * From Customer with(NOLOCK) where CM_Code = '" & inCustomerCd & "' "
+        Re_Count = DB_Select(DBT)
+        Return DBT
+    End Function
+
+    Public Function convNullToStr(inStr As Object) As String
+        Dim rtnStr As String
+        If IsDBNull(inStr) Then
+            rtnStr = ""
+        Else
+            rtnStr = inStr.ToString
+        End If
+        Return rtnStr
+    End Function
+
+    Public Function removeComma(inStr As Object) As String
+        Dim rtnStr As String
+        rtnStr = Replace(inStr, ",", "")
+        Return rtnStr
+    End Function
+
+    Public Sub fillGridColumns(inGrd As DataGridView, ByVal inDBT As DataTable, inTblList As String)
+
+        Dim i As Int32
+        Dim gridCellCount As Int32, gridRowCount As Int32
+        Dim DBT As DataTable
+
+        DBT = Nothing
+        'Column Comment가져오기
+        DBT = getTableDetails(inTblList)
+        Console.WriteLine("DBT Row Count => " & DBT.Rows.Count)
+        gridRowCount = inDBT.Rows.Count
+        gridCellCount = inDBT.Columns.Count
+
+        For i = 0 To gridCellCount - 1
+            inGrd.Columns(i).DataPropertyName = inDBT.Columns(i).ColumnName
+            inGrd.Columns(i).HeaderText = findColumnComment(inDBT.Columns(i).ColumnName, DBT)
+            inGrd.Columns(i).Width = inDBT.Columns(i).MaxLength
+            inGrd.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            'hsim 20200803 화면에 비표시 할 항목들에 대해서는 Visible 속성을 False로
+            If inDBT.Columns(i).ColumnName = "Cre_Dttm" Or
+               inDBT.Columns(i).ColumnName = "Cre_Man" Or
+               inDBT.Columns(i).ColumnName = "Mod_Dttm" Or
+               inDBT.Columns(i).ColumnName = "Mod_Man" Or
+               inDBT.Columns(i).ColumnName = "UPD_DE" Or
+               inDBT.Columns(i).ColumnName = "UPD_MG" Or
+               inDBT.Columns(i).ColumnName = "UPDT_DE" Or
+               inDBT.Columns(i).ColumnName = "UPDT_EMPL" Then
+                inGrd.Columns(i).Visible = False
+            End If
+        Next
+
+    End Sub
+
+End Module

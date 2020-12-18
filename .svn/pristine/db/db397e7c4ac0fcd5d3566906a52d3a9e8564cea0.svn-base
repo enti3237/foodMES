@@ -1,0 +1,1776 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Public Class Frm_Stock2
+
+    'hsim 20200508 사용 테이블 저장용 변수 선언
+    '#1. 사용자 테이블
+    Dim tblCmStockQC As New DataTable
+    Dim tblCmStockQCList As New DataTable
+
+    Dim prcType As New String(String.Empty)
+    Dim histLogStr As New String(String.Empty)
+    Dim fmtStr As New String(String.Format("yyyy-MM-dd")), fmtStr2 As New String(String.Format("yyyy-MM-dd HH:mm:ss"))
+
+    Dim xls As New Excel.Application
+    Dim xworkbook As Excel.Workbook
+    Dim xworksheet As Excel.Worksheet
+    Dim xRange As Excel.Range
+    Dim xlotno As String
+
+    Dim Excel_Check As Boolean
+    Dim file_path As String = ""
+    Dim file_name As String = ""
+
+    Private Sub Frm_Stock2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        palMain.Top = 40
+        palMain.Left = 10
+        Panel9.Top = 40
+        Panel9.Left = 10
+        Panel7.Top = 40
+        Panel7.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = True
+        Panel9.Visible = False
+        Panel7.Visible = False
+        palDetail.Visible = False
+
+        '#1. 사용자 테이블
+        tblCmStockQC = fnGetTableStructure("CM_Stock_QC")
+        tblCmStockQCList = fnGetTableStructure("CM_Stock_QC_List")
+
+        comboSetUp1(cboItmUnit3, "1050")
+
+        'hsim 20200616 검사결과 combo설정
+        RIRRsltComboSetUp()
+
+        CQ_Load()
+
+    End Sub
+
+
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles btnMain.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = True
+        Panel9.Visible = False
+        Panel7.Visible = False
+        palDetail.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles btnDetail.Click
+        'Label_Color(sender, Color_Label, Di_Panel2)
+        'palMain.Visible = False
+        'Panel9.Visible = False
+        'Panel7.Visible = False
+        'palDetail.Visible = True
+    End Sub
+
+    Private Sub CQ_Load()
+
+        Dim i As Integer
+        Dim DBT As DataTable, DBT2 As DataTable
+        Dim itmestr As String = ""
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = " SELECT CQ.* " &
+                 " ,CR.CR_Name CQ_CR_Name " &
+                 " ,(select isnull(Max(CR_Rev_No),1) from CR_Contract where CR_Code = CQ.CQ_CR_Code) As CQ_CR_Rev_No " &
+                 " ,(select isnull(Max(LO_Rev_No),1) from LA_Order where LO_Code = CQ.CQ_LO_Code) As CQ_LO_Rev_No " &
+                 " ,(select isnull(Max(CO_Rev_No),1) from CM_Order where CO_Code = CQ.CQ_CO_Code) As CQ_CO_Rev_No " &
+                 " ,(select isnull(Max(PS_Rev_No),1) from PS_Order_Plan where PS_Code = CQ.CQ_PS_Code) As CQ_PS_Rev_No " &
+                 " ,(select CM_Name from company where CQ.CQ_Customer_Code <> '' And CM_Code = CQ.CQ_Customer_Code) As CQ_Customer_Name " &
+                 " ,(select CM_Add1 + ' ' + CM_Add2 from company where CQ.CQ_Vendor_Code <> '' And CM_Code = CQ.CQ_Vendor_Code) As CQ_Vendor_Addr " &
+                 " ,(select CM_Name from company where CQ.CQ_Vendor_Code <> '' And CM_Code = CQ.CQ_Vendor_Code) As CQ_Vendor_Name " &
+                 " ,(select Man_Name from man where CQ.CQ_Prepared <> '' And Man_Code = CQ.CQ_Prepared) As CQ_Prepared_User_Name " &
+                 " ,(select Man_Name from man where CQ.CQ_Reviewed <> '' And Man_Code = CQ.CQ_Reviewed) As CQ_Reviewed_User_Name " &
+                 " ,(select Man_Name from man where CQ.CQ_Inspection_Prepared <> '' And Man_Code = CQ.CQ_Inspection_Prepared) As CQ_Inspection_Prepared_User_Name " &
+                 " ,(select Man_Name from man where CQ.CQ_Inspection_Confirmed <> '' And Man_Code = CQ.CQ_Inspection_Confirmed) As CQ_Inspection_Confirmed_User_Name " &
+                 " ,(select Man_Name from man where CQ.CQ_WH_Confirmed <> '' And Man_Code = CQ.CQ_WH_Confirmed) As CQ_WH_Confirmed_User_Name " &
+                 " FROM CM_Stock_QC CQ, CR_Contract CR " &
+                 " where 1=1 " &
+                 " AND CQ.CQ_Rev_No = (select isnull(max(CQ_Rev_No),1) from CM_Stock_QC where CQ_Code = CQ.CQ_code) " &
+                 " And CQ.CQ_CR_Code Like '%" & txtJobNo.Text & "%' " &
+                 " And CQ.CQ_Code Like '%" & txtRIRNo.Text & "%' " &
+                 " AND convert(datetime,'" & dtpRegDateFrom.Value.ToString("yyyy-MM-dd") & "') <= CQ.CQ_Date and convert(datetime,'" & dtpRegDateTo.Value.ToString("yyyy-MM-dd") & "') >= CQ.CQ_Date " &
+                 " And CQ.CQ_CR_Code = CR.CR_Code " &
+                 " And CR.CR_Rev_No = ( select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code) " &
+                 " And CR.CR_Name like '%" & txtJobName.Text & "%' " &
+                 " order by CQ.CQ_Code, CQ.CQ_CR_Code"
+        Re_Count = DB_Select(DBT)
+
+        lstMain.DataSource = DBT
+        lstMain.ClearSelection()
+
+        'hsim 20200517 이력 내역 조회
+        showRevLog("Frm_Stock2", DBT2, lstRev)
+
+    End Sub
+
+    Private Sub Text_Clear()
+
+        txtCQListCode3.Text = ""
+        txtDWGCode3.Text = ""
+        txtItem3.Text = ""
+        txtSpec3.Text = ""
+        txtSize3.Text = ""
+        cboItmUnit3.Text = ""
+        txtQty3.Text = ""
+        txtCFSI3.Text = ""
+        txtMCE3.Text = ""
+        txtHeatLotNo3.Text = ""
+        txtBigo3.Text = ""
+        cboResultNonNNS.Text = ""
+        cboResultNNS_A_MS.Text = ""
+        cboResultNNS_A_QC.Text = ""
+        cboResultNNS_B.Text = ""
+        cboResultNNS_C.Text = ""
+        cboResultNNS_D.Text = ""
+        cboResultNNS_E.Text = ""
+        If lstDetail.Rows.Count > 0 Then
+            txtSun3.Text = (Convert.ToInt32(lstDetail.Rows(lstDetail.Rows.Count - 1).Cells("CQ_Sun").Value.ToString) + 1).ToString
+        Else
+            txtSun3.Text = "1"
+        End If
+    End Sub
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs)
+        Label_Color(btnDetail, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        Panel9.Visible = False
+        Panel7.Visible = False
+        palDetail.Visible = True
+        Text_Clear()
+    End Sub
+
+    Private Sub lstMain_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellDoubleClick
+
+        Text_Clear()
+        Label_Color(btnDetail, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        Panel9.Visible = False
+        Panel7.Visible = False
+        palDetail.Visible = True
+
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = " SELECT  CQL.CQ_List_Code, CQL.CQ_Code, CQL.CQ_Rev_No, CQL.CQ_Sun, CQL.CQ_DV_Code, " & '" CQL.CQ_CR_List_Code, CQL.CQ_BO_List_Code, CQL.CQ_PS_Code, CQL.CQ_LO_List_Code, CQL.CQ_CO_List_Code, " &
+                 " 		CQL.CQ_Item, CQL.CQ_Spec, CQL.CQ_Size, CQL.CQ_Unit, CQL.CQ_Qty, " &
+                 " 		CQL.CQ_CFSI, CQL.CQ_MCE, CQL.CQ_HEAT_LOT_No, " &
+                 " 		CQL.CQ_Result, CQL.CQ_Result_NNS_A_MS, CQL.CQ_Result_NNS_A_QC, CQL.CQ_Result_NNS_B, CQL.CQ_Result_NNS_C, CQL.CQ_Result_NNS_D, CQL.CQ_Result_NNS_E " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Unit <> '' And Base_Sel_Code = '1050' And Base_Code = CQL.CQ_Unit) CQ_Unit_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result) CQ_Result_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_A_MS <> '' And Base_Sel_Code = '6020' And Base_Code = CQL.CQ_Result_NNS_A_MS) CQ_Result_NNS_A_MS_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_A_QC <> '' And Base_Sel_Code = '6020' And Base_Code = CQL.CQ_Result_NNS_A_QC) CQ_Result_NNS_A_QC_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_B <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result_NNS_B) CQ_Result_NNS_B_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_C <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result_NNS_C) CQ_Result_NNS_C_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_D <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result_NNS_D) CQ_Result_NNS_D_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_E <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result_NNS_E) CQ_Result_NNS_E_Name " &
+                 ",CQL.CQ_Item_Bigo, CQL.CQ_Prepared, CQL.CQ_Prepare_Date, CQL.CQ_Updated, CQL.CQ_Update_Date " &
+                 " FROM CM_Stock_QC_List CQL " &
+                 " Where CQ_Code = '" & lstMain.Rows(e.RowIndex).Cells("CQ_Code").Value.ToString() & "' And CQ_Rev_No = " & lstMain.Rows(e.RowIndex).Cells("CQ_Rev_No").Value.ToString() & " Order By CQ_Sun "
+
+        Re_Count = DB_Select(DBT)
+        txtCQCode3.Text = txtCQCode2.Text
+        txtCQRevNo3.Text = txtCQRev2.Text
+        lstDetail.DataSource = DBT
+        Text_Clear()
+        If Re_Count > 0 Then
+            lstDetail.ClearSelection()
+        End If
+
+    End Sub
+
+    Private Sub Com_Can_Click(sender As Object, e As EventArgs)
+        Label_Color(btnMain, Color_Label, Di_Panel2)
+        palMain.Visible = True
+        Panel9.Visible = False
+        Panel7.Visible = False
+        palDetail.Visible = False
+        Text_Clear()
+    End Sub
+
+
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        file_path = ""
+        file_name = ""
+        OpenFileDialog1.InitialDirectory = "C:\\"
+
+        If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
+            file_name = OpenFileDialog1.FileName
+            '파일이름
+            ListBox1.Items.Add(System.IO.Path.GetFileName(file_name))
+            '파일경로+이름
+            ListBox2.Items.Add(file_name)
+        End If
+
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        file_path = ""
+        file_name = ""
+        SaveFileDialog1.InitialDirectory = "C:\\"
+        SaveFileDialog1.FileName = ListBox1.Items(ListBox1.SelectedIndex).ToString
+        file_name = ListBox1.Items(ListBox1.SelectedIndex).ToString
+        If SaveFileDialog1.ShowDialog() = DialogResult.OK Then
+            System.IO.File.Copy(ListBox2.Items(ListBox1.SelectedIndex).ToString(), SaveFileDialog1.FileName.Replace(file_name, "") + "" & ListBox1.Items(ListBox1.SelectedIndex).ToString(), True)
+
+        End If
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        If ListBox1.SelectedIndex >= 0 Then
+            ListBox2.Items.RemoveAt(ListBox1.SelectedIndex)
+            ListBox1.Items.RemoveAt(ListBox1.SelectedIndex)
+
+        End If
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        Panel9.Visible = True
+        Panel7.Visible = False
+        palDetail.Visible = False
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles printType1.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        Panel9.Visible = False
+        Panel7.Visible = True
+        palDetail.Visible = False
+
+        If Excel_Check = True Then
+            xworkbook.Close()
+            xls.Quit()
+            xworksheet = Nothing
+            xworkbook = Nothing
+            xls = Nothing
+            releaseObject(xworksheet)
+            releaseObject(xworkbook)
+            releaseObject(xls)
+            Excel_Check = False
+
+        End If
+
+        xls = New Excel.Application
+        xls.Visible = False
+        xworkbook = xls.Workbooks.Open(Application.StartupPath + "\\Excel\\인수검사의뢰서.xlsx")
+        xworksheet = xworkbook.Sheets(1)
+
+        xls.DisplayAlerts = False
+        xls.DisplayFormulaBar = False
+        xls.DisplayStatusBar = False
+        xls.ActiveWindow.DisplayWorkbookTabs = False
+        xls.ActiveWindow.DisplayHeadings = False
+
+        SetParent(xls.Hwnd, Panel8.Handle)
+        SendMessage(xls.Hwnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0)
+        Excel_Check = True
+    End Sub
+
+    Private Sub lstDetail_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstDetail.CellClick
+        If e.RowIndex >= 0 Then
+            txtCQCode3.Text = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Code_d").Value.ToString
+            txtCQRevNo3.Text = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Rev_No_d").Value.ToString
+            txtSun3.Text = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Sun").Value.ToString
+            txtCQListCode3.Text = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_List_Code").Value.ToString
+            txtDWGCode3.Text = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_DV_Code").Value.ToString
+            txtItem3.Text = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Item").Value.ToString
+            txtSpec3.Text = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Spec").Value.ToString
+            txtSize3.Text = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Size").Value.ToString
+            cboItmUnit3.SelectedValue = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Unit").Value.ToString
+            txtQty3.Text = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Qty").Value.ToString
+            txtCFSI3.Text = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_CFSI_d").Value.ToString
+            txtMCE3.Text = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_MCE").Value.ToString
+            txtHeatLotNo3.Text = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_HEAT_LOT_No").Value.ToString
+            txtBigo3.Text = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Item_Bigo").Value.ToString
+            cboResultNonNNS.SelectedValue = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Result").Value.ToString
+            cboResultNNS_A_MS.SelectedValue = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Result_NNS_A_MS").Value.ToString
+            cboResultNNS_A_QC.SelectedValue = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Result_NNS_A_QC").Value.ToString
+            cboResultNNS_B.SelectedValue = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Result_NNS_B").Value.ToString
+            cboResultNNS_C.SelectedValue = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Result_NNS_C").Value.ToString
+            cboResultNNS_D.SelectedValue = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Result_NNS_D").Value.ToString
+            cboResultNNS_E.SelectedValue = lstDetail.Rows(lstDetail.CurrentRow.Index).Cells("CQ_Result_NNS_E").Value.ToString
+        End If
+
+
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        Dim DBT As DataTable
+        Dim File As String = ""
+        DBT = Nothing
+        StrSQL = "SELECT * FROM CM_Stock_QC where CQ_Code = '" & xworksheet.Range("Q1").Value.ToString & "'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            StrSQL = "Update CM_Stock_QC Set CQ_PS_Code = '" & xworksheet.Range("C6").Value.ToString & "',
+                                         CQ_PR_Code = '" & xworksheet.Range("L6").Value.ToString & "',
+                                         CQ_PO_Code = '" & xworksheet.Range("R6").Value.ToString & "',
+                                         CQ_Name = '" & xworksheet.Range("L5").Value.ToString & "',
+                                         CQ_Time = '" & "" & "',
+                                         CQ_Vendor_Name = '" & xworksheet.Range("C4").Value.ToString & "',
+                                         CQ_Vendor_Add = '" & xworksheet.Range("L4").Value.ToString & "',
+                                         CQ_Customer_Code = '" & "" & "',
+                                         CQ_Customer_Name = '" & xworksheet.Range("R5").Value.ToString & "',
+                                         CQ_Customer_Man_Name = '" & "" & "',
+                                         CQ_Customer_Man_Tel = '" & "" & "',
+                                         CQ_Manager = '" & xworksheet.Range("P23").Value.ToString & "',
+                                         CQ_Day = '" & xworksheet.Range("R4").Value.ToString & "',
+                                         CQ_Check = '" & "" & "',
+                                         CQ_Bigo = '" & xworksheet.Range("G19").Value.ToString & "',
+                                         CQ_File = '" & "" & "'
+                                         WHERE CQ_Code = '" & xworksheet.Range("Q1").Value.ToString & "' "
+            Re_Count2 = DB_Execute()
+
+            For i = 1 To 9
+
+                If xworksheet.Range("B" + (i + 7).ToString).Value <> Nothing Then
+                    StrSQL = "Update CM_Stock_QC_List Set CQ_DRW_Code = '" & xworksheet.Range("B" + (i + 7).ToString).Value.ToString.Trim & "',
+                                                  CQ_Item = '" & xworksheet.Range("C" + (i + 7).ToString).Value.ToString.Trim & "',
+                                                  CQ_Spec = '" & xworksheet.Range("E" + (i + 7).ToString).Value.ToString.Trim & "',
+                                                  CQ_Size = '" & xworksheet.Range("G" + (i + 7).ToString).Value.ToString.Trim & "',
+                                                  CQ_Unit = '" & xworksheet.Range("L" + (i + 7).ToString).Value.ToString.Trim & "',
+                                                  CQ_Qty = '" & xworksheet.Range("M" + (i + 7).ToString).Value.ToString.Trim & "',
+                                                  CQ_CFSI = '" & xworksheet.Range("N" + (i + 7).ToString).Value.ToString.Trim & "',
+                                                  CQ_MCE = '" & xworksheet.Range("O" + (i + 7).ToString).Value.ToString.Trim & "'
+                                            WHERE CQ_Code = '" & xworksheet.Range("Q1").Value.ToString & "' and CQ_Sun = '" & i.ToString & "' "
+                    DB_Execute()
+                End If
+            Next
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+        Else
+            'CT_Plan 추가
+            StrSQL = "Insert into CM_Stock_QC (CQ_Code, CQ_JOB_Code, CQ_PS_Code, CQ_PR_Code, CQ_PO_Code,
+                                           CQ_Name, CQ_Date, CQ_Time, CQ_Customer_Code, CQ_Customer_Name,
+                                           CQ_Customer_Man_Name, CQ_Customer_Man_Tel, CQ_Manager, CQ_Day, CQ_Check,
+                                           CQ_Bigo, CQ_File, CQ_Vendor_Name, CQ_Vendor_Add) 
+                                   Values ('" & xworksheet.Range("Q1").Value.ToString & "', '" & xworksheet.Range("C5").Value.ToString & "', '" & xworksheet.Range("C6").Value.ToString & "', '" & xworksheet.Range("L6").Value.ToString & "', '" & xworksheet.Range("R6").Value.ToString & "',
+                                           '" & xworksheet.Range("L5").Value.ToString & "', '" & DateTime.Today.ToString("yyyy-MM-dd") & "', '" & "" & "', '" & "" & "', '" & xworksheet.Range("R5").Value.ToString & "',
+                                           '" & "" & "', '" & "" & "', '" & xworksheet.Range("P23").Value.ToString & "', '" & xworksheet.Range("R4").Value.ToString & "', '" & "" & "',
+                                           '" & xworksheet.Range("G19").Value.ToString & "', '" & "" & "', '" & xworksheet.Range("C4").Value.ToString & "', '" & xworksheet.Range("L4").Value.ToString & "')"
+            Re_Count2 = DB_Execute()
+
+            For i = 1 To 9
+
+                If xworksheet.Range("B" + (i + 7).ToString).Value <> Nothing Then
+                    StrSQL = "Insert into CM_Stock_QC_List (CQ_Code, CQ_Sun, CQ_DRW_Code, 
+                                                 CQ_Item, CQ_Spec, CQ_Size, 
+                                                 CQ_Unit, CQ_Qty, CQ_CFSI, 
+                                                 CQ_MCE) 
+                                   Values ('" & xworksheet.Range("Q1").Value.ToString.Trim & "', '" & i.ToString & "', '" & xworksheet.Range("B" + (i + 7).ToString).Value.ToString.Trim & "', 
+                                           '" & xworksheet.Range("C" + (i + 7).ToString).Value.ToString.Trim & "', '" & xworksheet.Range("E" + (i + 7).ToString).Value.ToString.Trim & "', '" & xworksheet.Range("G" + (i + 7).ToString).Value.ToString.Trim & "', 
+
+                                           '" & xworksheet.Range("L" + (i + 7).ToString).Value.ToString.Trim & "', '" & xworksheet.Range("M" + (i + 7).ToString).Value.ToString.Trim & "', '" & xworksheet.Range("N" + (i + 7).ToString).Value.ToString.Trim & "', 
+                                           '" & xworksheet.Range("O" + (i + 7).ToString).Value.ToString.Trim & "')"
+                    DB_Execute()
+                End If
+            Next
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        End If
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        CQ_Load()
+    End Sub
+
+    Private Sub btnCustomerSearch_Click(sender As Object, e As EventArgs) Handles btnCustomerSearch.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Customer_POP = New Frm_Customer_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            cboDBT.Columns.Add("CM_Code")
+            cboDBT.Columns.Add("CM_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            txtCustomerName.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            'cboCustomer2.DataSource = cboDBT
+            'cboCustomer2.ValueMember = "CM_Code"
+            'cboCustomer2.DisplayMember = "CM_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnJobSearch2_Click(sender As Object, e As EventArgs) Handles btnJobSearch2.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString
+            txtJobRev2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Rev_No").Value.ToString
+            txtJobName2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Name").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnVendorSearch2_Click(sender As Object, e As EventArgs) Handles btnVendorSearch2.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Customer_POP = New Frm_Customer_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            cboDBT.Columns.Add("CM_Code")
+            cboDBT.Columns.Add("CM_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            txtVendor2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            txtAddress2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Addr").Value.ToString
+            cboVendor2.DataSource = cboDBT
+            cboVendor2.ValueMember = "CM_Code"
+            cboVendor2.DisplayMember = "CM_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnCustomerSearch2_Click(sender As Object, e As EventArgs) Handles btnCustomerSearch2.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Customer_POP = New Frm_Customer_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            cboDBT.Columns.Add("CM_Code")
+            cboDBT.Columns.Add("CM_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            txtCustomer2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            cboCustomer2.DataSource = cboDBT
+            cboCustomer2.ValueMember = "CM_Code"
+            cboCustomer2.DisplayMember = "CM_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub palMain_Paint(sender As Object, e As PaintEventArgs) Handles palMain.Paint
+
+    End Sub
+
+    Private Sub cboNCRYN2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboNCRYN2.SelectedIndexChanged
+        If Me.cboNCRYN2.Text = "Y" Then
+            txtNCRNo2.Enabled = True
+        Else
+            txtNCRNo2.Enabled = False
+        End If
+    End Sub
+
+    Private Sub btnPSSearch2_Click(sender As Object, e As EventArgs) Handles btnPSSearch2.Click
+        Dim pop1 As Frm_PS_POP = New Frm_PS_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            txtPS2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("PS_Code").Value.ToString
+            txtPSRev2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("PS_Rev_No").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnPreparedSearch_Click(sender As Object, e As EventArgs) Handles btnPreparedSearch.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Man_POP = New Frm_Man_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            cboDBT.Columns.Add("Man_Code")
+            cboDBT.Columns.Add("Man_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            txtPrepared2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            cboPrepared2.DataSource = cboDBT
+            cboPrepared2.ValueMember = "Man_Code"
+            cboPrepared2.DisplayMember = "Man_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnReview2_Click(sender As Object, e As EventArgs) Handles btnReview2.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Man_POP = New Frm_Man_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            cboDBT.Columns.Add("Man_Code")
+            cboDBT.Columns.Add("Man_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            txtReviewed2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            cboReview2.DataSource = cboDBT
+            cboReview2.ValueMember = "Man_Code"
+            cboReview2.DisplayMember = "Man_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnInspecPre2_Click(sender As Object, e As EventArgs) Handles btnInspecPre2.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Man_POP = New Frm_Man_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            cboDBT.Columns.Add("Man_Code")
+            cboDBT.Columns.Add("Man_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            txtInspecPre2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            cboInspecPre2.DataSource = cboDBT
+            cboInspecPre2.ValueMember = "Man_Code"
+            cboInspecPre2.DisplayMember = "Man_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnInspecCon2_Click(sender As Object, e As EventArgs) Handles btnInspecCon2.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Man_POP = New Frm_Man_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            cboDBT.Columns.Add("Man_Code")
+            cboDBT.Columns.Add("Man_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            txtInspecCon2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            cboInspecCon2.DataSource = cboDBT
+            cboInspecCon2.ValueMember = "Man_Code"
+            cboInspecCon2.DisplayMember = "Man_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnLOSearch2_Click(sender As Object, e As EventArgs) Handles btnLOSearch2.Click
+        Dim pop1 As Frm_PR_POP = New Frm_PR_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            txtLO2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("LO_Code").Value.ToString
+            txtLORev2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("LO_Rev_No").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnPOSearch2_Click(sender As Object, e As EventArgs) Handles btnPOSearch2.Click
+        Dim pop1 As Frm_PO_POP = New Frm_PO_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            txtPO2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CO_Code").Value.ToString
+            txtPORev2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CO_Rev_No").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles btnAdd2.Click
+        txtJobNo2.Text = ""
+        txtJobRev2.Text = ""
+        txtJobName2.Text = ""
+        txtCQCode2.Text = ""
+        txtCQName2.Text = ""
+        txtCQRev2.Text = ""
+        txtLO2.Text = ""
+        txtLORev2.Text = ""
+        txtPO2.Text = ""
+        txtPORev2.Text = ""
+        txtVendor2.Text = ""
+        txtAddress2.Text = ""
+        txtPS2.Text = ""
+        txtPSRev2.Text = ""
+        dtpCQDate2.Value = DateTime.Now.ToString(fmtStr2)
+        dtpWHDate2.Value = DateTime.Now.ToString(fmtStr2)
+        txtCustomer2.Text = ""
+        txtMTIden2.Text = ""
+        txtCFSI2.Text = ""
+        txtMTeEq2.Text = ""
+        txtMTeEqSerial2.Text = ""
+        dtpMTeEqExp2.Value = DateTime.Now.ToString(fmtStr2)
+        txtExternal2.Text = ""
+        txtDimension2.Text = ""
+        txtOther2.Text = ""
+        txtClean2.Text = ""
+        txtPacking2.Text = ""
+        cboNCRYN2.Text = ""
+        txtNCRNo2.Text = ""
+
+        'hsim 작성자는 login 사용자로 함
+        Dim cboDBT As New DataTable()
+        cboDBT.Columns.Add("Man_Code")
+        cboDBT.Columns.Add("Man_Name")
+        cboDBT.Rows.Add()
+        cboDBT.Rows(0).Item(0) = loginID
+        cboDBT.Rows(0).Item(1) = logInUserName
+        txtPrepared2.Text = logInUserName
+        cboPrepared2.DataSource = cboDBT
+        cboPrepared2.ValueMember = "Man_Code"
+        cboPrepared2.DisplayMember = "Man_Name"
+        cboPrepared2.SelectedValue = loginID
+
+        txtPrepared2.Text = ""
+        txtReviewed2.Text = ""
+        txtInspecPre2.Text = ""
+        txtInspecCon2.Text = ""
+    End Sub
+
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles btnDelete2.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+        If MessageBox.Show(txtCQCode2.Text + " 를 삭제하시겠습니까?" & vbCrLf & "상세 내용도 함께 삭제합니다", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If txtCQCode2.Text <> "" Then
+                StrSQL = "Delete CM_Stock_QC where CQ_Code = '" & txtCQCode2.Text & "' and CQ_Rev_No = " & txtCQRev2.Text & " "
+                Re_Count = DB_Execute()
+                StrSQL = "Delete CM_Stock_QC_List where CQ_Code = '" & txtCQCode2.Text & "' and CQ_Rev_No = " & txtCQRev2.Text & " "
+                DB_Execute()
+                If Re_Count > 0 Then
+                    MsgBox("삭제 완료")
+                End If
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " RIR 정보 삭제 : " & txtCQCode2.Text & "-" & txtCQRev2.Text
+                Man_Log("Frm_Stock2", "RIR 정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+            Else
+                MsgBox("선택된 RIR No. 가 없습니다")
+            End If
+            CQ_Load()
+        End If
+    End Sub
+
+    Private Sub btnSave2_Click_1(sender As Object, e As EventArgs) Handles btnSave2.Click
+
+        Dim i%
+        Dim DBT As DataTable, DBT2 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+
+        Try
+
+            StrSQL = "SELECT * from CM_Stock_QC where CQ_Code = '" & txtCQCode2.Text & "' And CQ_Rev_No = (SELECT max(CQ_Rev_No) from CM_Stock_QC where CQ_Code = '" & txtCQCode2.Text & "' and CQ_Rev_No = '" & txtCQRev2.Text & "')"
+            Re_Count = DB_Select(DBT)
+
+            StrSQL = "SELECT * from CM_Stock_QC where CQ_Code = '" & txtCQCode2.Text & "' And CQ_Rev_No = (SELECT max(CQ_Rev_No) from CM_Stock_QC where CQ_Code = '" & txtCQCode2.Text & "')"
+            Re_Count2 = DB_Select(DBT2)
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblCmStockQC)
+            '#2. 입력자료 입력
+            For i = 0 To tblCmStockQC.Rows.Count - 1
+
+                Select Case tblCmStockQC.Rows(i).Item(0).ToString
+
+                    Case "CQ_Code"
+                        If txtCQCode2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtCQCode2.Text
+                        Else
+                            tblCmStockQC.Rows(i).Item(11) = PK_Make("CM_Stock_QC")
+                        End If
+                    Case "CQ_Rev_No"
+                        If txtCQRev2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtCQRev2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Rev_No").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Rev_No").ToString
+                        Else
+                            tblCmStockQC.Rows(i).Item(11) = 1
+                        End If
+                    Case "CQ_Name"
+                        If txtCQName2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtCQName2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Name").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Name").ToString
+                        End If
+                    Case "CQ_Date"
+                        If dtpCQDate2.Value.ToString <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = dtpCQDate2.Value.ToString(fmtStr)
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Date").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Date").ToString
+                        End If
+                    Case "CQ_Vendor_Code"
+                        If cboVendor2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = cboVendor2.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Vendor_Code").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Vendor_Code").ToString
+                        End If
+                    Case "CQ_Customer_Code"
+                        If cboCustomer2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = cboCustomer2.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Customer_Code").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Customer_Code").ToString
+                        End If
+                    Case "CQ_CR_Code"
+                        If txtJobNo2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtJobNo2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_CR_Code").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_CR_Code").ToString
+                        End If
+                    Case "CQ_PS_Code"
+                        If txtPS2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtPS2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_PS_Code").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_PS_Code").ToString
+                        End If
+                    Case "CQ_LO_Code"
+                        If txtLO2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtLO2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_LO_Code").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_LO_Code").ToString
+                        End If
+                    Case "CQ_CO_Code"
+                        If txtPO2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtPO2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_CO_Code").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_CO_Code").ToString
+                        End If
+                    Case "CQ_MT_Identification"
+                        If txtMTIden2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtMTIden2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_MT_Identification").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_MT_Identification").ToString
+                        End If
+                    Case "CQ_CFSI"
+                        If txtCFSI2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtCFSI2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_CFSI").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_CFSI").ToString
+                        End If
+                    Case "CQ_M_TE_Equipment"
+                        If txtMTeEq2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtMTeEq2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_M_TE_Equipment").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_M_TE_Equipment").ToString
+                        End If
+                    Case "CQ_M_TE_Eq_Serial"
+                        If txtMTeEqSerial2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtMTeEqSerial2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_M_TE_Eq_Serial").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_M_TE_Eq_Serial").ToString
+                        End If
+                    Case "CQ_M_TE_Eq_Expire_Date"
+                        If dtpMTeEqExp2.Value.ToString <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = dtpMTeEqExp2.Value.ToString(fmtStr)
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_M_TE_Eq_Expire_Date").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_M_TE_Eq_Expire_Date").ToString
+                        End If
+                    Case "CQ_Externals"
+                        If txtExternal2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtExternal2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Externals").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Externals").ToString
+                        End If
+                    Case "CQ_Dimension"
+                        If txtDimension2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtDimension2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Dimension").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Dimension").ToString
+                        End If
+                    Case "CQ_Other_Req"
+                        If txtOther2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtOther2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Other_Req").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Other_Req").ToString
+                        End If
+                    Case "CQ_Cleanness"
+                        If txtClean2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtClean2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Cleanness").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Cleanness").ToString
+                        End If
+                    Case "CQ_Packing_Status"
+                        If txtPacking2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtPacking2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Packing_Status").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Packing_Status").ToString
+                        End If
+                    Case "CQ_WH_Date"
+                        If dtpWHDate2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = dtpWHDate2.Value.ToString(fmtStr)
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_WH_Date").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_WH_Date").ToString
+                        End If
+                    Case "CQ_WH_Confirmed"
+                        If cboWHConfirm2.SelectedValue <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = cboWHConfirm2.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_WH_Confirmed").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_WH_Confirmed").ToString
+                        End If
+                    Case "CQ_NCR_YN"
+                        If cboNCRYN2.SelectedItem <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = cboNCRYN2.SelectedItem
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_NCR_YN").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_NCR_YN").ToString
+                        End If
+                    Case "CQ_NCR_No"
+                        If txtNCRNo2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtNCRNo2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_NCR_No").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_NCR_No").ToString
+                        End If
+                    Case "CQ_Bigo"
+                        If txtCQBigo2.Text <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = txtCQBigo2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Bigo").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Bigo").ToString
+                        End If
+                    Case "CQ_Prepared"
+                        If cboPrepared2.SelectedValue <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = cboPrepared2.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Prepared").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Prepared").ToString
+                            Else
+                                tblCmStockQC.Rows(i).Item(11) = ""
+                            End If
+                        End If
+                    Case "CQ_Reviewed"
+                        If cboReview2.SelectedValue <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = cboReview2.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Reviewed").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Reviewed").ToString
+                            Else
+                                tblCmStockQC.Rows(i).Item(11) = ""
+                            End If
+                        End If
+                    Case "CQ_Updated"
+                        If Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Updated").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Updated").ToString
+                            Else
+                                tblCmStockQC.Rows(i).Item(11) = loginID
+                            End If
+                        End If
+                    Case "CQ_Inspection_Prepared"
+                        If cboInspecPre2.SelectedValue <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = cboInspecPre2.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Inspection_Prepared").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Inspection_Prepared").ToString
+                            Else
+                                tblCmStockQC.Rows(i).Item(11) = ""
+                            End If
+                        End If
+                    Case "CQ_Inspection_Confirmed"
+                        If cboInspecCon2.SelectedValue <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = cboInspecCon2.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Inspection_Confirmed").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Inspection_Confirmed").ToString
+                            Else
+                                tblCmStockQC.Rows(i).Item(11) = ""
+                            End If
+                        End If
+                    Case "CQ_Inspection_Received"
+                        If Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Inspection_Received").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Inspection_Received").ToString
+                            Else
+                                tblCmStockQC.Rows(i).Item(11) = ""
+                            End If
+                        End If
+                    Case "CQ_Prepare_Date"
+                        If dtpCQDate2.Value.ToString <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = dtpCQDate2.Value.ToString(fmtStr2)
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Prepare_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Prepare_Date").ToString
+                            Else
+                                tblCmStockQC.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                            End If
+                        End If
+                    Case "CQ_Review_Date"
+                        If dtpCQDate2.Value.ToString <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = dtpCQDate2.Value.ToString(fmtStr2)
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Review_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Review_Date").ToString
+                            Else
+                                tblCmStockQC.Rows(i).Item(11) = ""
+                            End If
+                        End If
+                    Case "CQ_Update_Date"
+                        If Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Update_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Update_Date").ToString
+                            Else
+                                tblCmStockQC.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                            End If
+                        End If
+                    Case "CQ_Inspection_Prepare_Date"
+                        If dtpInspecPre2.Value.ToString <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = dtpInspecPre2.Value.ToString(fmtStr2)
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Inspection_Prepare_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Inspection_Prepare_Date").ToString
+                            Else
+                                tblCmStockQC.Rows(i).Item(11) = ""
+                            End If
+                        End If
+                    Case "CQ_Inspection_Confirm_Date"
+                        If dtpInspecCon2.Value.ToString <> "" Then
+                            tblCmStockQC.Rows(i).Item(11) = dtpInspecCon2.Value.ToString(fmtStr2)
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Inspection_Confirm_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Inspection_Confirm_Date").ToString
+                            Else
+                                tblCmStockQC.Rows(i).Item(11) = ""
+                            End If
+                        End If
+                    Case "CQ_Inspection_Receive_Date"
+                        If Re_Count > 0 Then
+                            tblCmStockQC.Rows(i).Item(11) = DBT.Rows(0)("CQ_Inspection_Receive_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQC.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Inspection_Receive_Date").ToString
+                            Else
+                                tblCmStockQC.Rows(i).Item(11) = ""
+                            End If
+                        End If
+                End Select
+            Next
+
+
+
+            If Re_Count > 0 Then
+                Re_Count2 = fnTableUpdate("dbo.CM_Stock_QC", tblCmStockQC)
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+            Else
+                Re_Count2 = fnTableInsert("dbo.CM_Stock_QC", tblCmStockQC)
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " RIR 정보 수정 : " & txtCQCode2.Text & "-" & txtCQRev2.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " RIR 정보 신규 입력 : " & txtCQCode2.Text & "-" & txtCQRev2.Text
+            End If
+            Man_Log("Frm_Stock2", prcType, loginID & "-" & logInUserName, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        Catch ex As Exception
+            Exit Sub
+
+        End Try
+
+        CQ_Load()
+
+    End Sub
+
+    Private Sub btnWHConfirm2_Click(sender As Object, e As EventArgs) Handles btnWHConfirm2.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Man_POP = New Frm_Man_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            cboDBT.Columns.Add("Man_Code")
+            cboDBT.Columns.Add("Man_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            txtWHConfirm2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            cboWHConfirm2.DataSource = cboDBT
+            cboWHConfirm2.ValueMember = "Man_Code"
+            cboWHConfirm2.DisplayMember = "Man_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+
+        Dim cboDBT As New DataTable(), cboDBT2 As New DataTable(), cboDBT3 As New DataTable(), cboDBT4 As New DataTable(), cboDBT5 As New DataTable()
+        If e.RowIndex >= 0 Then
+            txtJobNo2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_CR_Code").Value.ToString
+            txtJobRev2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_CR_Rev_No").Value.ToString
+            txtJobName2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_CR_Name").Value.ToString
+            txtCQCode2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Code").Value.ToString
+            txtCQName2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Name").Value.ToString
+            txtCQRev2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Rev_No").Value.ToString
+            txtLO2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_LO_Code").Value.ToString
+            txtLORev2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_LO_Rev_No").Value.ToString
+            txtPO2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_CO_Code").Value.ToString
+            txtPORev2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_CO_Rev_No").Value.ToString
+            txtVendor2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Vendor_Name").Value.ToString
+            cboVendor2.SelectedValue = lstMain.Rows(e.RowIndex).Cells("CQ_Vendor_Code").Value.ToString
+            txtAddress2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Vendor_Addr").Value.ToString
+            dtpCQDate2.Value = lstMain.Rows(e.RowIndex).Cells("CQ_Date").Value.ToString
+            dtpWHDate2.Value = lstMain.Rows(e.RowIndex).Cells("CQ_WH_Date").Value.ToString
+            txtCustomer2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Customer_Name").Value.ToString
+            cboCustomer2.SelectedValue = lstMain.Rows(e.RowIndex).Cells("CQ_Customer_Code").Value.ToString
+            txtPS2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_PS_Code").Value.ToString
+            txtPSRev2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_PS_Rev_No").Value.ToString
+            txtMTIden2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_MT_Identification").Value.ToString
+            txtCFSI2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_CFSI").Value.ToString
+            txtMTeEq2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_M_TE_Equipment").Value.ToString
+            txtMTeEqSerial2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_M_TE_Eq_Serial").Value.ToString
+            dtpMTeEqExp2.Value = lstMain.Rows(e.RowIndex).Cells("CQ_M_TE_Eq_Expire_Date").Value.ToString
+            txtExternal2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Externals").Value.ToString
+            txtDimension2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Dimension").Value.ToString
+            txtOther2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Other_Req").Value.ToString
+            txtClean2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Cleanness").Value.ToString
+            txtPacking2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Packing_Status").Value.ToString
+            cboNCRYN2.SelectedValue = lstMain.Rows(e.RowIndex).Cells("CQ_NCR_YN").Value.ToString
+            txtNCRNo2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_NCR_No").Value.ToString
+            txtCQBigo2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Bigo").Value.ToString
+
+            '#1. 작성자
+            cboDBT.Columns.Add("CQ_Prepared")
+            cboDBT.Columns.Add("CQ_Prepared_User_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = lstMain.Rows(e.RowIndex).Cells("CQ_Prepared").Value.ToString
+            cboDBT.Rows(0).Item(1) = lstMain.Rows(e.RowIndex).Cells("CQ_Prepared_User_Name").Value.ToString
+            txtPrepared2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Prepared_User_Name").Value.ToString
+            cboPrepared2.DataSource = cboDBT
+            cboPrepared2.ValueMember = "CQ_Prepared"
+            cboPrepared2.DisplayMember = "CQ_Prepared_User_Name"
+            cboPrepared2.SelectedValue = lstMain.Rows(e.RowIndex).Cells("CQ_Prepared").Value.ToString
+
+            '#2. 검토자
+            cboDBT2.Columns.Add("CQ_Reviewed")
+            cboDBT2.Columns.Add("CQ_Reviewed_User_Name")
+            cboDBT2.Rows.Add()
+            cboDBT2.Rows(0).Item(0) = lstMain.Rows(e.RowIndex).Cells("CQ_Reviewed").Value.ToString
+            cboDBT2.Rows(0).Item(1) = lstMain.Rows(e.RowIndex).Cells("CQ_Reviewed_User_Name").Value.ToString
+            txtReviewed2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Reviewed_User_Name").Value.ToString
+            cboReview2.DataSource = cboDBT2
+            cboReview2.ValueMember = "CQ_Reviewed"
+            cboReview2.DisplayMember = "CQ_Reviewed_User_Name"
+            cboReview2.SelectedValue = lstMain.Rows(e.RowIndex).Cells("CQ_Reviewed").Value.ToString
+
+            '#3. 인수검사 작성자
+            cboDBT3.Columns.Add("CQ_Inspection_Prepared")
+            cboDBT3.Columns.Add("CQ_Inspection_Prepared_User_Name")
+            cboDBT3.Rows.Add()
+            cboDBT3.Rows(0).Item(0) = lstMain.Rows(e.RowIndex).Cells("CQ_Inspection_Prepared").Value.ToString
+            cboDBT3.Rows(0).Item(1) = lstMain.Rows(e.RowIndex).Cells("CQ_Inspection_Prepared_User_Name").Value.ToString
+            txtInspecPre2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Inspection_Prepared_User_Name").Value.ToString
+            cboInspecPre2.DataSource = cboDBT3
+            cboInspecPre2.ValueMember = "CQ_Inspection_Prepared"
+            cboInspecPre2.DisplayMember = "CQ_Inspection_Prepared_User_Name"
+            cboInspecPre2.SelectedValue = lstMain.Rows(e.RowIndex).Cells("CQ_Inspection_Prepared").Value.ToString
+
+            '#4. 인수검사 승인자
+            cboDBT4.Columns.Add("CQ_Inspection_Confirmed")
+            cboDBT4.Columns.Add("CQ_Inspection_Confirmed_User_Name")
+            cboDBT4.Rows.Add()
+            cboDBT4.Rows(0).Item(0) = lstMain.Rows(e.RowIndex).Cells("CQ_Inspection_Confirmed").Value.ToString
+            cboDBT4.Rows(0).Item(1) = lstMain.Rows(e.RowIndex).Cells("CQ_Inspection_Confirmed_User_Name").Value.ToString
+            txtInspecCon2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Inspection_Confirmed_User_Name").Value.ToString
+            cboInspecCon2.DataSource = cboDBT4
+            cboInspecCon2.ValueMember = "CQ_Inspection_Confirmed"
+            cboInspecCon2.DisplayMember = "CQ_Inspection_Confirmed_User_Name"
+            cboInspecCon2.SelectedValue = lstMain.Rows(e.RowIndex).Cells("CQ_Inspection_Confirmed").Value.ToString
+
+            '#5. 입고 확인자
+            cboDBT5.Columns.Add("CQ_WH_Confirmed")
+            cboDBT5.Columns.Add("CQ_WH_Confirmed_User_Name")
+            cboDBT5.Rows.Add()
+            cboDBT5.Rows(0).Item(0) = lstMain.Rows(e.RowIndex).Cells("CQ_WH_Confirmed").Value.ToString
+            cboDBT5.Rows(0).Item(1) = lstMain.Rows(e.RowIndex).Cells("CQ_WH_Confirmed_User_Name").Value.ToString
+            txtWHConfirm2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_WH_Confirmed_User_Name").Value.ToString
+            cboWHConfirm2.DataSource = cboDBT5
+            cboWHConfirm2.ValueMember = "CQ_WH_Confirmed"
+            cboWHConfirm2.DisplayMember = "CQ_WH_Confirmed_User_Name"
+            cboWHConfirm2.SelectedValue = lstMain.Rows(e.RowIndex).Cells("CQ_WH_Confirmed").Value.ToString
+
+            dtpPre2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Prepare_Date").Value.ToString
+            dtpReview2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Review_Date").Value.ToString
+            dtpInspecPre2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Inspection_Prepare_Date").Value.ToString
+            dtpInspecCon2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_Inspection_Confirm_Date").Value.ToString
+            dtpWHConfirm2.Text = lstMain.Rows(e.RowIndex).Cells("CQ_WH_Date").Value.ToString
+        End If
+
+
+    End Sub
+
+    Private Sub btnDWGSearch_Click(sender As Object, e As EventArgs) Handles btnDWGSearch.Click
+        Dim pop1 As Frm_DV_POP = New Frm_DV_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            txtDWGCode3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("DV_Code").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnGetPO_Click(sender As Object, e As EventArgs) Handles btnGetPO.Click
+        Dim i%, j%
+        Dim DBTinit As DataTable, DBT As DataTable, DBT2 As DataTable
+        Dim initTgtCount As Int32
+        DBTinit = Nothing
+        DBT = Nothing
+        DBT2 = Nothing
+
+        Dim tmpCOCode As New String(String.Empty)
+        Dim tmpCORevNo As New String(String.Empty)
+        ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+        'Try
+
+        '#1. popUp으로 PO 정보를 가져옴
+        Dim pop1 As Frm_PO_POP = New Frm_PO_POP
+            pop1.StartPosition = FormStartPosition.CenterScreen
+            If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+                tmpCOCode = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CO_Code").Value.ToString
+                tmpCORevNo = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CO_Rev_No").Value.ToString
+            End If
+            pop1.Dispose()
+            '#2. 진행할 지 물어봄
+            If MessageBox.Show("PO번호" & tmpCOCode & "/개정번호 " & tmpCORevNo & "의 전체항목을 RIR 목록에 추가하시겠습니까?", "PO항목 가져오기", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+
+                '#3-1 PO 목록 가져오기
+                StrSQL = "SELECT CO.*, COL.* from CM_Order CO, CM_Order_List COL where CO.CO_Code = '" & tmpCOCode & "' And CO.CO_Rev_No = " & tmpCORevNo & " And CO.CO_Code = COL.CO_Code And CO.CO_Rev_No = COL.CO_Rev_No order by COL.CO_Sun asc "
+                initTgtCount = DB_Select(DBTinit)
+                If initTgtCount < 1 Then
+                    MessageBox.Show("PO번호" & tmpCOCode & "/개정번호 " & tmpCORevNo & "의 PO 목록이 존재하지 않습니다.", "PO항목 가져오기", MessageBoxButtons.OK)
+                    Exit Sub
+                End If
+
+                StrSQL = "SELECT 1 from CM_Stock_QC_List CQL where 1=1 " &
+                     " AND CQL.CQ_Code = '" & txtCQCode2.Text & "' " &
+                     " AND CQL.CQ_Rev_No = " & txtCQRev2.Text
+                Re_Count = DB_Select(DBT)
+
+                '#3-2 RIR 목록과 중복되는 기존 PO목록 삭제 처리
+                If Re_Count > 0 Then
+
+                    If MessageBox.Show("PO번호" & tmpCOCode & "/개정번호 " & tmpCORevNo & "의 항목이 RIR 목록에 존재합니다. 삭제 후 진행하시겠습니까?", "PO항목 가져오기", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                    StrSQL = " DELETE from CM_Stock_QC_List where 1=1 " &
+                             " AND CQ_Code = '" & txtCQCode2.Text & "' " &
+                             " AND CQ_Rev_No = " & txtCQRev2.Text
+                    Re_Count = DB_Select(DBT)
+                        If Re_Count > 0 Then
+                            MessageBox.Show("PO번호" & tmpCOCode & "/개정번호 " & tmpCORevNo & "의 기존 RIR 목록을 삭제하였습니다.", "PO항목 가져오기", MessageBoxButtons.OK)
+                        Else
+                            MessageBox.Show("PO번호" & tmpCOCode & "/개정번호 " & tmpCORevNo & "의 기존 RIR 목록을 삭제에 실패하였습니다.", "PO항목 가져오기", MessageBoxButtons.OK)
+                            Exit Sub
+                        End If
+                    End If
+
+                End If
+
+
+                StrSQL = "SELECT isnull(max(CQ_Sun),0) from CM_Stock_QC_List where CQ_Code = '" & txtCQCode2.Text & "' And CQ_Rev_No = " & txtCQRev2.Text
+                Re_Count2 = DB_Select(DBT2)
+                Dim tmpMaxSun As New Int32
+                tmpMaxSun = Integer.Parse(DBT2.Rows(0).Item(0).ToString())
+
+                For j = 0 To initTgtCount - 1
+
+                    '#3-3 하나씩 입력 
+                    tmpMaxSun += 1
+                    '#1. 기존 입력 값 초기화
+                    clearTblRowValues(tblCmStockQCList)
+                    '#2. 입력자료 입력
+                    For i = 0 To tblCmStockQCList.Rows.Count - 1
+
+                        Select Case tblCmStockQCList.Rows(i).Item(0).ToString
+                            Case "CQ_List_Code"
+                                tblCmStockQCList.Rows(i).Item(11) = PK_Make("CM_Stock_QC_List")
+                            Case "CQ_Code"
+                                tblCmStockQCList.Rows(i).Item(11) = txtCQCode2.Text
+                            Case "CQ_Rev_No"
+                                tblCmStockQCList.Rows(i).Item(11) = txtCQRev2.Text
+                            Case "CQ_Sun"
+                                tblCmStockQCList.Rows(i).Item(11) = tmpMaxSun.ToString
+                            Case "CQ_CR_List_Code"
+                                tblCmStockQCList.Rows(i).Item(11) = ""
+                            Case "CQ_BO_List_Code"
+                                tblCmStockQCList.Rows(i).Item(11) = DBTinit.Rows(j)("CO_BO_List_Code").ToString
+                            Case "CQ_LO_List_Code"
+                                tblCmStockQCList.Rows(i).Item(11) = DBTinit.Rows(j)("CO_LO_List_Code").ToString
+                            Case "CQ_CO_List_Code"
+                                tblCmStockQCList.Rows(i).Item(11) = DBTinit.Rows(j)("CO_List_Code").ToString
+                            Case "CQ_PS_Code"
+                                tblCmStockQCList.Rows(i).Item(11) = DBTinit.Rows(j)("CO_PS_Code").ToString
+                            Case "CQ_DV_Code"
+                                tblCmStockQCList.Rows(i).Item(11) = DBTinit.Rows(j)("CO_DV_Code").ToString
+                            Case "CQ_Item"
+                                tblCmStockQCList.Rows(i).Item(11) = DBTinit.Rows(j)("CO_Itm_Code").ToString
+                            Case "CQ_Spec"
+                                tblCmStockQCList.Rows(i).Item(11) = DBTinit.Rows(j)("CO_Itm_Spec").ToString
+                            Case "CQ_Size"
+                                tblCmStockQCList.Rows(i).Item(11) = ""
+                            Case "CQ_Unit"
+                                tblCmStockQCList.Rows(i).Item(11) = DBTinit.Rows(j)("CO_Itm_Unit").ToString
+                            Case "CQ_Qty"
+                                tblCmStockQCList.Rows(i).Item(11) = DBTinit.Rows(j)("CO_Itm_Qty").ToString
+                            Case "CQ_CFSI"
+                                tblCmStockQCList.Rows(i).Item(11) = ""
+                            Case "CQ_MCE"
+                                tblCmStockQCList.Rows(i).Item(11) = ""
+                            Case "CQ_HEAT_LOT_No"
+                                tblCmStockQCList.Rows(i).Item(11) = ""
+                            Case "CQ_Result"
+                                tblCmStockQCList.Rows(i).Item(11) = ""
+                            Case "CQ_Result_NNS_A_MS"
+                                tblCmStockQCList.Rows(i).Item(11) = ""
+                            Case "CQ_Result_NNS_A_QC"
+                                tblCmStockQCList.Rows(i).Item(11) = ""
+                            Case "CQ_Result_NNS_B"
+                                tblCmStockQCList.Rows(i).Item(11) = ""
+                            Case "CQ_Result_NNS_C"
+                                tblCmStockQCList.Rows(i).Item(11) = ""
+                            Case "CQ_Result_NNS_D"
+                                tblCmStockQCList.Rows(i).Item(11) = ""
+                            Case "CQ_Result_NNS_E"
+                                tblCmStockQCList.Rows(i).Item(11) = ""
+                            Case "CQ_Item_Bigo"
+                                tblCmStockQCList.Rows(i).Item(11) = DBTinit.Rows(j)("CO_Itm_Bigo").ToString
+                            Case "CQ_Prepared"
+                                tblCmStockQCList.Rows(i).Item(11) = loginID
+                            Case "CQ_Prepare_Date"
+                                tblCmStockQCList.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                            Case "CQ_Updated"
+                                tblCmStockQCList.Rows(i).Item(11) = loginID
+                            Case "CQ_Update_Date"
+                                tblCmStockQCList.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End Select
+
+                    Next
+
+
+                    Re_Count2 = fnTableInsert("dbo.CM_Stock_QC_List", tblCmStockQCList)
+                    If Re_Count2 <= 0 Then
+                        MsgBox("저장 실패")
+                        Exit Sub
+                    End If
+
+                Next
+
+            End If
+
+            'hsim 20200515 처리 이력
+            histLogStr = "사용자 " & logInUserName & " RIR 항목정보 PO에서 가져오기 - 신규 입력 : " & txtCQCode2.Text & "-" & txtCQRev2.Text
+            Man_Log("Frm_Stock2", "신규입력", loginID & "-" & logInUserName, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        'Catch ex As Exception
+
+        'MsgBox(ex.Message)
+        'Exit Sub
+
+        'End Try
+
+        CQ_Detail_Load()
+
+    End Sub
+
+    Private Sub Button16_Click(sender As Object, e As EventArgs) Handles btnAddDetail.Click
+        Text_Clear()
+    End Sub
+
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles btnSaveDetail.Click
+        Dim i%
+        Dim DBT As DataTable, DBT2 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        Try
+
+            StrSQL = "SELECT * from CM_Stock_QC_List where CQ_Code = '" & txtCQCode3.Text & "' And CQ_Rev_No = (SELECT max(CQ_Rev_No) from CM_Stock_QC_List where CQ_Code = '" & txtCQCode3.Text & "' and CQ_Rev_No = '" & txtCQRevNo3.Text & "')"
+            Re_Count = DB_Select(DBT)
+
+            StrSQL = "SELECT * from CM_Stock_QC_List where CQ_Code = '" & txtCQCode3.Text & "' And CQ_Rev_No = (SELECT max(CQ_Rev_No) from CM_Stock_QC_List where CQ_Code = '" & txtCQCode3.Text & "')"
+            Re_Count2 = DB_Select(DBT2)
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblCmStockQCList)
+
+            '#2. 입력자료 입력
+            For i = 0 To tblCmStockQCList.Rows.Count - 1
+
+                Select Case tblCmStockQCList.Rows(i).Item(0).ToString
+
+                    Case "CQ_List_Code"
+                        If txtCQListCode3.Text <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = txtCQListCode3.Text
+                        Else
+                            tblCmStockQCList.Rows(i).Item(11) = PK_Make("CM_Stock_QC_List")
+                        End If
+                    Case "CQ_Code"
+                        If txtCQCode3.Text <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = txtCQCode3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Code").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Code").ToString
+                        End If
+                    Case "CQ_Rev_No"
+                        If txtCQRevNo3.Text <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = txtCQRevNo3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Rev_No").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Rev_No").ToString
+                        Else
+                            tblCmStockQCList.Rows(i).Item(11) = 1
+                        End If
+                    Case "CQ_Sun"
+                        If txtSun3.Text <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = txtSun3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Sun").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Sun").ToString
+                        End If
+                    Case "CQ_DV_Code"
+                        If txtDWGCode3.Text <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = txtDWGCode3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_DV_Code").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_DV_Code").ToString
+                        End If
+                    Case "CQ_Item"
+                        If txtItem3.Text <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = txtItem3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Item").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Item").ToString
+                        End If
+                    Case "CQ_Spec"
+                        If txtSpec3.Text <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = txtSpec3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Spec").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Spec").ToString
+                        End If
+                    Case "CQ_Size"
+                        If txtSize3.Text <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = txtSize3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Size").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Size").ToString
+                        End If
+                    Case "CQ_Unit"
+                        If cboItmUnit3.SelectedValue <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = cboItmUnit3.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Unit").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Unit").ToString
+                        End If
+                    Case "CQ_Qty"
+                        If txtQty3.Text <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = txtQty3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Qty").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Qty").ToString
+                        End If
+                    Case "CQ_CFSI"
+                        If txtCFSI3.Text <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = txtCFSI3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_CFSI").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_CFSI").ToString
+                        End If
+                    Case "CQ_MCE"
+                        If txtMCE3.Text <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = txtMCE3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_MCE").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_MCE").ToString
+                        End If
+                    Case "CQ_HEAT_LOT_No"
+                        If txtHeatLotNo3.Text <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = txtHeatLotNo3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_HEAT_LOT_No").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_HEAT_LOT_No").ToString
+                        End If
+                    Case "CQ_Result"
+                        If cboResultNonNNS.SelectedValue <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = cboResultNonNNS.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Result").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Result").ToString
+                        End If
+                    Case "CQ_Result_NNS_A_MS"
+                        If cboResultNNS_A_MS.SelectedValue <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = cboResultNNS_A_MS.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Result_NNS_A_MS").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Result_NNS_A_MS").ToString
+                        End If
+                    Case "CQ_Result_NNS_A_QC"
+                        If cboResultNNS_A_QC.SelectedValue <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = cboResultNNS_A_QC.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Result_NNS_A_QC").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Result_NNS_A_QC").ToString
+                        End If
+                    Case "CQ_Result_NNS_B"
+                        If cboResultNNS_B.SelectedValue <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = cboResultNNS_B.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Result_NNS_B").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Result_NNS_B").ToString
+                        End If
+                    Case "CQ_Result_NNS_C"
+                        If cboResultNNS_C.SelectedValue <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = cboResultNNS_C.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Result_NNS_C").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Result_NNS_C").ToString
+                        End If
+                    Case "CQ_Result_NNS_D"
+                        If cboResultNNS_D.SelectedValue <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = cboResultNNS_D.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Result_NNS_D").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Result_NNS_D").ToString
+                        End If
+                    Case "CQ_Result_NNS_E"
+                        If cboResultNNS_E.SelectedValue <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = cboResultNNS_E.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Result_NNS_E").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Result_NNS_E").ToString
+                        End If
+                    Case "CQ_Item_Bigo"
+                        If txtBigo3.Text <> "" Then
+                            tblCmStockQCList.Rows(i).Item(11) = txtBigo3.Text
+                        ElseIf Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Item_Bigo").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Item_Bigo").ToString
+                        End If
+                    Case "CQ_Prepared"
+                        If Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Prepared").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Prepared").ToString
+                            Else
+                                tblCmStockQCList.Rows(i).Item(11) = loginID
+                            End If
+                        End If
+                    Case "CQ_Prepare_Date"
+                        If Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Prepare_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Prepare_Date").ToString
+                            Else
+                                tblCmStockQCList.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                            End If
+                        End If
+                    Case "CQ_Updated"
+                        If Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Updated").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Updated").ToString
+                            Else
+                                tblCmStockQCList.Rows(i).Item(11) = loginID
+                            End If
+                        End If
+                    Case "CQ_Update_Date"
+                        If Re_Count > 0 Then
+                            tblCmStockQCList.Rows(i).Item(11) = DBT.Rows(0)("CQ_Update_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblCmStockQCList.Rows(i).Item(11) = DBT2.Rows(0)("CQ_Update_Date").ToString
+                            Else
+                                tblCmStockQCList.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                            End If
+                        End If
+                End Select
+            Next
+
+
+
+            If Re_Count > 0 Then
+                Re_Count2 = fnTableUpdate("dbo.CM_Stock_QC_List", tblCmStockQCList)
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+            Else
+                Re_Count2 = fnTableInsert("dbo.CM_Stock_QC_List", tblCmStockQCList)
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " RIR 항목 정보 수정 : " & txtCQCode3.Text & "-" & txtCQRevNo3.Text & "-" & txtSun3.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " RIR 항목정보 신규 입력 : " & txtCQCode3.Text & "-" & txtCQRevNo3.Text & "-" & txtSun3.Text
+            End If
+            Man_Log("Frm_Stock2", prcType, loginID & "-" & logInUserName, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+
+        StrSQL = " SELECT  CQL.CQ_List_Code, CQL.CQ_Code, CQL.CQ_Rev_No, CQL.CQ_Sun, CQL.CQ_DV_Code, " & '" CQL.CQ_CR_List_Code, CQL.CQ_BO_List_Code, CQL.CQ_PS_Code, CQL.CQ_LO_List_Code, CQL.CQ_CO_List_Code, " &
+                 " 		CQL.CQ_Item, CQL.CQ_Spec, CQL.CQ_Size, CQL.CQ_Unit, CQL.CQ_Qty, " &
+                 " 		CQL.CQ_CFSI, CQL.CQ_MCE, CQL.CQ_HEAT_LOT_No, " &
+                 " 		CQL.CQ_Result, CQL.CQ_Result_NNS_A_MS, CQL.CQ_Result_NNS_A_QC, CQL.CQ_Result_NNS_B, CQL.CQ_Result_NNS_C, CQL.CQ_Result_NNS_D, CQL.CQ_Result_NNS_E " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Unit <> '' And Base_Sel_Code = '1050' And Base_Code = CQL.CQ_Unit) CQ_Unit_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result) CQ_Result_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_A_MS <> '' And Base_Sel_Code = '6020' And Base_Code = CQL.CQ_Result_NNS_A_MS) CQ_Result_NNS_A_MS_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_A_QC <> '' And Base_Sel_Code = '6020' And Base_Code = CQL.CQ_Result_NNS_A_QC) CQ_Result_NNS_A_QC_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_B <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result_NNS_B) CQ_Result_NNS_B_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_C <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result_NNS_C) CQ_Result_NNS_C_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_D <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result_NNS_D) CQ_Result_NNS_D_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_E <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result_NNS_E) CQ_Result_NNS_E_Name " &
+                 ",CQL.CQ_Item_Bigo, CQL.CQ_Prepared, CQL.CQ_Prepare_Date, CQL.CQ_Updated, CQL.CQ_Update_Date " &
+                 " FROM CM_Stock_QC_List CQL " &
+                 " Where CQ_Code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CQ_Code").Value.ToString() & "' And CQ_Rev_No = " & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CQ_Rev_No").Value.ToString() & " Order By CQ_Sun "
+
+        Re_Count = DB_Select(DBT)
+        txtCQCode3.Text = txtCQCode2.Text
+        txtCQRevNo3.Text = txtCQRev2.Text
+        lstDetail.DataSource = DBT
+        Text_Clear()
+
+    End Sub
+
+    Private Sub btnDeleteDetail_Click(sender As Object, e As EventArgs) Handles btnDeleteDetail.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+        If MessageBox.Show("삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If txtCQCode3.Text <> "" Then
+                StrSQL = "Delete CM_Stock_QC_List where CQ_Code = '" & txtCQCode3.Text & "' and CQ_Rev_No = '" & lstDetail.Rows(lstDetail.CurrentCell.RowIndex).Cells("CQ_Rev_No").Value.ToString & "' and CQ_Sun = " & txtSun3.Text
+                Re_Count = DB_Execute()
+                If Re_Count > 0 Then
+                    MsgBox("삭제 완료")
+                End If
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " RIR 항목 삭제 : " & txtCQCode3.Text & "-" &
+                                 lstDetail.Rows(lstDetail.CurrentCell.RowIndex).Cells("CQ_Rev_No").Value.ToString & "-" & txtSun3.Text
+                Man_Log("Frm_Stock2", "RIR 항목 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+            Else
+                MsgBox("선택된 RIR 항목이 없습니다")
+            End If
+            CQ_Load()
+        End If
+    End Sub
+
+    Private Sub btnMTeEqSearch_Click(sender As Object, e As EventArgs) Handles btnMTeEqSearch.Click
+        Dim pop1 As Frm_MTE_POP = New Frm_MTE_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.lstMain.Rows.Count > 0 Then
+            txtMTeEqSerial2.Text = pop1.lstMain.Rows(pop1.lstMain.CurrentCell.RowIndex).Cells("MTECL_No").Value.ToString
+            txtMTeEq2.Text = pop1.lstMain.Rows(pop1.lstMain.CurrentCell.RowIndex).Cells("MTE_Name").Value.ToString
+            dtpMTeEqExp2.Value = pop1.lstMain.Rows(pop1.lstMain.CurrentCell.RowIndex).Cells("MTE_Calib_Date").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            txtJobNo.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString
+            txtJobName.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Name").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub CQ_Detail_Load()
+
+        Text_Clear()
+        Label_Color(btnDetail, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        Panel9.Visible = False
+        Panel7.Visible = False
+        palDetail.Visible = True
+
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = " SELECT  CQL.CQ_List_Code, CQL.CQ_Code, CQL.CQ_Rev_No, CQL.CQ_Sun, CQL.CQ_DV_Code, " & '" CQL.CQ_CR_List_Code, CQL.CQ_BO_List_Code, CQL.CQ_PS_Code, CQL.CQ_LO_List_Code, CQL.CQ_CO_List_Code, " &
+                 " 		CQL.CQ_Item, CQL.CQ_Spec, CQL.CQ_Size, CQL.CQ_Unit, CQL.CQ_Qty, " &
+                 " 		CQL.CQ_CFSI, CQL.CQ_MCE, CQL.CQ_HEAT_LOT_No, " &
+                 " 		CQL.CQ_Result, CQL.CQ_Result_NNS_A_MS, CQL.CQ_Result_NNS_A_QC, CQL.CQ_Result_NNS_B, CQL.CQ_Result_NNS_C, CQL.CQ_Result_NNS_D, CQL.CQ_Result_NNS_E " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Unit <> '' And Base_Sel_Code = '1050' And Base_Code = CQL.CQ_Unit) CQ_Unit_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result) CQ_Result_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_A_MS <> '' And Base_Sel_Code = '6020' And Base_Code = CQL.CQ_Result_NNS_A_MS) CQ_Result_NNS_A_MS_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_A_QC <> '' And Base_Sel_Code = '6020' And Base_Code = CQL.CQ_Result_NNS_A_QC) CQ_Result_NNS_A_QC_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_B <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result_NNS_B) CQ_Result_NNS_B_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_C <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result_NNS_C) CQ_Result_NNS_C_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_D <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result_NNS_D) CQ_Result_NNS_D_Name " &
+                 ",(select Base_Name from Base_Code where CQL.CQ_Result_NNS_E <> '' And Base_Sel_Code = '6010' And Base_Code = CQL.CQ_Result_NNS_E) CQ_Result_NNS_E_Name " &
+                 ",	CQL.CQ_Item_Bigo, CQL.CQ_Prepared, CQL.CQ_Prepare_Date, CQL.CQ_Updated, CQL.CQ_Update_Date " &
+                 " FROM CM_Stock_QC_List CQL " &
+                 " Where CQ_Code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CQ_Code").Value.ToString() & "' And CQ_Rev_No = " & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("CQ_Rev_No").Value.ToString() & " Order By CQ_Sun "
+
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstDetail.DataSource = DBT
+            lstDetail.ClearSelection()
+        End If
+
+    End Sub
+
+    Private Sub RIRRsltComboSetUp()
+
+        Dim cboDBT1 As New DataTable()
+        cboDBT1 = Nothing
+        StrSQL = "Select Base_Code, Base_Name From Base_Code with(NOLOCK) where Base_Sel_Code = '6010' order by Base_Sun"
+        Re_Count = DB_Select(cboDBT1)
+        'cboResultNonNNS.DataSource = cboDBT1
+        'cboResultNonNNS.ValueMember = "Base_Code"
+        'cboResultNonNNS.DisplayMember = "Base_Name"
+        'cboResultNNS_B.DataSource = cboDBT1
+        'cboResultNNS_B.ValueMember = "Base_Code"
+        'cboResultNNS_B.DisplayMember = "Base_Name"
+        'cboResultNNS_C.DataSource = cboDBT1
+        'cboResultNNS_C.ValueMember = "Base_Code"
+        'cboResultNNS_C.DisplayMember = "Base_Name"
+        'cboResultNNS_D.DataSource = cboDBT1
+        'cboResultNNS_D.ValueMember = "Base_Code"
+        'cboResultNNS_D.DisplayMember = "Base_Name"
+        comboSetUp1(cboResultNonNNS, "6010")
+        comboSetUp1(cboResultNNS_B, "6010")
+        comboSetUp1(cboResultNNS_C, "6010")
+        comboSetUp1(cboResultNNS_D, "6010")
+        comboSetUp1(cboResultNNS_E, "6010")
+
+        Dim cboDBT2 As New DataTable()
+        cboDBT2 = Nothing
+        StrSQL = "Select Base_Code, Base_Name From Base_Code with(NOLOCK) where Base_Sel_Code = '6020' order by Base_Sun"
+        Re_Count = DB_Select(cboDBT2)
+        'cboResultNNS_A_MS.DataSource = cboDBT2
+        'cboResultNNS_A_MS.ValueMember = "Base_Code"
+        'cboResultNNS_A_MS.DisplayMember = "Base_Name"
+        'cboResultNNS_A_QC.DataSource = cboDBT2
+        'cboResultNNS_A_QC.ValueMember = "Base_Code"
+        'cboResultNNS_A_QC.DisplayMember = "Base_Name"
+        comboSetUp1(cboResultNNS_A_MS, "6020")
+        comboSetUp1(cboResultNNS_A_QC, "6020")
+
+    End Sub
+
+End Class

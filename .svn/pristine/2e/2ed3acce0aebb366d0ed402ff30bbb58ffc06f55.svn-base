@@ -1,0 +1,331 @@
+﻿Public Class Frm_graph
+    Dim De_CC(100) As String
+    Dim De_Su(100) As String
+    Dim count As Integer = 0
+    Dim today As String = ""
+    Dim max As Integer
+    Dim hour As Integer
+
+    Dim c() As Label '창고명 (DB에 들어가면 바로씀)
+    Dim ii() As Label '온도
+    Dim p() As Label 'ip 또는 그 외적인 것  
+
+
+    Private Sub Frm_Monitoring_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Dim DBT As New DataTable
+        Dim k As Integer
+        Dim i As Integer
+
+
+
+        ' PIc_Pic(Picture_Logo, Application.StartupPath & "\Picture\Logo2_" & Setup_Data(9) & ".png")
+        'PIc_Pic(Picture_Logo, Application.StartupPath & "\Picture\Logo2.png")
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        StrSQL = "SELECT GETDATE()"
+
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count = 0 Then
+            Exit Sub
+        Else
+
+            today = DBT.Rows(0).Item(0)
+            today = Mid(today, 1, 4) & Mid(today, 6, 2) & Mid(today, 9, 2)
+        End If
+
+
+        Chart1.Series("Series1").Name = "냉동실"
+        Chart1.Series("Series2").Name = "급냉실"
+        Chart1.Series("Series3").Name = "가공실"
+        Chart1.Series("Series4").Name = "냉동고"
+        Chart1.Series("Series5").Name = "냉장실"
+        Chart1.Series("Series6").Name = "창고"
+
+        hour = Now.Hour
+
+        Chart1.ChartAreas(0).AxisX.Maximum = hour
+        Chart1.ChartAreas(0).AxisX.Minimum = 0
+        Chart1.ChartAreas(0).AxisX.Interval = 1
+
+        Chart1.ChartAreas(0).AxisY.Maximum = 30
+        Chart1.ChartAreas(0).AxisY.Minimum = -40
+        Chart1.ChartAreas(0).AxisY.Interval = 10
+
+        Display()
+
+        '
+
+    End Sub
+
+    Private Sub Display()
+
+        Dim DBT As New DataTable
+        Dim DBT2 As New DataTable
+
+        Dim Re_Count2 As Long
+        Dim i As Integer
+        Dim j As Integer
+        Dim k As Integer
+        Dim ip As Integer = 231
+
+        '그래프 초기화
+        Chart1.Series("냉동실").Points.Clear()
+        Chart1.Series("급냉실").Points.Clear()
+        Chart1.Series("가공실").Points.Clear()
+        Chart1.Series("냉동고").Points.Clear()
+        Chart1.Series("냉장실").Points.Clear()
+        Chart1.Series("창고").Points.Clear()
+
+        'ip에 따라서 값 가져오기 / 시간별로
+
+        If hour < 10 Then
+            For i = 0 To hour
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '231' and c_time LIKE '0" & i & "%' order by c_date DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("냉동실").Points.AddY(DBT.Rows(0)("C_DATA"))
+                    ' Chart1.Series("냉각실1").Points.AddXY("냉각실1", DBT.Rows(0)("C_TEMP"))
+                    '  ii(i).Text = DBT.Rows(0)("C_TEMP")
+                Else
+                End If
+            Next
+        Else
+            For i = 0 To 9
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '231' and c_time LIKE '0" & i & "%' order by c_date DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("냉동실").Points.AddY(DBT.Rows(0)("C_DATA"))
+                    ' Chart1.Series("냉각실1").Points.AddXY("냉각실1", DBT.Rows(0)("C_TEMP"))
+                    '  ii(i).Text = DBT.Rows(0)("C_TEMP")
+                Else
+                End If
+            Next
+
+            For i = 10 To hour
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '231' and c_time LIKE '" & i & "%' order by C_DATE DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("냉동실").Points.AddY(DBT.Rows(0)("C_DATA"))
+                Else
+                End If
+            Next
+        End If
+
+
+
+        '-------------------------------------232
+
+
+
+
+        If hour < 10 Then
+            For i = 0 To hour
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '232' and c_time LIKE '0" & i & "%' order by c_date DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("급냉실").Points.AddY(DBT.Rows(0)("C_DATA"))
+                    ' Chart1.Series("냉각실1").Points.AddXY("냉각실1", DBT.Rows(0)("C_TEMP"))
+                    '  ii(i).Text = DBT.Rows(0)("C_TEMP")
+                Else
+                End If
+            Next
+        Else
+            For i = 0 To 9
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '232' and c_time LIKE '0" & i & "%' order by c_date DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("급냉실").Points.AddY(DBT.Rows(0)("C_DATA"))
+                    ' Chart1.Series("냉각실1").Points.AddXY("냉각실1", DBT.Rows(0)("C_TEMP"))
+                    '  ii(i).Text = DBT.Rows(0)("C_TEMP")
+                Else
+                End If
+            Next
+
+            For i = 10 To hour
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '232' and c_time LIKE '" & i & "%' order by C_DATE DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("급냉실").Points.AddY(DBT.Rows(0)("C_DATA"))
+                Else
+                End If
+            Next
+        End If
+
+        '-------------------------------------233
+
+        If hour < 10 Then
+            For i = 0 To hour
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '233' and c_time LIKE '0" & i & "%' order by c_date DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("가공실").Points.AddY(DBT.Rows(0)("C_DATA"))
+                    ' Chart1.Series("냉각실1").Points.AddXY("냉각실1", DBT.Rows(0)("C_TEMP"))
+                    '  ii(i).Text = DBT.Rows(0)("C_TEMP")
+                Else
+                End If
+            Next
+        Else
+            For i = 0 To 9
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '233' and c_time LIKE '0" & i & "%' order by c_date DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("가공실").Points.AddY(DBT.Rows(0)("C_DATA"))
+                    ' Chart1.Series("냉각실1").Points.AddXY("냉각실1", DBT.Rows(0)("C_TEMP"))
+                    '  ii(i).Text = DBT.Rows(0)("C_TEMP")
+                Else
+                End If
+            Next
+
+            For i = 10 To hour
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '233' and c_time LIKE '" & i & "%' order by C_DATE DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("가공실").Points.AddY(DBT.Rows(0)("C_DATA"))
+                Else
+                End If
+            Next
+        End If
+
+        '-------------------------------------234
+
+        If hour < 10 Then
+            For i = 0 To hour
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '234' and c_time LIKE '0" & i & "%' order by c_date DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("냉동고").Points.AddY(DBT.Rows(0)("C_DATA"))
+                    ' Chart1.Series("냉각실1").Points.AddXY("냉각실1", DBT.Rows(0)("C_TEMP"))
+                    '  ii(i).Text = DBT.Rows(0)("C_TEMP")
+                Else
+                End If
+            Next
+        Else
+            For i = 0 To 9
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '234' and c_time LIKE '0" & i & "%' order by c_date DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("냉동고").Points.AddY(DBT.Rows(0)("C_DATA"))
+                    ' Chart1.Series("냉각실1").Points.AddXY("냉각실1", DBT.Rows(0)("C_TEMP"))
+                    '  ii(i).Text = DBT.Rows(0)("C_TEMP")
+                Else
+                End If
+            Next
+
+            For i = 10 To hour
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '234' and c_time LIKE '" & i & "%' order by C_DATE DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("냉동고").Points.AddY(DBT.Rows(0)("C_DATA"))
+                Else
+                End If
+            Next
+        End If
+
+        '-------------------------------------235
+
+        If hour < 10 Then
+            For i = 0 To hour
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '235' and c_time LIKE '0" & i & "%' order by c_date DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("냉장실").Points.AddY(DBT.Rows(0)("C_DATA"))
+                    ' Chart1.Series("냉각실1").Points.AddXY("냉각실1", DBT.Rows(0)("C_TEMP"))
+                    '  ii(i).Text = DBT.Rows(0)("C_TEMP")
+                Else
+                End If
+            Next
+        Else
+            For i = 0 To 9
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '235' and c_time LIKE '0" & i & "%' order by c_date DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("냉장실").Points.AddY(DBT.Rows(0)("C_DATA"))
+                    ' Chart1.Series("냉각실1").Points.AddXY("냉각실1", DBT.Rows(0)("C_TEMP"))
+                    '  ii(i).Text = DBT.Rows(0)("C_TEMP")
+                Else
+                End If
+            Next
+
+            For i = 10 To hour
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '235' and c_time LIKE '" & i & "%' order by C_DATE DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("냉장실").Points.AddY(DBT.Rows(0)("C_DATA"))
+                Else
+                End If
+            Next
+        End If
+
+        '-------------------------------------236
+
+        If hour < 10 Then
+            For i = 0 To hour
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '236' and c_time LIKE '0" & i & "%' order by c_date DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("창고").Points.AddY(DBT.Rows(0)("C_DATA"))
+                    ' Chart1.Series("냉각실1").Points.AddXY("냉각실1", DBT.Rows(0)("C_TEMP"))
+                    '  ii(i).Text = DBT.Rows(0)("C_TEMP")
+                Else
+                End If
+            Next
+        Else
+            For i = 0 To 9
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '236' and c_time LIKE '0" & i & "%' order by c_date DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("창고").Points.AddY(DBT.Rows(0)("C_DATA"))
+                    ' Chart1.Series("냉각실1").Points.AddXY("냉각실1", DBT.Rows(0)("C_TEMP"))
+                    '  ii(i).Text = DBT.Rows(0)("C_TEMP")
+                Else
+                End If
+            Next
+
+            For i = 10 To hour
+                StrSQL = "SELECT TOP 1 C_DATA FROM IOTLOG WHERE C_IP = '236' and c_time LIKE '" & i & "%' order by C_DATE DESC, c_time desc"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Chart1.Series("창고").Points.AddY(DBT.Rows(0)("C_DATA"))
+                Else
+                End If
+            Next
+        End If
+
+
+    End Sub
+
+    Private Sub Frm_Monitoring_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles Me.MouseDoubleClick
+        Dim dualMonitor() As Screen = Screen.AllScreens
+        If dualMonitor.Length = 2 Then
+            If Me.Bounds = dualMonitor(1).Bounds Then
+                Me.Bounds = dualMonitor(0).WorkingArea
+            Else
+                Me.Bounds = dualMonitor(1).WorkingArea
+            End If
+        End If
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+
+        Display()
+
+    End Sub
+
+
+    Private Sub Picture_Logo_Click(sender As Object, e As EventArgs) Handles Picture_Logo.Click
+        Me.Close()
+        End
+    End Sub
+
+    Private Sub Label21_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Label40_Click(sender As Object, e As EventArgs)
+
+    End Sub
+End Class

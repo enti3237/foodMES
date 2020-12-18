@@ -1,0 +1,43 @@
+﻿Public Class Frm_BOM_Itm_POP
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = " SELECT BOL.BO_List_Code, BOL.BO_Code, BOL.BO_Rev_No, BOL.BO_Sun, " &
+                 " BOL.BO_CR_list_Code, (SELECT CR_PL_NAME FROM CR_Contract_List where CR_List_Code = BOL.BO_CR_List_Code) BO_CR_list_Name, " &
+                 " BOL.BO_DV_Code, (SELECT DV_NAME FROM DV_Drawing where BOL.BO_DV_Code <> '' And DV_Code = BOL.BO_DV_Code and DV_Rev_No = (select isnull(max(DV_Rev_No),1) from DV_Drawing where DV_Code = BOL.BO_DV_Code)) BO_DV_Name, " &
+                 " BOL.BO_Itm_Code, BOL.BO_Itm_Name,  " &
+                 " BOL.BO_Itm_Form, BOL.BO_Itm_Method, BOL.BO_Itm_Standard, BOL.BO_Itm_Size,  " &
+                 " BOL.BO_Itm_Unit, BOL.BO_Itm_Qty, BOL.BO_Bigo " &
+                 " FROM CR_Contract CR OUTER APPLY (SELECT * From BO_BOM BO where CR.CR_Code = BO.BO_CR_Code And BO.BO_Rev_No = (select isnull(max(BO_Rev_No),1) from BO_BOM where BO_Code = BO.BO_Code) ) BO " &
+                 " OUTER APPLY (SELECT * From BO_BOM_List BOL where BO.BO_Code = BOL.BO_Code And BO.BO_Rev_No = BOL.BO_Rev_No ) BOL " &
+                 " where 1=1 " &
+                 " And BO.BO_Code Like '%" & txtBOMCode.Text & "%' " &
+                 " And CR_Rev_No = (select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code) " &
+                 " order by BOL.BO_Code, BOL.BO_Rev_No, BOL.BO_Sun "
+
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+        DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.DialogResult = DialogResult.OK
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Me.Close()
+    End Sub
+
+    Private Sub btnBOMSearch_Click(sender As Object, e As EventArgs) Handles btnBOMSearch.Click
+        Dim pop2 As Frm_BOM_POP = New Frm_BOM_POP
+        pop2.StartPosition = FormStartPosition.CenterScreen
+        If (pop2.ShowDialog(Me) = DialogResult.OK) Then
+            txtBOMCode.Text = pop2.DataGridView1.Rows(pop2.DataGridView1.CurrentCell.RowIndex).Cells("BO_Code").Value.ToString
+        End If
+        pop2.Dispose()
+    End Sub
+End Class

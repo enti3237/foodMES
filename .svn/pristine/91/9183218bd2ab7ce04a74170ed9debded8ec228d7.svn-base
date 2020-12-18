@@ -1,0 +1,208 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_Login
+    Inherits System.Windows.Forms.Form
+
+    'Form은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Login))
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Text_Man_Pass = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Text_Man_Code = New System.Windows.Forms.TextBox()
+        Me.picIntro = New System.Windows.Forms.PictureBox()
+        Me.Com_OK = New System.Windows.Forms.Button()
+        Me.Com_Can = New System.Windows.Forms.Button()
+        Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.lblSWTitle = New System.Windows.Forms.Label()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.lblSWVersion = New System.Windows.Forms.Label()
+        CType(Me.picIntro, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Label2.Location = New System.Drawing.Point(403, 454)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(37, 12)
+        Me.Label2.TabIndex = 21
+        Me.Label2.Text = "PASS"
+        '
+        'Text_Man_Pass
+        '
+        Me.Text_Man_Pass.Location = New System.Drawing.Point(446, 448)
+        Me.Text_Man_Pass.Name = "Text_Man_Pass"
+        Me.Text_Man_Pass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.Text_Man_Pass.Size = New System.Drawing.Size(165, 21)
+        Me.Text_Man_Pass.TabIndex = 2
+        Me.Text_Man_Pass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Label1.Location = New System.Drawing.Point(244, 454)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(16, 12)
+        Me.Label1.TabIndex = 19
+        Me.Label1.Text = "ID"
+        '
+        'Text_Man_Code
+        '
+        Me.Text_Man_Code.Location = New System.Drawing.Point(266, 448)
+        Me.Text_Man_Code.Name = "Text_Man_Code"
+        Me.Text_Man_Code.Size = New System.Drawing.Size(121, 21)
+        Me.Text_Man_Code.TabIndex = 1
+        Me.Text_Man_Code.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'picIntro
+        '
+        Me.picIntro.Location = New System.Drawing.Point(0, 1)
+        Me.picIntro.Margin = New System.Windows.Forms.Padding(0)
+        Me.picIntro.Name = "picIntro"
+        Me.picIntro.Size = New System.Drawing.Size(960, 440)
+        Me.picIntro.TabIndex = 24
+        Me.picIntro.TabStop = False
+        '
+        'Com_OK
+        '
+        Me.Com_OK.BackColor = System.Drawing.Color.White
+        Me.Com_OK.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame
+        Me.Com_OK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue
+        Me.Com_OK.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Com_OK.Font = New System.Drawing.Font("새굴림", 9.0!)
+        Me.Com_OK.Location = New System.Drawing.Point(642, 445)
+        Me.Com_OK.Margin = New System.Windows.Forms.Padding(2)
+        Me.Com_OK.Name = "Com_OK"
+        Me.Com_OK.Size = New System.Drawing.Size(124, 27)
+        Me.Com_OK.TabIndex = 3
+        Me.Com_OK.Text = "확인"
+        Me.Com_OK.UseVisualStyleBackColor = False
+        '
+        'Com_Can
+        '
+        Me.Com_Can.BackColor = System.Drawing.Color.White
+        Me.Com_Can.FlatAppearance.BorderColor = System.Drawing.SystemColors.WindowFrame
+        Me.Com_Can.FlatAppearance.MouseOverBackColor = System.Drawing.Color.CornflowerBlue
+        Me.Com_Can.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Com_Can.Font = New System.Drawing.Font("새굴림", 9.0!)
+        Me.Com_Can.Location = New System.Drawing.Point(797, 445)
+        Me.Com_Can.Margin = New System.Windows.Forms.Padding(2)
+        Me.Com_Can.Name = "Com_Can"
+        Me.Com_Can.Size = New System.Drawing.Size(124, 27)
+        Me.Com_Can.TabIndex = 4
+        Me.Com_Can.Text = "취소"
+        Me.Com_Can.UseVisualStyleBackColor = False
+        '
+        'Panel5
+        '
+        Me.Panel5.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel5.Location = New System.Drawing.Point(0, 440)
+        Me.Panel5.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel5.Name = "Panel5"
+        Me.Panel5.Size = New System.Drawing.Size(960, 1)
+        Me.Panel5.TabIndex = 166
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel1.Location = New System.Drawing.Point(0, 476)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(960, 1)
+        Me.Panel1.TabIndex = 167
+        '
+        'lblSWTitle
+        '
+        Me.lblSWTitle.AutoSize = True
+        Me.lblSWTitle.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.lblSWTitle.Location = New System.Drawing.Point(11, 453)
+        Me.lblSWTitle.Name = "lblSWTitle"
+        Me.lblSWTitle.Size = New System.Drawing.Size(140, 12)
+        Me.lblSWTitle.TabIndex = 168
+        Me.lblSWTitle.Text = "SMART FACTORY Ver. "
+        '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel2.Location = New System.Drawing.Point(0, 0)
+        Me.Panel2.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(960, 1)
+        Me.Panel2.TabIndex = 169
+        '
+        'lblSWVersion
+        '
+        Me.lblSWVersion.AutoSize = True
+        Me.lblSWVersion.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.lblSWVersion.Location = New System.Drawing.Point(150, 453)
+        Me.lblSWVersion.Name = "lblSWVersion"
+        Me.lblSWVersion.Size = New System.Drawing.Size(21, 12)
+        Me.lblSWVersion.TabIndex = 170
+        Me.lblSWVersion.Text = "1.0"
+        '
+        'Frm_Login
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.White
+        Me.ClientSize = New System.Drawing.Size(960, 477)
+        Me.ControlBox = False
+        Me.Controls.Add(Me.lblSWVersion)
+        Me.Controls.Add(Me.Panel2)
+        Me.Controls.Add(Me.lblSWTitle)
+        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.Panel5)
+        Me.Controls.Add(Me.Com_Can)
+        Me.Controls.Add(Me.Com_OK)
+        Me.Controls.Add(Me.picIntro)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.Text_Man_Pass)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.Text_Man_Code)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.KeyPreview = True
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
+        Me.Name = "Frm_Login"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "로그인"
+        CType(Me.picIntro, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Text_Man_Pass As TextBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Text_Man_Code As TextBox
+    Friend WithEvents picIntro As PictureBox
+    Friend WithEvents Com_OK As Button
+    Friend WithEvents Com_Can As Button
+    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents lblSWTitle As Label
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents lblSWVersion As Label
+End Class

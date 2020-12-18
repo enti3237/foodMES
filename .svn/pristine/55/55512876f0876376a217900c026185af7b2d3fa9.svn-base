@@ -1,0 +1,187 @@
+﻿Public Class Frm_Monitoring7
+    Dim De_CC(100) As String
+    Dim De_Su(100) As String
+    Dim count As Integer = 0
+    Dim today As String = ""
+    Dim k As Integer = 0
+
+    Dim c() As Label '기계대수
+    Dim ii() As Label '지시수량 / 생산수량
+    Dim p() As Label '실적
+
+
+    Private Sub Frm_Monitoring_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Dim DBT As New DataTable
+        Dim k As Integer
+        Dim i As Integer
+
+
+
+        PIc_Pic(Picture_Logo, Application.StartupPath & "\Picture\Logo2_" & Setup_Data(9) & ".png")
+        'PIc_Pic(Picture_Logo, Application.StartupPath & "\Picture\Logo2.png")
+
+        c = New Label() {C1, C2, C3, C4, C5, C6, C7, C8, C9}
+        ii = New Label() {i1, i2, i3, i4, i5, i6, i7, i8, i9}
+        p = New Label() {p1, p2, p3, p4, p5, p6, p7, p8, p9}
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+
+        StrSQL = "SELECT COUNT(PL_CODE) FROM SI_MACHINE"
+            Re_Count = DB_Select(DBT)
+
+        If Re_Count <> 0 Then
+            '  ii(i).Text = DBT.Rows(0)("C_TEMP")
+        Else
+            Exit Sub
+        End If
+
+
+        'For k = 0 To Re_Count - 1
+
+        '    c(k).TextAlign = ContentAlignment.MiddleCenter
+        '    ii(k).TextAlign = ContentAlignment.MiddleCenter
+        '    p(k).TextAlign = ContentAlignment.MiddleCenter
+        '    p(k).Visible = False
+        '    ii(k).Text = ""
+
+        '    StrSQL = "SELECT PL_NAME FROM SI_MACHINE"
+        '    Re_Count = DB_Select(DBT)
+
+        '    c(k).Text = DBT.Rows(k)("PL_NAME")
+        'Next
+
+        c(0).Text = "훈연기"
+        c(1).Text = "슬라이스기"
+        c(2).Text = "텀블러"
+        c(3).Text = "작업대"
+        c(4).Text = "진공포장기"
+        c(5).Text = "해동"
+
+
+
+        StrSQL = "SELECT GETDATE()"
+
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count = 0 Then
+            Exit Sub
+        Else
+            today = DBT.Rows(0).Item(0)
+            today = Mid(today, 1, 4) & "-" & Mid(today, 6, 2) & "-" & Mid(today, 9, 2)
+        End If
+
+        c(6).Visible = False
+        ii(6).Visible = False
+        p(6).Visible = False
+
+        c(7).Visible = False
+        ii(7).Visible = False
+        p(7).Visible = False
+
+        c(8).Visible = False
+        ii(8).Visible = False
+        p(8).Visible = False
+        Label3.Text = ""
+
+        Display()
+
+    End Sub
+
+    Private Sub Display()
+
+        Dim DBT As New DataTable
+        Dim DBT2 As New DataTable
+
+        Dim Re_Count2 As Long
+        Dim i As Integer
+        Dim j As Integer
+        Dim k As Integer
+
+
+        For i = 0 To 5
+            StrSQL = "SELECT PL_COUNT FROM SI_MACHINE WHERE PL_NAME = '" & c(i).Text & "'"
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count <> 0 Then
+                ii(i).Text = DBT.Rows(0)("PL_COUNT")
+                p(i).Visible = False
+            Else
+            End If
+        Next
+
+    End Sub
+
+    Private Sub Frm_Monitoring_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles Me.MouseDoubleClick
+        Dim dualMonitor() As Screen = Screen.AllScreens
+        If dualMonitor.Length = 2 Then
+            If Me.Bounds = dualMonitor(1).Bounds Then
+                Me.Bounds = dualMonitor(0).WorkingArea
+            Else
+                Me.Bounds = dualMonitor(1).WorkingArea
+            End If
+        End If
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+
+        Display()
+
+    End Sub
+
+
+    Private Sub Picture_Logo_Click(sender As Object, e As EventArgs) Handles Picture_Logo.Click
+        Me.Close()
+        End
+    End Sub
+
+    Private Sub Label21_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub p5_Click(sender As Object, e As EventArgs) Handles p5.Click
+
+    End Sub
+
+    Private Sub i5_Click(sender As Object, e As EventArgs) Handles i5.Click
+
+    End Sub
+
+    Private Sub C5_Click(sender As Object, e As EventArgs) Handles C5.Click
+
+    End Sub
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        DBT = Nothing
+        'MsgBox(i.ToString)
+        StrSQL = "Select QC_MAN From QC_Info with(NOLOCK) Where QC_TITLE = '종합상황판 공지'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count = 0 Then
+            '  Label3.Text = ""
+        Else
+
+            If IsDBNull(DBT.Rows(k)("QC_MAN")) Then
+                Label3.Text = ""
+            Else
+                Label3.Text = DBT.Rows(k)("QC_MAN").ToString
+            End If
+            '가동중 
+
+
+        End If
+
+        k += 1
+
+        If k = DBT.Rows.Count Then
+            k = 0
+        End If
+
+        '   Display()
+    End Sub
+End Class

@@ -1,0 +1,224 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.Globalization
+Imports System.Data.OleDb
+
+Public Class Frm_PD_Req_Recv
+    Dim tblContract As New DataTable
+    Dim tblContract_lst As New DataTable
+
+    Dim Grid_Info_Row As Integer
+    Dim Grid_Info_Col As Integer
+    Dim Grid_Main_Row As Integer
+    Dim Grid_Main_Col As Integer
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+    Dim Excel_Check As Boolean
+    Dim Grid_Display_Ch As Boolean
+    Dim bu_set() As String = {"경영지원팀", "영업팀", "기술개발팀", "품질보증팀", "생산팀"}
+    Dim bool_data As Boolean = False
+    Dim bool_data2 As Boolean = False
+    Dim file_path As String = ""
+    Dim file_name As String = ""
+    Dim Main As Frm_Main = Application.OpenForms("Frm_Main")
+
+    Private Sub fnFrmTblLoad()
+        tblContract = fnGetTableStructure("dbo.CR_Contract")
+        tblContract_lst = fnGetTableStructure("dbo.CR_Contract_List")
+    End Sub
+
+    Private Sub Frm_PD_Req_Recv_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Label_Color(btnMain, Color_Label, Di_Panel2)
+
+        '의뢰일 From설정
+        dtpOrderDateFrom.Value = "2015-01-01"
+        dtpOrderDateTo.Value = DateTime.Now.ToString("yyyy") + "-12-31"
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        palMain.Top = 40
+        palMain.Left = 10
+
+        palMain.Visible = True
+
+        fnFrmTblLoad()
+        'Grid_CR_Load()
+
+        comboSatUp2(cboCustomer2, "0001")
+
+        Me.btnSearch.PerformClick()
+
+    End Sub
+
+    Private Sub Com_Contract_Click_1(sender As Object, e As EventArgs) Handles btnMain.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = True
+    End Sub
+
+    '수주목록 
+    Private Sub Grid_CR_Load()
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "select 
+	                    CR.CR_Code, CR.CR_Rev_No, CR.CRS_Code, CR.CR_Name, 
+	                    CM.CM_Name, CR.CR_Date, CR.CR_Due_Date 
+                    FROM 
+                    CR_Contract CR, 
+                    Company CM 
+                    where 1=1
+                    and CR.CR_Customer_Code = CM.CM_Code
+                    and CR.CR_Rev_No = (select isnull(max(CR_Rev_No),1)
+	                                     from CR_Contract
+	                                     where CR_Code = CR.CR_Code)
+                    order by 1 asc"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstMain.DataSource = DBT
+        End If
+
+        lstMain.ClearSelection()
+
+    End Sub
+
+    '돋보기로 Job No 검색
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles btnJobSearch.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo.Text = pop1.result
+            txtJobName.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Name").Value.ToString
+            txtCRSNo.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CRS_Code").Value.ToString
+            txtCustomer.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Customer_Name").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    '수주목록 그리드 셀클릭
+    Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+        If e.RowIndex >= 0 Then
+            StrSQL = "SELECT * FROM CR_Contract with(NOLOCK), Company with(NOLOCK) where CR_Customer_Code = CM_Code And
+                        CR_Code = '" & lstMain.Rows(e.RowIndex).Cells("CR_Code").Value.ToString() & "' And
+                        CR_Rev_No = '" & lstMain.Rows(e.RowIndex).Cells("CR_Rev_No").Value.ToString() & "' order by CR_Code, CR_Rev_No"
+            Re_Count = DB_Select(DBT2)
+
+            If Re_Count > 0 Then
+                txtJobNo2.Text = DBT2.Rows(0)("CR_Code").ToString
+                txtJobRev2.Text = DBT2.Rows(0)("CR_Rev_No").ToString
+                txtCRSNo2.Text = DBT2.Rows(0)("CRS_Code").ToString
+                txtJobName2.Text = DBT2.Rows(0)("CR_Name").ToString
+                txtCustomer2.Text = DBT2.Rows(0)("CM_Name").ToString
+                cboCustomer2.SelectedValue = DBT2.Rows(0)("CM_Code").ToString
+            End If
+        End If
+
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable, DBT2 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = " SELECT CR.CR_Code, CR.CR_Rev_No, CR.CRS_Code, CR.CR_Name, CM.CM_Name, CR.CR_Date, CR.CR_Due_Date, CR.CR_Order_Date " &
+                 " FROM CR_Contract CR with(NOLOCK), Company CM with(NOLOCK) " &
+                 " where 1=1 " &
+                 " AND CR.CR_Rev_No = ( select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code) " &
+                 " AND CR.CR_Customer_Code = CM.CM_Code " &
+                 " AND CR.CR_Code Like '%" & txtJobNo.Text & "%' " &
+                 " AND CR.CRS_Code Like '%" & txtCRSNo.Text & "%' " &
+                 " AND CR.CR_Name Like '%" & txtJobName.Text & "%' " &
+                 " AND CM.CM_Name Like '%" & txtCustomer.Text & "%' " &
+                 " AND convert(datetime,'" & dtpOrderDateFrom.Value.ToString("yyyy-MM-dd") & "') <= CR.CR_Order_Date and convert(datetime,'" & dtpOrderDateTo.Value.ToString("yyyy-MM-dd") & "') >= CR.CR_Order_Date " &
+                 " order by CR.CR_Due_Date desc, CR.CR_Date desc, CR.CR_CODE, CR.CR_NAME "
+
+        Re_Count = DB_Select(DBT)
+
+        lstMain.DataSource = DBT
+        'lstMain.Rows(0).Selected = True '첫 째 행 선택
+
+        showRevLog("Frm_PD_Req_Recv", DBT2, lstRev)
+
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT2 = Nothing
+
+        Try
+
+            StrSQL = " UPDATE CR_Contract " &
+                     " Set CR_Order_Received = '" & loginID & "', CR_Order_Receive_Date = '" & DateTime.Now.ToString(fmtStr2) & "' " &
+                     " where 1=1 " &
+                     " AND CR_Rev_No = " & txtJobRev2.Text &
+                     " AND CR_Code = '" & txtJobNo2.Text & "' "
+            Console.WriteLine("제조의뢰접수SQL:" & StrSQL)
+            Re_Count = DB_Execute()
+
+            If Re_Count > 0 Then
+                MsgBox("접수 완료")
+            Else
+                MsgBox("접수 실패")
+            End If
+
+            'hsim 20200515 처리 이력
+            histLogStr = "사용자 " & logInUserName & " 제조의뢰 접수 : " & txtJobNo2.Text & "-" & txtJobName2.Text
+            Man_Log("Frm_PD_Req_Recv", "수정", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+            'hsim 20200515 개정이력 조회 갱신
+            showRevLog("Frm_PD_Req_Recv", DBT2, lstRev)
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+
+        Clear_Items_1() '기본정보 초기화
+        Grid_CR_Load()
+
+    End Sub
+
+    Private Sub btnCustomer_Click(sender As Object, e As EventArgs) Handles btnCustomerSearch.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Customer_POP = New Frm_Customer_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            cboDBT.Columns.Add("CM_Code")
+            cboDBT.Columns.Add("CM_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            txtCustomer2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            cboCustomer2.DataSource = cboDBT
+            cboCustomer2.ValueMember = "CM_Code"
+            cboCustomer2.DisplayMember = "CM_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Function Clear_Items_1()
+        Me.txtJobNo2.Text = ""
+        Me.txtJobRev2.Text = ""
+        Me.txtJobName2.Text = ""
+        Me.txtCRSNo2.Text = ""
+        Me.txtCustomer2.Text = ""
+        Me.cboCustomer2.Text = ""
+    End Function
+
+End Class

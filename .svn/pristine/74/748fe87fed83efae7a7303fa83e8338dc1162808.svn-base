@@ -1,0 +1,33 @@
+﻿Public Class Frm_Product_Pop
+    Dim tblList As String
+    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        Me.Close()
+    End Sub
+
+    Private Sub btnSelect_Click(sender As Object, e As EventArgs) Handles btnSelect.Click
+        Me.DialogResult = DialogResult.OK
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = " Select * " &
+                 " From Product PR " &
+                 " Where 1 = 1 " &
+                 " And PR.Product_Name Like '%" & txtSearchItem11.Text & "%' " &
+                 " And PR.Product_Code Like '%" & txtSearchItem12.Text & "%' " &
+                 " order by PR.Product_Code, PR.Product_Name "
+
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+        'hsim 20200803 Grid의 컬럼항목 설정
+        tblList = "('Product')"
+        fillGridColumns(DataGridView1, DBT, tblList)
+        DataGridView1.ClearSelection()
+
+    End Sub
+
+End Class

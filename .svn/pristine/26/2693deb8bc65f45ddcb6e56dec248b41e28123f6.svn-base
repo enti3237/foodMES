@@ -1,0 +1,363 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Public Class Frm_QC_Travel
+
+    Dim file_path As String = ""
+    Dim file_name As String = ""
+    Private Sub Frm_QC_Travel_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Panel1.Top = 40
+        Panel1.Left = 10
+        Panel41.Top = 40
+        Panel41.Left = 10
+
+        Panel1.Visible = True
+        Panel41.Visible = False
+
+        'Grid_QC_Load()
+        'Setup()
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT a1,a6,a12,a7,a3,a10,a20,a16,a4
+           FROM  test with(NOLOCK)"
+
+
+
+
+        Re_Count = DB_Select(DBT)
+        DataGridView1.DataSource = DBT
+
+
+
+    End Sub
+
+    Private Sub Setup()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        'CRS_NO, 공정명 콤보박스 부여
+        StrSQL = "SELECT CR_Code FROM Contract where CR_Code != ''"
+        Re_Count = DB_Select(DBT)
+
+        Dim i As Integer
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                ComboBox1.Items.Add(DBT.Rows(i)("CR_Code").ToString)
+
+            Next
+            ComboBox1.SelectedIndex = 0
+        End If
+    End Sub
+
+    Private Sub Grid_QC_Load()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT QC_JOB, QC_Code, QC_PL_Code, QC_Type, QC_PL_Name, QC_Name, QC_Date, QC_Day, QC_Manager, QC_Menu, QC_Spec, QC_Level, QC_Bigo
+                    FROM QC_List"
+
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+        DataGridView1.ClearSelection()
+
+    End Sub
+
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+    End Sub
+
+    Private Sub Text_Clear()
+        TextBox101.Text = ""    'JOB NO
+        TextBox104.Text = ""    '수입검사서
+        TextBox98.Text = ""     '업체명
+        TextBox97.Text = ""     '공정명
+        TextBox4.Text = ""     '구매시방서
+        ComboBox1.Text = ""     '구매시방서
+        TextBox96.Text = ""     '구매요구서
+        TextBox95.Text = ""     '발주서
+        TextBox88.Text = ""     '작성자
+        DateTimePicker1.Text = ""
+        TextBox2.Text = ""
+        TextBox3.Text = ""
+        ListBox1.Items.Clear()
+        ListBox2.Items.Clear()
+    End Sub
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+        Label_Color(Button2, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+        Text_Clear()
+    End Sub
+
+    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
+        Text_Clear()
+        Label_Color(Button2, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = "SELECT * 
+                  FROM QC_List 
+                  Where QC_Code = '" & DataGridView1.Rows(e.RowIndex).Cells("QC_Code").Value.ToString() & "'"
+        Re_Count = DB_Select(DBT)
+
+        ComboBox1.Text = DBT.Rows(0)("QC_JOB").ToString
+        TextBox101.Text = DBT.Rows(0)("QC_Code").ToString
+        TextBox104.Text = DBT.Rows(0)("QC_PL_Code").ToString
+        TextBox98.Text = DBT.Rows(0)("QC_PL_Name").ToString
+        TextBox97.Text = DBT.Rows(0)("QC_Name").ToString
+        TextBox4.Text = DBT.Rows(0)("QC_Manager").ToString
+        DateTimePicker1.Text = DBT.Rows(0)("QC_Day").ToString
+        TextBox3.Text = DBT.Rows(0)("QC_Type").ToString
+        TextBox96.Text = DBT.Rows(0)("QC_Menu").ToString
+        TextBox95.Text = DBT.Rows(0)("QC_Spec").ToString
+        TextBox88.Text = DBT.Rows(0)("QC_Level").ToString
+        TextBox2.Text = DBT.Rows(0)("QC_Bigo").ToString
+        If DBT.Rows(0)("QC_File").ToString <> "" Then
+            For i = 0 To Split(DBT.Rows(0)("QC_File").ToString, "/").Count - 1
+                ListBox1.Items.Add(System.IO.Path.GetFileName(Split(DBT.Rows(0)("QC_File").ToString, "/")(i)))
+                ListBox2.Items.Add(Split(DBT.Rows(0)("QC_File").ToString, "/")(i))
+            Next
+        End If
+    End Sub
+
+    Private Sub Com_Can_Click(sender As Object, e As EventArgs) Handles Com_Can.Click
+        Label_Color(Button1, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        file_path = ""
+        file_name = ""
+        OpenFileDialog1.InitialDirectory = "C:\\"
+
+
+        If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
+            file_name = OpenFileDialog1.FileName
+            '파일이름
+            ListBox1.Items.Add(System.IO.Path.GetFileName(file_name))
+            '파일경로+이름
+            ListBox2.Items.Add(file_name)
+        End If
+
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        file_path = ""
+        file_name = ""
+        SaveFileDialog1.InitialDirectory = "C:\\"
+        SaveFileDialog1.FileName = ListBox1.Items(ListBox1.SelectedIndex).ToString
+        file_name = ListBox1.Items(ListBox1.SelectedIndex).ToString
+        If SaveFileDialog1.ShowDialog() = DialogResult.OK Then
+            System.IO.File.Copy(ListBox2.Items(ListBox1.SelectedIndex).ToString(), SaveFileDialog1.FileName.Replace(file_name, "") + "" & ListBox1.Items(ListBox1.SelectedIndex).ToString(), True)
+
+        End If
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        If ListBox1.SelectedIndex >= 0 Then
+            ListBox2.Items.RemoveAt(ListBox1.SelectedIndex)
+            ListBox1.Items.RemoveAt(ListBox1.SelectedIndex)
+
+        End If
+    End Sub
+
+    Private Sub Com_OK_Click(sender As Object, e As EventArgs) Handles Com_OK.Click
+        Dim DBT As DataTable
+        Dim File As String = ""
+        DBT = Nothing
+
+        'CT_Code 
+        StrSQL = "SELECT * FROM QC_List where QC_Code = '" & TextBox101.Text & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            Dim findfile As New System.IO.FileInfo(Application.StartupPath + "\\검사품목\\" + TextBox101.Text)
+            '기존파일삭제
+            If Dir(Application.StartupPath + "\\검사품목\\" + TextBox101.Text, vbDirectory) <> "" And DBT.Rows(0)("QS_File").ToString() = "" Then
+                System.IO.Directory.Delete(Application.StartupPath + "\\검사품목\\" + TextBox101.Text, True)
+            End If
+        End If
+        If ListBox1.Items.Count > 0 Then
+            For i = 0 To ListBox2.Items.Count - 1
+                If i = 0 Then
+                    File += Application.StartupPath + "\\검사품목\\" + TextBox101.Text + "\\" + ListBox1.Items(i).ToString()
+                End If
+
+                If i > 0 Then
+                    File += "/" + Application.StartupPath + "\\검사품목\\" + TextBox101.Text + "\\" + ListBox1.Items(i).ToString()
+                End If
+            Next
+
+            '파일저장폴더생성
+            Dim path As String = Application.StartupPath + "\\검사품목\\" + TextBox101.Text
+
+            If Len(Dir(path, vbDirectory)) = 0 Then
+                MkDir(path)
+
+
+            End If
+
+            '복사파일생성
+            path = Application.StartupPath + "\\검사품목\\" + TextBox101.Text + "copy"
+            MkDir(path)
+            '파일내용 덮어쓰기
+            For i = 0 To ListBox1.Items.Count - 1
+                System.IO.File.Copy(ListBox2.Items(i).ToString(), path + "\\" & ListBox1.Items(i).ToString(), True)
+            Next
+            '기존파일삭제
+            System.IO.Directory.Delete(Application.StartupPath + "\\검사품목\\" + TextBox101.Text, True)
+            System.Threading.Thread.Sleep(1000)
+            'copy파일 이름변경
+            My.Computer.FileSystem.RenameDirectory(path, TextBox101.Text)
+        End If
+
+        If Re_Count > 0 Then
+            StrSQL = "Update QC_List Set QC_PL_Code = '" & TextBox104.Text & "',
+                                         QC_PL_Name = '" & TextBox98.Text & "',
+                                         QC_Name = '" & TextBox97.Text & "',
+                                         QC_Day = '" & DateTimePicker1.Text & "',
+                                         QC_Manager = '" & TextBox4.Text & "',
+                                         QC_Type = '" & TextBox3.Text & "',
+                                         QC_Menu = '" & TextBox96.Text & "',
+                                         QC_Spec = '" & TextBox95.Text & "',
+                                         QC_Bigo = '" & TextBox2.Text & "',
+                                         QS_File = '" & File & "'
+                                         WHERE QS_Code = '" & TextBox101.Text & "' "
+
+
+            Re_Count2 = DB_Execute()
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+        Else
+            'CT_Plan 추가
+            StrSQL = "Insert into QC_List (QC_JOB, QC_Code, QC_PL_Code, QC_PL_Name, QC_Name, QC_Date, 
+                                           QC_Day, QC_Manager, QC_Type, QC_Menu, QC_Spec, QS_File,
+                                           QC_Level, QC_Bigo) 
+                                   Values ('" & ComboBox1.Text & "', '" & TextBox101.Text & "', '" & TextBox104.Text & "', '" & TextBox98.Text & "', '" & TextBox97.Text & "', '" & DateTime.Today & "',
+                                           '" & DateTimePicker1.Text & "', '" & TextBox4.Text & "', '" & TextBox3.Text & "', '" & TextBox96.Text & "', '" & TextBox95.Text & "', '" & File & "',
+                                           '" & TextBox88.Text & "', '" & TextBox2.Text & "')"
+            Re_Count2 = DB_Execute()
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        End If
+        Grid_QC_Load()
+        Label_Color(Button1, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+
+    End Sub
+
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT QC_JOB, QC_Code, QC_PL_Code, QC_Type, QC_PL_Name, QC_Name, QC_Date, QC_Day, QC_Manager, QC_Menu, QC_Spec, QC_Level, QC_Bigo
+                    FROM QC_List where QC_JOB Like '%" & TextBox15.Text & "%'"
+
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+        DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT QC_JOB, QC_Code, QC_PL_Code, QC_Type, QC_PL_Name, QC_Name, QC_Date, QC_Day, QC_Manager, QC_Menu, QC_Spec, QC_Level, QC_Bigo
+        '            FROM QC_List where QC_Code Like '%" & TextBox16.Text & "%'"
+
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView1.DataSource = DBT
+        'DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT QC_JOB, QC_Code, QC_PL_Code, QC_Type, QC_PL_Name, QC_Name, QC_Date, QC_Day, QC_Manager, QC_Menu, QC_Spec, QC_Level, QC_Bigo
+        '            FROM QC_List where QC_PL_Name Like '%" & TextBox17.Text & "%'"
+
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView1.DataSource = DBT
+        'DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = "SELECT * 
+                  FROM QC_List 
+                  Where QC_JOB = '" & ComboBox1.Text & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            TextBox101.Text = DBT.Rows(0)("QC_Code").ToString
+            TextBox104.Text = DBT.Rows(0)("QC_PL_Code").ToString
+            TextBox98.Text = DBT.Rows(0)("QC_PL_Name").ToString
+            TextBox97.Text = DBT.Rows(0)("QC_Name").ToString
+            TextBox4.Text = DBT.Rows(0)("QC_Manager").ToString
+            DateTimePicker1.Text = DBT.Rows(0)("QC_Day").ToString
+            TextBox3.Text = DBT.Rows(0)("QC_Type").ToString
+            TextBox96.Text = DBT.Rows(0)("QC_Menu").ToString
+            TextBox95.Text = DBT.Rows(0)("QC_Spec").ToString
+            TextBox88.Text = DBT.Rows(0)("QC_Level").ToString
+            TextBox2.Text = DBT.Rows(0)("QC_Bigo").ToString
+            If DBT.Rows(0)("QC_File").ToString <> "" Then
+                For i = 0 To Split(DBT.Rows(0)("QC_File").ToString, "/").Count - 1
+                    ListBox1.Items.Add(System.IO.Path.GetFileName(Split(DBT.Rows(0)("QC_File").ToString, "/")(i)))
+                    ListBox2.Items.Add(Split(DBT.Rows(0)("QC_File").ToString, "/")(i))
+                Next
+            End If
+        Else
+            TextBox101.Text = ""
+            TextBox104.Text = ""
+            TextBox98.Text = ""
+            TextBox97.Text = ""
+            TextBox4.Text = ""
+            DateTimePicker1.Text = ""
+            TextBox3.Text = ""
+            TextBox96.Text = ""
+            TextBox95.Text = ""
+            TextBox88.Text = ""
+            TextBox2.Text = ""
+            ListBox1.Items.Clear()
+            ListBox2.Items.Clear()
+        End If
+
+    End Sub
+End Class

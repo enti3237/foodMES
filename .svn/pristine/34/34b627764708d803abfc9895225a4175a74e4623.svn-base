@@ -1,0 +1,321 @@
+﻿
+Imports Excel = Microsoft.Office.Interop.Excel
+
+Public Class Frm_PC_Order
+
+    Private Sub Frm_PC_Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Panel1.Top = 40
+        Panel1.Left = 10
+        Panel41.Top = 40
+        Panel41.Left = 10
+
+        Panel1.Visible = True
+        Panel41.Visible = False
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT a1,a6,a13,a24,a3,a8,a10,a18
+           FROM  test with(NOLOCK) "
+
+        Re_Count = DB_Select(DBT)
+        DataGridView1.DataSource = DBT
+
+
+        'PO_Lode()
+        'Setup()
+    End Sub
+
+    Private Sub Setup()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        'CRS_NO, 공정명 콤보박스 부여
+        StrSQL = "SELECT CR_Code FROM Contract where CR_Code != ''"
+        Re_Count = DB_Select(DBT)
+
+        Dim i As Integer
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                ComboBox1.Items.Add(DBT.Rows(i)("CR_Code").ToString)
+
+            Next
+            ComboBox1.SelectedIndex = 0
+        End If
+    End Sub
+
+    Private Sub PO_Lode()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT PO_JOB, PO_Code, PO_PR_Name, PO_DE_Name, PO_Date, PO_Day, PO_CM_Code, PO_Name, PO_Bigo FROM PO_Order order by PO_Code"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+        DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Text_Clear()
+        TextBox124.Text = ""
+        TextBox112.Text = ""
+        TextBox123.Text = ""
+        TextBox110.Text = ""
+        DateTimePicker1.Text = ""
+        TextBox121.Text = ""
+        TextBox120.Text = ""
+        TextBox119.Text = ""
+        TextBox117.Text = ""
+        TextBox115.Text = ""
+        TextBox113.Text = ""
+        TextBox111.Text = ""
+        TextBox2.Text = ""
+        ComboBox1.Text = ""
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles Com_Contract.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles Com_Excel.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+    End Sub
+
+    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
+        Text_Clear()
+        Label_Color(Com_Excel, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = "SELECT * FROM PO_Order Where PO_Code = '" & DataGridView1.Rows(e.RowIndex).Cells("PO_Code").Value.ToString() & "'"
+        DB_Select(DBT)
+
+        TextBox124.Text = DBT.Rows(0)("PO_Code").ToString
+        TextBox112.Text = DBT.Rows(0)("PO_PR_Name").ToString
+        TextBox123.Text = DBT.Rows(0)("PO_DE_Name").ToString
+        TextBox110.Text = DBT.Rows(0)("PO_Name").ToString
+        TextBox2.Text = DBT.Rows(0)("PO_CM_Code").ToString
+        ComboBox1.Text = DBT.Rows(0)("PO_JOB").ToString
+        DateTimePicker1.Text = DBT.Rows(0)("PO_Date").ToString
+
+        StrSQL = "SELECT PO_Sun,PO_Manager,PO_PL_Name,PO_Total,PO_Standard,PO_Unit,PO_PR_Gold,PO_Bigo
+FROM PO_Order_List Where PO_Code = '" & DataGridView1.Rows(e.RowIndex).Cells("PO_Code").Value.ToString() & "'"
+        DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+    End Sub
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+        Text_Clear()
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+    End Sub
+
+    Private Sub DataGridView5_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView5.CellClick
+        TextBox121.Text = DataGridView5.Rows(DataGridView5.CurrentRow.Index).Cells("PO_PL_Name").Value.ToString
+        TextBox120.Text = DataGridView5.Rows(DataGridView5.CurrentRow.Index).Cells("PO_Total").Value.ToString
+        TextBox119.Text = DataGridView5.Rows(DataGridView5.CurrentRow.Index).Cells("PO_Standard").Value.ToString
+        TextBox117.Text = DataGridView5.Rows(DataGridView5.CurrentRow.Index).Cells("PO_Unit").Value.ToString
+        TextBox115.Text = DataGridView5.Rows(DataGridView5.CurrentRow.Index).Cells("PO_PR_Gold").Value.ToString
+        TextBox113.Text = DataGridView5.Rows(DataGridView5.CurrentRow.Index).Cells("PO_Manager").Value.ToString
+        TextBox111.Text = DataGridView5.Rows(DataGridView5.CurrentRow.Index).Cells("PO_List_Bigo").Value.ToString
+        TextBox1.Text = DataGridView5.Rows(DataGridView5.CurrentRow.Index).Cells("PO_Sun").Value.ToString
+    End Sub
+
+    Private Sub Com_Can_Click(sender As Object, e As EventArgs) Handles Com_Can.Click
+        Text_Clear()
+        Label_Color(Com_Contract, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Com_OK_Click(sender As Object, e As EventArgs) Handles Com_OK.Click
+        Dim DBT As DataTable
+        Dim File As String = ""
+        DBT = Nothing
+
+        StrSQL = "SELECT * FROM PO_Order where PO_Code = '" & TextBox124.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            StrSQL = "SELECT * FROM PO_Order_List where PO_Code = '" & TextBox124.Text & "' AND PO_PL_Name = '" & TextBox121.Text & "'"
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count > 0 Then
+                StrSQL = "Update PO_Order_List Set PO_Code ='" & TextBox124.Text & "',
+                                         PO_Day = '" & "" & "',
+                                         PO_PL_Code = '" & "" & "',
+                                         PO_PL_Name = '" & TextBox121.Text & "',
+                                         PO_Standard = '" & TextBox119.Text & "',
+                                         PO_Unit = '" & TextBox117.Text & "',
+                                         PO_PR_Gold = '" & TextBox115.Text & "',
+                                         PO_Total = '" & TextBox120.Text & "',
+                                         PO_Manager = '" & TextBox113.Text & "',
+                                         PO_Bigo = '" & TextBox111.Text & "'
+                                         WHERE PO_Code = '" & TextBox124.Text & "' AND PO_Sun = '" & TextBox1.Text & "'"
+                Re_Count2 = DB_Execute()
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+
+                Else
+                    MsgBox("저장 실패")
+                End If
+            Else
+                StrSQL = "SELECT * FROM PO_Order_List where PO_Code = '" & TextBox124.Text & "'"
+                Re_Count = DB_Select(DBT)
+                Dim sun As Integer = 1
+                If Re_Count > 0 Then
+                    sun = Convert.ToInt32(DBT.Rows(DBT.Rows.Count - 1)("PO_Sun")) + 1
+                End If
+
+                StrSQL = "Insert into PO_Order_List (PO_Code, PO_Sun, PO_Day, PO_PL_Code, PO_PL_Name,
+                                           PO_Standard, PO_Unit, PO_PR_Gold, PO_Total, PO_Manager,
+                                           PO_Bigo) 
+                                   Values ('" & TextBox124.Text & "', '" & sun.ToString & "', '" & "" & "', '" & "" & "', '" & TextBox121.Text & "',
+                                           '" & TextBox119.Text & "', '" & TextBox117.Text & "', '" & TextBox115.Text & "', '" & TextBox120.Text & "', '" & TextBox113.Text & "',
+                                           '" & TextBox111.Text & "')"
+                Re_Count2 = DB_Execute()
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            End If
+
+        Else
+            StrSQL = "Insert into PO_Order (PO_JOB, PO_Code, PO_Name, PO_Date, PO_Time, PO_PR_Code,
+                                           PO_PR_Name, PO_DE_Code, PO_DE_Name, PO_CM_Code, PO_Day,
+                                           PO_CM_Code, LO_Bigo) 
+                                   Values ('" & ComboBox1.Text & "', '" & TextBox124.Text & "', '" & TextBox110.Text & "', '" & DateTime.Today & "', '" & "" & "', '" & "" & "',
+                                           '" & TextBox112.Text & "', '" & "" & "', '" & TextBox123.Text & "', '" & "" & "', '" & DateTimePicker1.Text & "',
+                                           '" & TextBox2.Text & "', '" & "" & "')"
+            Re_Count2 = DB_Execute()
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+        End If
+        If Re_Count > 0 Then
+            StrSQL = "SELECT * FROM PO_Stock_List where PS_Code = '" & TextBox124.Text & "' AND PS_PL_Name = '" & TextBox121.Text & "'"
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count > 0 Then
+
+            Else
+                StrSQL = "SELECT * FROM PO_Stock_List where PS_Code = '" & TextBox124.Text & "'"
+                Re_Count = DB_Select(DBT)
+                Dim sun As Integer = 1
+                If Re_Count > 0 Then
+                    sun = Convert.ToInt32(DBT.Rows(DBT.Rows.Count - 1)("PS_Sun")) + 1
+                End If
+
+                StrSQL = "Insert into PO_Stock_List (PS_Code, PS_Sun, PS_PL_Code, PS_PL_Name,
+                                           PS_Standard, PS_Unit, PS_PO_Total,
+                                           PS_Bigo) 
+                                   Values ('" & TextBox124.Text & "', '" & sun.ToString & "', '" & "" & "', '" & TextBox121.Text & "',
+                                           '" & TextBox119.Text & "', '" & TextBox117.Text & "', '" & TextBox120.Text & "',
+                                           '" & TextBox111.Text & "')"
+                Re_Count2 = DB_Execute()
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            End If
+        End If
+        PO_Lode()
+        Text_Clear()
+        Label_Color(Com_Contract, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT PO_JOB, PO_Code, PO_PR_Name, PO_DE_Name, PO_Date, PO_Day, PO_CM_Code, PO_Name, PO_Bigo 
+                  FROM PO_Order where PO_Code Like '%" & TextBox15.Text & "%' order by PO_Code"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+        DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT PO_JOB, PO_Code, PO_PR_Name, PO_DE_Name, PO_Date, PO_Day, PO_CM_Code, PO_Name, PO_Bigo 
+        '          FROM PO_Order where PO_PR_Name Like '%" & TextBox16.Text & "%' order by PO_Code"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView1.DataSource = DBT
+        'DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT PO_JOB, PO_Code, PO_PR_Name, PO_DE_Name, PO_Date, PO_Day, PO_CM_Code, PO_Name, PO_Bigo 
+        '          FROM PO_Order where PO_Name Like '%" & TextBox17.Text & "%' order by PO_Code"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView1.DataSource = DBT
+        'DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT * FROM PO_Order Where PO_JOB = '" & ComboBox1.Text & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            TextBox124.Text = DBT.Rows(0)("PO_Code").ToString
+            TextBox112.Text = DBT.Rows(0)("PO_PR_Name").ToString
+            TextBox123.Text = DBT.Rows(0)("PO_DE_Name").ToString
+            TextBox110.Text = DBT.Rows(0)("PO_Name").ToString
+            TextBox2.Text = DBT.Rows(0)("PO_CM_Code").ToString
+            DateTimePicker1.Text = DBT.Rows(0)("PO_Date").ToString
+
+            StrSQL = "SELECT PO_Sun,PO_Manager,PO_PL_Name,PO_Total,PO_Standard,PO_Unit,PO_PR_Gold,PO_Bigo
+FROM PO_Order_List Where PO_Code = '" & DBT.Rows(0)("PO_Code").ToString & "'"
+            DB_Select(DBT)
+
+            DataGridView5.DataSource = DBT
+            DataGridView5.ClearSelection()
+
+        Else
+            TextBox124.Text = ""
+            TextBox112.Text = ""
+            TextBox123.Text = ""
+            TextBox110.Text = ""
+            TextBox2.Text = ""
+            DateTimePicker1.Text = ""
+
+            DataGridView5.DataSource = Nothing
+        End If
+
+    End Sub
+End Class

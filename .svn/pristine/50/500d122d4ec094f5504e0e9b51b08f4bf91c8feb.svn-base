@@ -1,0 +1,453 @@
+﻿Public Class Frm_Monitoring2
+    Dim De_CC(100) As String
+    Dim De_Su(100) As String
+
+    '추가 변수
+    Dim To_Day = Format(Now, "yyyy-MM-dd")
+    Dim CO_Day(30) As String
+    Dim CO_Day1(30) As String
+
+    Private Sub Frm_Monitoring_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'PIc_Pic(Picture_Logo, Application.StartupPath & "\Picture\Logo2_" & Setup_Data(9) & ".png")
+        'PIc_Pic(Picture_Logo, Application.StartupPath & "\Picture\Logo2.png")
+
+
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.WindowState = FormWindowState.Maximized
+
+        Grid_Main_Setup()
+
+        Grid_Main_Display()
+
+        For a = 0 To Re_Count - 1
+            For i = 0 To 30 - 1
+                Grid_Main.Rows(a).Cells(i + 3).Style.Font = New Font("Tahoma", 10, FontStyle.Bold)
+            Next i
+        Next a
+
+
+    End Sub
+
+    Private Sub Frm_Monitoring_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles Me.MouseDoubleClick
+        Dim dualMonitor() As Screen = Screen.AllScreens
+        If dualMonitor.Length = 2 Then
+            If Me.Bounds = dualMonitor(1).Bounds Then
+                Me.Bounds = dualMonitor(0).WorkingArea
+            Else
+                Me.Bounds = dualMonitor(1).WorkingArea
+            End If
+        End If
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Day_Label.Text = Format(Now, "yyyy/MM/dd")
+        'Time_Label.Text = Format(Now, "HH시 mm분 ss초")
+        Time_Label.Text = Format(Now, "ddd요일")
+        Time_Label2.Text = Format(Now, "HH:mm:ss")
+
+
+        'Grid_Main_Display()
+
+        '공지사항
+        'Dim DBT As New DataTable
+        'StrSQL = "Select * From QC_Inf with(NOLOCK) Where QT_GU = '종합상황판 공지' Order By QT_Sun"
+        'Re_Count = DB_Select(DBT)
+        'If Re_Count <> 0 Then
+        '    TextBox1.Text = DBT.Rows(0)("QT_Bigo")
+        '    TextBox2.Text = DBT.Rows(1)("QT_Bigo")
+        '    TextBox3.Text = DBT.Rows(2)("QT_Bigo")
+        '    TextBox4.Text = DBT.Rows(3)("QT_Bigo")
+        'End If
+
+        'StrSQL = "Select * From QC_Inf with(NOLOCK) Where QT_GU = '종합상황판 품질' Order By QT_Sun" '종합상황판 품질
+        'Re_Count = DB_Select(DBT)
+        'If Re_Count <> 0 Then
+        '    TextBox5.Text = DBT.Rows(0)("QT_Bigo")
+        '    TextBox6.Text = DBT.Rows(1)("QT_Bigo")
+        '    TextBox7.Text = DBT.Rows(2)("QT_Bigo")
+        '    TextBox8.Text = DBT.Rows(3)("QT_Bigo")
+        'End If
+
+
+        'Label7.Text = Format(Now, "yyyy-MM-dd")
+
+        'Label5.Text = "무사고 " & DateDiff("d", Label6.Text, Label7.Text) & "일"
+
+
+    End Sub
+
+    Public Function Grid_Main_Setup() As Boolean
+
+        ' Grid_Color(Grid_Main)
+
+
+
+        'Grid_Main.GridColor = Color.White
+        'Grid_Main.GridColor = Color.White
+        'Grid_Main.BackgroundColor = Color.White
+        'Grid_Main.EnableHeadersVisualStyles = False
+        'Grid_Main.ColumnHeadersDefaultCellStyle.BackColor = Color.DarkOrange
+        'Grid_Main.ColumnHeadersDefaultCellStyle.ForeColor = Color.White
+        'Grid_Main.RowsDefaultCellStyle.BackColor = Color.FromArgb(210, 222, 239)
+        'Grid_Main.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(234, 239, 247)
+        'Grid_Main.AllowUserToAddRows = False
+
+
+        Select Case Setup_Data(9)
+            Case "동영산업"
+                Grid_Main.RowTemplate.Height = 42
+                Grid_Main.ColumnHeadersHeight = 70
+                Me.BackColor = Color.DarkBlue
+            Case "정우프린텍"
+                Grid_Main.RowTemplate.Height = 84
+                Grid_Main.ColumnHeadersHeight = 113
+            Case "동아프로세스"
+                Grid_Main.RowTemplate.Height = 100
+                Grid_Main.ColumnHeadersHeight = 113
+                Me.BackColor = Color.LightSeaGreen
+            Case Else
+                Grid_Main.RowTemplate.Height = 53
+                Grid_Main.ColumnHeadersHeight = 76
+        End Select
+
+        Grid_Main.RowHeadersVisible = False
+
+        Grid_Main.ColumnCount = 33 'n개 보여줌
+
+        Grid_Main.EnableHeadersVisualStyles = False
+
+        Me.Grid_Main.ColumnHeadersDefaultCellStyle.Font = New Font("Tahoma", 26, FontStyle.Bold)
+
+        Grid_Main.RowCount = 0
+        Dim i As Integer
+
+        For i = 0 To Grid_Main.ColumnCount - 1
+            Grid_Main.Columns(i).HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+            Grid_Main.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            Grid_Main.Columns(i).HeaderCell.Style.BackColor = Color.DarkBlue
+            Grid_Main.Columns(i).HeaderCell.Style.ForeColor = Color.Yellow
+        Next
+
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        'Grid_Main.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+
+
+        Grid_Main.Columns(0).HeaderText = "No"
+        Grid_Main.Columns(1).HeaderText = "납품업체"
+        Grid_Main.Columns(2).HeaderText = "제품명"
+
+        'Grid_Main.Columns(3).HeaderText = "제품명2"
+        'Grid_Main.Columns(4).HeaderText = "일자"
+        'Grid_Main.Columns(3).Visible = False
+        'Grid_Main.Columns(4).Visible = False
+
+        For i = 1 To 10
+            CO_Day(i) = DateAdd("d", i - 11, To_Day)
+        Next i
+
+        For i = 11 To 30
+            CO_Day(i) = DateAdd("d", i - 11, To_Day)
+        Next i
+        For i = 1 To 30
+            CO_Day(i) = Mid(CO_Day(i), 1, 4) & Mid(CO_Day(i), 6, 2) & Mid(CO_Day(i), 9, 2)
+        Next i
+
+        'For i = 0 To 31 - 1
+        '    Grid_Main.Columns(i + 6).HeaderText = CO_Day(i + 6).ToString
+        'Next i
+
+
+        For i = 0 To 30 - 1
+            Grid_Main.Columns(i + 3).HeaderText = Mid(CO_Day(i + 1), 7, 8).ToString()
+            Grid_Main.Columns(i + 3).HeaderCell.Style.Font = New Font("Tahoma", 18, FontStyle.Bold)
+        Next
+
+        Grid_Main.Columns(0).Width = 60
+        Grid_Main.Columns(1).Width = 190
+        Grid_Main.Columns(2).Width = 195
+        'Grid_Main.Columns(3).Width = 
+        'Grid_Main.Columns(4).Width = 0
+        'Grid_Main.Columns(5).Width = 0
+
+        For i = 0 To 30 - 1
+            Grid_Main.Columns(i + 3).Width = 49
+        Next i
+
+        Grid_Main.CellBorderStyle = DataGridViewCellBorderStyle.None
+
+        'Grid_Main.DefaultCellStyle.WrapMode = DataGridViewTriState.True
+        'Grid_Main.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+
+        Grid_Main_Setup = True
+
+    End Function
+    Public Function Grid_Main_Display() As Boolean
+        Dim DBT As New DataTable
+        Dim DBT1 As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+
+        Grid_Main.RowCount = 0
+
+        'Day_Label.Text = Format(Now, "yyyyMM")
+
+        For i = 1 To 10
+            CO_Day(i) = DateAdd("d", i - 11, To_Day)
+            CO_Day1(i) = DateAdd("d", i - 11, To_Day)
+        Next i
+
+        For i = 11 To 30
+            CO_Day(i) = DateAdd("d", i - 11, To_Day)
+            CO_Day1(i) = DateAdd("d", i - 11, To_Day)
+        Next i
+
+        For i = 1 To 30
+            CO_Day(i) = Mid(CO_Day(i), 1, 4) & Mid(CO_Day(i), 6, 2) & Mid(CO_Day(i), 9, 2)
+            CO_Day1(i) = Mid(CO_Day1(i), 1, 10)
+        Next i
+        TextBox5.Text = ""
+        For i = 1 To 30
+            TextBox5.Text = TextBox5.Text & " " & CO_Day(i)
+        Next i
+
+        Dim stDay As String
+        Dim edDay As String
+        stDay = CO_Day(1)
+        edDay = CO_Day(30)
+
+        StrSQL = "Select * 
+                  FROM
+                  (
+                 Select                 
+                 DL_Customer_Name, 
+                 DL_PL_Name,
+                 CONVERT(int, DL_Total,0) AS DL_Total,
+                 SUBSTRING(replace(DL_Day,'-',''),1,8) AS DL_MonthDay 
+                 From Deliver with(NOLOCK), Deliver_List with(NOLOCK), Contract with(NOLOCK) 
+                 Where 1=1
+                            and SUBSTRING(replace(DL_Day,'-',''),1,8) >= '" & stDay &
+                            "' and SUBSTRING(replace(DL_Day,'-',''),1,8) <= '" & edDay &
+                           "' and Deliver.DL_Code = Deliver_List.DL_Code 
+                 GROUP BY DL_Customer_Name, DL_PL_Name,DL_Day, DL_Total
+                  ) A 
+                  PIVOT 
+                  (
+                    SUM(DL_Total) FOR
+                    DL_MonthDay IN ("
+
+        For i = 1 To 30
+            StrSQL = StrSQL & " [" & CO_Day(i) & "]"
+            If i = 30 Then
+            Else
+                StrSQL = StrSQL & ","
+            End If
+        Next i
+        StrSQL = StrSQL & ") ) PV"
+        ' Debug.Print(StrSQL)
+
+
+        'StrSQL = "Select * 
+        '          FROM
+        '          (
+        '         Select 
+        '         DISTINCT SUBSTRING(replace(DL_Day,'-',''),1,6) AS DL_Month, 
+        '         SUBSTRING(replace(DL_Day,'-',''),1,8) AS DL_Day11,
+        '         DL_Customer_Name, 
+        '         DL_PL_Name,
+        '         CONVERT(int, DL_Total,0) AS DL_Total,
+        '         DL_Day,
+        '         SUBSTRING(replace(DL_Day,'-',''),7,2) AS DL_MonthDay 
+        '         From Deliver with(NOLOCK), Deliver_List with(NOLOCK), Contract with(NOLOCK) 
+        '         Where 1=1
+        '                    and SUBSTRING(replace(DL_Day,'-',''),1,6) = '" & Day_Label.Text &
+        '                   "' and Deliver.DL_Code = Deliver_List.DL_Code 
+        '          ) A 
+        '          PIVOT 
+        '          (
+        '            SUM(DL_Total) FOR
+        '            DL_Day11 IN ("
+
+        'For i = 1 To 31
+        '    StrSQL = StrSQL & " [" & CO_Day(i) & "]"
+        '    If i = 31 Then
+        '    Else
+        '        StrSQL = StrSQL & ","
+        '    End If
+        'Next i
+        'StrSQL = StrSQL & ") ) PV"
+
+
+
+        'StrSQL = "Select * 
+        '          FROM
+        '          (
+        '         Select 
+        '         DISTINCT SUBSTRING(replace(DL_Day,'-',''),1,6) AS DL_Month,
+        '         DL_Customer_Name, 
+        '         DL_PL_Name,
+        '         CONVERT(int, DL_Total,0) AS DL_Total,
+        '         DL_Day,
+        '         SUBSTRING(replace(DL_Day,'-',''),7,2) AS DL_MonthDay 
+        '         From Deliver with(NOLOCK), Deliver_List with(NOLOCK), Contract with(NOLOCK) 
+        '         Where 1=1
+        '                    and SUBSTRING(replace(DL_Day,'-',''),1,6) = '" & Day_Label.Text &
+        '                   "' and Deliver.DL_Code = Deliver_List.DL_Code 
+        '          ) A 
+        '          PIVOT 
+        '          (
+        '            SUM(DL_Total) FOR
+        '            DL_MonthDay IN ( [01], [02], [03], [04], [05], 
+        '                                    [06], [07], [08], [09], [10], 
+        '                                    [11], [12], [13], [14], [15], 
+        '                                    [16], [17], [18], [19], [20], 
+        '                                    [21], [22], [23], [24], [25], 
+        '                                    [26], [27], [28], [29], [30], 
+        '                                    [31]
+        '                  ) ) PV"
+
+        Re_Count = DB_Select(DBT)
+
+        Dim a As Integer
+
+        If Re_Count <> 0 Then
+            Grid_Main.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+
+                Grid_Main.Item(0, i).Value = i + 1
+                For j = 1 To Grid_Main.ColumnCount - 1
+                    Grid_Main.Item(j, i).Value = DBT.Rows(i).Item(j - 1).ToString
+
+
+                    If Grid_Main.Item(3, i).Value <> Nothing Or Grid_Main.Item(4, i).Value <> Nothing Or Grid_Main.Item(5, i).Value <> Nothing Or Grid_Main.Item(6, i).Value <> Nothing Or Grid_Main.Item(7, i).Value <> Nothing Or Grid_Main.Item(8, i).Value <> Nothing Or Grid_Main.Item(9, i).Value <> Nothing Or Grid_Main.Item(10, i).Value <> Nothing Or Grid_Main.Item(11, i).Value <> Nothing Or Grid_Main.Item(12, i).Value <> Nothing Then
+                        '현재일 기준 -10
+                        For a = 0 To 10 - 1
+                            Grid_Main.Rows(i).Cells(a + 3).Style.BackColor = Color.Red
+                            ' Grid_Main.Rows(i).Cells(a + 13).Style.BackColor = Color.Yellow
+                            'Grid_Main.Rows(i).Cells(a + 23).Style.BackColor = Color.White
+                        Next a
+                    End If
+                    If Grid_Main.Item(22, i).Value <> Nothing Or Grid_Main.Item(21, i).Value <> Nothing Or Grid_Main.Item(20, i).Value <> Nothing Or Grid_Main.Item(19, i).Value <> Nothing Or Grid_Main.Item(18, i).Value <> Nothing Or Grid_Main.Item(17, i).Value <> Nothing Or Grid_Main.Item(16, i).Value <> Nothing Or Grid_Main.Item(15, i).Value <> Nothing Or Grid_Main.Item(14, i).Value <> Nothing Or Grid_Main.Item(13, i).Value <> Nothing Then
+                        '현재일 기준 -10
+                        For a = 0 To 10 - 1
+                            ' Grid_Main.Rows(i).Cells(a + 3).Style.BackColor = Color.Red
+                            Grid_Main.Rows(i).Cells(a + 13).Style.BackColor = Color.Yellow
+                            ' Grid_Main.Rows(i).Cells(a + 23).Style.BackColor = Color.White
+                        Next a
+                    End If
+                    If Grid_Main.Item(23, i).Value <> Nothing Or Grid_Main.Item(24, i).Value <> Nothing Or Grid_Main.Item(25, i).Value <> Nothing Or Grid_Main.Item(26, i).Value <> Nothing Or Grid_Main.Item(27, i).Value <> Nothing Or Grid_Main.Item(28, i).Value <> Nothing Or Grid_Main.Item(29, i).Value <> Nothing Or Grid_Main.Item(30, i).Value <> Nothing Or Grid_Main.Item(31, i).Value <> Nothing Or Grid_Main.Item(32, i).Value <> Nothing Then
+                        '현재일 기준 -10
+                        For a = 0 To 10 - 1
+                            ' Grid_Main.Rows(i).Cells(a + 3).Style.BackColor = Color.Red
+                            'Grid_Main.Rows(i).Cells(a + 13).Style.BackColor = Color.Yellow
+                            Grid_Main.Rows(i).Cells(a + 23).Style.BackColor = Color.White
+                        Next a
+                    End If
+
+
+                    ''범위 검색을 어떻게 하나?
+                    'If Grid_Main.Item(3, i).Value <> Nothing Or Grid_Main.Item(4, i).Value <> Nothing Or Grid_Main.Item(5, i).Value <> Nothing Or Grid_Main.Item(6, i).Value <> Nothing Or Grid_Main.Item(7, i).Value <> Nothing Or Grid_Main.Item(8, i).Value <> Nothing Or Grid_Main.Item(9, i).Value <> Nothing Or Grid_Main.Item(10, i).Value <> Nothing Or Grid_Main.Item(11, i).Value <> Nothing Or Grid_Main.Item(12, i).Value <> Nothing Then
+                    '    '현재일 기준 -10
+                    '    For a = 0 To 10 - 1
+                    '        Grid_Main.Rows(i).Cells(a + 3).Style.BackColor = Color.Red
+                    '        Grid_Main.Rows(i).Cells(a + 13).Style.BackColor = Color.Yellow
+                    '        Grid_Main.Rows(i).Cells(a + 23).Style.BackColor = Color.White
+                    '    Next a
+                    'ElseIf Grid_Main.Item(22, i).Value <> Nothing Or Grid_Main.Item(21, i).Value <> Nothing Or Grid_Main.Item(20, i).Value <> Nothing Or Grid_Main.Item(19, i).Value <> Nothing Or Grid_Main.Item(18, i).Value <> Nothing Or Grid_Main.Item(17, i).Value <> Nothing Or Grid_Main.Item(16, i).Value <> Nothing Or Grid_Main.Item(15, i).Value <> Nothing Or Grid_Main.Item(14, i).Value <> Nothing Or Grid_Main.Item(13, i).Value <> Nothing Then
+                    '    '현재일 기준 +10
+                    '    For a = 0 To 10 - 1
+                    '        Grid_Main.Rows(i).Cells(a + 3).Style.BackColor = Color.Red
+                    '        Grid_Main.Rows(i).Cells(a + 13).Style.BackColor = Color.Yellow
+                    '        Grid_Main.Rows(i).Cells(a + 23).Style.BackColor = Color.White
+                    '    Next a
+                    'ElseIf Grid_Main.Item(23, i).Value <> Nothing Or Grid_Main.Item(24, i).Value <> Nothing Or Grid_Main.Item(25, i).Value <> Nothing Or Grid_Main.Item(26, i).Value <> Nothing Or Grid_Main.Item(27, i).Value <> Nothing Or Grid_Main.Item(28, i).Value <> Nothing Or Grid_Main.Item(29, i).Value <> Nothing Or Grid_Main.Item(30, i).Value <> Nothing Or Grid_Main.Item(31, i).Value <> Nothing Or Grid_Main.Item(32, i).Value <> Nothing Then
+                    '    '현재일 기준 +20
+                    '    'Grid_Main.Rows(i).DefaultCellStyle.BackColor = Color.White
+                    '    For a = 0 To 10 - 1
+                    '        Grid_Main.Rows(i).Cells(a + 3).Style.BackColor = Color.Red
+                    '        Grid_Main.Rows(i).Cells(a + 13).Style.BackColor = Color.Yellow
+                    '        Grid_Main.Rows(i).Cells(a + 23).Style.BackColor = Color.White
+                    '    Next a
+                    'End If
+
+                Next j
+
+            Next i
+
+        Else
+            Grid_Main.RowCount = 1
+            For j = 0 To Grid_Main.ColumnCount - 1
+                Grid_Main.Item(j, 0).Value = ""
+            Next j
+        End If
+
+
+        'For a = 0 To Re_Count - 1
+        '    For i = 0 To 30 - 1
+        '        'Grid_Main.Rows(2).Cells(i + 6).Style.WrapMode = DataGridViewTriState.True
+        '        Grid_Main.Rows(a).Cells(i + 3).Style.Font = New Font("Tahoma", 10, FontStyle.Bold)
+        '    Next i
+        'Next a
+
+
+
+        Grid_Main.CurrentCell = Nothing
+
+        Grid_Main_Display = True
+
+    End Function
+
+
+
+    Private Sub Picture_Logo_Click(sender As Object, e As EventArgs)
+        End
+
+    End Sub
+
+    Private Sub Time_Label2_Click(sender As Object, e As EventArgs) Handles Time_Label2.Click
+        Me.Close()
+    End Sub
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs)
+        Grid_Main_Display()
+    End Sub
+
+    'Public Function IsTheSameCellValue(column As Integer, row As Integer) As Boolean
+    '    Dim cell1 As DataGridViewCell = Grid_Main(column, row)
+    '    Dim cell2 As DataGridViewCell = Grid_Main(column, row - 1)
+
+    '    If cell1.Value = Nothing Or cell2.Value = Nothing Then
+    '        Return False
+    '    End If
+
+    '    Return cell1.Value.ToString() = cell2.Value.ToString()
+    'End Function
+
+    'Private Sub Grid_Main_CellPainting(sender As Object, e As DataGridViewCellPaintingEventArgs) Handles Grid_Main.CellPainting
+
+    '    e.AdvancedBorderStyle.Bottom = DataGridViewAdvancedCellBorderStyle.None
+
+    '    If (e.RowIndex < 1 Or e.ColumnIndex < 0) Then
+    '        Return
+    '    End If
+
+    '    If (IsTheSameCellValue(e.ColumnIndex, e.RowIndex)) Then
+    '        e.AdvancedBorderStyle.Top = DataGridViewAdvancedCellBorderStyle.None
+    '    Else
+    '        e.AdvancedBorderStyle.Top = Grid_Main.AdvancedCellBorderStyle.Top
+    '    End If
+
+    'End Sub
+
+    'Private Sub Grid_Main_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles Grid_Main.CellFormatting
+    '    If (e.RowIndex = 0) Then
+    '        Return
+    '    End If
+
+    '    If (IsTheSameCellValue(e.ColumnIndex, e.RowIndex)) Then
+    '        e.Value = ""
+    '        e.FormattingApplied = True
+    '    End If
+
+    'End Sub
+End Class

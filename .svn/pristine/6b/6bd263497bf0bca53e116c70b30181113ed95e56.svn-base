@@ -1,0 +1,109 @@
+﻿Public Class Frm_Device2
+    Dim Grid_Display As Boolean
+    Dim Grid_Display_Ch As Boolean
+
+    Dim Grid_Bom_Row As Integer
+    Dim Grid_Bom_Col As Integer
+
+    Private Sub Frm_Device2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Process_Line_Grid_Setup()
+        Search_Combo.Items.Add("라인코드")
+        Search_Combo.Items.Add("라인명")
+        Search_Combo.Text = "라인코드"
+    End Sub
+    Public Function Process_Line_Grid_Setup() As Boolean
+
+        Grid_Color(Process_Line_Grid)
+
+
+        Process_Line_Grid.AllowUserToAddRows = False
+        Process_Line_Grid.RowTemplate.Height = 20
+
+
+        '열의 갯수는 하나 더 많아야 함.
+        Process_Line_Grid.ColumnCount = 6
+        Process_Line_Grid.RowCount = 1
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Process_Line_Grid.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Process_Line_Grid.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Process_Line_Grid.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+
+        Process_Line_Grid.RowHeadersWidth = 40
+        Process_Line_Grid.Columns(0).Width = 60
+        Process_Line_Grid.Columns(1).Width = 200
+        Process_Line_Grid.Columns(2).Width = 100
+        Process_Line_Grid.Columns(3).Width = 100
+        Process_Line_Grid.Columns(4).Width = 100
+        Process_Line_Grid.Columns(5).Width = 200
+        Process_Line_Grid.Columns(0).HeaderText = "라인코드"
+        Process_Line_Grid.Columns(1).HeaderText = "라인명"
+        Process_Line_Grid.Columns(2).HeaderText = "주담당자"
+        Process_Line_Grid.Columns(3).HeaderText = "부담당자"
+        Process_Line_Grid.Columns(4).HeaderText = "장비 도입일"
+        Process_Line_Grid.Columns(5).HeaderText = "비고"
+
+
+        Process_Line_Grid.Columns(0).ReadOnly = True
+        Process_Line_Grid_Setup = True
+    End Function
+
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs) Handles Search_Com.Click
+        Process_Line_Grid_Display()
+
+    End Sub
+    Public Function Process_Line_Grid_Display() As Boolean
+
+        Dim i As Integer
+        Dim j As Integer
+        Dim DBT As New DataTable
+        Grid_Display = False
+        Process_Line_Grid.RowCount = 1
+        Select Case Search_Combo.Text
+            Case "라인코드"
+                StrSQL = "Select * From Device_Conf with(NOLOCK) Where PL_Code Like '" & Search_Text.Text & "%' Or PL_Code Is Null Order By PL_Code"
+            Case "라인명"
+                StrSQL = "Select * From Device_Conf with(NOLOCK) Where PL_Name Like '" & Search_Text.Text & "%' Or PL_Name Is Null Order By PL_Name"
+        End Select
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Process_Line_Grid.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                For j = 0 To 5
+                    Process_Line_Grid.Item(j, i).Value = DBT.Rows(i).Item(j)
+                Next j
+            Next i
+        Else
+            Process_Line_Grid.RowCount = 1
+            For j = 0 To Process_Line_Grid.ColumnCount - 1
+                Process_Line_Grid.Item(j, 0).Value = ""
+            Next j
+
+        End If
+        Grid_Display = True
+        Process_Line_Grid_Display = True
+    End Function
+    Private Sub Process_Line_Grid_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles Process_Line_Grid.CellValueChanged
+        If Grid_Display = True Then
+            Process_Line_Grid.CurrentRow.HeaderCell.Value = "*"
+        End If
+
+    End Sub
+
+    Private Sub Save_Com_Click(sender As Object, e As EventArgs) Handles Save_Com.Click
+        Dim i As Integer
+        Grid_Display = False
+        For i = 0 To Process_Line_Grid.Rows.Count - 1
+            If Process_Line_Grid.Rows(i).HeaderCell.Value = "*" Then
+                'Update
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "update Device_conf Set PL_Main_Name = '" & Process_Line_Grid.Item(2, i).Value & "', PL_Sub_Name = '" & Process_Line_Grid.Item(3, i).Value & "', PL_ST_Day = '" & Process_Line_Grid.Item(4, i).Value & "', PL_Bigo = '" & Process_Line_Grid.Item(5, i).Value & "' where PL_Code = '" & Process_Line_Grid.Item(0, i).Value & "'"
+                Re_Count = DB_Execute()
+                Process_Line_Grid.Rows(i).HeaderCell.Value = ""
+            End If
+        Next i
+        Grid_Display = True
+    End Sub
+End Class

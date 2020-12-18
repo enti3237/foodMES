@@ -1,0 +1,634 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_CM_Report2
+
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.palMain = New System.Windows.Forms.Panel()
+        Me.labJobNo = New System.Windows.Forms.Label()
+        Me.btnJobSearch = New System.Windows.Forms.Button()
+        Me.labPOCode = New System.Windows.Forms.Label()
+        Me.labPSCode = New System.Windows.Forms.Label()
+        Me.labPRNo = New System.Windows.Forms.Label()
+        Me.txtPRNo = New System.Windows.Forms.TextBox()
+        Me.txtPOCode = New System.Windows.Forms.TextBox()
+        Me.txtJobName = New System.Windows.Forms.TextBox()
+        Me.txtJobNo = New System.Windows.Forms.TextBox()
+        Me.btnSearch = New System.Windows.Forms.Button()
+        Me.Panel24 = New System.Windows.Forms.Panel()
+        Me.btnLOSearchTop = New System.Windows.Forms.Button()
+        Me.lstMain = New System.Windows.Forms.DataGridView()
+        Me.CO_CR_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_LO_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_PS_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Deliver = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Customer_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Customer_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Customer_Addr = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_WH = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Condition = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Total = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Prepared = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Reviewed_MS = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Reviewed_QA = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Approved = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Updated = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Deliver_Confirmed = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Prepared_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Reviewed_MS_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Reviewed_QA_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Approved_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Updated_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Deliver_Confirmed_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Prepare_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Review_Date_MS = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Review_Date_QA = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Approve_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Update_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Deliver_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Src_Verify_YN = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Bigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_LO_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_PS_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.palMain.SuspendLayout()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        '
+        'palMain
+        '
+        Me.palMain.AutoSize = True
+        Me.palMain.Controls.Add(Me.lstMain)
+        Me.palMain.Controls.Add(Me.btnLOSearchTop)
+        Me.palMain.Controls.Add(Me.labJobNo)
+        Me.palMain.Controls.Add(Me.btnJobSearch)
+        Me.palMain.Controls.Add(Me.labPOCode)
+        Me.palMain.Controls.Add(Me.labPSCode)
+        Me.palMain.Controls.Add(Me.labPRNo)
+        Me.palMain.Controls.Add(Me.txtPRNo)
+        Me.palMain.Controls.Add(Me.txtPOCode)
+        Me.palMain.Controls.Add(Me.txtJobName)
+        Me.palMain.Controls.Add(Me.txtJobNo)
+        Me.palMain.Controls.Add(Me.btnSearch)
+        Me.palMain.Controls.Add(Me.Panel24)
+        Me.palMain.Location = New System.Drawing.Point(29, 232)
+        Me.palMain.Name = "palMain"
+        Me.palMain.Size = New System.Drawing.Size(1660, 1186)
+        Me.palMain.TabIndex = 161
+        '
+        'labJobNo
+        '
+        Me.labJobNo.AutoSize = True
+        Me.labJobNo.Location = New System.Drawing.Point(19, 20)
+        Me.labJobNo.Name = "labJobNo"
+        Me.labJobNo.Size = New System.Drawing.Size(45, 12)
+        Me.labJobNo.TabIndex = 380
+        Me.labJobNo.Text = "Job No"
+        '
+        'btnJobSearch
+        '
+        Me.btnJobSearch.BackColor = System.Drawing.Color.White
+        Me.btnJobSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnJobSearch.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnJobSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnJobSearch.Location = New System.Drawing.Point(231, 13)
+        Me.btnJobSearch.Name = "btnJobSearch"
+        Me.btnJobSearch.Size = New System.Drawing.Size(31, 27)
+        Me.btnJobSearch.TabIndex = 384
+        Me.btnJobSearch.Text = "⌕"
+        Me.btnJobSearch.UseVisualStyleBackColor = False
+        '
+        'labPOCode
+        '
+        Me.labPOCode.AutoSize = True
+        Me.labPOCode.Location = New System.Drawing.Point(267, 52)
+        Me.labPOCode.Name = "labPOCode"
+        Me.labPOCode.Size = New System.Drawing.Size(50, 12)
+        Me.labPOCode.TabIndex = 383
+        Me.labPOCode.Text = "PO 번호"
+        '
+        'labPSCode
+        '
+        Me.labPSCode.AutoSize = True
+        Me.labPSCode.Location = New System.Drawing.Point(267, 20)
+        Me.labPSCode.Name = "labPSCode"
+        Me.labPSCode.Size = New System.Drawing.Size(41, 12)
+        Me.labPSCode.TabIndex = 382
+        Me.labPSCode.Text = "Job 명"
+        '
+        'labPRNo
+        '
+        Me.labPRNo.AutoSize = True
+        Me.labPRNo.Location = New System.Drawing.Point(19, 52)
+        Me.labPRNo.Name = "labPRNo"
+        Me.labPRNo.Size = New System.Drawing.Size(49, 12)
+        Me.labPRNo.TabIndex = 381
+        Me.labPRNo.Text = "PR 번호"
+        '
+        'txtPRNo
+        '
+        Me.txtPRNo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtPRNo.Location = New System.Drawing.Point(75, 46)
+        Me.txtPRNo.Name = "txtPRNo"
+        Me.txtPRNo.Size = New System.Drawing.Size(150, 25)
+        Me.txtPRNo.TabIndex = 379
+        '
+        'txtPOCode
+        '
+        Me.txtPOCode.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtPOCode.Location = New System.Drawing.Point(323, 46)
+        Me.txtPOCode.Name = "txtPOCode"
+        Me.txtPOCode.Size = New System.Drawing.Size(150, 25)
+        Me.txtPOCode.TabIndex = 378
+        '
+        'txtJobName
+        '
+        Me.txtJobName.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtJobName.Location = New System.Drawing.Point(323, 14)
+        Me.txtJobName.Name = "txtJobName"
+        Me.txtJobName.Size = New System.Drawing.Size(150, 25)
+        Me.txtJobName.TabIndex = 377
+        '
+        'txtJobNo
+        '
+        Me.txtJobNo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtJobNo.Location = New System.Drawing.Point(75, 14)
+        Me.txtJobNo.Name = "txtJobNo"
+        Me.txtJobNo.Size = New System.Drawing.Size(150, 25)
+        Me.txtJobNo.TabIndex = 376
+        '
+        'btnSearch
+        '
+        Me.btnSearch.BackColor = System.Drawing.Color.White
+        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSearch.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnSearch.Location = New System.Drawing.Point(1465, 45)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(150, 27)
+        Me.btnSearch.TabIndex = 301
+        Me.btnSearch.Text = "조회"
+        Me.btnSearch.UseVisualStyleBackColor = False
+        '
+        'Panel24
+        '
+        Me.Panel24.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel24.Location = New System.Drawing.Point(16, 85)
+        Me.Panel24.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel24.Name = "Panel24"
+        Me.Panel24.Size = New System.Drawing.Size(1600, 1)
+        Me.Panel24.TabIndex = 299
+        '
+        'btnLOSearchTop
+        '
+        Me.btnLOSearchTop.BackColor = System.Drawing.Color.White
+        Me.btnLOSearchTop.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnLOSearchTop.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnLOSearchTop.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnLOSearchTop.Location = New System.Drawing.Point(231, 45)
+        Me.btnLOSearchTop.Name = "btnLOSearchTop"
+        Me.btnLOSearchTop.Size = New System.Drawing.Size(31, 27)
+        Me.btnLOSearchTop.TabIndex = 432
+        Me.btnLOSearchTop.Text = "⌕"
+        Me.btnLOSearchTop.UseVisualStyleBackColor = False
+        '
+        'lstMain
+        '
+        Me.lstMain.AllowUserToAddRows = False
+        Me.lstMain.BackgroundColor = System.Drawing.Color.White
+        Me.lstMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.lstMain.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CO_CR_Code, Me.CO_Code, Me.CO_Rev_No, Me.CO_Name, Me.CO_LO_Code, Me.CO_PS_Code, Me.CO_Date, Me.CO_Deliver, Me.CO_Customer_Name, Me.CO_Customer_Code, Me.CO_Customer_Addr, Me.CO_WH, Me.CO_Condition, Me.CO_Total, Me.CO_Prepared, Me.CO_Reviewed_MS, Me.CO_Reviewed_QA, Me.CO_Approved, Me.CO_Updated, Me.CO_Deliver_Confirmed, Me.CO_Prepared_Name, Me.CO_Reviewed_MS_Name, Me.CO_Reviewed_QA_Name, Me.CO_Approved_Name, Me.CO_Updated_Name, Me.CO_Deliver_Confirmed_Name, Me.CO_Prepare_Date, Me.CO_Review_Date_MS, Me.CO_Review_Date_QA, Me.CO_Approve_Date, Me.CO_Update_Date, Me.CO_Deliver_Date, Me.CO_Src_Verify_YN, Me.CO_Bigo, Me.CR_Code, Me.CR_Rev_No, Me.CR_Name, Me.CO_LO_Rev_No, Me.CO_PS_Rev_No})
+        Me.lstMain.Location = New System.Drawing.Point(16, 102)
+        Me.lstMain.Name = "lstMain"
+        Me.lstMain.ReadOnly = True
+        Me.lstMain.RowHeadersVisible = False
+        Me.lstMain.RowTemplate.Height = 23
+        Me.lstMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.lstMain.Size = New System.Drawing.Size(1600, 732)
+        Me.lstMain.TabIndex = 433
+        '
+        'CO_CR_Code
+        '
+        Me.CO_CR_Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CO_CR_Code.DataPropertyName = "CO_CR_Code"
+        Me.CO_CR_Code.HeaderText = "Job No"
+        Me.CO_CR_Code.MinimumWidth = 100
+        Me.CO_CR_Code.Name = "CO_CR_Code"
+        Me.CO_CR_Code.ReadOnly = True
+        Me.CO_CR_Code.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        '
+        'CO_Code
+        '
+        Me.CO_Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CO_Code.DataPropertyName = "CO_Code"
+        Me.CO_Code.HeaderText = "PO No"
+        Me.CO_Code.MinimumWidth = 120
+        Me.CO_Code.Name = "CO_Code"
+        Me.CO_Code.ReadOnly = True
+        '
+        'CO_Rev_No
+        '
+        Me.CO_Rev_No.DataPropertyName = "CO_Rev_No"
+        Me.CO_Rev_No.HeaderText = "PO개정번호"
+        Me.CO_Rev_No.MinimumWidth = 100
+        Me.CO_Rev_No.Name = "CO_Rev_No"
+        Me.CO_Rev_No.ReadOnly = True
+        '
+        'CO_Name
+        '
+        Me.CO_Name.DataPropertyName = "CO_Name"
+        Me.CO_Name.HeaderText = "PO명"
+        Me.CO_Name.MinimumWidth = 150
+        Me.CO_Name.Name = "CO_Name"
+        Me.CO_Name.ReadOnly = True
+        Me.CO_Name.Width = 150
+        '
+        'CO_LO_Code
+        '
+        Me.CO_LO_Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CO_LO_Code.DataPropertyName = "CO_LO_Code"
+        Me.CO_LO_Code.HeaderText = "PR No"
+        Me.CO_LO_Code.MinimumWidth = 120
+        Me.CO_LO_Code.Name = "CO_LO_Code"
+        Me.CO_LO_Code.ReadOnly = True
+        '
+        'CO_PS_Code
+        '
+        Me.CO_PS_Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CO_PS_Code.DataPropertyName = "CO_PS_Code"
+        Me.CO_PS_Code.HeaderText = "PS No"
+        Me.CO_PS_Code.MinimumWidth = 120
+        Me.CO_PS_Code.Name = "CO_PS_Code"
+        Me.CO_PS_Code.ReadOnly = True
+        '
+        'CO_Date
+        '
+        Me.CO_Date.DataPropertyName = "CO_Date"
+        Me.CO_Date.HeaderText = "등록일자"
+        Me.CO_Date.Name = "CO_Date"
+        Me.CO_Date.ReadOnly = True
+        '
+        'CO_Deliver
+        '
+        Me.CO_Deliver.DataPropertyName = "CO_Deliver"
+        Me.CO_Deliver.HeaderText = "입고예정일"
+        Me.CO_Deliver.Name = "CO_Deliver"
+        Me.CO_Deliver.ReadOnly = True
+        '
+        'CO_Customer_Name
+        '
+        Me.CO_Customer_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CO_Customer_Name.DataPropertyName = "CO_Customer_Name"
+        Me.CO_Customer_Name.HeaderText = "공급업체"
+        Me.CO_Customer_Name.MinimumWidth = 100
+        Me.CO_Customer_Name.Name = "CO_Customer_Name"
+        Me.CO_Customer_Name.ReadOnly = True
+        '
+        'CO_Customer_Code
+        '
+        Me.CO_Customer_Code.DataPropertyName = "CO_Customer_Code"
+        Me.CO_Customer_Code.HeaderText = "공급업체코드"
+        Me.CO_Customer_Code.Name = "CO_Customer_Code"
+        Me.CO_Customer_Code.ReadOnly = True
+        Me.CO_Customer_Code.Visible = False
+        '
+        'CO_Customer_Addr
+        '
+        Me.CO_Customer_Addr.DataPropertyName = "CO_Customer_Addr"
+        Me.CO_Customer_Addr.HeaderText = "공급업체 주소"
+        Me.CO_Customer_Addr.Name = "CO_Customer_Addr"
+        Me.CO_Customer_Addr.ReadOnly = True
+        Me.CO_Customer_Addr.Width = 300
+        '
+        'CO_WH
+        '
+        Me.CO_WH.DataPropertyName = "CO_WH"
+        Me.CO_WH.HeaderText = "납품장소"
+        Me.CO_WH.Name = "CO_WH"
+        Me.CO_WH.ReadOnly = True
+        '
+        'CO_Condition
+        '
+        Me.CO_Condition.DataPropertyName = "CO_Condition"
+        Me.CO_Condition.HeaderText = "납품조건"
+        Me.CO_Condition.Name = "CO_Condition"
+        Me.CO_Condition.ReadOnly = True
+        '
+        'CO_Total
+        '
+        Me.CO_Total.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CO_Total.DataPropertyName = "CO_Total"
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle1.Format = "N0"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.CO_Total.DefaultCellStyle = DataGridViewCellStyle1
+        Me.CO_Total.HeaderText = "합계금액"
+        Me.CO_Total.MinimumWidth = 100
+        Me.CO_Total.Name = "CO_Total"
+        Me.CO_Total.ReadOnly = True
+        '
+        'CO_Prepared
+        '
+        Me.CO_Prepared.DataPropertyName = "CO_Prepared"
+        Me.CO_Prepared.HeaderText = "작성자"
+        Me.CO_Prepared.MinimumWidth = 100
+        Me.CO_Prepared.Name = "CO_Prepared"
+        Me.CO_Prepared.ReadOnly = True
+        Me.CO_Prepared.Visible = False
+        '
+        'CO_Reviewed_MS
+        '
+        Me.CO_Reviewed_MS.DataPropertyName = "CO_Reviewed_MS"
+        Me.CO_Reviewed_MS.HeaderText = "검토자(MS)"
+        Me.CO_Reviewed_MS.Name = "CO_Reviewed_MS"
+        Me.CO_Reviewed_MS.ReadOnly = True
+        Me.CO_Reviewed_MS.Visible = False
+        '
+        'CO_Reviewed_QA
+        '
+        Me.CO_Reviewed_QA.DataPropertyName = "CO_Reviewed_QA"
+        Me.CO_Reviewed_QA.HeaderText = "검토자(QA)"
+        Me.CO_Reviewed_QA.Name = "CO_Reviewed_QA"
+        Me.CO_Reviewed_QA.ReadOnly = True
+        Me.CO_Reviewed_QA.Visible = False
+        '
+        'CO_Approved
+        '
+        Me.CO_Approved.DataPropertyName = "CO_Approved"
+        Me.CO_Approved.HeaderText = "승인자"
+        Me.CO_Approved.Name = "CO_Approved"
+        Me.CO_Approved.ReadOnly = True
+        Me.CO_Approved.Visible = False
+        '
+        'CO_Updated
+        '
+        Me.CO_Updated.DataPropertyName = "CO_Updated"
+        Me.CO_Updated.HeaderText = "수정자"
+        Me.CO_Updated.Name = "CO_Updated"
+        Me.CO_Updated.ReadOnly = True
+        Me.CO_Updated.Visible = False
+        '
+        'CO_Deliver_Confirmed
+        '
+        Me.CO_Deliver_Confirmed.DataPropertyName = "CO_Deliver_Confirmed"
+        Me.CO_Deliver_Confirmed.HeaderText = "입고확인자"
+        Me.CO_Deliver_Confirmed.Name = "CO_Deliver_Confirmed"
+        Me.CO_Deliver_Confirmed.ReadOnly = True
+        Me.CO_Deliver_Confirmed.Visible = False
+        '
+        'CO_Prepared_Name
+        '
+        Me.CO_Prepared_Name.DataPropertyName = "CO_Prepared_Name"
+        Me.CO_Prepared_Name.HeaderText = "작성자명"
+        Me.CO_Prepared_Name.MinimumWidth = 100
+        Me.CO_Prepared_Name.Name = "CO_Prepared_Name"
+        Me.CO_Prepared_Name.ReadOnly = True
+        '
+        'CO_Reviewed_MS_Name
+        '
+        Me.CO_Reviewed_MS_Name.DataPropertyName = "CO_Reviewed_MS_Name"
+        Me.CO_Reviewed_MS_Name.HeaderText = "검토자명(MS)"
+        Me.CO_Reviewed_MS_Name.MinimumWidth = 100
+        Me.CO_Reviewed_MS_Name.Name = "CO_Reviewed_MS_Name"
+        Me.CO_Reviewed_MS_Name.ReadOnly = True
+        '
+        'CO_Reviewed_QA_Name
+        '
+        Me.CO_Reviewed_QA_Name.DataPropertyName = "CO_Reviewed_QA_Name"
+        Me.CO_Reviewed_QA_Name.HeaderText = "검토자명(QA)"
+        Me.CO_Reviewed_QA_Name.MinimumWidth = 100
+        Me.CO_Reviewed_QA_Name.Name = "CO_Reviewed_QA_Name"
+        Me.CO_Reviewed_QA_Name.ReadOnly = True
+        '
+        'CO_Approved_Name
+        '
+        Me.CO_Approved_Name.DataPropertyName = "CO_Approved_Name"
+        Me.CO_Approved_Name.HeaderText = "승인자명"
+        Me.CO_Approved_Name.MinimumWidth = 100
+        Me.CO_Approved_Name.Name = "CO_Approved_Name"
+        Me.CO_Approved_Name.ReadOnly = True
+        '
+        'CO_Updated_Name
+        '
+        Me.CO_Updated_Name.DataPropertyName = "CO_Updated_Name"
+        Me.CO_Updated_Name.HeaderText = "수정자명"
+        Me.CO_Updated_Name.MinimumWidth = 100
+        Me.CO_Updated_Name.Name = "CO_Updated_Name"
+        Me.CO_Updated_Name.ReadOnly = True
+        '
+        'CO_Deliver_Confirmed_Name
+        '
+        Me.CO_Deliver_Confirmed_Name.DataPropertyName = "CO_Deliver_Confirmed_Name"
+        Me.CO_Deliver_Confirmed_Name.HeaderText = "입고확인자명"
+        Me.CO_Deliver_Confirmed_Name.MinimumWidth = 100
+        Me.CO_Deliver_Confirmed_Name.Name = "CO_Deliver_Confirmed_Name"
+        Me.CO_Deliver_Confirmed_Name.ReadOnly = True
+        '
+        'CO_Prepare_Date
+        '
+        Me.CO_Prepare_Date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CO_Prepare_Date.DataPropertyName = "CO_Prepare_Date"
+        Me.CO_Prepare_Date.HeaderText = "작성일시"
+        Me.CO_Prepare_Date.MinimumWidth = 100
+        Me.CO_Prepare_Date.Name = "CO_Prepare_Date"
+        Me.CO_Prepare_Date.ReadOnly = True
+        '
+        'CO_Review_Date_MS
+        '
+        Me.CO_Review_Date_MS.DataPropertyName = "CO_Review_Date_MS"
+        Me.CO_Review_Date_MS.HeaderText = "검토일시(MS)"
+        Me.CO_Review_Date_MS.Name = "CO_Review_Date_MS"
+        Me.CO_Review_Date_MS.ReadOnly = True
+        Me.CO_Review_Date_MS.Visible = False
+        '
+        'CO_Review_Date_QA
+        '
+        Me.CO_Review_Date_QA.DataPropertyName = "CO_Review_Date_QA"
+        Me.CO_Review_Date_QA.HeaderText = "검토일시(QA)"
+        Me.CO_Review_Date_QA.Name = "CO_Review_Date_QA"
+        Me.CO_Review_Date_QA.ReadOnly = True
+        Me.CO_Review_Date_QA.Visible = False
+        '
+        'CO_Approve_Date
+        '
+        Me.CO_Approve_Date.DataPropertyName = "CO_Approve_Date"
+        Me.CO_Approve_Date.HeaderText = "승인일시"
+        Me.CO_Approve_Date.Name = "CO_Approve_Date"
+        Me.CO_Approve_Date.ReadOnly = True
+        Me.CO_Approve_Date.Visible = False
+        '
+        'CO_Update_Date
+        '
+        Me.CO_Update_Date.DataPropertyName = "CO_Update_Date"
+        Me.CO_Update_Date.HeaderText = "수정일시"
+        Me.CO_Update_Date.Name = "CO_Update_Date"
+        Me.CO_Update_Date.ReadOnly = True
+        Me.CO_Update_Date.Visible = False
+        '
+        'CO_Deliver_Date
+        '
+        Me.CO_Deliver_Date.DataPropertyName = "CO_Deliver_Date"
+        Me.CO_Deliver_Date.HeaderText = "입고일시"
+        Me.CO_Deliver_Date.Name = "CO_Deliver_Date"
+        Me.CO_Deliver_Date.ReadOnly = True
+        Me.CO_Deliver_Date.Visible = False
+        '
+        'CO_Src_Verify_YN
+        '
+        Me.CO_Src_Verify_YN.DataPropertyName = "CO_Src_Verify_YN"
+        Me.CO_Src_Verify_YN.HeaderText = "공장확인검사여부"
+        Me.CO_Src_Verify_YN.Name = "CO_Src_Verify_YN"
+        Me.CO_Src_Verify_YN.ReadOnly = True
+        Me.CO_Src_Verify_YN.Visible = False
+        '
+        'CO_Bigo
+        '
+        Me.CO_Bigo.DataPropertyName = "CO_Bigo"
+        Me.CO_Bigo.HeaderText = "비고"
+        Me.CO_Bigo.Name = "CO_Bigo"
+        Me.CO_Bigo.ReadOnly = True
+        Me.CO_Bigo.Visible = False
+        '
+        'CR_Code
+        '
+        Me.CR_Code.DataPropertyName = "CR_Code"
+        Me.CR_Code.HeaderText = "계약번호"
+        Me.CR_Code.Name = "CR_Code"
+        Me.CR_Code.ReadOnly = True
+        Me.CR_Code.Visible = False
+        '
+        'CR_Rev_No
+        '
+        Me.CR_Rev_No.DataPropertyName = "CR_Rev_No"
+        Me.CR_Rev_No.HeaderText = "계약개정번호"
+        Me.CR_Rev_No.Name = "CR_Rev_No"
+        Me.CR_Rev_No.ReadOnly = True
+        Me.CR_Rev_No.Visible = False
+        '
+        'CR_Name
+        '
+        Me.CR_Name.DataPropertyName = "CR_Name"
+        Me.CR_Name.HeaderText = "계약명"
+        Me.CR_Name.Name = "CR_Name"
+        Me.CR_Name.ReadOnly = True
+        Me.CR_Name.Visible = False
+        '
+        'CO_LO_Rev_No
+        '
+        Me.CO_LO_Rev_No.DataPropertyName = "CO_LO_Rev_No"
+        Me.CO_LO_Rev_No.HeaderText = "구매요구서개정번호"
+        Me.CO_LO_Rev_No.Name = "CO_LO_Rev_No"
+        Me.CO_LO_Rev_No.ReadOnly = True
+        Me.CO_LO_Rev_No.Visible = False
+        '
+        'CO_PS_Rev_No
+        '
+        Me.CO_PS_Rev_No.DataPropertyName = "CO_PS_Rev_No"
+        Me.CO_PS_Rev_No.HeaderText = "구매시방서개정번호"
+        Me.CO_PS_Rev_No.Name = "CO_PS_Rev_No"
+        Me.CO_PS_Rev_No.ReadOnly = True
+        Me.CO_PS_Rev_No.Visible = False
+        '
+        'Frm_CM_Report2
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.palMain)
+        Me.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Name = "Frm_CM_Report2"
+        Me.Size = New System.Drawing.Size(1747, 1280)
+        Me.palMain.ResumeLayout(False)
+        Me.palMain.PerformLayout()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents OpenFileDialog1 As OpenFileDialog
+    Friend WithEvents SaveFileDialog1 As SaveFileDialog
+    Friend WithEvents palMain As Panel
+    Friend WithEvents labJobNo As Label
+    Friend WithEvents btnJobSearch As Button
+    Friend WithEvents labPOCode As Label
+    Friend WithEvents labPSCode As Label
+    Friend WithEvents labPRNo As Label
+    Friend WithEvents txtPRNo As TextBox
+    Friend WithEvents txtPOCode As TextBox
+    Friend WithEvents txtJobName As TextBox
+    Friend WithEvents txtJobNo As TextBox
+    Friend WithEvents btnSearch As Button
+    Friend WithEvents Panel24 As Panel
+    Friend WithEvents btnLOSearchTop As Button
+    Friend WithEvents lstMain As DataGridView
+    Friend WithEvents CO_CR_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Rev_No As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CO_LO_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CO_PS_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Deliver As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Customer_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Customer_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Customer_Addr As DataGridViewTextBoxColumn
+    Friend WithEvents CO_WH As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Condition As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Total As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Prepared As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Reviewed_MS As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Reviewed_QA As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Approved As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Updated As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Deliver_Confirmed As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Prepared_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Reviewed_MS_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Reviewed_QA_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Approved_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Updated_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Deliver_Confirmed_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Prepare_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Review_Date_MS As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Review_Date_QA As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Approve_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Update_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Deliver_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Src_Verify_YN As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Bigo As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Rev_No As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CO_LO_Rev_No As DataGridViewTextBoxColumn
+    Friend WithEvents CO_PS_Rev_No As DataGridViewTextBoxColumn
+End Class

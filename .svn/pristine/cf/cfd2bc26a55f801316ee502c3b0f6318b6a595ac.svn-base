@@ -1,0 +1,677 @@
+﻿Public Class Frm_Storage_CODE
+    Dim Grid_Display_Ch As Boolean
+    Dim Storage_Grid_Row As Integer
+    Dim Storage_Grid_Col As Integer
+    Dim Overlap_Storage_code As String
+
+    '' declare our header cell with checkbox 
+    Dim WithEvents CheckBoxHeaderCell As DataGridViewCheckBoxHeaderCell
+
+
+
+    Private Sub Frm_Storage_CODE_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Grid_Display_Ch = False
+        Grid_Setup(Location1_Grid)
+        Grid_Display(Location1_Grid, "Location1")
+
+        Grid_Display_Ch = False
+        Grid_Setup(Location2_Grid)
+        Grid_Display(Location2_Grid, "Location2")
+
+
+        Grid_Display_Ch = False
+        Grid_Setup(Location3_Grid)
+        Grid_Display(Location3_Grid, "Location3")
+
+        Grid_Display_Ch = False
+        Grid_Setup(Location4_Grid)
+        Grid_Display(Location4_Grid, "Location4")
+
+
+
+        Grid_Display_Ch = False
+        Storage_Grid_Setup()
+        Storage_Grid_Display()
+
+
+    End Sub
+
+    Public Function Storage_Grid_Setup() As Boolean
+
+
+        Grid_Color(Storage_Grid)
+        Storage_Grid.EnableHeadersVisualStyles = False
+
+        Storage_Grid.AllowUserToAddRows = False
+        Storage_Grid.RowTemplate.Height = 24
+
+        Storage_Grid.ColumnCount = 8
+
+        Storage_Grid.RowCount = 1
+
+        '프린트 체크박스 추가
+        'check box in Clumn Header
+        Storage_Grid.Columns.Insert(7, New DataGridViewCheckBoxColumn)
+        '' our checkbox in header cell
+        CheckBoxHeaderCell = New DataGridViewCheckBoxHeaderCell
+        Storage_Grid.Columns(7).HeaderCell = CheckBoxHeaderCell
+
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Storage_Grid.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Storage_Grid.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Storage_Grid.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Storage_Grid.RowHeadersWidth = 45
+        'Storage_Grid.Columns(0).Width = 70
+
+        Storage_Grid.Columns(0).HeaderText = "코드"
+        Storage_Grid.Columns(1).HeaderText = "위치 구분1"
+        Storage_Grid.Columns(2).HeaderText = "위치 구분2"
+        Storage_Grid.Columns(3).HeaderText = "위치 구분3"
+        Storage_Grid.Columns(4).HeaderText = "위치 구분4"
+        Storage_Grid.Columns(5).HeaderText = "이름"
+        Storage_Grid.Columns(6).HeaderText = "비고"
+
+        Storage_Grid.Columns(0).ReadOnly = True
+        Storage_Grid_Setup = True
+
+    End Function
+
+    '스토리지 그리드 변경시 실행되는 코드
+    Private Sub Storage_Grid_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles Storage_Grid.CellValueChanged
+        'Storage_키값 임시저장
+        Dim Location1_code As String
+        Dim Location2_code As String
+        Dim Location3_code As String
+        Dim Location4_code As String
+
+
+
+        If Grid_Display_Ch = True Then
+            If Storage_Grid.CurrentCell.ColumnIndex <> 7 Then
+                Storage_Grid.CurrentRow.HeaderCell.Value = "*"
+            End If
+
+            Dim DBT As New DataTable
+
+            'LOCATION1(위치 구분1) 코드 받아와서 초기화
+            StrSQL = "SELECT [LOCATION_CODE] "
+            StrSQL = StrSQL & "FROM [LOCATION] "
+            StrSQL = StrSQL & "WHERE [LOCATION_DIV] = 'Location1' AND [LOCATION_NAME] = '" & Storage_Grid.CurrentRow.Cells(1).Value & "'"
+            StrSQL = StrSQL & "Order By [LOCATION_CODE] "
+            Re_Count = DB_Select(DBT)
+            If Re_Count > 0 Then
+                Location1_code = DBT.Rows(0)("LOCATION_CODE")
+            End If
+
+
+
+            'LOCATION2(위치 구분2) 코드 받아와서 초기화
+            StrSQL = "SELECT [LOCATION_CODE] "
+            StrSQL = StrSQL & "FROM [dbo].[LOCATION] "
+            StrSQL = StrSQL & "WHERE [LOCATION_DIV] = 'Location2' AND [LOCATION_NAME] = '" & Storage_Grid.CurrentRow.Cells(2).Value & "'"
+            StrSQL = StrSQL & "Order By [LOCATION_CODE] "
+            Re_Count = DB_Select(DBT)
+            If Re_Count > 0 Then
+                Location2_code = DBT.Rows(0)("LOCATION_CODE")
+            End If
+
+
+            'LOCATION3(위치 구분3) 코드 받아와서 초기화
+            StrSQL = "SELECT [LOCATION_CODE] "
+            StrSQL = StrSQL & "FROM [dbo].[LOCATION] "
+            StrSQL = StrSQL & "WHERE [LOCATION_DIV] = 'Location3' AND [LOCATION_NAME] = '" & Storage_Grid.CurrentRow.Cells(3).Value & "'"
+            StrSQL = StrSQL & "Order By [LOCATION_CODE] "
+            Re_Count = DB_Select(DBT)
+            If Re_Count > 0 Then
+                Location3_code = DBT.Rows(0)("LOCATION_CODE")
+            End If
+
+            'LOCATION4(위치 구분4) 코드 받아와서 초기화
+            StrSQL = "SELECT [LOCATION_CODE] "
+            StrSQL = StrSQL & "FROM [dbo].[LOCATION] "
+            StrSQL = StrSQL & "WHERE [LOCATION_DIV] = 'Location4' AND [LOCATION_NAME] = '" & Storage_Grid.CurrentRow.Cells(4).Value & "'"
+            StrSQL = StrSQL & "Order By [LOCATION_CODE] "
+            Re_Count = DB_Select(DBT)
+            If Re_Count > 0 Then
+                Location4_code = DBT.Rows(0)("LOCATION_CODE")
+            End If
+
+            '기존 셀값과 같은 경우
+            If Storage_Grid.CurrentRow.Cells(0).Value = Location1_code & "-" & Location2_code & "-" & Location3_code & "-" & Location4_code Then
+
+            Else
+                '아닌 경우만 중복체크 후 저장버튼 비활성화
+                Storage_Grid.CurrentRow.Cells(0).Value = Location1_code & "-" & Location2_code & "-" & Location3_code & "-" & Location4_code
+
+                If Location1_code IsNot Nothing And Location2_code IsNot Nothing And Location3_code IsNot Nothing And Location4_code IsNot Nothing Then
+                    'STORAGE_CODE가 중복되는 경우 저장버튼 비활성화 시킴
+                    StrSQL = "SELECT *  FROM [dbo].[STORAGE] WHERE STORAGE_CODE = '" & Storage_Grid.CurrentRow.Cells(0).Value & "'"
+                    Re_Count = DB_Select(DBT)
+                    If Re_Count <> 0 Then
+                        MsgBox(Storage_Grid.CurrentRow.Index + 1 & "행의 코드가 중복되어 저장버튼을 비활성화합니다. 코드는 중복될 수 없습니다.", vbOKOnly + vbExclamation, "경고메세지")
+                        Storage_Save_Com.Enabled = False '저장버튼 비활성화
+                        Overlap_Storage_code = Storage_Grid.CurrentRow.Cells(0).Value
+                    Else
+                        Storage_Save_Com.Enabled = True '저장버튼 활성화
+                    End If
+                End If
+            End If
+        End If
+    End Sub
+
+
+    '스토리지 그리드 셀 선택시 나오는 콤보박스
+    Private Sub Storage_Grid_MouseClick(sender As Object, e As MouseEventArgs) Handles Storage_Grid.MouseClick
+        Storage_Grid_Row = Storage_Grid.CurrentCell.RowIndex
+        Storage_Grid_Col = Storage_Grid.CurrentCell.ColumnIndex
+        Storage_Grid_Combo.Visible = False
+        If Storage_Grid_Row < 0 Then
+            Exit Sub
+        End If
+        If Storage_Grid_Col < 0 Then
+            Exit Sub
+        End If
+        Dim DBT As New DataTable
+        If Storage_Grid_Col < 1 Or Storage_Grid_Col > 4 Then
+        Else
+            If Storage_Grid_Col = 1 Then 'Location1, 위치 구분1 관련 콤보박스 내용 DB에서 읽어오기
+                StrSQL = "SELECT [LOCATION_DIV], [LOCATION_CODE], [LOCATION_NAME], [LOCATION_BIGO] "
+                StrSQL = StrSQL & "FROM [dbo].[LOCATION] "
+                StrSQL = StrSQL & "WHERE [LOCATION_DIV] = 'Location1' "
+                StrSQL = StrSQL & "Order By [LOCATION_CODE] "
+                Re_Count = DB_Select(DBT)
+                Storage_Grid_Combo.Items.Clear()
+                For i = 0 To Re_Count - 1
+                    Storage_Grid_Combo.Items.Add(DBT.Rows(i)("LOCATION_NAME"))
+                Next i
+            End If
+            If Storage_Grid_Col = 2 Then 'Location2, 위치 구분2 관련 콤보박스 내용 DB에서 읽어오기
+                StrSQL = "SELECT [LOCATION_DIV], [LOCATION_CODE], [LOCATION_NAME], [LOCATION_BIGO] "
+                StrSQL = StrSQL & "FROM [dbo].[LOCATION] "
+                StrSQL = StrSQL & "WHERE [LOCATION_DIV] = 'Location2' "
+                StrSQL = StrSQL & "Order By [LOCATION_CODE] "
+                Re_Count = DB_Select(DBT)
+                Storage_Grid_Combo.Items.Clear()
+                For i = 0 To Re_Count - 1
+                    Storage_Grid_Combo.Items.Add(DBT.Rows(i)("LOCATION_NAME"))
+                Next i
+            End If
+            If Storage_Grid_Col = 3 Then 'Location3, 위치 구분3 관련 콤보박스 내용 DB에서 읽어오기
+                StrSQL = "SELECT [LOCATION_DIV], [LOCATION_CODE], [LOCATION_NAME], [LOCATION_BIGO] "
+                StrSQL = StrSQL & "FROM [dbo].[LOCATION] "
+                StrSQL = StrSQL & "WHERE [LOCATION_DIV] = 'Location3' "
+                StrSQL = StrSQL & "Order By [LOCATION_CODE] "
+                Re_Count = DB_Select(DBT)
+                Storage_Grid_Combo.Items.Clear()
+                For i = 0 To Re_Count - 1
+                    Storage_Grid_Combo.Items.Add(DBT.Rows(i)("LOCATION_NAME"))
+                Next i
+            End If
+            If Storage_Grid_Col = 4 Then 'Location4, 위치 구분4 관련 콤보박스 내용 DB에서 읽어오기
+                StrSQL = "SELECT [LOCATION_DIV], [LOCATION_CODE], [LOCATION_NAME], [LOCATION_BIGO] "
+                StrSQL = StrSQL & "FROM [dbo].[LOCATION] "
+                StrSQL = StrSQL & "WHERE [LOCATION_DIV] = 'Location4' "
+                StrSQL = StrSQL & "Order By [LOCATION_CODE] "
+                Re_Count = DB_Select(DBT)
+                Storage_Grid_Combo.Items.Clear()
+                For i = 0 To Re_Count - 1
+                    Storage_Grid_Combo.Items.Add(DBT.Rows(i)("LOCATION_NAME"))
+                Next i
+            End If
+            Storage_Grid_Combo.Size = Storage_Grid.CurrentCell.Size
+            Storage_Grid_Combo.Top = Storage_Grid.GetCellDisplayRectangle(Storage_Grid_Col, Storage_Grid_Row, True).Top + Storage_Grid.Top
+            Storage_Grid_Combo.Left = Storage_Grid.GetCellDisplayRectangle(Storage_Grid_Col, Storage_Grid_Row, True).Left + Storage_Grid.Left
+            ''Storage_Grid_Combo.Text = Storage_Grid.CurrentCell.Value.ToString
+
+
+            Storage_Grid_Combo.BackColor = Storage_Grid.RowsDefaultCellStyle.BackColor
+            Storage_Grid_Combo.Visible = True
+            Storage_Grid_Combo.Focus.ToString()
+
+
+        End If
+
+
+    End Sub
+
+    Private Sub Storage_Insert_Com_Click(sender As Object, e As EventArgs) Handles Storage_Insert_Com.Click
+        '빈칸 생성
+        Dim row As String() = New String() {"", "", "", "", "", "", ""}
+
+        '그리드뷰에 빈칸 추가
+        Storage_Grid.Rows.Add(row)
+
+    End Sub
+
+    Private Sub Storage_Save_Com_Click(sender As Object, e As EventArgs) Handles Storage_Save_Com.Click
+        Grid_Display_Ch = False
+        Dim Table_Name As String
+        Dim DBT As DataTable = Nothing
+        Dim Field_Name(500) As String
+        Dim i As Integer
+        Dim j As Long
+        Dim k As Integer
+
+        For k = 0 To Storage_Grid.RowCount - 1
+            If Storage_Grid.Rows(k).HeaderCell.Value = "*" Then
+                '위치정보가 입력되지 않은 경우 추가되지 않음.
+                If Storage_Grid.Item(1, k).Value = "" Or Storage_Grid.Item(2, k).Value = "" Or Storage_Grid.Item(3, k).Value = "" Or Storage_Grid.Item(4, k).Value = "" Then
+                    MsgBox(CStr(k + 1) & "행의 위치정보입력이 완료되어 있지않아 해당내용이 저장되지 않았습니다.", vbOKOnly + vbExclamation, "경고메세지")
+                Else
+                    '기존에 입력된 내용이 있는 경우 UTDATE
+                    StrSQL = "SELECT *  FROM [dbo].[STORAGE]"
+                    Re_Count2 = DB_Select(DBT) 'STORAGE 데이터 수 확인
+
+                    '기존에 입력된 내용이 있는 경우 UTDATE
+                    StrSQL = "SELECT *  FROM [dbo].[STORAGE] WHERE STORAGE_CODE = '" & Storage_Grid.Item(0, k).Value & "'"
+                    Re_Count = DB_Select(DBT)
+
+                    If Re_Count > 0 Then '조회 결과 기존 값이 있는 경우
+                        '업데이트 쿼리
+                        If Re_Count2 - 1 < k Then '현재 STORAGE DATA 수보다 많은(신규) 입력은 중복입력으로 입력처리 하지 않음
+                            MsgBox(CStr(k + 1) & "행의 코드가 중복되어 해당내용이 저장되지 않았습니다.", vbOKOnly + vbExclamation, "경고메세지")
+                            Continue For
+                        Else
+                            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                            StrSQL = StrSQL & "Update STORAGE Set STORAGE_NAME = '" & Storage_Grid.Item(5, k).Value & "', STORAGE_BIGO = '" & Storage_Grid.Item(6, k).Value
+                            StrSQL = StrSQL & "' Where STORAGE_CODE = '" & Storage_Grid.Item(0, k).Value & "'"
+                            Re_Count = DB_Execute()
+                        End If
+
+                    Else
+                        '기존 입력내역 중복 후 수정처리처리된 경우
+                        If Overlap_Storage_code IsNot Nothing And Re_Count2 - 1 >= k Then
+                            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                            StrSQL = StrSQL & "Update STORAGE Set STORAGE_CODE = '" & Storage_Grid.Item(0, k).Value & "', STORAGE_NAME = '" & Storage_Grid.Item(5, k).Value & "', STORAGE_BIGO = '" & Storage_Grid.Item(6, k).Value
+                            StrSQL = StrSQL & "' Where STORAGE_CODE = '" & Overlap_Storage_code & "'"
+                            Re_Count = DB_Execute()
+                            Overlap_Storage_code = ""
+                        Else
+                            '신규 입력
+                            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                            StrSQL = StrSQL & "Insert into STORAGE(STORAGE_CODE, STORAGE_NAME, STORAGE_BIGO)  Values ('" & Storage_Grid.Item(0, k).Value.ToString
+                            StrSQL = StrSQL & "', '" & Storage_Grid.Item(5, k).Value & "', '" & Storage_Grid.Item(6, k).Value & "')"
+                            Re_Count = DB_Execute()
+                        End If
+
+                    End If
+                    Storage_Grid.Rows(k).HeaderCell.Value = ""
+                End If
+            End If
+        Next k
+        Grid_Display_Ch = True
+    End Sub
+
+    Private Sub Storage_Delete_Com_Click(sender As Object, e As EventArgs) Handles Storage_Delete_Com.Click
+        '해당 칼럼 삭제
+        Grid_Display_Ch = False
+
+
+        If Len(Storage_Grid.Item(0, Storage_Grid.CurrentCell.RowIndex).Value) < 1 Then
+            Exit Sub
+        End If
+        Dim i As Integer
+
+        '삭제한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Delete STORAGE Where STORAGE_CODE = '" & Storage_Grid.Item(0, Storage_Grid.CurrentCell.RowIndex).Value & "'"
+        Re_Count = DB_Execute()
+
+        '선택된 갈럼값을 가지고 온다
+        Storage_Grid_Display()
+        Grid_Display_Ch = True
+
+    End Sub
+
+    Public Function Storage_Grid_Display() As Boolean
+        Grid_Display_Ch = False
+        Dim DBT As New DataTable
+        Dim DBT1 As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        Storage_Grid.RowCount = 1
+        StrSQL = "Select * From STORAGE with(NOLOCK) Order  By STORAGE_CODE"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Storage_Grid.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                '컬럼 0, 5, 6 내용만 DB내용으로 표기
+                Storage_Grid.Item(0, i).Value = DBT.Rows(i)(0)
+                Storage_Grid.Item(5, i).Value = DBT.Rows(i)(1)
+                Storage_Grid.Item(6, i).Value = DBT.Rows(i)(2)
+
+                '"1-1-1-1"형태의 키값 배열행태로 변환
+                Dim storage_code_arr = Split(DBT.Rows(i)(0), "-")
+
+                For j = 0 To storage_code_arr.Length - 1
+                    StrSQL = "SELECT [LOCATION_DIV], [LOCATION_CODE], [LOCATION_NAME], [LOCATION_BIGO] "
+                    StrSQL = StrSQL & "FROM [LOCATION] "
+                    StrSQL = StrSQL & "WHERE [LOCATION_DIV] = 'Location" & CStr(j + 1) & "' AND [LOCATION_CODE] = '" & storage_code_arr(j) & "' "
+                    StrSQL = StrSQL & "Order By [LOCATION_CODE] "
+                    Dim Re_Count1 = DB_Select(DBT1)
+                    If Re_Count1 <> 0 Then
+                        Storage_Grid.Item(1 + j, i).Value = DBT1.Rows(0)("LOCATION_NAME")
+                    End If
+                Next j
+            Next i
+        Else
+            'Storage_Grid.RowCount = 1
+            'For j = 0 To Storage_Grid.ColumnCount - 1
+            '    Storage_Grid.Item(j, 0).Value = ""
+            'Next j
+        End If
+
+        Grid_Display_Ch = True
+        Storage_Grid_Display = True
+
+    End Function
+
+    Private Sub Level_Grid_Combo_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles Storage_Grid_Combo.SelectionChangeCommitted
+        Storage_Grid.Item(Storage_Grid_Col, Storage_Grid_Row).Value = Storage_Grid_Combo.SelectedItem.ToString()
+
+    End Sub
+
+
+    Public Function Grid_Setup(Grid As DataGridView) As Boolean
+        Grid_Color(Grid)
+
+        Grid.EnableHeadersVisualStyles = False
+
+        Grid.AllowUserToAddRows = False
+        Grid.RowTemplate.Height = 20
+        Grid.ColumnCount = 3
+        Grid.RowCount = 1
+
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid.RowHeadersWidth = 45
+        Grid.Columns(0).Width = 55
+        Grid.Columns(1).Width = 115
+        Grid.Columns(2).Width = 115
+
+        Grid.Columns(0).HeaderText = "순번"
+        Grid.Columns(1).HeaderText = "내용"
+        Grid.Columns(2).HeaderText = "비고" '기초코드
+
+        Grid.Columns(0).ReadOnly = True
+        Grid_Setup = True
+    End Function
+    Public Function Grid_Display(Grid As DataGridView, Location_Div As String) As Boolean
+        Grid_Display_Ch = False
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        Grid.RowCount = 1
+        StrSQL = "Select * From LOCATION With(NOLOCK) Where LOCATION_DIV = '" & Location_Div & "'  Order  By LOCATION_CODE"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Grid.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                Grid.Item(0, i).Value = DBT.Rows(i)("LOCATION_CODE")
+                Grid.Item(1, i).Value = DBT.Rows(i)("LOCATION_NAME")
+                Grid.Item(2, i).Value = DBT.Rows(i)("LOCATION_BIGO")
+            Next i
+        Else
+            Grid.RowCount = 1
+            For j = 0 To Grid.ColumnCount - 1
+                Grid.Item(j, 0).Value = ""
+            Next j
+        End If
+        Grid_Display = True
+        Grid_Display_Ch = True
+
+    End Function
+
+
+    Private Sub Location_Grid_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles Location1_Grid.CellValueChanged, Location2_Grid.CellValueChanged, Location3_Grid.CellValueChanged, Location4_Grid.CellValueChanged
+        If Grid_Display_Ch = True Then
+            sender.CurrentRow.HeaderCell.Value = "*"
+        End If
+    End Sub
+
+    Private Sub Location_Save_Com_Click(sender As Object, e As EventArgs) Handles Location1_Save_Com.Click, Location2_Save_Com.Click, Location3_Save_Com.Click, Location4_Save_Com.Click
+
+
+
+        '선택된 갈럼값을 가지고 온다
+        Grid_Display_Ch = True
+
+        Grid_Display_Ch = False
+        Dim Grid As DataGridView
+        Dim Location_Div As String
+        Select Case sender.name.ToString
+            Case "Location1_Save_Com"
+                Grid = Location1_Grid
+                Location_Div = "Location1"
+            Case "Location2_Save_Com"
+                Grid = Location2_Grid
+                Location_Div = "Location2"
+            Case "Location3_Save_Com"
+                Grid = Location3_Grid
+                Location_Div = "Location3"
+            Case "Location4_Save_Com"
+                Grid = Location4_Grid
+                Location_Div = "Location4"
+
+
+            Case Else
+                Exit Sub
+        End Select
+        Dim i As Integer
+        For i = 0 To Grid.Rows.Count - 1
+            If Grid.Rows(i).HeaderCell.Value = "*" Then
+                'Update
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "Update LOCATION Set LOCATION_NAME = '" & Grid.Item(1, i).Value & "', LOCATION_BIGO = '" & Grid.Item(2, i).Value & "' Where LOCATION_DIV = '" & Location_Div & "' And LOCATION_CODE = '" & Grid.Item(0, i).Value & "'"
+                Re_Count = DB_Execute()
+                Grid.Rows(i).HeaderCell.Value = ""
+            End If
+        Next i
+        Grid_Display_Ch = True
+
+    End Sub
+
+    Private Sub Location_Insert_Com_Click(sender As Object, e As EventArgs) Handles Location1_Insert_Com.Click, Location2_Insert_Com.Click, Location3_Insert_Com.Click, Location4_Insert_Com.Click
+        Dim Grid As DataGridView
+        Dim Location_Div As String
+        Select Case sender.name.ToString
+            Case "Location1_Insert_Com"
+                Grid = Location1_Grid
+                Location_Div = "Location1"
+            Case "Location2_Insert_Com"
+                Grid = Location2_Grid
+                Location_Div = "Location2"
+                'Case "Product_Insert_Com"
+                '    Grid = Product_Grid
+                '    Sel_Name = "자산"
+            Case "Location3_Insert_Com"
+                Grid = Location3_Grid
+                Location_Div = "Location3"
+            Case "Location4_Insert_Com"
+                Grid = Location4_Grid
+                Location_Div = "Location4"
+                'Case "Proc_Insert_Com"
+                '    Grid = Proc_Grid
+                '    Sel_Name = "중지"
+
+            Case Else
+                Exit Sub
+        End Select
+
+        Dim DBT As New DataTable
+        Dim Db_Sun As String
+        StrSQL = "Select LOCATION_CODE From LOCATION with(NOLOCK) Where LOCATION_DIV = '" & Location_Div & "' Order By LOCATION_CODE Desc "
+        Re_Count = DB_Select(DBT)
+        If Re_Count = 0 Then
+            Db_Sun = "001"
+        Else
+            Db_Sun = Format(DBT.Rows(0).Item(0) + 1, "00#")
+        End If
+
+        '추가한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Insert into LOCATION (LOCATION_DIV, LOCATION_CODE)  Values ('" & Location_Div & "', '" & Db_Sun & "')"
+        Re_Count = DB_Execute()
+        Grid_Display(Grid, Location_Div)
+
+    End Sub
+
+    Private Sub Location_Put_Com_Click(sender As Object, e As EventArgs) Handles Location1_Put_Com.Click, Location2_Put_Com.Click, Location3_Put_Com.Click, Location4_Put_Com.Click
+        Grid_Display_Ch = False
+        Dim Grid As DataGridView
+        Dim Location_Div As String
+        Select Case sender.name.ToString
+            Case "Location1_Put_Com"
+                Grid = Location1_Grid
+                Location_Div = "Location1"
+            Case "Location2_Put_Com"
+                Grid = Location2_Grid
+                Location_Div = "Location2"
+                'Case "product_Put_Com"
+                '    Grid = Product_Grid
+                '    Sel_Name = "자산"
+            Case "Location3_Put_Com"
+                Grid = Location3_Grid
+                Location_Div = "Location3"
+            Case "Location4_Put_Com"
+                Grid = Location4_Grid
+                Location_Div = "Location4"
+                'Case "Proc_Put_Com"
+                '    Grid = Proc_Grid
+                '    Sel_Name = "중지"
+
+            Case Else
+                Exit Sub
+        End Select
+
+        If Len(Grid.Item(0, Grid.CurrentCell.RowIndex).Value) < 1 Then
+            Exit Sub
+        End If
+        Dim i As Integer
+        For i = Grid.RowCount - 1 To Grid.CurrentCell.RowIndex Step -1
+            '수정한다
+            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+            StrSQL = StrSQL & "Update LOCATION Set LOCATION_CODE = '" & i + 2 & "' Where LOCATION_CODE = '" & i + 1 & "' And LOCATION_DIV ='" & Location_Div & "'"
+            Re_Count = DB_Execute()
+        Next i
+        '선택된 갈럼값을 가지고 온다
+        '추가한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Insert into LOCATION (LOCATION_DIV, LOCATION_CODE)  Values ('" & Location_Div & "', '" & Grid.CurrentCell.RowIndex + 1 & "')"
+        Re_Count = DB_Execute()
+        Grid_Display(Grid, Location_Div)
+        Grid_Display_Ch = True
+
+
+    End Sub
+
+    Private Sub Location_Delete_Com_Click(sender As Object, e As EventArgs) Handles Location1_Delete_Com.Click, Location2_Delete_Com.Click, Location3_Delete_Com.Click, Location4_Delete_Com.Click
+        '해당 칼럼 삭제
+        Grid_Display_Ch = False
+        Dim Grid As DataGridView
+        Dim Location_Div As String
+        Select Case sender.name.ToString
+            Case "Location1_Delete_Com"
+                Grid = Location1_Grid
+                Location_Div = "Location1"
+            Case "Location2_Delete_Com"
+                Grid = Location2_Grid
+                Location_Div = "Location2"
+                'Case "Product_Delete_Com"
+                '    Grid = Product_Grid
+                '    Sel_Name = "자산"
+            Case "Location3_Delete_Com"
+                Grid = Location3_Grid
+                Location_Div = "Location3"
+            Case "Location4_Delete_Com"
+                Grid = Location4_Grid
+                Location_Div = "Location4"
+                'Case "Proc_Delete_Com"
+                '    Grid = Proc_Grid
+                '    Sel_Name = "중지"
+            Case Else
+
+
+                Exit Sub
+        End Select
+        If Len(Grid.Item(0, Grid.CurrentCell.RowIndex).Value) < 1 Then
+            Exit Sub
+        End If
+        Dim i As Integer
+
+        '삭제한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Delete LOCATION Where LOCATION_DIV = '" & Location_Div & "' And   LOCATION_CODE = '" & Grid.Item(0, Grid.CurrentCell.RowIndex).Value & "'"
+        Re_Count = DB_Execute()
+
+        For i = Grid.CurrentCell.RowIndex + 1 To Grid.RowCount - 1
+            '수정한다
+            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+            StrSQL = StrSQL & "Update LOCATION Set LOCATION_CODE = '" & i & "' Where LOCATION_DIV = '" & Location_Div & "' And  LOCATION_CODE = '" & i + 1 & "'"
+            Re_Count = DB_Execute()
+        Next i
+        '선택된 갈럼값을 가지고 온다
+        Grid_Display(Grid, Location_Div)
+        Grid_Display_Ch = True
+
+    End Sub
+
+
+
+    Private Sub Man_Grid_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
+
+    End Sub
+
+    Private Sub Man_Grid_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs)
+        If Grid_Display_Ch = True Then
+            sender.CurrentRow.HeaderCell.Value = "*"
+        End If
+
+    End Sub
+
+    Private Sub Tag_Print_com_Click(sender As Object, e As EventArgs) Handles Tag_Print_com.Click
+        Dim barcode_print_data As Barcode_print_data '출력할 자료를 저장할 구조체 배열
+        Dim barcode_ArrList As New ArrayList()
+
+        '체크된 그리드내용 ArrList에 저장하기
+        Dim i As Integer
+        For i = 0 To Storage_Grid.RowCount - 1
+            If Storage_Grid.Item(7, i).Value = True Then
+                barcode_print_data.Storage_Code = Storage_Grid.Item(0, i).Value
+                barcode_print_data.Storage_Name = Storage_Grid.Item(5, i).Value
+                barcode_print_data.Storage_Bigo = Storage_Grid.Item(6, i).Value
+                barcode_ArrList.Add(barcode_print_data)
+            End If
+        Next
+
+        If barcode_ArrList.Count = 0 Then
+            MsgBox("출력할 행을 체크하신 후 출력버튼을 눌려주세요. 출력 할 행이 선택되지 않으면 실행되지 않습니다.", 0, "안내메세지")
+        Else
+            '출력할 바코드 list형태로 전달
+            Dia_Storage_barcode_print.SetBarcode_arr(barcode_ArrList)
+            Dia_Storage_barcode_print.Show()
+        End If
+
+    End Sub
+
+    '헤더체크박스 내용으로 전체 체크박스 내용 설정
+    Private Sub CheckBoxHeaderCell_CheckBoxClicked(sender As Object, e As DataGridViewCheckBoxHeaderCellEventArgs) Handles CheckBoxHeaderCell.CheckBoxClicked
+        CheckBoxHeaderCell.CheckUncheckEntireColumn(e.Checked)
+    End Sub
+
+
+    '프린트 폼에 값전달을 하기위한 구조체 선언
+    Public Structure Barcode_print_data
+        Dim Storage_Code As String
+        Dim Storage_Name As String
+        Dim Storage_Bigo As String
+    End Structure
+
+End Class

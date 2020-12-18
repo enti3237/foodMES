@@ -1,0 +1,303 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_MT_Itm_POP
+    Inherits System.Windows.Forms.Form
+
+    'Form은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.MT_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_Sun = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_List_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_Item = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_DV_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_DV_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_CR_List_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_CR_List_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_Item_Spec = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_Item_Size = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_Item_Unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Item_Qty = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_HEAT_LOT_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_Item_Bigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.txtMTCode = New System.Windows.Forms.TextBox()
+        Me.btnBOMSearch = New System.Windows.Forms.Button()
+        Me.txtMTName = New System.Windows.Forms.TextBox()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.White
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button2.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button2.Location = New System.Drawing.Point(212, 349)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(150, 27)
+        Me.Button2.TabIndex = 325
+        Me.Button2.Text = "취소"
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.White
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button1.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button1.Location = New System.Drawing.Point(39, 349)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(150, 27)
+        Me.Button1.TabIndex = 324
+        Me.Button1.Text = "선택"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
+        'Button14
+        '
+        Me.Button14.BackColor = System.Drawing.Color.White
+        Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button14.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button14.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button14.Location = New System.Drawing.Point(737, 72)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(150, 27)
+        Me.Button14.TabIndex = 323
+        Me.Button14.Text = "조회"
+        Me.Button14.UseVisualStyleBackColor = False
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.AllowUserToDeleteRows = False
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.MT_Code, Me.MT_Name, Me.MT_Sun, Me.MT_List_Code, Me.MT_Item, Me.MT_DV_Code, Me.MT_DV_Name, Me.BO_CR_List_Code, Me.MT_CR_List_Name, Me.MT_Item_Spec, Me.MT_Item_Size, Me.MT_Item_Unit, Me.BO_Item_Qty, Me.MT_HEAT_LOT_No, Me.MT_Item_Bigo})
+        Me.DataGridView1.Location = New System.Drawing.Point(39, 103)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.ReadOnly = True
+        Me.DataGridView1.RowHeadersVisible = False
+        Me.DataGridView1.RowTemplate.Height = 23
+        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DataGridView1.Size = New System.Drawing.Size(848, 211)
+        Me.DataGridView1.TabIndex = 322
+        '
+        'MT_Code
+        '
+        Me.MT_Code.DataPropertyName = "MT_Code"
+        Me.MT_Code.HeaderText = "입고번호"
+        Me.MT_Code.Name = "MT_Code"
+        Me.MT_Code.ReadOnly = True
+        '
+        'MT_Name
+        '
+        Me.MT_Name.DataPropertyName = "MT_Name"
+        Me.MT_Name.HeaderText = "입고명"
+        Me.MT_Name.Name = "MT_Name"
+        Me.MT_Name.ReadOnly = True
+        Me.MT_Name.Width = 200
+        '
+        'MT_Sun
+        '
+        Me.MT_Sun.DataPropertyName = "MT_Sun"
+        Me.MT_Sun.HeaderText = "순번"
+        Me.MT_Sun.Name = "MT_Sun"
+        Me.MT_Sun.ReadOnly = True
+        '
+        'MT_List_Code
+        '
+        Me.MT_List_Code.DataPropertyName = "MT_List_Code"
+        Me.MT_List_Code.HeaderText = "입고자재항목코드"
+        Me.MT_List_Code.Name = "MT_List_Code"
+        Me.MT_List_Code.ReadOnly = True
+        Me.MT_List_Code.Width = 150
+        '
+        'MT_Item
+        '
+        Me.MT_Item.DataPropertyName = "MT_Item"
+        Me.MT_Item.HeaderText = "입고자재항목명"
+        Me.MT_Item.Name = "MT_Item"
+        Me.MT_Item.ReadOnly = True
+        '
+        'MT_DV_Code
+        '
+        Me.MT_DV_Code.DataPropertyName = "MT_DV_Code"
+        Me.MT_DV_Code.HeaderText = "도면번호"
+        Me.MT_DV_Code.Name = "MT_DV_Code"
+        Me.MT_DV_Code.ReadOnly = True
+        '
+        'MT_DV_Name
+        '
+        Me.MT_DV_Name.DataPropertyName = "MT_DV_Name"
+        Me.MT_DV_Name.HeaderText = "도면명"
+        Me.MT_DV_Name.Name = "MT_DV_Name"
+        Me.MT_DV_Name.ReadOnly = True
+        '
+        'BO_CR_List_Code
+        '
+        Me.BO_CR_List_Code.DataPropertyName = "BO_CR_List_Code"
+        Me.BO_CR_List_Code.HeaderText = "계약물품항목ID"
+        Me.BO_CR_List_Code.Name = "BO_CR_List_Code"
+        Me.BO_CR_List_Code.ReadOnly = True
+        '
+        'MT_CR_List_Name
+        '
+        Me.MT_CR_List_Name.DataPropertyName = "MT_CR_List_Name"
+        Me.MT_CR_List_Name.HeaderText = "계약물품항목명"
+        Me.MT_CR_List_Name.Name = "MT_CR_List_Name"
+        Me.MT_CR_List_Name.ReadOnly = True
+        Me.MT_CR_List_Name.Width = 150
+        '
+        'MT_Item_Spec
+        '
+        Me.MT_Item_Spec.DataPropertyName = "MT_Item_Spec"
+        Me.MT_Item_Spec.HeaderText = "입고자재 Item 규격"
+        Me.MT_Item_Spec.Name = "MT_Item_Spec"
+        Me.MT_Item_Spec.ReadOnly = True
+        Me.MT_Item_Spec.Width = 150
+        '
+        'MT_Item_Size
+        '
+        Me.MT_Item_Size.DataPropertyName = "MT_Item_Size"
+        Me.MT_Item_Size.HeaderText = "입고자재 Item 치수"
+        Me.MT_Item_Size.Name = "MT_Item_Size"
+        Me.MT_Item_Size.ReadOnly = True
+        Me.MT_Item_Size.Width = 150
+        '
+        'MT_Item_Unit
+        '
+        Me.MT_Item_Unit.DataPropertyName = "MT_Item_Unit"
+        Me.MT_Item_Unit.HeaderText = "입고자재 Item 단위"
+        Me.MT_Item_Unit.Name = "MT_Item_Unit"
+        Me.MT_Item_Unit.ReadOnly = True
+        Me.MT_Item_Unit.Width = 150
+        '
+        'BO_Item_Qty
+        '
+        Me.BO_Item_Qty.DataPropertyName = "MT_Item_Qty"
+        Me.BO_Item_Qty.HeaderText = "입고자재 Item수량"
+        Me.BO_Item_Qty.Name = "BO_Item_Qty"
+        Me.BO_Item_Qty.ReadOnly = True
+        '
+        'MT_HEAT_LOT_No
+        '
+        Me.MT_HEAT_LOT_No.DataPropertyName = "MT_HEAT_LOT_No"
+        Me.MT_HEAT_LOT_No.HeaderText = "입고자재 HEAT/Lot No."
+        Me.MT_HEAT_LOT_No.Name = "MT_HEAT_LOT_No"
+        Me.MT_HEAT_LOT_No.ReadOnly = True
+        '
+        'MT_Item_Bigo
+        '
+        Me.MT_Item_Bigo.DataPropertyName = "MT_Item_Bigo"
+        Me.MT_Item_Bigo.HeaderText = "비고"
+        Me.MT_Item_Bigo.Name = "MT_Item_Bigo"
+        Me.MT_Item_Bigo.ReadOnly = True
+        Me.MT_Item_Bigo.Width = 200
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(43, 78)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(53, 12)
+        Me.Label1.TabIndex = 329
+        Me.Label1.Text = "입고번호"
+        '
+        'txtMTCode
+        '
+        Me.txtMTCode.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtMTCode.Location = New System.Drawing.Point(106, 72)
+        Me.txtMTCode.Name = "txtMTCode"
+        Me.txtMTCode.ReadOnly = True
+        Me.txtMTCode.Size = New System.Drawing.Size(150, 25)
+        Me.txtMTCode.TabIndex = 328
+        '
+        'btnBOMSearch
+        '
+        Me.btnBOMSearch.BackColor = System.Drawing.Color.White
+        Me.btnBOMSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnBOMSearch.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnBOMSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnBOMSearch.Location = New System.Drawing.Point(262, 71)
+        Me.btnBOMSearch.Name = "btnBOMSearch"
+        Me.btnBOMSearch.Size = New System.Drawing.Size(31, 27)
+        Me.btnBOMSearch.TabIndex = 381
+        Me.btnBOMSearch.Text = "⌕"
+        Me.btnBOMSearch.UseVisualStyleBackColor = False
+        '
+        'txtMTName
+        '
+        Me.txtMTName.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtMTName.Location = New System.Drawing.Point(301, 72)
+        Me.txtMTName.Name = "txtMTName"
+        Me.txtMTName.ReadOnly = True
+        Me.txtMTName.Size = New System.Drawing.Size(194, 25)
+        Me.txtMTName.TabIndex = 382
+        '
+        'Frm_MT_Itm_POP
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(934, 450)
+        Me.Controls.Add(Me.txtMTName)
+        Me.Controls.Add(Me.btnBOMSearch)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.txtMTCode)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.Button14)
+        Me.Controls.Add(Me.DataGridView1)
+        Me.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.Name = "Frm_MT_Itm_POP"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "자재 목록정보 조회"
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Button14 As Button
+    Public WithEvents DataGridView1 As DataGridView
+    Friend WithEvents Label1 As Label
+    Friend WithEvents txtMTCode As TextBox
+    Friend WithEvents btnBOMSearch As Button
+    Friend WithEvents MT_Code As DataGridViewTextBoxColumn
+    Friend WithEvents MT_Name As DataGridViewTextBoxColumn
+    Friend WithEvents MT_Sun As DataGridViewTextBoxColumn
+    Friend WithEvents MT_List_Code As DataGridViewTextBoxColumn
+    Friend WithEvents MT_Item As DataGridViewTextBoxColumn
+    Friend WithEvents MT_DV_Code As DataGridViewTextBoxColumn
+    Friend WithEvents MT_DV_Name As DataGridViewTextBoxColumn
+    Friend WithEvents BO_CR_List_Code As DataGridViewTextBoxColumn
+    Friend WithEvents MT_CR_List_Name As DataGridViewTextBoxColumn
+    Friend WithEvents MT_Item_Spec As DataGridViewTextBoxColumn
+    Friend WithEvents MT_Item_Size As DataGridViewTextBoxColumn
+    Friend WithEvents MT_Item_Unit As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Item_Qty As DataGridViewTextBoxColumn
+    Friend WithEvents MT_HEAT_LOT_No As DataGridViewTextBoxColumn
+    Friend WithEvents MT_Item_Bigo As DataGridViewTextBoxColumn
+    Friend WithEvents txtMTName As TextBox
+End Class

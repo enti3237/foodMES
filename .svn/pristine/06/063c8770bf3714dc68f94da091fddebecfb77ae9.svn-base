@@ -1,0 +1,9 @@
+﻿Public Class Frm_CR_POP
+    Private Sub Frm_CR_POP_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        context_load()
+    End Sub
+    Private Function context_load()
+
+    End Function
+
+End Class

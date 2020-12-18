@@ -1,0 +1,33 @@
+﻿Public Class Frm_Man_Log
+    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Grid_Log_Load()
+    End Sub
+
+    Private Sub Grid_Log_Load()
+
+        Me.Button14.PerformClick()
+
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT Man_Code, Man_Name, Man_Sangho, Man_Bu, Man_Gik, Man_Sex, Man_Birth, Man_Phon, Man_Car,
+                         LOG_IP, Man_Pass, Man_Level, Man_Bigo, LOG_Date, LOG_Time
+                  FROM Man
+						JOIN Login_Event ON Man_Code = LOG_Code 
+                  where 1=1
+                  and Man_Code Like '%" & TextBox15.Text & "%'
+                  and Man_Name Like '%" & TextBox16.Text & "%'
+                  and Man_Bu Like '%" & TextBox17.Text & "%' 
+                  order by LOG_Date desc, LOG_Time desc"
+
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+    End Sub
+End Class

@@ -1,0 +1,258 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_MT_POP
+    Inherits System.Windows.Forms.Form
+
+    'Form은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.MT_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_Prepared = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_Prepared_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MT_Process_Status = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.txtMTName = New System.Windows.Forms.TextBox()
+        Me.Label36 = New System.Windows.Forms.Label()
+        Me.labDate = New System.Windows.Forms.Label()
+        Me.dtpDateTo = New System.Windows.Forms.DateTimePicker()
+        Me.dtpDateFrom = New System.Windows.Forms.DateTimePicker()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.txtMTCode = New System.Windows.Forms.TextBox()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.White
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button2.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button2.Location = New System.Drawing.Point(212, 349)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(150, 27)
+        Me.Button2.TabIndex = 325
+        Me.Button2.Text = "취소"
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.White
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button1.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button1.Location = New System.Drawing.Point(39, 349)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(150, 27)
+        Me.Button1.TabIndex = 324
+        Me.Button1.Text = "선택"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
+        'Button14
+        '
+        Me.Button14.BackColor = System.Drawing.Color.White
+        Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button14.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button14.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button14.Location = New System.Drawing.Point(737, 72)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(150, 27)
+        Me.Button14.TabIndex = 323
+        Me.Button14.Text = "조회"
+        Me.Button14.UseVisualStyleBackColor = False
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.AllowUserToDeleteRows = False
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.MT_Code, Me.MT_Name, Me.MT_Date, Me.MT_Prepared, Me.MT_Prepared_Name, Me.MT_Process_Status})
+        Me.DataGridView1.Location = New System.Drawing.Point(39, 103)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.ReadOnly = True
+        Me.DataGridView1.RowHeadersVisible = False
+        Me.DataGridView1.RowTemplate.Height = 23
+        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DataGridView1.Size = New System.Drawing.Size(848, 211)
+        Me.DataGridView1.TabIndex = 322
+        '
+        'MT_Code
+        '
+        Me.MT_Code.DataPropertyName = "MT_Code"
+        Me.MT_Code.HeaderText = "입고번호"
+        Me.MT_Code.Name = "MT_Code"
+        Me.MT_Code.ReadOnly = True
+        '
+        'MT_Name
+        '
+        Me.MT_Name.DataPropertyName = "MT_Name"
+        Me.MT_Name.HeaderText = "입고명"
+        Me.MT_Name.Name = "MT_Name"
+        Me.MT_Name.ReadOnly = True
+        Me.MT_Name.Width = 150
+        '
+        'MT_Date
+        '
+        Me.MT_Date.DataPropertyName = "MT_Date"
+        Me.MT_Date.HeaderText = "입고일"
+        Me.MT_Date.Name = "MT_Date"
+        Me.MT_Date.ReadOnly = True
+        Me.MT_Date.Width = 150
+        '
+        'MT_Prepared
+        '
+        Me.MT_Prepared.DataPropertyName = "MT_Prepared"
+        Me.MT_Prepared.HeaderText = "작성자"
+        Me.MT_Prepared.Name = "MT_Prepared"
+        Me.MT_Prepared.ReadOnly = True
+        Me.MT_Prepared.Visible = False
+        '
+        'MT_Prepared_Name
+        '
+        Me.MT_Prepared_Name.DataPropertyName = "MT_Prepared_Name"
+        Me.MT_Prepared_Name.HeaderText = "작성자명"
+        Me.MT_Prepared_Name.Name = "MT_Prepared_Name"
+        Me.MT_Prepared_Name.ReadOnly = True
+        '
+        'MT_Process_Status
+        '
+        Me.MT_Process_Status.DataPropertyName = "MT_Process_Status"
+        Me.MT_Process_Status.HeaderText = "처리상태"
+        Me.MT_Process_Status.Name = "MT_Process_Status"
+        Me.MT_Process_Status.ReadOnly = True
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(332, 78)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(41, 12)
+        Me.Label1.TabIndex = 329
+        Me.Label1.Text = "입고명"
+        '
+        'txtMTName
+        '
+        Me.txtMTName.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtMTName.Location = New System.Drawing.Point(395, 72)
+        Me.txtMTName.Name = "txtMTName"
+        Me.txtMTName.Size = New System.Drawing.Size(199, 25)
+        Me.txtMTName.TabIndex = 328
+        '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Location = New System.Drawing.Point(235, 50)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(14, 12)
+        Me.Label36.TabIndex = 390
+        Me.Label36.Text = "~"
+        '
+        'labDate
+        '
+        Me.labDate.AutoSize = True
+        Me.labDate.Location = New System.Drawing.Point(43, 50)
+        Me.labDate.Name = "labDate"
+        Me.labDate.Size = New System.Drawing.Size(41, 12)
+        Me.labDate.TabIndex = 389
+        Me.labDate.Text = "입고일"
+        '
+        'dtpDateTo
+        '
+        Me.dtpDateTo.Font = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpDateTo.Location = New System.Drawing.Point(255, 45)
+        Me.dtpDateTo.Name = "dtpDateTo"
+        Me.dtpDateTo.Size = New System.Drawing.Size(125, 22)
+        Me.dtpDateTo.TabIndex = 388
+        '
+        'dtpDateFrom
+        '
+        Me.dtpDateFrom.Font = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpDateFrom.Location = New System.Drawing.Point(106, 45)
+        Me.dtpDateFrom.Name = "dtpDateFrom"
+        Me.dtpDateFrom.Size = New System.Drawing.Size(125, 22)
+        Me.dtpDateFrom.TabIndex = 387
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(43, 78)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(53, 12)
+        Me.Label2.TabIndex = 392
+        Me.Label2.Text = "입고번호"
+        '
+        'txtMTCode
+        '
+        Me.txtMTCode.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtMTCode.Location = New System.Drawing.Point(106, 72)
+        Me.txtMTCode.Name = "txtMTCode"
+        Me.txtMTCode.Size = New System.Drawing.Size(199, 25)
+        Me.txtMTCode.TabIndex = 391
+        '
+        'Frm_MT_POP
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(934, 450)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.txtMTCode)
+        Me.Controls.Add(Me.Label36)
+        Me.Controls.Add(Me.labDate)
+        Me.Controls.Add(Me.dtpDateTo)
+        Me.Controls.Add(Me.dtpDateFrom)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.txtMTName)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.Button14)
+        Me.Controls.Add(Me.DataGridView1)
+        Me.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.Name = "Frm_MT_POP"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "자재 입고정보 조회"
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Button14 As Button
+    Public WithEvents DataGridView1 As DataGridView
+    Friend WithEvents Label1 As Label
+    Friend WithEvents txtMTName As TextBox
+    Friend WithEvents Label36 As Label
+    Friend WithEvents labDate As Label
+    Friend WithEvents dtpDateTo As DateTimePicker
+    Friend WithEvents dtpDateFrom As DateTimePicker
+    Friend WithEvents Label2 As Label
+    Friend WithEvents txtMTCode As TextBox
+    Friend WithEvents MT_Code As DataGridViewTextBoxColumn
+    Friend WithEvents MT_Name As DataGridViewTextBoxColumn
+    Friend WithEvents MT_Date As DataGridViewTextBoxColumn
+    Friend WithEvents MT_Prepared As DataGridViewTextBoxColumn
+    Friend WithEvents MT_Prepared_Name As DataGridViewTextBoxColumn
+    Friend WithEvents MT_Process_Status As DataGridViewTextBoxColumn
+End Class

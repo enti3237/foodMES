@@ -1,0 +1,293 @@
+﻿Public Class Dia_Storage_barcode_print
+
+
+    Dim barcode_ArrList As New ArrayList()
+    Dim now_page As Integer = 1
+
+
+    Private MAX_PAGE_COUNT As Integer = 3
+
+    Private pageNumber As Integer
+
+
+
+    Public Sub SetBarcode_arr(Barcode_arr As ArrayList)
+        barcode_ArrList = Barcode_arr
+    End Sub
+
+    Private Sub Dia_Storage_barcode_print_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Label1.Text = "폐이지: " & now_page & "/" & barcode_ArrList.Count
+
+        '페이지 수 설정
+        pageNumber = 1
+        MAX_PAGE_COUNT = barcode_ArrList.Count
+
+    End Sub
+
+    Private Sub PictureBox1_Paint(sender As Object, e As PaintEventArgs) Handles PictureBox1.Paint
+        PictureBox1_Paint_update(e)
+    End Sub
+
+    Private Sub PrintDocument1_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
+
+
+        '출력용 barcode 생성
+        '배열에서 값 가져오기
+        Dim temp As Frm_Storage_CODE.Barcode_print_data = barcode_ArrList.Item(pageNumber - 1)
+
+        Dim x As Integer = 1
+        Dim y As Integer = 1
+        '제목 칸 크기
+        Dim xwidth As Integer = 350
+        Dim yheight As Integer = 40
+        'BARCOD 칸 크기
+        Dim barocde_width As Integer = 350
+        Dim barcode_height As Integer = 80
+        '창고명, 비고란 크기'
+        Dim name_bigo_width As Integer = 100
+        Dim name_bigo_height As Integer = 40
+        '창고명, 비고란 값표시란 크기
+        Dim print_width As Integer = 250
+        Dim print_height As Integer = 40
+        '전체 크기
+        Dim width As Integer = 350
+        Dim height As Integer = 200
+
+        '내용 초기화 횐색으로 덮음
+        Dim Fill_rect As New Rectangle(x, y, width, height)
+        e.Graphics.FillRectangle(Brushes.White, Fill_rect)
+
+        Dim font As New Font("맑은 고딕", 20, FontStyle.Bold) '제목
+        Dim font1 As New Font("IDAutomationHC39M Free Version", 12, FontStyle.Bold) '바코드폰트
+        Dim font2 As New Font("맑은 고딕", 15) '창고명, 비고
+        '제목 칸
+        Dim rect As New Rectangle(x, y, xwidth, yheight)
+        '바코드 칸.
+        Dim rect1 As New Rectangle(x, yheight + y, barocde_width, barcode_height)
+        '창고명 칸
+        Dim rect2 As New Rectangle(x, barcode_height + yheight + y, name_bigo_width, name_bigo_height)
+        '창고명 출력 칸
+        Dim rect3 As New Rectangle(x + name_bigo_width, barcode_height + yheight + y, print_width, print_height)
+        '비고명 칸
+        Dim rect4 As New Rectangle(x, name_bigo_height + barcode_height + yheight + y, name_bigo_width, name_bigo_height)
+        '비고명 출력 칸
+        Dim rect5 As New Rectangle(x + name_bigo_width, print_height + barcode_height + yheight + y, print_width, print_height)
+        Dim strings As New StringFormat
+
+        strings.Alignment = StringAlignment.Center
+        strings.LineAlignment = StringAlignment.Center
+
+        e.Graphics.DrawRectangle(Pens.Black, rect)
+        e.Graphics.DrawRectangle(Pens.Black, rect1)
+        e.Graphics.DrawRectangle(Pens.Black, rect2)
+        e.Graphics.DrawRectangle(Pens.Black, rect3)
+        e.Graphics.DrawRectangle(Pens.Black, rect4)
+        e.Graphics.DrawRectangle(Pens.Black, rect5)
+        e.Graphics.DrawString("창고 BARCODE TAG", font, Brushes.Black, rect, strings)
+        e.Graphics.DrawString("*" & temp.Storage_Code & "*", font1, Brushes.Black, rect1, strings) 'STORAGE_CODE
+        e.Graphics.DrawString("창고명", font2, Brushes.Black, rect2, strings)
+        e.Graphics.DrawString(temp.Storage_Name, font2, Brushes.Black, rect3, strings)          'STORAGE_NAME
+        e.Graphics.DrawString("비고", font2, Brushes.Black, rect4, strings)
+        e.Graphics.DrawString(temp.Storage_Bigo, font2, Brushes.Black, rect5, strings)    'STORAGE_BIGO
+
+
+
+
+
+
+        If Me.pageNumber = MAX_PAGE_COUNT Then
+            'We have printed all the pages.
+            e.HasMorePages = False
+
+            'Reset the page number because if this is a preview and the user presses
+            'the Print button the printing routine will be executed a second time.
+            Me.pageNumber = 1
+        Else
+            'There are more pages to print.
+            e.HasMorePages = True
+
+            'Increment the page number.
+            Me.pageNumber += 1
+        End If
+
+    End Sub
+
+
+    Private Sub Print_bnt_Click(sender As Object, e As EventArgs) Handles Print_bnt.Click
+        PrintDialog1.Document = PrintDocument1
+        PrintDialog1.PrinterSettings = PrintDocument1.PrinterSettings
+        PrintDialog1.AllowSomePages = True
+        PrintDocument1.DefaultPageSettings.Landscape = True
+        If PrintDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
+            PrintDocument1.PrinterSettings = PrintDialog1.PrinterSettings
+            PrintDocument1.Print()
+
+            Me.Close()
+        End If
+
+
+    End Sub
+
+    Private Sub back_page_Click(sender As Object, e As EventArgs) Handles back_page.Click
+        '페이지 변경
+        If now_page = 1 Then
+
+        Else
+            now_page = now_page - 1
+        End If
+        Label1.Text = "폐이지: " & now_page & "/" & barcode_ArrList.Count
+        PictureBox1_Paint_update()
+
+
+
+    End Sub
+
+    Private Sub next_page_Click(sender As Object, e As EventArgs) Handles next_page.Click
+        '페이지 변경
+        If now_page = barcode_ArrList.Count Then
+
+        Else
+            now_page = now_page + 1
+        End If
+        Label1.Text = "폐이지: " & now_page & "/" & barcode_ArrList.Count
+        PictureBox1_Paint_update()
+
+
+
+    End Sub
+
+    '이전페이지, 다음페이지 버튼에서 사용
+    Private Sub PictureBox1_Paint_update()
+
+        Dim e As Graphics = PictureBox1.CreateGraphics
+
+        '배열에서 값 가져오기
+        Dim temp As Frm_Storage_CODE.Barcode_print_data = barcode_ArrList.Item(now_page - 1)
+
+        PictureBox1.BackColor = Color.FromArgb(255, 255, 255)
+
+        Dim x As Integer = 1
+        Dim y As Integer = 1
+        '제목 칸 크기
+        Dim xwidth As Integer = 350
+        Dim yheight As Integer = 40
+        'BARCOD 칸 크기
+        Dim barocde_width As Integer = 350
+        Dim barcode_height As Integer = 80
+        '창고명, 비고란 크기'
+        Dim name_bigo_width As Integer = 100
+        Dim name_bigo_height As Integer = 40
+        '창고명, 비고란 값표시란 크기
+        Dim print_width As Integer = 250
+        Dim print_height As Integer = 40
+        '전체 크기
+        Dim width As Integer = 350
+        Dim height As Integer = 200
+
+        '내용 초기화 횐색으로 덮음
+        Dim Fill_rect As New Rectangle(x, y, width, height)
+        e.FillRectangle(Brushes.White, Fill_rect)
+
+        Dim font As New Font("맑은 고딕", 20, FontStyle.Bold) '제목
+        Dim font1 As New Font("IDAutomationHC39M Free Version", 12, FontStyle.Bold) '바코드폰트
+        Dim font2 As New Font("맑은 고딕", 15) '창고명, 비고
+        '제목 칸
+        Dim rect As New Rectangle(x, y, xwidth, yheight)
+        '바코드 칸.
+        Dim rect1 As New Rectangle(x, yheight + y, barocde_width, barcode_height)
+        '창고명 칸
+        Dim rect2 As New Rectangle(x, barcode_height + yheight + y, name_bigo_width, name_bigo_height)
+        '창고명 출력 칸
+        Dim rect3 As New Rectangle(x + name_bigo_width, barcode_height + yheight + y, print_width, print_height)
+        '비고명 칸
+        Dim rect4 As New Rectangle(x, name_bigo_height + barcode_height + yheight + y, name_bigo_width, name_bigo_height)
+        '비고명 출력 칸
+        Dim rect5 As New Rectangle(x + name_bigo_width, print_height + barcode_height + yheight + y, print_width, print_height)
+        Dim strings As New StringFormat
+
+        strings.Alignment = StringAlignment.Center
+        strings.LineAlignment = StringAlignment.Center
+
+        e.DrawRectangle(Pens.Black, rect)
+        e.DrawRectangle(Pens.Black, rect1)
+        e.DrawRectangle(Pens.Black, rect2)
+        e.DrawRectangle(Pens.Black, rect3)
+        e.DrawRectangle(Pens.Black, rect4)
+        e.DrawRectangle(Pens.Black, rect5)
+        e.DrawString("창고 BARCODE TAG", font, Brushes.Black, rect, strings)
+        e.DrawString("*" & temp.Storage_Code & "*", font1, Brushes.Black, rect1, strings) 'STORAGE_CODE
+        e.DrawString("창고명", font2, Brushes.Black, rect2, strings)
+        e.DrawString(temp.Storage_Name, font2, Brushes.Black, rect3, strings)          'STORAGE_NAME
+        e.DrawString("비고", font2, Brushes.Black, rect4, strings)
+        e.DrawString(temp.Storage_Bigo, font2, Brushes.Black, rect5, strings)    'STORAGE_BIGO
+    End Sub
+
+    'paint 생성시 사용
+    Private Sub PictureBox1_Paint_update(e As PaintEventArgs)
+
+        '배열에서 값 가져오기
+        Dim temp As Frm_Storage_CODE.Barcode_print_data = barcode_ArrList.Item(now_page - 1)
+
+        PictureBox1.BackColor = Color.FromArgb(255, 255, 255)
+
+        Dim x As Integer = 1
+        Dim y As Integer = 1
+        '제목 칸 크기
+        Dim xwidth As Integer = 350
+        Dim yheight As Integer = 40
+        'BARCOD 칸 크기
+        Dim barocde_width As Integer = 350
+        Dim barcode_height As Integer = 80
+        '창고명, 비고란 크기'
+        Dim name_bigo_width As Integer = 100
+        Dim name_bigo_height As Integer = 40
+        '창고명, 비고란 값표시란 크기
+        Dim print_width As Integer = 250
+        Dim print_height As Integer = 40
+        '전체 크기
+        Dim width As Integer = 350
+        Dim height As Integer = 200
+
+        '내용 초기화 횐색으로 덮음
+        Dim Fill_rect As New Rectangle(x, y, width, height)
+        e.Graphics.FillRectangle(Brushes.White, Fill_rect)
+
+        Dim font As New Font("맑은 고딕", 20, FontStyle.Bold) '제목
+        Dim font1 As New Font("IDAutomationHC39M Free Version", 12, FontStyle.Bold) '바코드폰트
+        Dim font2 As New Font("맑은 고딕", 15) '창고명, 비고
+        '제목 칸
+        Dim rect As New Rectangle(x, y, xwidth, yheight)
+        '바코드 칸.
+        Dim rect1 As New Rectangle(x, yheight + y, barocde_width, barcode_height)
+        '창고명 칸
+        Dim rect2 As New Rectangle(x, barcode_height + yheight + y, name_bigo_width, name_bigo_height)
+        '창고명 출력 칸
+        Dim rect3 As New Rectangle(x + name_bigo_width, barcode_height + yheight + y, print_width, print_height)
+        '비고명 칸
+        Dim rect4 As New Rectangle(x, name_bigo_height + barcode_height + yheight + y, name_bigo_width, name_bigo_height)
+        '비고명 출력 칸
+        Dim rect5 As New Rectangle(x + name_bigo_width, print_height + barcode_height + yheight + y, print_width, print_height)
+        Dim strings As New StringFormat
+
+        strings.Alignment = StringAlignment.Center
+        strings.LineAlignment = StringAlignment.Center
+
+        e.Graphics.DrawRectangle(Pens.Black, rect)
+        e.Graphics.DrawRectangle(Pens.Black, rect1)
+        e.Graphics.DrawRectangle(Pens.Black, rect2)
+        e.Graphics.DrawRectangle(Pens.Black, rect3)
+        e.Graphics.DrawRectangle(Pens.Black, rect4)
+        e.Graphics.DrawRectangle(Pens.Black, rect5)
+        e.Graphics.DrawString("창고 BARCODE TAG", font, Brushes.Black, rect, strings)
+        e.Graphics.DrawString("*" & temp.Storage_Code & "*", font1, Brushes.Black, rect1, strings) 'STORAGE_CODE
+        e.Graphics.DrawString("창고명", font2, Brushes.Black, rect2, strings)
+        e.Graphics.DrawString(temp.Storage_Name, font2, Brushes.Black, rect3, strings)          'STORAGE_NAME
+        e.Graphics.DrawString("비고", font2, Brushes.Black, rect4, strings)
+        e.Graphics.DrawString(temp.Storage_Bigo, font2, Brushes.Black, rect5, strings)    'STORAGE_BIGO
+    End Sub
+
+
+End Class

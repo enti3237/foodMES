@@ -1,0 +1,388 @@
+﻿Public Class Frm_QC_Process
+    Dim tblQC_Result As New DataTable
+
+    Private Sub fnFrmTblLoad()
+        tblQC_Result = fnGetTableStructure("dbo.PC_QC_Result")
+    End Sub
+
+    Private Sub Frm_QC_Process_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        comboSetUp(cboMCK, "1100")
+        comboSetUp(cboC1CK, "1100")
+        comboSetUp(cboC2CK, "1100")
+        fnFrmTblLoad()
+        btnSearch.PerformClick()
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "Select CR_Code, CR_Rev_No, CR_Sun, CR_PL_Code, CR_PL_Name, CR_Qty, CR_Date From CR_Contract_List with(NOLOCK) where CR_Code Like '%" & txtJobNo.Text & "%' And
+                                                                                                                           CR_PL_Code Like '%" & txtPLCode.Text & "%' And
+                                                                                                                           CR_PL_Name Like '%" & txtPLName.Text & "%' And
+                                                                                                                           convert(datetime,'" & dtpDateFrom.Value.ToString("yyyy-MM-dd") & "') <= CR_Date and convert(datetime,'" & dtpDateTo.Value.ToString("yyyy-MM-dd") & "') >= CR_Date order by CR_Sun"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstList.DataSource = DBT
+            lstList.ClearSelection()
+        End If
+
+        showRevLog("Frm_QC_Process", DBT, lstRev)
+    End Sub
+
+
+    Private Sub lstQC_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstQC.CellClick
+        If e.RowIndex >= 0 Then
+            txtPCCode.Text = lstQC.Rows(e.RowIndex).Cells("PC_Code").Value.ToString
+            txtQCCode.Text = lstQC.Rows(e.RowIndex).Cells("QC_Check_Item_Code").Value.ToString
+            txtQCName.Text = lstQC.Rows(e.RowIndex).Cells("QC_Check_Item_Name").Value.ToString
+            cboMCK.Text = lstQC.Rows(e.RowIndex).Cells("QC_Moojin_Ckpt").Value.ToString.Split("/")(0).Trim
+            txtMCKResult.Text = lstQC.Rows(e.RowIndex).Cells("QC_Moojin_Ckpt").Value.ToString.Split("/")(1).Trim
+            txtMPrep.Text = lstQC.Rows(e.RowIndex).Cells("QC_Moojin_Ckpt").Value.ToString.Split("/")(2).Trim
+            dtpMPrepDate.Text = lstQC.Rows(e.RowIndex).Cells("QC_Moojin_Ckpt").Value.ToString.Split("/")(3).Trim
+            cboC1CK.Text = lstQC.Rows(e.RowIndex).Cells("QC_Cust1_Ckpt").Value.ToString.Split("/")(0).Trim
+            txtC1Result.Text = lstQC.Rows(e.RowIndex).Cells("QC_Cust1_Ckpt").Value.ToString.Split("/")(1).Trim
+            txtC1Prep.Text = lstQC.Rows(e.RowIndex).Cells("QC_Cust1_Ckpt").Value.ToString.Split("/")(2).Trim
+            dtpC1PrepDate.Text = lstQC.Rows(e.RowIndex).Cells("QC_Cust1_Ckpt").Value.ToString.Split("/")(3).Trim
+            cboC2CK.Text = lstQC.Rows(e.RowIndex).Cells("QC_Cust2_Ckpt").Value.ToString.Split("/")(0).Trim
+            txtC2Result.Text = lstQC.Rows(e.RowIndex).Cells("QC_Cust2_Ckpt").Value.ToString.Split("/")(1).Trim
+            txtC2Prep.Text = lstQC.Rows(e.RowIndex).Cells("QC_Cust2_Ckpt").Value.ToString.Split("/")(2).Trim
+            dtpC2PrepDate.Text = lstQC.Rows(e.RowIndex).Cells("QC_Cust2_Ckpt").Value.ToString.Split("/")(3).Trim
+            txtBigo2.Text = lstQC.Rows(e.RowIndex).Cells("QC_Bigo2").Value.ToString
+        End If
+
+    End Sub
+
+    Private Sub lstList_CellClick_1(sender As Object, e As DataGridViewCellEventArgs) Handles lstList.CellClick
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        If e.RowIndex >= 0 Then
+            StrSQL = "Select * From PC_Process where CL_Code = '" & lstList.Rows(e.RowIndex).Cells("CR_Code").Value.ToString & "' And 
+                                                     CL_Rev_No = '" & lstList.Rows(e.RowIndex).Cells("CR_Rev_No").Value.ToString & "' And
+                                                     CL_Sun = '" & lstList.Rows(e.RowIndex).Cells("CR_Sun").Value.ToString & "'"
+
+            Re_Count = DB_Select(DBT)
+            If Re_Count > 0 Then
+                lstProcess.RowCount = DBT.Rows.Count
+                For i = 0 To DBT.Rows.Count - 1
+                    lstProcess.Rows(i).Cells("CL_PL_Name2").Value = lstList.Rows(e.RowIndex).Cells("CR_PL_Name").Value.ToString
+                    lstProcess.Rows(i).Cells("PC_Code2").Value = DBT.Rows(i)("PC_Code").ToString
+                    lstProcess.Rows(i).Cells("PC_Name").Value = DBT.Rows(i)("PC_Name").ToString
+                    lstProcess.Rows(i).Cells("PC_Bigo").Value = DBT.Rows(i)("PC_Bigo").ToString
+                    lstProcess.Rows(i).Cells("PC_Prepared").Value = DBT.Rows(i)("PC_Prepared").ToString
+                    lstProcess.Rows(i).Cells("PC_Prepare_Date").Value = DBT.Rows(i)("PC_Prepare_Date").ToString
+                    lstProcess.Rows(i).Cells("PC_Updated").Value = DBT.Rows(i)("PC_Updated").ToString
+                    lstProcess.Rows(i).Cells("PC_Update_Date").Value = DBT.Rows(i)("PC_Update_Date").ToString
+                Next
+            Else
+                lstProcess.RowCount = 0
+            End If
+        End If
+
+    End Sub
+
+    Private Sub lstProcess_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstProcess.CellClick
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        If e.RowIndex >= 0 Then
+            StrSQL = "Select * From PC_QC_Result where CL_Code = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString & "' And 
+                                                     CL_Rev_No = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Rev_No").Value.ToString & "' And
+                                                     CL_Sun = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Sun").Value.ToString & "' And
+                                                     PC_Code = '" & lstProcess.Rows(e.RowIndex).Cells("PC_Code2").Value.ToString & "'
+                                                     "
+
+            Re_Count = DB_Select(DBT)
+            If Re_Count > 0 Then
+                lstQC.RowCount = Re_Count
+                For i = 0 To DBT.Rows.Count - 1
+                    lstQC.Rows(i).Cells("PC_Code").Value = DBT.Rows(i)("PC_Code").ToString
+                    lstQC.Rows(i).Cells("QC_Check_Item_Code").Value = DBT.Rows(i)("QC_Check_Item_Code").ToString
+                    lstQC.Rows(i).Cells("QC_Check_Item_Name").Value = DBT.Rows(i)("QC_Check_Item_Name").ToString
+                    lstQC.Rows(i).Cells("QC_Moojin_Ckpt").Value = DBT.Rows(i)("QC_Moojin_Ckpt").ToString & " / " & DBT.Rows(i)("QC_Moojin_Ckpt_Result").ToString & " / " & DBT.Rows(i)("QC_Moojin_Ckpt_Prep").ToString & " / " & DBT.Rows(i)("QC_Moojin_Ckpt_Prep_Date").ToString
+                    lstQC.Rows(i).Cells("QC_Cust1_Ckpt").Value = DBT.Rows(i)("QC_Cust1_Ckpt").ToString & " / " & DBT.Rows(i)("QC_Cust1_Ckpt_Result").ToString & " / " & DBT.Rows(i)("QC_Cust1_Ckpt_Prep").ToString & " / " & DBT.Rows(i)("QC_Cust1_Ckpt_Prep_Date").ToString
+                    lstQC.Rows(i).Cells("QC_Cust2_Ckpt").Value = DBT.Rows(i)("QC_Cust2_Ckpt").ToString & " / " & DBT.Rows(i)("QC_Cust2_Ckpt_Result").ToString & " / " & DBT.Rows(i)("QC_Cust2_Ckpt_Prep").ToString & " / " & DBT.Rows(i)("QC_Cust2_Ckpt_Prep_Date").ToString
+                    lstQC.Rows(i).Cells("QC_Bigo").Value = DBT.Rows(i)("QC_Bigo").ToString
+                    lstQC.Rows(i).Cells("QC_Prepared").Value = DBT.Rows(i)("QC_Prepared").ToString
+                    lstQC.Rows(i).Cells("QC_Prepare_Date").Value = DBT.Rows(i)("QC_Prepare_Date").ToString
+                    lstQC.Rows(i).Cells("QC_Updated").Value = DBT.Rows(i)("QC_Updated").ToString
+                    lstQC.Rows(i).Cells("QC_Update_Date").Value = DBT.Rows(i)("QC_Update_Date").ToString
+                    lstQC.Rows(i).Cells("QC_Bigo2").Value = DBT.Rows(i)("QC_Bigo").ToString
+                Next
+            Else
+                lstQC.RowCount = 0
+            End If
+
+            btnAdd.PerformClick()
+        End If
+
+
+    End Sub
+
+    Private Sub btnJobSearch_Click(sender As Object, e As EventArgs) Handles btnJobSearch.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo.Text = pop1.result
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        txtPCCode.Text = ""
+        txtQCCode.Text = ""
+        txtQCName.Text = ""
+        cboMCK.Text = ""
+        txtMCKResult.Text = ""
+        txtMPrep.Text = ""
+        dtpMPrepDate.Text = ""
+        cboC1CK.Text = ""
+        txtC1Result.Text = ""
+        txtC1Prep.Text = ""
+        dtpC1PrepDate.Text = ""
+        cboC2CK.Text = ""
+        txtC2Result.Text = ""
+        txtC2Prep.Text = ""
+        dtpC2PrepDate.Text = ""
+        txtBigo2.Text = ""
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        Dim DBT As DataTable
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+
+        DBT = Nothing
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        If MessageBox.Show(txtQCCode.Text + " 를 삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If txtQCCode.Text <> "" Then
+                StrSQL = "Delete PC_QC_Result where CL_Code = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CL_Code").Value.ToString & "' 
+and CL_Rev_No = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CL_Rev_No").Value.ToString & "' 
+and CL_Sun = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CL_Sun").Value.ToString & "' 
+and PC_Code = '" & txtPCCode.Text & "' 
+and QC_Check_Item_Code = '" & txtQCCode.Text & "'"
+                Re_Count = DB_Execute()
+
+                If Re_Count > 0 Then
+                    MsgBox("삭제 완료")
+                End If
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 정보 삭제 : " & txtQCCode.Text & "-" & txtQCName.Text
+                Man_Log("Frm_QC_Process", "정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+            Else
+                MsgBox("선택된 검사항목이 없습니다")
+            End If
+
+            Dim i As Integer
+            DBT = Nothing
+
+            StrSQL = "Select * From PC_QC_Result where CL_Code = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString & "' And 
+                                                     CL_Rev_No = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Rev_No").Value.ToString & "' And
+                                                     CL_Sun = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Sun").Value.ToString & "' And
+                                                     PC_Code = '" & lstProcess.Rows(lstProcess.CurrentCell.RowIndex).Cells("PC_Code2").Value.ToString & "'
+                                                     "
+
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count > 0 Then
+                For i = 0 To DBT.Rows.Count - 1
+                    lstQC.Rows(i).Cells("PC_Code").Value = DBT.Rows(i)("PC_Code").ToString
+                    lstQC.Rows(i).Cells("QC_Check_Item_Code").Value = DBT.Rows(i)("QC_Check_Item_Code").ToString
+                    lstQC.Rows(i).Cells("QC_Check_Item_Name").Value = DBT.Rows(i)("QC_Check_Item_Name").ToString
+                    lstQC.Rows(i).Cells("QC_Moojin_Ckpt").Value = DBT.Rows(i)("QC_Moojin_Ckpt").ToString & " / " & DBT.Rows(i)("QC_Moojin_Ckpt_Result").ToString & " / " & DBT.Rows(i)("QC_Moojin_Ckpt_Prep").ToString & " / " & DBT.Rows(i)("QC_Moojin_Ckpt_Prep_Date").ToString
+                    lstQC.Rows(i).Cells("QC_Cust1_Ckpt").Value = DBT.Rows(i)("QC_Cust1_Ckpt").ToString & " / " & DBT.Rows(i)("QC_Cust1_Ckpt_Result").ToString & " / " & DBT.Rows(i)("QC_Cust1_Ckpt_Prep").ToString & " / " & DBT.Rows(i)("QC_Cust1_Ckpt_Prep_Date").ToString
+                    lstQC.Rows(i).Cells("QC_Cust2_Ckpt").Value = DBT.Rows(i)("QC_Cust2_Ckpt").ToString & " / " & DBT.Rows(i)("QC_Cust2_Ckpt_Result").ToString & " / " & DBT.Rows(i)("QC_Cust2_Ckpt_Prep").ToString & " / " & DBT.Rows(i)("QC_Cust2_Ckpt_Prep_Date").ToString
+                    lstQC.Rows(i).Cells("QC_Bigo").Value = DBT.Rows(i)("QC_Bigo").ToString
+                    lstQC.Rows(i).Cells("QC_Prepared").Value = DBT.Rows(i)("QC_Prepared").ToString
+                    lstQC.Rows(i).Cells("QC_Prepare_Date").Value = DBT.Rows(i)("QC_Prepare_Date").ToString
+                    lstQC.Rows(i).Cells("QC_Updated").Value = DBT.Rows(i)("QC_Updated").ToString
+                    lstQC.Rows(i).Cells("QC_Update_Date").Value = DBT.Rows(i)("QC_Update_Date").ToString
+                Next
+            End If
+
+        End If
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        If lstList.CurrentCell.RowIndex >= 0 Then
+
+            StrSQL = "SELECT * from PC_QC_Result 
+where 1=1 
+and CL_Code = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString & "'
+and CL_Rev_No = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Rev_No").Value.ToString & "'
+and CL_Sun = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Sun").Value.ToString & "'
+and PC_Code = '" & txtPCCode.Text & "'
+and QC_Check_Item_Code = '" & txtQCCode.Text & "'
+"
+            Re_Count = DB_Select(DBT)
+
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblQC_Result)
+            '#2. 입력자료 입력
+            For i = 0 To tblQC_Result.Rows.Count - 1
+
+                Select Case tblQC_Result.Rows(i).Item(0).ToString
+
+                    Case "CL_Code"
+                        tblQC_Result.Rows(i).Item(11) = lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString
+
+                    Case "CL_Rev_No"
+                        tblQC_Result.Rows(i).Item(11) = lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Rev_No").Value.ToString
+                    Case "CL_Sun"
+                        tblQC_Result.Rows(i).Item(11) = lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Sun").Value.ToString
+                    Case "PC_Code"
+                        tblQC_Result.Rows(i).Item(11) = lstProcess.Rows(lstProcess.CurrentCell.RowIndex).Cells("PC_Code2").Value.ToString
+                    Case "QC_Check_Item_Code"
+                        If txtQCCode.Text = "" Then
+                            tblQC_Result.Rows(i).Item(11) = PK_Make("PC_QC_Result")
+                        Else
+                            tblQC_Result.Rows(i).Item(11) = txtQCCode.Text
+                        End If
+                    Case "QC_Check_Item_Name"
+                        tblQC_Result.Rows(i).Item(11) = txtQCName.Text
+                    Case "QC_Moojin_Ckpt"
+                        tblQC_Result.Rows(i).Item(11) = cboMCK.Text
+                    Case "QC_Moojin_Ckpt_Result"
+                        tblQC_Result.Rows(i).Item(11) = txtMCKResult.Text
+                    Case "QC_Moojin_Ckpt_Prep"
+                        tblQC_Result.Rows(i).Item(11) = txtMPrep.Text
+                    Case "QC_Moojin_Ckpt_Prep_Date"
+                        tblQC_Result.Rows(i).Item(11) = dtpMPrepDate.Value.ToString(fmtStr)
+                    Case "QC_Cust1_Ckpt"
+                        tblQC_Result.Rows(i).Item(11) = cboC1CK.Text
+                    Case "QC_Cust1_Ckpt_Result"
+                        tblQC_Result.Rows(i).Item(11) = txtC1Result.Text
+                    Case "QC_Cust1_Ckpt_Prep"
+                        tblQC_Result.Rows(i).Item(11) = txtC1Prep.Text
+                    Case "QC_Cust1_Ckpt_Prep_Date"
+                        tblQC_Result.Rows(i).Item(11) = dtpC1PrepDate.Value.ToString(fmtStr)
+                    Case "QC_Cust2_Ckpt"
+                        tblQC_Result.Rows(i).Item(11) = cboC2CK.Text
+                    Case "QC_Cust2_Ckpt_Result"
+                        tblQC_Result.Rows(i).Item(11) = txtC2Result.Text
+                    Case "QC_Cust2_Ckpt_Prep"
+                        tblQC_Result.Rows(i).Item(11) = txtC2Prep.Text
+                    Case "QC_Cust2_Ckpt_Prep_Date"
+                        tblQC_Result.Rows(i).Item(11) = dtpC2PrepDate.Value.ToString(fmtStr)
+                    Case "QC_Bigo"
+                        tblQC_Result.Rows(i).Item(11) = txtBigo2.Text
+                    Case "QC_Prepared"
+                        If Re_Count > 0 Then
+                            tblQC_Result.Rows(i).Item(11) = DBT.Rows(0)("QC_Prepared").ToString
+                        Else
+                            tblQC_Result.Rows(i).Item(11) = logInUserName
+                        End If
+                    Case "QC_Prepare_Date"
+                        If Re_Count > 0 Then
+                            tblQC_Result.Rows(i).Item(11) = DBT.Rows(0)("QC_Prepare_Date").ToString
+                        Else
+                            tblQC_Result.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                    Case "QC_Updated"
+                        If Re_Count > 0 Then
+                            tblQC_Result.Rows(i).Item(11) = logInUserName
+
+                        End If
+                    Case "QC_Update_Date"
+                        If Re_Count > 0 Then
+                            tblQC_Result.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+
+                        End If
+                End Select
+            Next
+
+            If Re_Count > 0 Then
+
+                Re_Count2 = fnTableUpdate("dbo.PC_QC_Result", tblQC_Result)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            Else
+
+                Re_Count2 = fnTableInsert("dbo.PC_QC_Result", tblQC_Result)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 공정 검사 정보 수정 : " & txtQCCode.Text & "-" & txtQCName.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 공정 검사 정보 신규 입력 : " & txtQCCode.Text & "-" & txtQCName.Text
+            End If
+            Man_Log("Frm_QC_Process", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+            'hsim 20200515 개정이력 조회 갱신
+            showRevLog("Frm_QC_Process", DBT2, lstRev)
+
+            StrSQL = "Select * From PC_QC_Result where CL_Code = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString & "' And 
+                                                     CL_Rev_No = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Rev_No").Value.ToString & "' And
+                                                     CL_Sun = '" & lstList.Rows(lstList.CurrentCell.RowIndex).Cells("CR_Sun").Value.ToString & "' And
+                                                     PC_Code = '" & lstProcess.Rows(lstProcess.CurrentCell.RowIndex).Cells("PC_Code2").Value.ToString & "'
+                                                     "
+
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count > 0 Then
+                lstQC.RowCount = Re_Count
+                For i = 0 To DBT.Rows.Count - 1
+                    lstQC.Rows(i).Cells("PC_Code").Value = DBT.Rows(i)("PC_Code").ToString
+                    lstQC.Rows(i).Cells("QC_Check_Item_Code").Value = DBT.Rows(i)("QC_Check_Item_Code").ToString
+                    lstQC.Rows(i).Cells("QC_Check_Item_Name").Value = DBT.Rows(i)("QC_Check_Item_Name").ToString
+                    lstQC.Rows(i).Cells("QC_Moojin_Ckpt").Value = DBT.Rows(i)("QC_Moojin_Ckpt").ToString & " / " & DBT.Rows(i)("QC_Moojin_Ckpt_Result").ToString & " / " & DBT.Rows(i)("QC_Moojin_Ckpt_Prep").ToString & " / " & DBT.Rows(i)("QC_Moojin_Ckpt_Prep_Date").ToString
+                    lstQC.Rows(i).Cells("QC_Cust1_Ckpt").Value = DBT.Rows(i)("QC_Cust1_Ckpt").ToString & " / " & DBT.Rows(i)("QC_Cust1_Ckpt_Result").ToString & " / " & DBT.Rows(i)("QC_Cust1_Ckpt_Prep").ToString & " / " & DBT.Rows(i)("QC_Cust1_Ckpt_Prep_Date").ToString
+                    lstQC.Rows(i).Cells("QC_Cust2_Ckpt").Value = DBT.Rows(i)("QC_Cust2_Ckpt").ToString & " / " & DBT.Rows(i)("QC_Cust2_Ckpt_Result").ToString & " / " & DBT.Rows(i)("QC_Cust2_Ckpt_Prep").ToString & " / " & DBT.Rows(i)("QC_Cust2_Ckpt_Prep_Date").ToString
+                    lstQC.Rows(i).Cells("QC_Bigo").Value = DBT.Rows(i)("QC_Bigo").ToString
+                    lstQC.Rows(i).Cells("QC_Prepared").Value = DBT.Rows(i)("QC_Prepared").ToString
+                    lstQC.Rows(i).Cells("QC_Prepare_Date").Value = DBT.Rows(i)("QC_Prepare_Date").ToString
+                    lstQC.Rows(i).Cells("QC_Updated").Value = DBT.Rows(i)("QC_Updated").ToString
+                    lstQC.Rows(i).Cells("QC_Update_Date").Value = DBT.Rows(i)("QC_Update_Date").ToString
+                Next
+            Else
+                lstQC.RowCount = 0
+            End If
+        End If
+
+    End Sub
+End Class

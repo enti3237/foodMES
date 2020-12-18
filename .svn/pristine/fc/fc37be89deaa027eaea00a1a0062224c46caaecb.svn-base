@@ -1,0 +1,302 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_BOM_Itm_POP
+    Inherits System.Windows.Forms.Form
+
+    'Form은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.BO_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Sun = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Itm_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Itm_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_DV_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_DV_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_CR_List_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_CR_List_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Itm_Form = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Itm_Method = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Itm_Standard = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Itm_Size = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Itm_Unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Itm_Qty = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.BO_Bigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.txtBOMCode = New System.Windows.Forms.TextBox()
+        Me.btnBOMSearch = New System.Windows.Forms.Button()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.White
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button2.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button2.Location = New System.Drawing.Point(212, 349)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(150, 27)
+        Me.Button2.TabIndex = 325
+        Me.Button2.Text = "취소"
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.White
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button1.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button1.Location = New System.Drawing.Point(39, 349)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(150, 27)
+        Me.Button1.TabIndex = 324
+        Me.Button1.Text = "선택"
+        Me.Button1.UseVisualStyleBackColor = False
+        '
+        'Button14
+        '
+        Me.Button14.BackColor = System.Drawing.Color.White
+        Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button14.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button14.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button14.Location = New System.Drawing.Point(737, 72)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(150, 27)
+        Me.Button14.TabIndex = 323
+        Me.Button14.Text = "조회"
+        Me.Button14.UseVisualStyleBackColor = False
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.AllowUserToDeleteRows = False
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.BO_Code, Me.BO_Name, Me.BO_Sun, Me.BO_Itm_Code, Me.BO_Itm_Name, Me.BO_DV_Code, Me.BO_DV_Name, Me.BO_CR_List_Code, Me.BO_CR_List_Name, Me.BO_Itm_Form, Me.BO_Itm_Method, Me.BO_Itm_Standard, Me.BO_Itm_Size, Me.BO_Itm_Unit, Me.BO_Itm_Qty, Me.BO_Bigo})
+        Me.DataGridView1.Location = New System.Drawing.Point(39, 103)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.ReadOnly = True
+        Me.DataGridView1.RowHeadersVisible = False
+        Me.DataGridView1.RowTemplate.Height = 23
+        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DataGridView1.Size = New System.Drawing.Size(848, 211)
+        Me.DataGridView1.TabIndex = 322
+        '
+        'BO_Code
+        '
+        Me.BO_Code.DataPropertyName = "BO_Code"
+        Me.BO_Code.HeaderText = "BOM번호"
+        Me.BO_Code.Name = "BO_Code"
+        Me.BO_Code.ReadOnly = True
+        '
+        'BO_Name
+        '
+        Me.BO_Name.DataPropertyName = "BO_Name"
+        Me.BO_Name.HeaderText = "BOM명"
+        Me.BO_Name.Name = "BO_Name"
+        Me.BO_Name.ReadOnly = True
+        Me.BO_Name.Width = 200
+        '
+        'BO_Sun
+        '
+        Me.BO_Sun.DataPropertyName = "BO_Sun"
+        Me.BO_Sun.HeaderText = "순번"
+        Me.BO_Sun.Name = "BO_Sun"
+        Me.BO_Sun.ReadOnly = True
+        '
+        'BO_Itm_Code
+        '
+        Me.BO_Itm_Code.DataPropertyName = "BO_Itm_Code"
+        Me.BO_Itm_Code.HeaderText = "BOM Item코드"
+        Me.BO_Itm_Code.Name = "BO_Itm_Code"
+        Me.BO_Itm_Code.ReadOnly = True
+        Me.BO_Itm_Code.Width = 150
+        '
+        'BO_Itm_Name
+        '
+        Me.BO_Itm_Name.DataPropertyName = "BO_Itm_Name"
+        Me.BO_Itm_Name.HeaderText = "BOM Item명"
+        Me.BO_Itm_Name.Name = "BO_Itm_Name"
+        Me.BO_Itm_Name.ReadOnly = True
+        '
+        'BO_DV_Code
+        '
+        Me.BO_DV_Code.DataPropertyName = "BO_DV_Code"
+        Me.BO_DV_Code.HeaderText = "도면번호"
+        Me.BO_DV_Code.Name = "BO_DV_Code"
+        Me.BO_DV_Code.ReadOnly = True
+        '
+        'BO_DV_Name
+        '
+        Me.BO_DV_Name.DataPropertyName = "BO_DV_Name"
+        Me.BO_DV_Name.HeaderText = "도면명"
+        Me.BO_DV_Name.Name = "BO_DV_Name"
+        Me.BO_DV_Name.ReadOnly = True
+        '
+        'BO_CR_List_Code
+        '
+        Me.BO_CR_List_Code.DataPropertyName = "BO_CR_List_Code"
+        Me.BO_CR_List_Code.HeaderText = "계약물품항목ID"
+        Me.BO_CR_List_Code.Name = "BO_CR_List_Code"
+        Me.BO_CR_List_Code.ReadOnly = True
+        '
+        'BO_CR_List_Name
+        '
+        Me.BO_CR_List_Name.DataPropertyName = "BO_CR_List_Name"
+        Me.BO_CR_List_Name.HeaderText = "계약물품항목명"
+        Me.BO_CR_List_Name.Name = "BO_CR_List_Name"
+        Me.BO_CR_List_Name.ReadOnly = True
+        Me.BO_CR_List_Name.Width = 150
+        '
+        'BO_Itm_Form
+        '
+        Me.BO_Itm_Form.DataPropertyName = "BO_Itm_Form"
+        Me.BO_Itm_Form.HeaderText = "BOM Item 형태"
+        Me.BO_Itm_Form.Name = "BO_Itm_Form"
+        Me.BO_Itm_Form.ReadOnly = True
+        Me.BO_Itm_Form.Width = 150
+        '
+        'BO_Itm_Method
+        '
+        Me.BO_Itm_Method.DataPropertyName = "BO_Itm_Method"
+        Me.BO_Itm_Method.HeaderText = "BOM Item 방법"
+        Me.BO_Itm_Method.Name = "BO_Itm_Method"
+        Me.BO_Itm_Method.ReadOnly = True
+        Me.BO_Itm_Method.Width = 150
+        '
+        'BO_Itm_Standard
+        '
+        Me.BO_Itm_Standard.DataPropertyName = "BO_Itm_Standard"
+        Me.BO_Itm_Standard.HeaderText = "BOM Item 규격"
+        Me.BO_Itm_Standard.Name = "BO_Itm_Standard"
+        Me.BO_Itm_Standard.ReadOnly = True
+        Me.BO_Itm_Standard.Width = 150
+        '
+        'BO_Itm_Size
+        '
+        Me.BO_Itm_Size.DataPropertyName = "BO_Itm_Size"
+        Me.BO_Itm_Size.HeaderText = "BOM Item 치수"
+        Me.BO_Itm_Size.Name = "BO_Itm_Size"
+        Me.BO_Itm_Size.ReadOnly = True
+        Me.BO_Itm_Size.Width = 150
+        '
+        'BO_Itm_Unit
+        '
+        Me.BO_Itm_Unit.DataPropertyName = "BO_Itm_Unit"
+        Me.BO_Itm_Unit.HeaderText = "BOM Item 단위"
+        Me.BO_Itm_Unit.Name = "BO_Itm_Unit"
+        Me.BO_Itm_Unit.ReadOnly = True
+        Me.BO_Itm_Unit.Width = 150
+        '
+        'BO_Itm_Qty
+        '
+        Me.BO_Itm_Qty.DataPropertyName = "BO_Itm_Qty"
+        Me.BO_Itm_Qty.HeaderText = "BOM Item수량"
+        Me.BO_Itm_Qty.Name = "BO_Itm_Qty"
+        Me.BO_Itm_Qty.ReadOnly = True
+        '
+        'BO_Bigo
+        '
+        Me.BO_Bigo.DataPropertyName = "BO_Bigo"
+        Me.BO_Bigo.HeaderText = "비고"
+        Me.BO_Bigo.Name = "BO_Bigo"
+        Me.BO_Bigo.ReadOnly = True
+        Me.BO_Bigo.Width = 200
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(43, 78)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(57, 12)
+        Me.Label1.TabIndex = 329
+        Me.Label1.Text = "BOM번호"
+        '
+        'txtBOMCode
+        '
+        Me.txtBOMCode.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtBOMCode.Location = New System.Drawing.Point(106, 72)
+        Me.txtBOMCode.Name = "txtBOMCode"
+        Me.txtBOMCode.ReadOnly = True
+        Me.txtBOMCode.Size = New System.Drawing.Size(150, 25)
+        Me.txtBOMCode.TabIndex = 328
+        '
+        'btnBOMSearch
+        '
+        Me.btnBOMSearch.BackColor = System.Drawing.Color.White
+        Me.btnBOMSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnBOMSearch.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnBOMSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnBOMSearch.Location = New System.Drawing.Point(262, 71)
+        Me.btnBOMSearch.Name = "btnBOMSearch"
+        Me.btnBOMSearch.Size = New System.Drawing.Size(31, 27)
+        Me.btnBOMSearch.TabIndex = 381
+        Me.btnBOMSearch.Text = "⌕"
+        Me.btnBOMSearch.UseVisualStyleBackColor = False
+        '
+        'Frm_BOM_Itm_POP
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(934, 450)
+        Me.Controls.Add(Me.btnBOMSearch)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.txtBOMCode)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.Button14)
+        Me.Controls.Add(Me.DataGridView1)
+        Me.ForeColor = System.Drawing.SystemColors.Highlight
+        Me.Name = "Frm_BOM_Itm_POP"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "BOM 목록정보 조회"
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Button14 As Button
+    Public WithEvents DataGridView1 As DataGridView
+    Friend WithEvents Label1 As Label
+    Friend WithEvents txtBOMCode As TextBox
+    Friend WithEvents btnBOMSearch As Button
+    Friend WithEvents BO_Code As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Name As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Sun As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Itm_Code As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Itm_Name As DataGridViewTextBoxColumn
+    Friend WithEvents BO_DV_Code As DataGridViewTextBoxColumn
+    Friend WithEvents BO_DV_Name As DataGridViewTextBoxColumn
+    Friend WithEvents BO_CR_List_Code As DataGridViewTextBoxColumn
+    Friend WithEvents BO_CR_List_Name As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Itm_Form As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Itm_Method As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Itm_Standard As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Itm_Size As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Itm_Unit As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Itm_Qty As DataGridViewTextBoxColumn
+    Friend WithEvents BO_Bigo As DataGridViewTextBoxColumn
+End Class

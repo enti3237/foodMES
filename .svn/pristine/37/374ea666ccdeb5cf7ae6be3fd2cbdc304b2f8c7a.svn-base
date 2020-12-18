@@ -1,0 +1,208 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_PD_Report7
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.palMain = New System.Windows.Forms.Panel()
+        Me.labCode = New System.Windows.Forms.Label()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.labTime = New System.Windows.Forms.Label()
+        Me.dtpTimeTo = New System.Windows.Forms.DateTimePicker()
+        Me.dtpTimeFrom = New System.Windows.Forms.DateTimePicker()
+        Me.txtCode = New System.Windows.Forms.TextBox()
+        Me.lstMain = New System.Windows.Forms.DataGridView()
+        Me.No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TerminalID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CreateTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SaveTime = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.btnSearch = New System.Windows.Forms.Button()
+        Me.Panel24 = New System.Windows.Forms.Panel()
+        Me.palMain.SuspendLayout()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'palMain
+        '
+        Me.palMain.Controls.Add(Me.labCode)
+        Me.palMain.Controls.Add(Me.Label35)
+        Me.palMain.Controls.Add(Me.labTime)
+        Me.palMain.Controls.Add(Me.dtpTimeTo)
+        Me.palMain.Controls.Add(Me.dtpTimeFrom)
+        Me.palMain.Controls.Add(Me.txtCode)
+        Me.palMain.Controls.Add(Me.lstMain)
+        Me.palMain.Controls.Add(Me.btnSearch)
+        Me.palMain.Controls.Add(Me.Panel24)
+        Me.palMain.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.palMain.Location = New System.Drawing.Point(10, 40)
+        Me.palMain.Name = "palMain"
+        Me.palMain.Size = New System.Drawing.Size(1660, 867)
+        Me.palMain.TabIndex = 150
+        '
+        'labCode
+        '
+        Me.labCode.AutoSize = True
+        Me.labCode.Location = New System.Drawing.Point(14, 52)
+        Me.labCode.Name = "labCode"
+        Me.labCode.Size = New System.Drawing.Size(53, 12)
+        Me.labCode.TabIndex = 395
+        Me.labCode.Text = "장비코드"
+        '
+        'Label35
+        '
+        Me.Label35.AutoSize = True
+        Me.Label35.Location = New System.Drawing.Point(420, 52)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(14, 12)
+        Me.Label35.TabIndex = 394
+        Me.Label35.Text = "~"
+        '
+        'labTime
+        '
+        Me.labTime.AutoSize = True
+        Me.labTime.Location = New System.Drawing.Point(231, 52)
+        Me.labTime.Name = "labTime"
+        Me.labTime.Size = New System.Drawing.Size(53, 12)
+        Me.labTime.TabIndex = 393
+        Me.labTime.Text = "가동시간"
+        '
+        'dtpTimeTo
+        '
+        Me.dtpTimeTo.Font = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpTimeTo.Location = New System.Drawing.Point(440, 47)
+        Me.dtpTimeTo.Name = "dtpTimeTo"
+        Me.dtpTimeTo.Size = New System.Drawing.Size(125, 22)
+        Me.dtpTimeTo.TabIndex = 392
+        '
+        'dtpTimeFrom
+        '
+        Me.dtpTimeFrom.CalendarFont = New System.Drawing.Font("굴림", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpTimeFrom.Font = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpTimeFrom.Location = New System.Drawing.Point(289, 47)
+        Me.dtpTimeFrom.Name = "dtpTimeFrom"
+        Me.dtpTimeFrom.Size = New System.Drawing.Size(125, 22)
+        Me.dtpTimeFrom.TabIndex = 391
+        '
+        'txtCode
+        '
+        Me.txtCode.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtCode.Location = New System.Drawing.Point(75, 46)
+        Me.txtCode.Name = "txtCode"
+        Me.txtCode.Size = New System.Drawing.Size(150, 25)
+        Me.txtCode.TabIndex = 390
+        '
+        'lstMain
+        '
+        Me.lstMain.AllowUserToAddRows = False
+        Me.lstMain.BackgroundColor = System.Drawing.Color.White
+        Me.lstMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.lstMain.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.No, Me.TerminalID, Me.CreateTime, Me.SaveTime})
+        Me.lstMain.Location = New System.Drawing.Point(16, 103)
+        Me.lstMain.Name = "lstMain"
+        Me.lstMain.ReadOnly = True
+        Me.lstMain.RowHeadersVisible = False
+        Me.lstMain.RowTemplate.Height = 23
+        Me.lstMain.Size = New System.Drawing.Size(1600, 732)
+        Me.lstMain.TabIndex = 299
+        '
+        'No
+        '
+        Me.No.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.No.DataPropertyName = "No"
+        Me.No.HeaderText = "No"
+        Me.No.Name = "No"
+        Me.No.ReadOnly = True
+        '
+        'TerminalID
+        '
+        Me.TerminalID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.TerminalID.DataPropertyName = "TerminalID"
+        Me.TerminalID.HeaderText = "장비코드"
+        Me.TerminalID.Name = "TerminalID"
+        Me.TerminalID.ReadOnly = True
+        '
+        'CreateTime
+        '
+        Me.CreateTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CreateTime.DataPropertyName = "CreateTime"
+        Me.CreateTime.HeaderText = "시작일시"
+        Me.CreateTime.Name = "CreateTime"
+        Me.CreateTime.ReadOnly = True
+        '
+        'SaveTime
+        '
+        Me.SaveTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.SaveTime.DataPropertyName = "SaveTime"
+        Me.SaveTime.HeaderText = "종료일시"
+        Me.SaveTime.Name = "SaveTime"
+        Me.SaveTime.ReadOnly = True
+        '
+        'btnSearch
+        '
+        Me.btnSearch.BackColor = System.Drawing.Color.White
+        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSearch.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnSearch.Location = New System.Drawing.Point(1465, 45)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(150, 27)
+        Me.btnSearch.TabIndex = 294
+        Me.btnSearch.Text = "조회"
+        Me.btnSearch.UseVisualStyleBackColor = False
+        '
+        'Panel24
+        '
+        Me.Panel24.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel24.Location = New System.Drawing.Point(16, 85)
+        Me.Panel24.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel24.Name = "Panel24"
+        Me.Panel24.Size = New System.Drawing.Size(1600, 1)
+        Me.Panel24.TabIndex = 69
+        '
+        'Frm_PD_Report7
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.palMain)
+        Me.Name = "Frm_PD_Report7"
+        Me.Size = New System.Drawing.Size(1771, 668)
+        Me.palMain.ResumeLayout(False)
+        Me.palMain.PerformLayout()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents palMain As Panel
+    Friend WithEvents lstMain As DataGridView
+    Friend WithEvents btnSearch As Button
+    Friend WithEvents Panel24 As Panel
+    Friend WithEvents labCode As Label
+    Friend WithEvents Label35 As Label
+    Friend WithEvents labTime As Label
+    Friend WithEvents dtpTimeTo As DateTimePicker
+    Friend WithEvents dtpTimeFrom As DateTimePicker
+    Friend WithEvents txtCode As TextBox
+    Friend WithEvents No As DataGridViewTextBoxColumn
+    Friend WithEvents TerminalID As DataGridViewTextBoxColumn
+    Friend WithEvents CreateTime As DataGridViewTextBoxColumn
+    Friend WithEvents SaveTime As DataGridViewTextBoxColumn
+End Class

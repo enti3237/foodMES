@@ -1,0 +1,863 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.IO.DirectoryInfo
+Imports System.IO.Directory
+Public Class Frm_Contract_CRS
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+    Dim Excel_Check As Boolean = False
+    Dim bu_set() As String = {"경영지원팀", "영업팀", "기술개발팀", "품질보증팀", "생산팀"}
+    Dim bool_data As Boolean = False
+    Dim file_path As String = ""
+    Dim file_name As String = ""
+    Dim Main As Frm_Main = Application.OpenForms("Frm_Main")
+
+    Private Sub Frm_Contract_CRS_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Panel_Main.Top = 40
+        Panel_Main.Left = 10
+        Panel_List.Top = 40
+        Panel_List.Left = 10
+
+        Panel_Main.Visible = False
+        Panel_List.Visible = True
+
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT a5,a13,a17,a18,a10,a3,a20
+           FROM  test with(NOLOCK) "
+
+        Re_Count = DB_Select(DBT)
+        DataGridView1.DataSource = DBT
+
+
+
+
+
+
+
+
+
+
+
+        'cboCRSNo.Items.Add("CRS-19-032")
+        ''cboCRSNo.Items.Add("CRS-19-077")
+        ''cboCRSName.Items.Add("CRS-19-032 샤프트 2품목 한빛2발")
+        ''cboCRSName.Items.Add("CRS-19-077 한빛1발 기계팀 임펠러 1품목A등급")
+        ''cboCRSNo.Text = "CRS-19-100"
+
+        ''cboOrder1.Items.Add("한수원")
+        ''cboOrder1.Items.Add("한전원자력연료")
+        ''cboOrder1.Items.Add("한국원자력연구원")
+        ''cboOrder1.Items.Add("한국원자력환경공단")
+        ''cboOrder1.Items.Add("기타")
+
+        'cboOrderCase1.Items.Add("전자")
+        'cboOrderCase1.Items.Add("수의")
+        'cboOrderCase1.Items.Add("수기")
+        'cboOrderCase1.Items.Add("변경계약")
+
+        'cboOrderCase2.Items.Add("1차 2019-12-30")
+        'cboOrderCase2.Items.Add("2차 2020-03-03")
+
+        ''cboConsider.Items.Add("예가산정용")
+        ''cboConsider.Items.Add("입찰용")
+        ''cboConsider.Items.Add("기타")
+
+        'cboAnnouncement.Items.Add("Y190349010")
+        'cboAnnouncement.Items.Add("Y190735010")
+
+        ''cboManager.Items.Add("오승현")
+        ''cboManager.Items.Add("방현주")
+        ''cboManager.Items.Add("전상준")
+        ''cboManager.Items.Add("최경충")
+
+        ''cboGrade1.Items.AddRange({"ASME", "KEPIC", "기기수리", "보조기기", "예비품", "자격취득용", "정비공사", "기타"})
+        ''cboGrade3.Items.AddRange({"T", "AQ", "R", "Q", "A", "S", "기타"})
+        ''Grid_Bu_Setup()
+        ''CRS_Combo_Setup()
+        ''Grid_CRS_Load()
+        ''DataGridView1.ClearSelection()
+        ''ListBox1.Items.Remove("")
+        ''ListBox2.Items.Remove("")
+
+
+
+
+    End Sub
+
+    Private Sub CRS_Combo_Setup()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        'CRS_NO, 공정명 콤보박스 부여
+        StrSQL = "SELECT CRS_Code,CRS_NAME FROM CONTRACT_CRS order by CRS_Code"
+        Re_Count = DB_Select(DBT)
+
+        Dim i As Integer
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                cboCRSNo.Items.Add(DBT.Rows(i)("CRS_Code").ToString)
+                cboCRSName.Items.Add(DBT.Rows(i)("CRS_Code").ToString)
+
+            Next
+            cboCRSNo.SelectedIndex = 0
+        End If
+
+        '검토목적 콤보박스 부여
+        DBT = Nothing
+        StrSQL = "SELECT * FROM BASE_CODE WHERE BASE_SEL = '검토목적' ORDER BY BASE_SUN"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                cboConsider.Items.Add(DBT.Rows(i)("BASE_NAME").ToString)
+            Next
+        End If
+
+        '발주처 콤보박스 부여
+        DBT = Nothing
+        StrSQL = "SELECT CM_NAME FROM CUSTOMER ORDER BY CM_CODE"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                cboOrder1.Items.Add(DBT.Rows(i)("CM_NAME").ToString)
+            Next
+        End If
+        '영업팀 담당자 콤보박스 부여
+        DBT = Nothing
+        StrSQL = "SELECT MAN_NAME FROM MAN WHERE MAN_BU LIKE '%영업%' "
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                cboManager.Items.Add(DBT.Rows(i)("MAN_NAME").ToString)
+            Next
+        End If
+        '등급1 콤보박스 부여
+        DBT = Nothing
+        StrSQL = "SELECT * FROM Base_Code WHERE Base_Sel = '자격'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                cboGrade1.Items.Add(DBT.Rows(i)("Base_Name").ToString)
+            Next
+        End If
+        '등급3 콤보박스 부여
+        DBT = Nothing
+        StrSQL = "SELECT Base_Name FROM Base_Code WHERE Base_Sel = '등급'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                cboGrade3.Items.Add(DBT.Rows(i)("Base_Name").ToString)
+            Next
+        End If
+    End Sub
+
+
+
+    Private Sub Grid_Bu_Setup()
+        Grid_Color(Grid_Bu1)
+        Grid_Color(Grid_Bu2)
+
+        Grid_Bu1.ColumnHeadersVisible = False
+        Grid_Bu2.ColumnHeadersVisible = False
+        Grid_Bu1.RowHeadersVisible = False
+        Grid_Bu2.RowHeadersVisible = False
+        Grid_Bu1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
+        Grid_Bu1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        Grid_Bu1.RowsDefaultCellStyle.BackColor = Color.White
+        Grid_Bu1.AlternatingRowsDefaultCellStyle.BackColor = Color.White
+        Grid_Bu1.AllowUserToResizeRows = False
+        Grid_Bu2.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
+        Grid_Bu2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+        Grid_Bu2.RowsDefaultCellStyle.BackColor = Color.White
+        Grid_Bu2.AlternatingRowsDefaultCellStyle.BackColor = Color.White
+        Grid_Bu2.AllowUserToResizeRows = False
+
+        Grid_Bu1.RowsDefaultCellStyle.ForeColor = Color.Black
+        Grid_Bu2.RowsDefaultCellStyle.ForeColor = Color.Black
+        Grid_Bu1.RowCount = 0
+        Grid_Bu2.RowCount = 5
+
+
+        Grid_Bu2.Rows(0).Cells(0).Value = "경영지원팀"
+        Grid_Bu2.Rows(1).Cells(0).Value = "영업팀"
+        Grid_Bu2.Rows(2).Cells(0).Value = "기술개발팀"
+        Grid_Bu2.Rows(3).Cells(0).Value = "품질보증팀"
+        Grid_Bu2.Rows(4).Cells(0).Value = "생산팀"
+
+        Grid_Bu1.ReadOnly = True
+        Grid_Bu2.ReadOnly = True
+        Grid_Bu2.ClearSelection()
+    End Sub
+    '발주처 변경시
+    Private Sub cboOrder1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboOrder1.SelectedIndexChanged
+        cboOrder2.Items.Clear() : cboOrder2.Text = ""
+        cboOrder3.Items.Clear() : cboOrder3.Text = ""
+
+        If cboOrder1.SelectedIndex = 0 Then
+            cboOrder2.Items.Add("1) 한빛원자력발전소")
+            cboOrder2.Items.Add("2) 고리원자력발전소")
+            cboOrder2.Items.Add("3) 월성원자력발전소")
+            cboOrder2.Items.Add("4) 한울원자력발전소")
+            cboOrder2.Items.Add("5) 새울원자력발전소")
+
+            cboOrder3.Items.Add("1 발전소")
+            cboOrder3.Items.Add("2 발전소")
+            cboOrder3.Items.Add("3 발전소")
+        End If
+    End Sub
+    'CRS_NO 콤보박스선택 변경
+    Private Sub cboCRSNo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboCRSNo.SelectedIndexChanged
+        cboCRSName.SelectedIndex = cboCRSNo.SelectedIndex
+        CheckBox1.Checked = False
+        CheckBox1.CheckState = False
+        Dim bu_set_after As List(Of String) = New List(Of String)(bu_set)
+
+        Dim i As Integer
+        Dim j As Integer
+        Dim DBT As DataTable
+
+        DBT = Nothing
+        StrSQL = "SELECT * FROM CONTRACT_CRS WHERE CRS_CODE = '" & cboCRSNo.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            Grid_Bu1.Rows.Clear()
+            Grid_Bu2.Rows.Clear()
+
+            cboCRSName.Text = DBT.Rows(0)("CRS_Name").ToString
+            cboOrder1.Text = DBT.Rows(0)("CRS_Order1").ToString
+            cboOrder2.Text = DBT.Rows(0)("CRS_Order2").ToString
+            cboOrder3.Text = DBT.Rows(0)("CRS_Order3").ToString
+            cboOrderCase1.Text = DBT.Rows(0)("CRS_Order_Case1").ToString
+            cboOrderCase2.Text = DBT.Rows(0)("CRS_Order_Case2").ToString
+            cboConsider.Text = DBT.Rows(0)("CRS_Consider").ToString
+            cboAnnouncement.Text = DBT.Rows(0)("CRS_Announcement").ToString
+            cboManager.Text = DBT.Rows(0)("CRS_Manager").ToString
+            DateTimePicker1.Text = DBT.Rows(0)("CRS_Delivery_date").ToString
+            DateTimePicker2.Text = DBT.Rows(0)("CRS_Passout_date").ToString
+            DateTimePicker3.Text = DBT.Rows(0)("CRS_Reply_date").ToString
+            DateTimePicker4.Text = DBT.Rows(0)("CRS_Bid_date").ToString
+            cboGrade1.Text = DBT.Rows(0)("CRS_Grade1").ToString
+            cboGrade2.Text = DBT.Rows(0)("CRS_Grade2").ToString
+            cboGrade3.Text = DBT.Rows(0)("CRS_Grade3").ToString
+            For i = 0 To 4
+                If DBT.Rows(0)("CRS_bu" & (i + 1)).ToString <> Nothing Or DBT.Rows(0)("CRS_bu" & (i + 1)).ToString <> "" Then
+                    Grid_Bu2.RowCount = Grid_Bu2.RowCount + 1
+                    Grid_Bu2.Rows(Grid_Bu2.RowCount - 1).Cells(0).Value = DBT.Rows(0)("CRS_bu" & (i + 1)).ToString
+                End If
+            Next
+
+            For i = 0 To Grid_Bu2.RowCount - 1
+                For j = 0 To bu_set.Length - 1
+                    If Grid_Bu2.Rows(i).Cells(0).Value = bu_set(j) Then
+                        bu_set_after.Remove(Grid_Bu2.Rows(i).Cells(0).Value)
+                    End If
+                Next
+            Next
+
+            For i = 0 To bu_set_after.Count - 1
+                Grid_Bu1.RowCount = Grid_Bu1.RowCount + 1
+                Grid_Bu1.Rows(Grid_Bu1.RowCount - 1).Cells(0).Value = bu_set_after(i)
+            Next
+            '부서는 생각해보자.
+            TextBox2.Text = DBT.Rows(0)("CRS_Context").ToString
+
+            Grid_Bu1.ClearSelection()
+            Grid_Bu2.ClearSelection()
+        End If
+
+    End Sub
+    Private Sub Text_Clear()
+        ComboBox1.Text = ""
+        cboCRSNo.Text = ""
+        cboCRSName.Text = ""
+        cboOrder1.Text = ""
+        cboOrder2.Text = ""
+        cboOrder3.Text = ""
+        cboOrderCase1.Text = ""
+        cboOrderCase2.Text = ""
+        cboConsider.Text = ""
+        cboAnnouncement.Text = ""
+        DateTimePicker1.Text = "2000-01-01 09:00"
+        DateTimePicker2.Text = "2000-01-01 09:00"
+        DateTimePicker3.Text = "2000-01-01 09:00"
+        DateTimePicker4.Text = "2000-01-01 09:00"
+        cboManager.Text = ""
+        cboGrade1.Text = ""
+        cboGrade2.Text = ""
+        cboGrade3.Text = ""
+        Grid_Bu_Setup()
+        ListBox1.Items.Clear()
+        ListBox2.Items.Clear()
+
+
+        TextBox2.Text = ""
+
+        Grid_Bu1.ClearSelection()
+        Grid_Bu2.ClearSelection()
+
+    End Sub
+
+    Private Sub cboCRSName_SelectedIndexChanged(sender As Object, e As EventArgs)
+        cboCRSNo.SelectedIndex = cboCRSName.SelectedIndex
+    End Sub
+
+    Private Sub cboGrade1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboGrade1.SelectedIndexChanged
+        cboGrade2.Items.Clear() : cboGrade2.Text = "" : cboGrade3.Text = ""
+
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+        StrSQL = "SELECT Base_Name FROM Base_Code WHERE Base_Sel = '분류번호' and Base_Sun = '" & cboGrade1.SelectedIndex + 1 & "'"
+        Re_Count = DB_Select(DBT)
+
+        For i = 0 To DBT.Rows.Count - 1
+            cboGrade2.Items.Add(DBT.Rows(i)("Base_Name").ToString)
+        Next
+
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles Com_Contract.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel_Main.Visible = False
+        Panel_List.Visible = True
+
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles Com_Excel.Click
+        Text_Clear()
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel_Main.Visible = False
+        Panel_List.Visible = False
+
+
+    End Sub
+
+    Private Sub Com_OK_Click_1(sender As Object, e As EventArgs) Handles Com_OK.Click
+        Dim i As Integer
+        Dim str(4) As String
+        Dim File As String = ""
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        For i = 0 To Grid_Bu2.Rows.Count - 1
+            If Grid_Bu2.Rows(i).Cells(0).Value <> Nothing Then
+                str(i) = Grid_Bu2.Rows(i).Cells(0).Value
+            Else
+                str(i) = ""
+            End If
+        Next
+
+
+        'MsgBox("1. 연관부서 담당자 배정 후 영업부 회신 확인 화면" & vbCrLf & vbCrLf & "2. 자재번호 입력 화면")
+        Dim DBT As DataTable
+
+
+        DBT = Nothing
+        StrSQL = "SELECT CRS_NAME,CRS_File FROM CONTRACT_CRS WHERE  CRS_Code = '" & cboCRSNo.Text & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            Dim findfile As New System.IO.FileInfo(Application.StartupPath + "\\계약검토파일\\" + cboCRSNo.Text)
+            '기존파일삭제
+            If Dir(Application.StartupPath + "\\계약검토파일\\" + cboCRSNo.Text, vbDirectory) <> "" And DBT.Rows(0)("CRS_File").ToString() = "" Then
+                System.IO.Directory.Delete(Application.StartupPath + "\\계약검토파일\\" + cboCRSNo.Text, True)
+                MsgBox("1")
+            End If
+        End If
+        If ListBox1.Items.Count > 0 Then
+            For i = 0 To ListBox2.Items.Count - 1
+                If i = 0 Then
+                    File += Application.StartupPath + "\\계약검토파일\\" + cboCRSNo.Text + "\\" + ListBox1.Items(i).ToString()
+                End If
+
+                If i > 0 Then
+                    File += "/" + Application.StartupPath + "\\계약검토파일\\" + cboCRSNo.Text + "\\" + ListBox1.Items(i).ToString()
+                End If
+            Next
+
+            '파일저장폴더생성
+            Dim path As String = Application.StartupPath + "\\계약검토파일\\" + cboCRSNo.Text
+
+            If Len(Dir(path, vbDirectory)) = 0 Then
+                MkDir(path)
+
+
+            End If
+
+            '복사파일생성
+            path = Application.StartupPath + "\\계약검토파일\\" + cboCRSNo.Text + "copy"
+            MkDir(path)
+            '파일내용 덮어쓰기
+            For i = 0 To ListBox1.Items.Count - 1
+                System.IO.File.Copy(ListBox2.Items(i).ToString(), path + "\\" & ListBox1.Items(i).ToString(), True)
+            Next
+            '기존파일삭제
+            System.IO.Directory.Delete(Application.StartupPath + "\\계약검토파일\\" + cboCRSNo.Text, True)
+            System.Threading.Thread.Sleep(1000)
+            'copy파일 이름변경
+            My.Computer.FileSystem.RenameDirectory(path, cboCRSNo.Text)
+        End If
+        If Re_Count > 0 Then
+            StrSQL = "UPDATE CONTRACT_CRS SET CRS_NAME ='" & cboCRSName.Text & "' , CRS_ORDER1 = '" & cboOrder1.Text & "', 
+             CRS_ORDER2 = '" & cboOrder2.Text & "', CRS_ORDER3 = '" & cboOrder3.Text & "', 
+             CRS_ORDER_CASE1 = '" & cboOrderCase1.Text & "', CRS_ORDER_CASE2 = '" & cboOrderCase2.Text & "', CRS_CONSIDER = '" & cboConsider.Text & "', 
+             CRS_Announcement ='" & cboAnnouncement.Text & "', 
+             CRS_MANAGER = '" & cboManager.Text & "', 
+             PO_MANAGER = '" & ComboBox1.Text & "', 
+             CRS_Delivery_date = '" & DateTimePicker1.Value.ToString("yyyy-MM-dd") & "', 
+             CRS_PASSOUT_DATE = '" & DateTimePicker2.Value.ToString("yyyy-MM-dd") & "', 
+             CRS_REPLY_DATE = '" & DateTimePicker3.Value.ToString("yyyy-MM-dd") & "', 
+             CRS_BID_DATE = '" & DateTimePicker4.Value.ToString("yyyy-MM-dd HH:mm") & "', 
+             CRS_GRADE1 = '" & cboGrade1.Text & "', CRS_GRADE2 = '" & cboGrade2.Text & "', CRS_GRADE3 = '" & cboGrade3.Text & "', 
+             CRS_BU1 = '" & str(0) & "',  
+             CRS_BU2 = '" & str(1) & "',  
+             CRS_BU3 = '" & str(2) & "', 
+             CRS_BU4 = '" & str(3) & "',  
+             CRS_BU5 = '" & str(4) & "',  
+             CRS_CONTEXT = '" & TextBox2.Text & "', 
+             CRS_FILE = '" & File & "' 
+            WHERE CRS_CODE = '" & cboCRSNo.Text & "' "
+
+            Re_Count2 = DB_Execute()
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+                'MsgBox(Main.Text_Man_Name.Text + Me.Name + sender.text)
+                'hsim 20200515 처리 이력
+                Dim histLogStr As New String("사용자 " & logInUserName & " 정보 수정 : " & cboCRSNo.Text)
+                Man_Log("Frm_Contract", "정보 수정", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+            Else
+                MsgBox("저장 실패")
+            End If
+        Else
+            StrSQL = "INSERT INTO CONTRACT_CRS(CRS_CODE,CRS_NAME,CRS_ORDER1,CRS_ORDER2,CRS_ORDER3, CRS_ORDER_CASE1,CRS_ORDER_CASE2,CRS_CONSIDER,CRS_Announcement,
+                CRS_MANAGER,PO_MANAGER,CRS_Delivery_date,CRS_PASSOUT_DATE,CRS_REPLY_DATE,CRS_BID_DATE,CRS_GRADE1,CRS_GRADE2,CRS_GRADE3,CRS_BU1,CRS_BU2,CRS_BU3,CRS_BU4,CRS_BU5,
+                CRS_CONTEXT,CRS_FILE) VALUES 
+            ('" & cboCRSNo.Text & "','" & cboCRSName.Text & "','" & cboOrder1.Text & "','" & cboOrder2.Text & "','" & cboOrder3.Text &
+            "','" & cboOrderCase1.Text & "','" & cboOrderCase2.Text &
+            "','" & cboConsider.Text & "','" & cboAnnouncement.Text & "','" & cboManager.Text & "','" & ComboBox1.Text & "','" & DateTimePicker1.Value.ToString("yyyy-MM-dd") &
+            "','" & DateTimePicker2.Value.ToString("yyyy-MM-dd") & "','" & DateTimePicker3.Value.ToString("yyyy-MM-dd") &
+            "','" & DateTimePicker4.Value.ToString("yyyy-MM-dd HH:mm") & "','" & cboGrade1.Text & "','" & cboGrade2.Text & "','" & cboGrade3.Text &
+            "','" & str(0) & "','" & str(1) & "','" & str(2) & "','" & str(3) & "','" & str(4) &
+            "','" & TextBox2.Text & "','" & File & "')"
+
+            Re_Count2 = DB_Execute()
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        End If
+
+        If Re_Count2 > 0 Then
+            DBT = Nothing
+            StrSQL = "SELECT CRS_Code FROM CONTRACT WHERE  CRS_Code = '" & cboCRSNo.Text & "'"
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count > 0 Then
+                StrSQL = "UPDATE CONTRACT SET CR_NAME ='" & cboCRSName.Text & "' , 
+             CR_Customer_Name = '" & cboOrder1.Text & " " & cboOrder2.Text & " " & cboOrder3.Text & "',
+             CR_Condition = '" & cboOrderCase1.Text & "',
+             CRS_Announcement ='" & cboAnnouncement.Text & "', CR_MANAGER_CR = '" & cboManager.Text & "', 
+             CRS_GRADE1 = '" & cboGrade1.Text & "', CRS_GRADE2 = '" & cboGrade2.Text & "', CRS_GRADE3 = '" & cboGrade3.Text & "', 
+             CR_BU1 = '" & str(0) & "',  
+             CR_BU2 = '" & str(1) & "',  
+             CR_BU3 = '" & str(2) & "', 
+             CR_BU4 = '" & str(3) & "',  
+             CR_BU5 = '" & str(4) & "'
+            WHERE CRS_CODE = '" & cboCRSNo.Text & "' "
+                DB_Execute()
+            Else
+
+                StrSQL = "Insert into Contract (CRS_Code, CR_Code, CR_Name, CR_Customer_Name,CRS_Grade1,CRS_Grade2,CRS_Grade3,CR_Condition,CRS_Announcement,
+                        CR_BU1, CR_BU2, CR_BU3, CR_BU4, CR_BU5)  
+            Values ('" & cboCRSNo.Text & "', '" & "" & "','" & cboCRSName.Text & "','" & cboOrder1.Text & " " & cboOrder2.Text & " " & cboOrder3.Text &
+            "','" & cboGrade1.Text & "','" & cboGrade2.Text & "','" & cboGrade3.Text & "','" & cboOrderCase1.Text & "','" & cboAnnouncement.Text &
+            "', '" & str(0) & "', '" & str(1) & "', '" & str(2) & "', '" & str(3) & "', '" & str(4) & "')"
+                DB_Execute()
+            End If
+
+
+
+        End If
+        '자격 저장
+        DBT = Nothing
+        StrSQL = "SELECT * FROM Base_Code WHERE Base_Sel = '자격' and Base_Name = '" & cboGrade1.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+
+        Else
+            Dim sun As Integer
+            sun = Convert.ToInt32(DBT.Rows(0)("Base_Sun")) + 1
+            StrSQL = "Insert into Base_Code (Base_Sel, Base_Sun, Base_Name, Base_Bigo)  
+            Values ('" & "자격" & "', '" & sun.ToString & "','" & cboGrade1.Text & "','" & "" & "')"
+            DB_Execute()
+        End If
+
+        '분류번호 저장
+        DBT = Nothing
+        StrSQL = "SELECT * FROM Base_Code WHERE Base_Sel = '분류번호' and Base_Name = '" & cboGrade2.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+
+        Else
+            DBT = Nothing
+            StrSQL = "SELECT * FROM Base_Code WHERE Base_Sel = '자격' and Base_Name = '" & cboGrade1.Text & "'"
+            Re_Count = DB_Select(DBT)
+            Dim sun As Integer
+            sun = Convert.ToInt32(DBT.Rows(0)("Base_Sun"))
+            StrSQL = "Insert into Base_Code (Base_Sel, Base_Sun, Base_Name, Base_Bigo)  
+            Values ('" & "자격" & "', '" & sun.ToString & "','" & cboGrade1.Text & "','" & "" & "')"
+            DB_Execute()
+        End If
+
+        '등급 저장
+        DBT = Nothing
+        StrSQL = "SELECT * FROM Base_Code WHERE Base_Sel = '등급' and Base_Name = '" & cboGrade3.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+
+        Else
+            StrSQL = "Insert into Base_Code (Base_Sel, Base_Name, Base_Bigo)  
+            Values ('" & "등급" & "', '" & cboGrade3.Text & "', '" & "" & "')"
+            DB_Execute()
+        End If
+  
+        Grid_CRS_Load()
+        DataGridView1.ClearSelection()
+        Label_Color(Com_Contract, Color_Label, Di_Panel2)
+        Panel_Main.Visible = False
+        Panel_List.Visible = True
+
+
+
+    End Sub
+
+
+    Private Sub Com_Jaje_Click(sender As Object, e As EventArgs)
+        Dim DBT As DataTable
+        DBT = Nothing
+        StrSQL = "SELECT CRS_CODE FROM Contract_CRS WHERE CRS_Code = '" & cboCRSNo.Text & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count = 0 Then
+            MsgBox("해당 CRS_NO로 계약검토가 등록되지 않았습니다.")
+            Exit Sub
+        End If
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel_Main.Visible = False
+
+    End Sub
+
+    '계약검토목록 
+    Private Sub Grid_CRS_Load()
+
+        Dim i As Integer
+
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT * FROM Contract_CRS order by CRS_Code"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.RowCount = 0
+
+        If Re_Count > 0 Then
+            DataGridView1.RowCount = Re_Count
+            For i = 0 To DataGridView1.RowCount - 1
+
+                DataGridView1.Rows(i).Cells("CRS_Code").Value = DBT.Rows(i)("CRS_Code").ToString 'CRS NO
+                DataGridView1.Rows(i).Cells("CRS_Name").Value = DBT.Rows(i)("CRS_Name").ToString '공정명
+                DataGridView1.Rows(i).Cells("CRS_Order").Value = DBT.Rows(i)("CRS_Order1").ToString '발주처
+                DataGridView1.Rows(i).Cells("CRS_Order_Case").Value = DBT.Rows(i)("CRS_Order_Case1").ToString '계약형태
+                DataGridView1.Rows(i).Cells("CRS_Consider").Value = DBT.Rows(i)("CRS_Consider").ToString '검토목적
+                DataGridView1.Rows(i).Cells("CRS_Consider").Value = DBT.Rows(i)("CRS_Consider").ToString '검토목적
+                DataGridView1.Rows(i).Cells("CRS_Announcement").Value = DBT.Rows(i)("CRS_Announcement").ToString '공고번호
+                DataGridView1.Rows(i).Cells("CRS_Manager").Value = DBT.Rows(i)("CRS_Manager").ToString '영업팀담당자
+                DataGridView1.Rows(i).Cells("CRS_Delivery_date").Value = DBT.Rows(i)("CRS_Delivery_date").ToString '계약납기일
+                DataGridView1.Rows(i).Cells("CRS_Passout_date").Value = DBT.Rows(i)("CRS_Passout_date").ToString '배포일
+                DataGridView1.Rows(i).Cells("CRS_Reply_date").Value = DBT.Rows(i)("CRS_Reply_date").ToString '회신마감일
+                DataGridView1.Rows(i).Cells("CRS_Bid_date").Value = DBT.Rows(i)("CRS_Bid_date").ToString '입찰일시
+                DataGridView1.Rows(i).Cells("CRS_Grade").Value = DBT.Rows(i)("CRS_Grade1").ToString + " / " + DBT.Rows(i)("CRS_Grade2").ToString + " / " + DBT.Rows(i)("CRS_Grade3").ToString '등급
+
+            Next
+        End If
+
+    End Sub
+
+    Private Sub Com_Can_Click(sender As Object, e As EventArgs) Handles Com_Can.Click
+        Label_Color(Com_Contract, Color_Label, Di_Panel2)
+        Panel_Main.Visible = False
+        Panel_List.Visible = True
+
+    End Sub
+    '▶ 선택
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        If Grid_Bu1.Rows.Count > 0 Then
+            Grid_Bu2.RowCount = Grid_Bu2.RowCount + 1
+            Grid_Bu2.Rows(Grid_Bu2.Rows.Count - 1).Cells(0).Value = Grid_Bu1.Rows(Grid_Bu1.CurrentRow.Index).Cells(0).Value
+            Grid_Bu1.Rows.RemoveAt(Grid_Bu1.CurrentRow.Index)
+            Grid_Bu2.ClearSelection()
+        End If
+    End Sub
+    '◀ 선택
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        If Grid_Bu2.Rows.Count > 0 Then
+            Grid_Bu1.RowCount = Grid_Bu1.RowCount + 1
+            Grid_Bu1.Rows(Grid_Bu1.Rows.Count - 1).Cells(0).Value = Grid_Bu2.Rows(Grid_Bu2.CurrentRow.Index).Cells(0).Value
+            Grid_Bu2.Rows.RemoveAt(Grid_Bu2.CurrentRow.Index)
+            Grid_Bu1.ClearSelection()
+        End If
+    End Sub
+
+    Private Sub Grid_Bu1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Bu1.CellClick
+        Grid_Bu2.ClearSelection()
+    End Sub
+
+    Private Sub Grid_Bu2_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Bu2.CellClick
+        Grid_Bu1.ClearSelection()
+    End Sub
+    'CRS_NO 내용변경시... 추후 수정
+    Private Sub cboCRSNo_TextChanged(sender As Object, e As EventArgs) Handles cboCRSNo.TextChanged
+        'CheckBox1.Checked = False
+        'CheckBox1.CheckState = False
+    End Sub
+    '자동등록 체크변경시
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+        If CheckBox1.Checked = True Then
+            Text_Clear()
+
+            Dim DBT As DataTable
+            DBT = Nothing
+
+            StrSQL = "SELECT TOP(1) CRS_Code from Contract_CRS ORDER BY CRS_Code desc "
+
+            Re_Count = DB_Select(DBT)
+            If Re_Count > 0 Then
+                'CRS-yy - XXX 의 XXX
+                Dim num As Integer
+                num = 0
+                num = DBT.Rows(0)("CRS_Code").ToString().Substring(7, 3)
+                'CRS-yy - XXX 의 yy
+                Dim yy As Integer
+                yy = 0
+                yy = DBT.Rows(0)("CRS_Code").ToString().Substring(4, 2)
+                If DateTime.Now.ToString("yy") = yy Then
+                    cboCRSNo.Text = "CRS-" & DateTime.Now.ToString("yy") & "-" & (num + 1).ToString("D3")
+                    cboCRSName.Text = "CRS-" & DateTime.Now.ToString("yy") & "-" & (num + 1).ToString("D3")
+                End If
+            Else
+                cboCRSNo.Text = "CRS-" & DateTime.Now.ToString("yy") & "-" & "001"
+                cboCRSName.Text = "CRS-" & DateTime.Now.ToString("yy") & "-" & "001"
+
+            End If
+        Else
+            If cboCRSNo.Items.Count > 0 Then
+                cboCRSNo.SelectedIndex = 0
+            End If
+        End If
+    End Sub
+    '파일 드래그 이름남기기.
+    Private Sub TextBox3_DragEnter(sender As Object, e As DragEventArgs)
+        If e.Data.GetDataPresent(DataFormats.FileDrop) Then
+            e.Effect = DragDropEffects.Copy
+        End If
+    End Sub
+
+    Private Sub TextBox3_DragDrop(sender As Object, e As DragEventArgs)
+        Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
+        For Each path In files
+
+        Next
+    End Sub
+    '저장/삭제 
+
+
+
+
+    'CRS NO검색
+    Private Sub Save_Com_Click(sender As Object, e As EventArgs) Handles Save_Com.Click
+        'Dim i As Integer
+
+
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT * FROM Contract_CRS Where CRS_Code Like '%" & TextBox1.Text & "%'"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView1.RowCount = 0
+
+        'If Re_Count > 0 Then
+        '    DataGridView1.RowCount = Re_Count
+        '    For i = 0 To DataGridView1.RowCount - 1
+
+        '        DataGridView1.Rows(i).Cells("CRS_Code").Value = DBT.Rows(i)("CRS_Code").ToString 'CRS NO
+        '        DataGridView1.Rows(i).Cells("CRS_Name").Value = DBT.Rows(i)("CRS_Name").ToString '공정명
+        '        DataGridView1.Rows(i).Cells("CRS_Order").Value = DBT.Rows(i)("CRS_Order1").ToString '발주처
+        '        DataGridView1.Rows(i).Cells("CRS_Order_Case").Value = DBT.Rows(i)("CRS_Order_Case1").ToString '계약형태
+        '        DataGridView1.Rows(i).Cells("CRS_Consider").Value = DBT.Rows(i)("CRS_Consider").ToString '검토목적
+        '        DataGridView1.Rows(i).Cells("CRS_Consider").Value = DBT.Rows(i)("CRS_Consider").ToString '검토목적
+        '        DataGridView1.Rows(i).Cells("CRS_Announcement").Value = DBT.Rows(i)("CRS_Announcement").ToString '공고번호
+        '        DataGridView1.Rows(i).Cells("CRS_Manager").Value = DBT.Rows(i)("CRS_Manager").ToString '영업팀담당자
+        '        DataGridView1.Rows(i).Cells("CRS_Delivery_date").Value = DBT.Rows(i)("CRS_Delivery_date").ToString '계약납기일
+        '        DataGridView1.Rows(i).Cells("CRS_Passout_date").Value = DBT.Rows(i)("CRS_Passout_date").ToString '배포일
+        '        DataGridView1.Rows(i).Cells("CRS_Reply_date").Value = DBT.Rows(i)("CRS_Reply_date").ToString '회신마감일
+        '        DataGridView1.Rows(i).Cells("CRS_Bid_date").Value = DBT.Rows(i)("CRS_Bid_date").ToString '입찰일시
+        '        DataGridView1.Rows(i).Cells("CRS_Grade").Value = DBT.Rows(i)("CRS_Grade1").ToString + " / " + DBT.Rows(i)("CRS_Grade2").ToString + " / " + DBT.Rows(i)("CRS_Grade3").ToString '등급
+
+        '    Next
+        'End If
+        'DataGridView1.ClearSelection()
+    End Sub
+    '공정명 검색
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
+        'Dim i As Integer
+
+
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT * FROM Contract_CRS Where CRS_Name Like '%" & TextBox11.Text & "%'"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView1.RowCount = 0
+
+        'If Re_Count > 0 Then
+        '    DataGridView1.RowCount = Re_Count
+        '    For i = 0 To DataGridView1.RowCount - 1
+
+        '        DataGridView1.Rows(i).Cells("CRS_Code").Value = DBT.Rows(i)("CRS_Code").ToString 'CRS NO
+        '        DataGridView1.Rows(i).Cells("CRS_Name").Value = DBT.Rows(i)("CRS_Name").ToString '공정명
+        '        DataGridView1.Rows(i).Cells("CRS_Order").Value = DBT.Rows(i)("CRS_Order1").ToString '발주처
+        '        DataGridView1.Rows(i).Cells("CRS_Order_Case").Value = DBT.Rows(i)("CRS_Order_Case1").ToString '계약형태
+        '        DataGridView1.Rows(i).Cells("CRS_Consider").Value = DBT.Rows(i)("CRS_Consider").ToString '검토목적
+        '        DataGridView1.Rows(i).Cells("CRS_Consider").Value = DBT.Rows(i)("CRS_Consider").ToString '검토목적
+        '        DataGridView1.Rows(i).Cells("CRS_Announcement").Value = DBT.Rows(i)("CRS_Announcement").ToString '공고번호
+        '        DataGridView1.Rows(i).Cells("CRS_Manager").Value = DBT.Rows(i)("CRS_Manager").ToString '영업팀담당자
+        '        DataGridView1.Rows(i).Cells("CRS_Delivery_date").Value = DBT.Rows(i)("CRS_Delivery_date").ToString '계약납기일
+        '        DataGridView1.Rows(i).Cells("CRS_Passout_date").Value = DBT.Rows(i)("CRS_Passout_date").ToString '배포일
+        '        DataGridView1.Rows(i).Cells("CRS_Reply_date").Value = DBT.Rows(i)("CRS_Reply_date").ToString '회신마감일
+        '        DataGridView1.Rows(i).Cells("CRS_Bid_date").Value = DBT.Rows(i)("CRS_Bid_date").ToString '입찰일시
+        '        DataGridView1.Rows(i).Cells("CRS_Grade").Value = DBT.Rows(i)("CRS_Grade1").ToString + " / " + DBT.Rows(i)("CRS_Grade2").ToString + " / " + DBT.Rows(i)("CRS_Grade3").ToString '등급
+
+        '    Next
+        'End If
+    End Sub
+
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+        'Text_Clear()
+        'Label_Color(Com_Excel, Color_Label, Di_Panel2)
+        'Panel_Main.Visible = True
+        'Panel_List.Visible = False
+    End Sub
+
+    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
+        'Text_Clear()
+        'Label_Color(Com_Excel, Color_Label, Di_Panel2)
+        'Panel_Main.Visible = True
+        'Panel_List.Visible = False
+
+        'Dim DBT As DataTable
+        'Dim i As Integer
+        'DBT = Nothing
+
+        'StrSQL = "SELECT * FROM Contract_CRS Where CRS_Code = '" & DataGridView1.Rows(e.RowIndex).Cells("CRS_Code").Value.ToString() & "'"
+        'Re_Count = DB_Select(DBT)
+
+        'cboCRSNo.Text = DBT.Rows(0)("CRS_Code").ToString
+        'cboCRSName.Text = DBT.Rows(0)("CRS_Name").ToString
+        'cboOrder1.Text = DBT.Rows(0)("CRS_Order1").ToString
+        'cboOrder2.Text = DBT.Rows(0)("CRS_Order2").ToString
+        'cboOrder3.Text = DBT.Rows(0)("CRS_Order3").ToString
+        'cboOrderCase1.Text = DBT.Rows(0)("CRS_Order_Case1").ToString
+        'cboOrderCase2.Text = DBT.Rows(0)("CRS_Order_Case2").ToString
+        'cboConsider.Text = DBT.Rows(0)("CRS_Consider").ToString
+        'cboAnnouncement.Text = DBT.Rows(0)("CRS_Announcement").ToString
+        'cboManager.Text = DBT.Rows(0)("CRS_Manager").ToString
+        'ComboBox1.Text = DBT.Rows(0)("PO_Manager").ToString
+        'DateTimePicker1.Value = DBT.Rows(0)("CRS_Delivery_date").ToString
+        'DateTimePicker2.Value = DBT.Rows(0)("CRS_Passout_date").ToString
+        'DateTimePicker3.Value = DBT.Rows(0)("CRS_Reply_date").ToString
+        'DateTimePicker4.Value = DBT.Rows(0)("CRS_Bid_date").ToString
+        'cboGrade1.Text = DBT.Rows(0)("CRS_Grade1").ToString
+        'cboGrade2.Text = DBT.Rows(0)("CRS_Grade2").ToString
+        'cboGrade3.Text = DBT.Rows(0)("CRS_Grade3").ToString
+        'If DBT.Rows(0)("CRS_File").ToString <> "" Then
+        '    For i = 0 To Split(DBT.Rows(0)("CRS_File").ToString, "/").Count - 1
+        '        ListBox1.Items.Add(System.IO.Path.GetFileName(Split(DBT.Rows(0)("CRS_File").ToString, "/")(i)))
+        '        ListBox2.Items.Add(Split(DBT.Rows(0)("CRS_File").ToString, "/")(i))
+        '    Next
+        'End If
+    End Sub
+
+    Private Sub ComboBox1_ControlRemoved(sender As Object, e As ControlEventArgs)
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        file_path = ""
+        file_name = ""
+        OpenFileDialog1.InitialDirectory = "C:\\"
+
+        If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
+            file_name = OpenFileDialog1.FileName
+            '파일이름
+            ListBox1.Items.Add(System.IO.Path.GetFileName(file_name))
+            '파일경로+이름
+            ListBox2.Items.Add(file_name)
+        End If
+
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        If ListBox1.SelectedIndex >= 0 Then
+            ListBox2.Items.RemoveAt(ListBox1.SelectedIndex)
+            ListBox1.Items.RemoveAt(ListBox1.SelectedIndex)
+
+        End If
+    End Sub
+
+    Private Sub ListBox1_DoubleClick(sender As Object, e As EventArgs) Handles ListBox1.DoubleClick
+
+    End Sub
+
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
+        file_path = ""
+        file_name = ""
+        SaveFileDialog1.InitialDirectory = "C:\\"
+        SaveFileDialog1.FileName = ListBox1.Items(ListBox1.SelectedIndex).ToString
+        file_name = ListBox1.Items(ListBox1.SelectedIndex).ToString
+        If SaveFileDialog1.ShowDialog() = DialogResult.OK Then
+            System.IO.File.Copy(ListBox2.Items(ListBox1.SelectedIndex).ToString(), SaveFileDialog1.FileName.Replace(file_name, "") + "" & ListBox1.Items(ListBox1.SelectedIndex).ToString(), True)
+
+        End If
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+        If cboCRSNo.Text <> "" Then
+            StrSQL = "DELETE Contract WHERE CRS_Code = '" & cboCRSNo.Text & "' and CRS_Announcement = '" & "" & "'"
+            DB_Execute()
+        End If
+
+        Text_Clear()
+        Label_Color(Com_Contract, Color_Label, Di_Panel2)
+        Panel_Main.Visible = False
+        Panel_List.Visible = True
+    End Sub
+End Class

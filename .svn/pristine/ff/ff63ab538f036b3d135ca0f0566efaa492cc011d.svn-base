@@ -1,0 +1,96 @@
+﻿Public Class Frm_Login
+    Private Sub Frm_Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Dim i As Integer
+
+        FileOpen(1, Application.StartupPath + "\Setup.txt", OpenMode.Input)
+        For i = 1 To 9
+            Setup_Data(i) = LineInput(1)
+        Next i
+        FileClose(1)
+
+        If DB_Open(Setup_Data(2)) Then
+        Else
+            End
+        End If
+
+
+
+        '프로그램 Check
+        Text_Man_Code.Text = "100001"
+        Text_Man_Pass.Text = "11111"
+    End Sub
+
+    Private Sub Com_Ok_Click(sender As Object, e As EventArgs) Handles Com_Ok.Click
+        Dim DBT As DataTable = Nothing
+        Try
+            '요기부터
+            'If Text_Man_Code.Text = "" Then
+            '    Frm_Main.Show()
+            '    'Frm_Main.Man_Level_Text.Text = "00"
+            '    'Frm_Main.Tx_ID.Text = "100001"
+            '    Me.Visible = False
+            '    Text_Man_Code.Text = ""
+            '    Text_Man_Pass.Text = ""
+            '    Me.Hide()
+            '    Exit Sub
+            'End If
+            '요기까지
+
+            '사원코드 검색
+            StrSQL = "Select Man_Code,Man_Name,Man_Pass From Man with(NOLOCK)  Where Man_Code = '" & Text_Man_Code.Text & "'"
+            Re_Count = DB_Select(DBT)
+            If Re_Count <> 0 Then
+                If Text_Man_Pass.Text = DBT.Rows(0)("Man_Pass").ToString Then
+                    Frm_Main.Show()
+                    Frm_Main.Text_Man_Code.Text = DBT.Rows(0)("Man_Code").ToString
+                    Frm_Main.Text_Man_Name.Text = DBT.Rows(0)("Man_Name").ToString
+                    Me.Visible = False
+                    Text_Man_Code.Text = ""
+                    Text_Man_Pass.Text = ""
+                    Me.Hide()
+                    Exit Sub
+                Else
+                    MsgBox("비밀 번호 오류 입니다.")
+                End If
+            Else
+                MsgBox("등록된 사원 코드가 없습니다.")
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "")
+        End Try
+
+    End Sub
+
+    Private Sub Com_Can_Click(sender As Object, e As EventArgs) Handles Com_Can.Click
+        End
+    End Sub
+
+    Private Sub Frm_Login_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+        If Setup_Data(1) = "Main" Then
+
+        End If
+        If Setup_Data(1) = "Monitoring" Then
+            Frm_Monitoring.Show()
+            Me.Visible = False
+            Text_Man_Code.Text = ""
+            Text_Man_Pass.Text = ""
+            Me.Hide()
+            Exit Sub
+        End If
+
+
+
+
+        If Mid(Setup_Data(1), 1, 6) = "Device" Then
+
+            Frm_PC_Stock_Device.Show()
+            Me.Visible = False
+            Text_Man_Code.Text = ""
+            Text_Man_Pass.Text = ""
+            Me.Hide()
+            Exit Sub
+
+        End If
+    End Sub
+End Class

@@ -1,0 +1,64 @@
+﻿Public Class Frm_Menu_Log
+    Private Sub Frm_Menu_Log_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Panel1.Top = 40
+        Panel1.Left = 10
+
+        Menu_Log_Lode()
+
+    End Sub
+
+    Private Sub Menu_Log_Lode()
+        Me.Button14.PerformClick()
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+
+        Dim i As Integer
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+        Dim itmestr As String = ""
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = "SELECT *
+                  FROM Man_Log
+                  WHERE 1=1
+                  and Form_Name Like '%" & TextBox15.Text & "%'
+                  and Act_Man Like '%" & TextBox16.Text & "%'
+                  order by Act_Date desc"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+        DataGridView1.ClearSelection()
+
+        For i = 0 To DataGridView1.RowCount - 1
+            StrSQL = "SELECT *
+                  FROM Man_Log,Menu
+                  WHERE 1=1
+                  and Form_Name = Form
+                  and Form_Name = '" & DataGridView1.Rows(i).Cells("Form_Name").Value.ToString & "'
+                  order by Act_Date desc"
+            Re_Count = DB_Select(DBT)
+            If Re_Count > 0 Then
+                DataGridView1.Rows(i).Cells("Form_Name").Value = DBT.Rows(0)("Sub")
+            End If
+
+            StrSQL = "SELECT *
+                  FROM Man_Log,Man
+                  WHERE 1=1
+                  and Act_Man = Man_Code
+                  and Act_Man = '" & DataGridView1.Rows(i).Cells("Act_Man").Value.ToString & "'
+                  order by Act_Date desc"
+            Re_Count = DB_Select(DBT)
+            If Re_Count > 0 Then
+                DataGridView1.Rows(i).Cells("Act_Man").Value = DBT.Rows(0)("Man_Name")
+            End If
+
+        Next
+
+
+    End Sub
+End Class

@@ -1,0 +1,327 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_Man_Log
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.DataGridView5 = New System.Windows.Forms.DataGridView()
+        Me.TextBox15 = New System.Windows.Forms.TextBox()
+        Me.TextBox16 = New System.Windows.Forms.TextBox()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.TextBox17 = New System.Windows.Forms.TextBox()
+        Me.Panel24 = New System.Windows.Forms.Panel()
+        Me.Man_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man_Sangho = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man_Bu = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man_Gik = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man_Sex = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man_Birth = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man_Phon = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man_Car = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man_Add = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man_Pass = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man_Level = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man_Bigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LOG_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LOG_Time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LOG_IP = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Panel1.SuspendLayout()
+        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.Label17)
+        Me.Panel1.Controls.Add(Me.Label16)
+        Me.Panel1.Controls.Add(Me.Label15)
+        Me.Panel1.Controls.Add(Me.DataGridView5)
+        Me.Panel1.Controls.Add(Me.TextBox15)
+        Me.Panel1.Controls.Add(Me.TextBox16)
+        Me.Panel1.Controls.Add(Me.Button14)
+        Me.Panel1.Controls.Add(Me.TextBox17)
+        Me.Panel1.Controls.Add(Me.Panel24)
+        Me.Panel1.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel1.Location = New System.Drawing.Point(10, 40)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1660, 867)
+        Me.Panel1.TabIndex = 163
+        '
+        'Label17
+        '
+        Me.Label17.Location = New System.Drawing.Point(1227, 46)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(76, 25)
+        Me.Label17.TabIndex = 99996
+        Me.Label17.Text = "부    서"
+        Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label16
+        '
+        Me.Label16.Location = New System.Drawing.Point(987, 46)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(76, 25)
+        Me.Label16.TabIndex = 99995
+        Me.Label16.Text = "성    명"
+        Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label15
+        '
+        Me.Label15.Location = New System.Drawing.Point(746, 46)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(76, 25)
+        Me.Label15.TabIndex = 99994
+        Me.Label15.Text = "사용자ID"
+        Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'DataGridView5
+        '
+        Me.DataGridView5.AllowUserToAddRows = False
+        Me.DataGridView5.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView5.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Man_Code, Me.Man_Name, Me.Man_Sangho, Me.Man_Bu, Me.Man_Gik, Me.Man_Sex, Me.Man_Birth, Me.Man_Phon, Me.Man_Car, Me.Man_Add, Me.Man_Pass, Me.Man_Level, Me.Man_Bigo, Me.LOG_Date, Me.LOG_Time, Me.LOG_IP})
+        Me.DataGridView5.Location = New System.Drawing.Point(16, 103)
+        Me.DataGridView5.Name = "DataGridView5"
+        Me.DataGridView5.ReadOnly = True
+        Me.DataGridView5.RowHeadersVisible = False
+        Me.DataGridView5.RowTemplate.Height = 23
+        Me.DataGridView5.Size = New System.Drawing.Size(1600, 732)
+        Me.DataGridView5.TabIndex = 299
+        '
+        'TextBox15
+        '
+        Me.TextBox15.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox15.Location = New System.Drawing.Point(830, 46)
+        Me.TextBox15.Name = "TextBox15"
+        Me.TextBox15.Size = New System.Drawing.Size(150, 25)
+        Me.TextBox15.TabIndex = 297
+        '
+        'TextBox16
+        '
+        Me.TextBox16.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox16.Location = New System.Drawing.Point(1068, 46)
+        Me.TextBox16.Name = "TextBox16"
+        Me.TextBox16.Size = New System.Drawing.Size(150, 25)
+        Me.TextBox16.TabIndex = 295
+        '
+        'Button14
+        '
+        Me.Button14.BackColor = System.Drawing.Color.White
+        Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button14.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button14.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button14.Location = New System.Drawing.Point(1465, 45)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(150, 27)
+        Me.Button14.TabIndex = 294
+        Me.Button14.Text = "검      색"
+        Me.Button14.UseVisualStyleBackColor = False
+        '
+        'TextBox17
+        '
+        Me.TextBox17.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox17.Location = New System.Drawing.Point(1309, 46)
+        Me.TextBox17.Name = "TextBox17"
+        Me.TextBox17.Size = New System.Drawing.Size(150, 25)
+        Me.TextBox17.TabIndex = 293
+        '
+        'Panel24
+        '
+        Me.Panel24.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel24.Location = New System.Drawing.Point(16, 85)
+        Me.Panel24.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel24.Name = "Panel24"
+        Me.Panel24.Size = New System.Drawing.Size(1600, 1)
+        Me.Panel24.TabIndex = 69
+        '
+        'Man_Code
+        '
+        Me.Man_Code.DataPropertyName = "Man_Code"
+        Me.Man_Code.HeaderText = "코드"
+        Me.Man_Code.Name = "Man_Code"
+        Me.Man_Code.ReadOnly = True
+        Me.Man_Code.Width = 200
+        '
+        'Man_Name
+        '
+        Me.Man_Name.DataPropertyName = "Man_Name"
+        Me.Man_Name.HeaderText = "성명"
+        Me.Man_Name.Name = "Man_Name"
+        Me.Man_Name.ReadOnly = True
+        Me.Man_Name.Width = 200
+        '
+        'Man_Sangho
+        '
+        Me.Man_Sangho.DataPropertyName = "Man_Sangho"
+        Me.Man_Sangho.HeaderText = "업체명"
+        Me.Man_Sangho.Name = "Man_Sangho"
+        Me.Man_Sangho.ReadOnly = True
+        Me.Man_Sangho.Visible = False
+        '
+        'Man_Bu
+        '
+        Me.Man_Bu.DataPropertyName = "Man_Bu"
+        Me.Man_Bu.HeaderText = "부서"
+        Me.Man_Bu.Name = "Man_Bu"
+        Me.Man_Bu.ReadOnly = True
+        Me.Man_Bu.Width = 200
+        '
+        'Man_Gik
+        '
+        Me.Man_Gik.DataPropertyName = "Man_Gik"
+        Me.Man_Gik.HeaderText = "직급"
+        Me.Man_Gik.Name = "Man_Gik"
+        Me.Man_Gik.ReadOnly = True
+        Me.Man_Gik.Visible = False
+        '
+        'Man_Sex
+        '
+        Me.Man_Sex.DataPropertyName = "Man_Sex"
+        Me.Man_Sex.HeaderText = "성별"
+        Me.Man_Sex.Name = "Man_Sex"
+        Me.Man_Sex.ReadOnly = True
+        Me.Man_Sex.Visible = False
+        '
+        'Man_Birth
+        '
+        Me.Man_Birth.DataPropertyName = "Man_Birth"
+        Me.Man_Birth.HeaderText = "생년월일"
+        Me.Man_Birth.Name = "Man_Birth"
+        Me.Man_Birth.ReadOnly = True
+        Me.Man_Birth.Visible = False
+        '
+        'Man_Phon
+        '
+        Me.Man_Phon.DataPropertyName = "Man_Phon"
+        Me.Man_Phon.HeaderText = "전화번호"
+        Me.Man_Phon.Name = "Man_Phon"
+        Me.Man_Phon.ReadOnly = True
+        Me.Man_Phon.Visible = False
+        '
+        'Man_Car
+        '
+        Me.Man_Car.DataPropertyName = "Man_Car"
+        Me.Man_Car.HeaderText = "차량번호"
+        Me.Man_Car.Name = "Man_Car"
+        Me.Man_Car.ReadOnly = True
+        Me.Man_Car.Visible = False
+        '
+        'Man_Add
+        '
+        Me.Man_Add.DataPropertyName = "Man_Add"
+        Me.Man_Add.HeaderText = "주소"
+        Me.Man_Add.Name = "Man_Add"
+        Me.Man_Add.ReadOnly = True
+        Me.Man_Add.Visible = False
+        '
+        'Man_Pass
+        '
+        Me.Man_Pass.DataPropertyName = "Man_Pass"
+        Me.Man_Pass.HeaderText = "암호"
+        Me.Man_Pass.Name = "Man_Pass"
+        Me.Man_Pass.ReadOnly = True
+        Me.Man_Pass.Visible = False
+        '
+        'Man_Level
+        '
+        Me.Man_Level.DataPropertyName = "Man_Level"
+        Me.Man_Level.HeaderText = "사용Level"
+        Me.Man_Level.Name = "Man_Level"
+        Me.Man_Level.ReadOnly = True
+        Me.Man_Level.Width = 200
+        '
+        'Man_Bigo
+        '
+        Me.Man_Bigo.DataPropertyName = "Man_Bigo"
+        Me.Man_Bigo.HeaderText = "비고"
+        Me.Man_Bigo.Name = "Man_Bigo"
+        Me.Man_Bigo.ReadOnly = True
+        Me.Man_Bigo.Width = 200
+        '
+        'LOG_Date
+        '
+        Me.LOG_Date.DataPropertyName = "LOG_Date"
+        Me.LOG_Date.HeaderText = "Login일자"
+        Me.LOG_Date.Name = "LOG_Date"
+        Me.LOG_Date.ReadOnly = True
+        Me.LOG_Date.Width = 200
+        '
+        'LOG_Time
+        '
+        Me.LOG_Time.DataPropertyName = "LOG_Time"
+        Me.LOG_Time.HeaderText = "Login시간"
+        Me.LOG_Time.Name = "LOG_Time"
+        Me.LOG_Time.ReadOnly = True
+        Me.LOG_Time.Width = 200
+        '
+        'LOG_IP
+        '
+        Me.LOG_IP.DataPropertyName = "LOG_IP"
+        Me.LOG_IP.HeaderText = "Login ip"
+        Me.LOG_IP.Name = "LOG_IP"
+        Me.LOG_IP.ReadOnly = True
+        Me.LOG_IP.Width = 200
+        '
+        'Frm_Man_Log
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Panel1)
+        Me.Name = "Frm_Man_Log"
+        Me.Size = New System.Drawing.Size(1648, 675)
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents DataGridView5 As DataGridView
+    Friend WithEvents TextBox15 As TextBox
+    Friend WithEvents TextBox16 As TextBox
+    Friend WithEvents Button14 As Button
+    Friend WithEvents TextBox17 As TextBox
+    Friend WithEvents Panel24 As Panel
+    Friend WithEvents Label17 As Label
+    Friend WithEvents Label16 As Label
+    Friend WithEvents Label15 As Label
+    Friend WithEvents Man_Code As DataGridViewTextBoxColumn
+    Friend WithEvents Man_Name As DataGridViewTextBoxColumn
+    Friend WithEvents Man_Sangho As DataGridViewTextBoxColumn
+    Friend WithEvents Man_Bu As DataGridViewTextBoxColumn
+    Friend WithEvents Man_Gik As DataGridViewTextBoxColumn
+    Friend WithEvents Man_Sex As DataGridViewTextBoxColumn
+    Friend WithEvents Man_Birth As DataGridViewTextBoxColumn
+    Friend WithEvents Man_Phon As DataGridViewTextBoxColumn
+    Friend WithEvents Man_Car As DataGridViewTextBoxColumn
+    Friend WithEvents Man_Add As DataGridViewTextBoxColumn
+    Friend WithEvents Man_Pass As DataGridViewTextBoxColumn
+    Friend WithEvents Man_Level As DataGridViewTextBoxColumn
+    Friend WithEvents Man_Bigo As DataGridViewTextBoxColumn
+    Friend WithEvents LOG_Date As DataGridViewTextBoxColumn
+    Friend WithEvents LOG_Time As DataGridViewTextBoxColumn
+    Friend WithEvents LOG_IP As DataGridViewTextBoxColumn
+End Class

@@ -1,0 +1,100 @@
+﻿Public Class Frm_Select
+
+    Dim select_mold_code As String = ""
+    Dim frm_Mold_Storage As Frm_Mold_Storage
+
+    Private Sub Cancel_Com_Click(sender As Object, e As EventArgs) Handles Cancel_Com.Click
+
+        Me.Close()
+
+    End Sub
+
+    '호출한 클랙스의 객체로 지정
+    Public Sub set_frm_Mold_Storage(frm_Mold_Storage As Frm_Mold_Storage)
+        Me.frm_Mold_Storage = frm_Mold_Storage
+    End Sub
+
+    '변경할 몰드 코드 지정
+    Public Sub set_select_mold_code(mold_code As String)
+        Me.select_mold_code = mold_code
+    End Sub
+
+    Private Sub Frm_Select_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ''Set view property
+        ListView1.View = View.Details
+        ListView1.GridLines = True
+        ListView1.FullRowSelect = True
+
+        'Add items in the listview
+        Dim arr(3) As String
+        Dim itm As ListViewItem
+
+
+
+        If Me.Text = "설비 선택" Then
+
+            'Add column header
+            ListView1.Columns.Add("코드", 100)
+            ListView1.Columns.Add("설비명", 150)
+            ListView1.Columns.Add("비고", 200)
+
+            Dim DBT As New DataTable
+            Dim i As Integer
+
+            StrSQL = "Select [DEVICE_CODE], [DEVICE_NAME], [DEVICE_BIGO]
+                          From [DEVICE] with(NOLOCK)"
+
+            Re_Count = DB_Select(DBT)
+            If Re_Count <> 0 Then
+                For i = 0 To Re_Count - 1
+                    arr(0) = DBT.Rows(i).Item("DEVICE_CODE").ToString
+                    arr(1) = DBT.Rows(i).Item("DEVICE_NAME").ToString
+                    arr(2) = DBT.Rows(i).Item("DEVICE_BIGO").ToString
+                    itm = New ListViewItem(arr)
+                    ListView1.Items.Add(itm)
+                Next i
+            End If
+
+
+        ElseIf Me.Text = "반납 위치 선택" Then
+            'Add column header
+            ListView1.Columns.Add("코드", 100)
+            ListView1.Columns.Add("저장위치명", 150)
+            ListView1.Columns.Add("비고", 200)
+
+
+            Dim DBT As New DataTable
+            Dim i As Integer
+            StrSQL = "Select * From STORAGE With(NOLOCK)"
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count <> 0 Then
+                For i = 0 To Re_Count - 1
+                    arr(0) = DBT.Rows(i).Item("STORAGE_CODE").ToString
+                    arr(1) = DBT.Rows(i).Item("STORAGE_NAME").ToString
+                    arr(2) = DBT.Rows(i).Item("STORAGE_BIGO").ToString
+                    itm = New ListViewItem(arr)
+                    ListView1.Items.Add(itm)
+                Next i
+            End If
+
+        End If
+
+    End Sub
+
+
+    Private Sub Frm_Select_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        Frm_Main.Enabled = True
+    End Sub
+
+    Private Sub Select_Com_Click(sender As Object, e As EventArgs) Handles Select_Com.Click
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "UPDATE MOLD SET MOLD_LOCATION = '" & ListView1.FocusedItem.Text & "' 
+                           WHERE MOLD_CODE = '" & Me.select_mold_code & "'"
+        Re_Count = DB_Execute()
+
+        Me.frm_Mold_Storage.Grid_Main_Display(frm_Mold_Storage.SEL_STORAGE_CODE)
+
+        Me.Close()
+    End Sub
+End Class

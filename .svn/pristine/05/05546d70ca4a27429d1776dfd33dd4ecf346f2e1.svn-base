@@ -1,0 +1,1009 @@
+﻿
+Imports Excel = Microsoft.Office.Interop.Excel
+
+Public Class Frm_PC_Order
+    Dim Grid_Display_Ch As Boolean
+    Dim Grid_Info_Row As Integer
+    Dim Grid_Info_Col As Integer
+
+    Dim Grid_Main_Row As Integer
+    Dim Grid_Main_Col As Integer
+
+
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+    Dim Excel_check As Boolean
+
+    Dim Info_Lab() As Button
+    Dim Info_Txt() As TextBox
+    Dim Info_Com() As ComboBox
+
+    Private Sub Frm_PC_Order_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Info_Lab = New Button() {Info_La0, Info_La1, Info_La2, Info_La3, Info_La4, Info_La5, Info_La6, Info_La7, Info_La8, Info_La9, Info_La10, Info_La11}
+        Info_Txt = New TextBox() {Info_Tx0, Info_Tx1, Info_Tx2, Info_Tx3, Info_Tx4, Info_Tx5, Info_Tx6, Info_Tx7, Info_Tx8, Info_Tx9, Info_Tx10, Info_Tx11}
+        Info_Com = New ComboBox() {Info_Co0, Info_Co1, Info_Co2, Info_Co3, Info_Co4, Info_Co5, Info_Co6, Info_Co7, Info_Co8, Info_Co9, Info_Co10, Info_Co11}
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Grid_Code_Setup()
+        Grid_Info_Setup()
+        Grid_Main_Setup()
+
+        Search_Combo.Items.Add("코드")
+        Search_Combo.Items.Add("날짜")
+        Search_Combo.Items.Add("생산라인")
+        Search_Combo.Text = "코드"
+
+
+        Panel_Main.Top = 136
+        Panel_Main.Left = 389
+        Panel_Excel.Top = 136
+        Panel_Excel.Left = 389
+
+        Panel_Main.Visible = True
+        Panel_Excel.Visible = False
+
+        Com_Excel_Print.Visible = False
+    End Sub
+    Public Function Grid_Code_Setup() As Boolean
+        Grid_Color(Grid_Code)
+
+        Grid_Code.AllowUserToAddRows = False
+        Grid_Code.RowTemplate.Height = 20
+        Grid_Code.ColumnCount = 3
+        Grid_Code.RowCount = 1
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Code.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.RowHeadersWidth = 10
+        Grid_Code.Columns(0).Width = 100
+        Grid_Code.Columns(1).Width = 70
+        Grid_Code.Columns(2).Width = 150
+
+        Grid_Code.Columns(0).HeaderText = "코드"
+        Grid_Code.Columns(1).HeaderText = "날짜"
+        Grid_Code.Columns(2).HeaderText = "생산라인"
+
+        Dim i As Integer
+        For i = 0 To Grid_Code.ColumnCount - 1
+            Grid_Code.Columns(i).ReadOnly = True
+        Next i
+        Grid_Code_Setup = True
+    End Function
+
+    Public Function Grid_Info_Setup() As Boolean
+
+        Grid_Color(Grid_Info)
+
+
+        Grid_Info.AllowUserToAddRows = False
+        Grid_Info.RowTemplate.Height = 24
+        Grid_Info.ColumnCount = 2
+        Grid_Info.RowCount = 12
+
+
+
+
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Info.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Grid_Info.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Info.RowHeadersWidth = 10
+        Grid_Info.Columns(0).Width = 100
+        Grid_Info.Columns(1).Width = 240
+        Grid_Info.Columns(0).HeaderText = "구분"
+        Grid_Info.Columns(1).HeaderText = "내용"
+
+        Grid_Info.Item(0, 0).Value = "코드"
+        Grid_Info.Item(0, 1).Value = "담당자"
+        Grid_Info.Item(0, 2).Value = "날짜"
+        Grid_Info.Item(0, 3).Value = "시간"
+        Grid_Info.Item(0, 4).Value = "공정코드"
+        Grid_Info.Item(0, 5).Value = "공정명"
+        Grid_Info.Item(0, 6).Value = "라인코드"
+        Grid_Info.Item(0, 7).Value = "라인명"
+        Grid_Info.Item(0, 8).Value = "외주"
+        Grid_Info.Item(0, 9).Value = "구분"
+        Grid_Info.Item(0, 10).Value = "비고"
+        Grid_Info.Item(0, 11).Value = "진행상태"
+
+        '버튼 텍스트 변경
+        For i = 0 To Grid_Info.RowCount - 1
+            Info_Lab(i).Text = Grid_Info.Item(0, i).Value
+        Next i
+
+        '콤보박스 숨기기
+        For i = 0 To Grid_Info.RowCount - 1
+            Info_Com(i).Visible = False
+        Next i
+
+        Info_Com(4).Visible = True
+        Info_Com(5).Visible = True
+        Info_Com(6).Visible = True
+        Info_Com(7).Visible = True
+        Info_Com(8).Visible = True
+        Info_Com(11).Visible = True
+
+        Info_Txt(4).Visible = False
+        Info_Txt(5).Visible = False
+        Info_Txt(6).Visible = False
+        Info_Txt(7).Visible = False
+
+        Grid_Info.Rows(0).ReadOnly = True
+        Grid_Info.Rows(1).ReadOnly = True
+        Grid_Info.Rows(2).ReadOnly = True
+        Grid_Info.Rows(3).ReadOnly = True
+        Grid_Info.Rows(9).ReadOnly = True
+
+        Grid_Info_Setup = True
+    End Function
+    Public Function Grid_Main_Setup() As Boolean
+        Grid_Color(Grid_Main)
+
+        Grid_Main.AllowUserToAddRows = False
+        Grid_Main.RowTemplate.Height = 24
+        Grid_Main.ColumnCount = 9
+        Grid_Main.RowCount = 0
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Main.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Grid_Main.Columns(6).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        Grid_Main.Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        Grid_Main.RowHeadersWidth = 10
+
+
+        Grid_Main.Columns(0).HeaderText = "순번"
+        Grid_Main.Columns(1).HeaderText = "일자"
+        Grid_Main.Columns(2).HeaderText = "제품코드"
+        Grid_Main.Columns(3).HeaderText = "제품명"
+        Grid_Main.Columns(4).HeaderText = "규격"
+        Grid_Main.Columns(5).HeaderText = "단위"
+        Grid_Main.Columns(6).HeaderText = "공정단가"
+        Grid_Main.Columns(7).HeaderText = "수량"
+        Grid_Main.Columns(8).HeaderText = "비고"
+
+        Dim i As Integer
+
+        Grid_Main.Columns(0).Width = 60
+        Grid_Main.Columns(1).Width = 120
+        Grid_Main.Columns(2).Width = 120
+        Grid_Main.Columns(3).Width = 150
+        Grid_Main.Columns(4).Width = 150
+
+        For i = 5 To Grid_Main.ColumnCount - 1
+            Grid_Main.Columns(i).Width = 80
+        Next i
+
+        Grid_Main_Setup = True
+    End Function
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs) Handles Search_Com.Click
+        Grid_Code_Display()
+    End Sub
+    Public Function Grid_Code_Display() As Boolean
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        Grid_Code.RowCount = 1
+
+        Select Case Search_Combo.Text
+            Case "코드"
+                StrSQL = "Select PROCESS_IN_Code, PROCESS_IN_Date, PROCESS_IN_DE_Name From PROCESS_IN with(NOLOCK) Where PROCESS_IN_Code Like '%" & Search_Text.Text & "%'  Order  By PROCESS_IN_Code DESC"
+            Case "날짜"
+                StrSQL = "Select PROCESS_IN_Code, PROCESS_IN_Date, PROCESS_IN_DE_Name From PROCESS_IN with(NOLOCK) Where PROCESS_IN_Date Like '%" & Search_Text.Text & "%' Or PROCESS_IN_Date Is Null  Order By PROCESS_IN_Date"
+            Case "생산라인"
+                StrSQL = "Select PROCESS_IN_Code, PROCESS_IN_Date, PROCESS_IN_DE_Name From PROCESS_IN with(NOLOCK) Where PROCESS_IN_DE_Name Like '%" & Search_Text.Text & "%' Or PROCESS_IN_DE_Name Is Null  Order By PROCESS_IN_DE_Name"
+        End Select
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Grid_Code.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                For j = 0 To Grid_Code.ColumnCount - 1
+                    Grid_Code.Item(j, i).Value = DBT.Rows(i).Item(j)
+                Next j
+            Next i
+        Else
+            Grid_Code.RowCount = 1
+            For j = 0 To Grid_Code.ColumnCount - 1
+                Grid_Code.Item(j, 0).Value = ""
+            Next j
+        End If
+        Grid_Code_Display = True
+
+        Grid_Code.MultiSelect = False
+        Grid_Code.ClearSelection()
+
+    End Function
+
+    Private Sub Insert_Com_Click(sender As Object, e As EventArgs) Handles Insert_Com.Click
+        '새로운 코드 추가
+        Dim DBT As New DataTable
+        Dim JP_Code As Long
+        Dim My_Date As String
+        Dim My_Time As String
+
+        StrSQL = "Select GETDATE() "
+        Re_Count = DB_Select(DBT)
+
+
+        If Re_Count = 0 Then
+            Exit Sub
+        Else
+            My_Date = DBT.Rows(0).Item(0)
+            JP_Code = Mid(My_Date, 1, 4) & Mid(My_Date, 6, 2) & Mid(My_Date, 9, 2)
+            My_Time = DateTime.Now.ToString("HH:mm:ss")
+            My_Date = Mid(My_Date, 1, 4) & "-" & Mid(My_Date, 6, 2) & "-" & Mid(My_Date, 9, 2)
+        End If
+
+
+        StrSQL = "Select PROCESS_IN_Code From PROCESS_IN with(NOLOCK) Where PROCESS_IN_Date Like  '%" & My_Date & "%' Order By PROCESS_IN_Code Desc "
+        Re_Count = DB_Select(DBT)
+        If Re_Count = 0 Then
+            JP_Code = JP_Code & "001"
+        Else
+            JP_Code = JP_Code & Format(Val(Mid(DBT.Rows(0).Item(0), 11, 3)) + 1, "00#")
+        End If
+
+        '추가한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Insert into PROCESS_IN (PROCESS_IN_Code, PROCESS_IN_Date, PROCESS_IN_Time, PROCESS_IN_Name, PROCESS_IN_Sel, PROCESS_IN_ING)  Values ('PN" & JP_Code & "', '" & My_Date & "','" & My_Time & "','" & Frm_Main.Text_Man_Name.Text & "','수동', '진행중')"
+        Re_Count = DB_Execute()
+        Grid_Code_Display()
+    End Sub
+    Private Sub Grid_Code_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Code.CellEnter
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+            Panel_Main.Visible = True
+            'Grid_Info_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+            Grid_Info_Display2(Grid_Info, "Select * From PROCESS_IN With(NOLOCK) Where PROCESS_IN_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "'", Info_Txt, Info_Com)
+            Label_Color(Com_Main, Color_Label, Di_Panel2)
+            Grid_Main_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+            Panel_Main.Visible = True
+            Panel_Excel.Visible = False
+            Com_Excel_Print.Visible = False
+            Grid_Info_Combo.Visible = False
+        End If
+
+    End Sub
+    Public Function Grid_Info_Display(Code As String) As Boolean
+        Grid_Display_Ch = False
+        Grid_Info_Display = True
+        Dim DBT As New DataTable
+        Dim i As Integer
+        StrSQL = "Select * From PROCESS_IN With(NOLOCK) Where PROCESS_IN_Code = '" & Code & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Columns.Count - 1
+                Grid_Info.Item(1, i).Value = DBT.Rows(0).Item(i).ToString
+            Next i
+        Else
+            For i = 0 To DBT.Columns.Count - 1
+                Grid_Info.Item(1, i).Value = ""
+            Next i
+        End If
+        Grid_Display_Ch = True
+    End Function
+    Public Function Grid_Main_Display(DEVICE_Code As String) As Boolean
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        Grid_Display_Ch = False
+        Grid_Main.RowCount = 0
+        StrSQL = "Select PROCESS_IN_Sun, PROCESS_IN_Day, PROCESS_IN_PRODUCT_Code, PROCESS_IN_PRODUCT_NAME, PROCESS_IN_Standard, PROCESS_IN_Unit, PROCESS_IN_PR_Gold, PROCESS_IN_Total, PROCESS_IN_Bigo  From PROCESS_IN_List with(NOLOCK)  Where PROCESS_IN_Code = '" & DEVICE_Code & "' Order By Convert(Decimal,PROCESS_IN_Sun)"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Grid_Main.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                For j = 0 To Grid_Main.ColumnCount - 1
+                    Grid_Main.Item(j, i).Value = DBT.Rows(i).Item(j).ToString
+                Next j
+            Next i
+        Else
+            Grid_Main.RowCount = 1
+            For j = 0 To Grid_Main.ColumnCount - 1
+                Grid_Main.Item(j, 0).Value = ""
+            Next j
+        End If
+
+
+        Grid_Display_Ch = True
+        Grid_Main_Display = True
+
+    End Function
+    Private Sub Grid_Info_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Info.CellEnter
+        '선택되었을때 처리
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) < 1 Then
+            Exit Sub
+        End If
+        'Car_Code 선택 처리
+        Grid_Info_Row = Grid_Info.CurrentCell.RowIndex
+        Grid_Info_Col = Grid_Info.CurrentCell.ColumnIndex
+        Grid_Info_Combo.Visible = False
+        If Grid_Info_Row < 0 Then
+            Exit Sub
+        End If
+        If Grid_Info_Col < 0 Then
+            Exit Sub
+        End If
+        Dim i As Integer
+        Dim WW As Long
+        Dim DBT As New DataTable
+        If Grid_Info_Col = 1 Then
+            Select Case Grid_Info_Row
+                Case 4
+                    StrSQL = "Select PC_Code  From Process With(NOLOCK) Order By PC_Code"
+                    Re_Count = DB_Select(DBT)
+                    Grid_Info_Combo.Items.Clear()
+                    If Re_Count <> 0 Then
+                        For i = 0 To Re_Count - 1
+                            Grid_Info_Combo.Items.Add(DBT.Rows(i)("PC_Code"))
+                        Next i
+                    End If
+                    Grid_Info_Combo.Top = Grid_Info.Top + Grid_Info.ColumnHeadersHeight + (Grid_Info_Row) * 24
+                    WW = 0
+                    For i = 0 To Grid_Info_Col - 1
+                        WW = WW + Grid_Info.Columns(i).Width
+                    Next
+                    Grid_Info_Combo.Left = Grid_Info.Left + Grid_Info.RowHeadersWidth + WW
+                    Grid_Info_Combo.Width = Grid_Info.Columns(Grid_Info_Col).Width
+                    Grid_Info_Combo.Text = Grid_Info.CurrentCell.Value.ToString
+                    Grid_Info_Combo.BackColor = Grid_Info.RowsDefaultCellStyle.BackColor
+                    Grid_Info_Combo.Visible = True
+                    Grid_Info_Combo.Focus.ToString()
+                Case 5
+                    StrSQL = "Select PC_Name  From Process With(NOLOCK) Order By PC_Name"
+                    Re_Count = DB_Select(DBT)
+                    Grid_Info_Combo.Items.Clear()
+                    If Re_Count <> 0 Then
+                        For i = 0 To Re_Count - 1
+                            Grid_Info_Combo.Items.Add(DBT.Rows(i)("PC_Name"))
+                        Next i
+                    End If
+                    Grid_Info_Combo.Top = Grid_Info.Top + Grid_Info.ColumnHeadersHeight + (Grid_Info_Row) * 24
+                    WW = 0
+                    For i = 0 To Grid_Info_Col - 1
+                        WW = WW + Grid_Info.Columns(i).Width
+                    Next
+                    Grid_Info_Combo.Left = Grid_Info.Left + Grid_Info.RowHeadersWidth + WW
+                    Grid_Info_Combo.Width = Grid_Info.Columns(Grid_Info_Col).Width
+                    Grid_Info_Combo.Text = Grid_Info.CurrentCell.Value.ToString
+                    Grid_Info_Combo.BackColor = Grid_Info.RowsDefaultCellStyle.BackColor
+                    Grid_Info_Combo.Visible = True
+                    Grid_Info_Combo.Focus.ToString()
+                Case 6
+                    StrSQL = "Select DEVICE_CODE  From Device With(NOLOCK), Process_Device With(NOLOCK) Where Process_Device.PROCESS_DEVICE_CODE = '" & Grid_Info.Item(1, 4).Value.ToString & "' And Process_Device.PROCESS_DEVICE_PL_CODE = DEVICE.DEVICE_CODE  Order By Convert(Decimal,Process_Device.PROCESS_DEVICE_Sun) Desc "
+                    Re_Count = DB_Select(DBT)
+                    Grid_Info_Combo.Items.Clear()
+                    If Re_Count <> 0 Then
+                        For i = 0 To Re_Count - 1
+                            Grid_Info_Combo.Items.Add(DBT.Rows(i)("DEVICE_Code"))
+                        Next i
+                    End If
+                    Grid_Info_Combo.Top = Grid_Info.Top + Grid_Info.ColumnHeadersHeight + (Grid_Info_Row) * 24
+                    WW = 0
+                    For i = 0 To Grid_Info_Col - 1
+                        WW = WW + Grid_Info.Columns(i).Width
+                    Next
+                    Grid_Info_Combo.Left = Grid_Info.Left + Grid_Info.RowHeadersWidth + WW
+                    Grid_Info_Combo.Width = Grid_Info.Columns(Grid_Info_Col).Width
+                    Grid_Info_Combo.Text = Grid_Info.CurrentCell.Value.ToString
+                    Grid_Info_Combo.BackColor = Grid_Info.RowsDefaultCellStyle.BackColor
+                    Grid_Info_Combo.Visible = True
+                    Grid_Info_Combo.Focus.ToString()
+                Case 7
+                    StrSQL = "Select DEVICE_Name  From Device With(NOLOCK), Process_Device With(NOLOCK) Where Process_Device.PROCESS_DEVICE_CODE = '" & Grid_Info.Item(1, 4).Value & "' And Process_Device.PROCESS_DEVICE_PL_CODE = DEVICE.DEVICE_CODE  Order By Convert(Decimal,Process_Device.PROCESS_DEVICE_Sun) Desc "
+                    Re_Count = DB_Select(DBT)
+                    Grid_Info_Combo.Items.Clear()
+                    If Re_Count <> 0 Then
+                        For i = 0 To Re_Count - 1
+                            Grid_Info_Combo.Items.Add(DBT.Rows(i)("DEVICE_Name"))
+                        Next i
+                    End If
+                    Grid_Info_Combo.Top = Grid_Info.Top + Grid_Info.ColumnHeadersHeight + (Grid_Info_Row) * 24
+                    WW = 0
+                    For i = 0 To Grid_Info_Col - 1
+                        WW = WW + Grid_Info.Columns(i).Width
+                    Next
+                    Grid_Info_Combo.Left = Grid_Info.Left + Grid_Info.RowHeadersWidth + WW
+                    Grid_Info_Combo.Width = Grid_Info.Columns(Grid_Info_Col).Width
+                    Grid_Info_Combo.Text = Grid_Info.CurrentCell.Value.ToString
+                    Grid_Info_Combo.BackColor = Grid_Info.RowsDefaultCellStyle.BackColor
+                    Grid_Info_Combo.Visible = True
+                    Grid_Info_Combo.Focus.ToString()
+                Case 11
+                    Grid_Info_Combo.Items.Clear()
+                    Grid_Info_Combo.Items.Add("완료")
+                    Grid_Info_Combo.Items.Add("진행중")
+
+                    Grid_Info_Combo.Top = Grid_Info.Top + Grid_Info.ColumnHeadersHeight + (Grid_Info_Row) * 24
+                    WW = 0
+                    For i = 0 To Grid_Info_Col - 1
+                        WW = WW + Grid_Info.Columns(i).Width
+                    Next
+                    Grid_Info_Combo.Left = Grid_Info.Left + Grid_Info.RowHeadersWidth + WW
+                    Grid_Info_Combo.Width = Grid_Info.Columns(Grid_Info_Col).Width
+                    Grid_Info_Combo.Text = Grid_Info.CurrentCell.Value
+                    Grid_Info_Combo.BackColor = Grid_Info.RowsDefaultCellStyle.BackColor
+                    Grid_Info_Combo.Visible = True
+                    Grid_Info_Combo.Focus.ToString()
+                Case Else
+                    Exit Sub
+            End Select
+        End If
+    End Sub
+    Private Sub Grid_Info_Combo_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles Grid_Info_Combo.SelectionChangeCommitted
+        Dim DBT As New DataTable
+        Grid_Info.Item(Grid_Info_Col, Grid_Info_Row).Value = Grid_Info_Combo.SelectedItem.ToString()
+
+        If Grid_Info_Row = 4 Then
+            StrSQL = "Select PC_Code, PC_Name  From Process With(NOLOCK) Where PC_Code = '" & Grid_Info_Combo.SelectedItem.ToString() & "'"
+            Re_Count = DB_Select(DBT)
+            Grid_Info_Combo.Items.Clear()
+            If Re_Count <> 0 Then
+                Grid_Info.Item(Grid_Info_Col, 5).Value = DBT.Rows(0)("PC_Name")
+                Grid_Info.Rows(4).HeaderCell.Value = "*"
+                Grid_Info.Rows(5).HeaderCell.Value = "*"
+            End If
+        End If
+        If Grid_Info_Row = 5 Then
+            StrSQL = "Select PC_Code, PC_Name  From Process With(NOLOCK) Where PC_Name = '" & Grid_Info_Combo.SelectedItem.ToString() & "'"
+            Re_Count = DB_Select(DBT)
+            Grid_Info_Combo.Items.Clear()
+            If Re_Count <> 0 Then
+                Grid_Info.Item(Grid_Info_Col, 4).Value = DBT.Rows(0)("PC_Code")
+                Grid_Info.Rows(4).HeaderCell.Value = "*"
+                Grid_Info.Rows(5).HeaderCell.Value = "*"
+            End If
+        End If
+
+
+        If Grid_Info_Row = 6 Then
+            StrSQL = "Select DEVICE_Code, DEVICE_Name, DEVICE_Sel  From Device With(NOLOCK) Where DEVICE_Code = '" & Grid_Info_Combo.SelectedItem.ToString() & "'"
+            Re_Count = DB_Select(DBT)
+            Grid_Info_Combo.Items.Clear()
+            If Re_Count <> 0 Then
+                Grid_Info.Item(Grid_Info_Col, 6).Value = DBT.Rows(0)("DEVICE_Code")
+                Grid_Info.Item(Grid_Info_Col, 7).Value = DBT.Rows(0)("DEVICE_Name")
+                Grid_Info.Item(Grid_Info_Col, 8).Value = DBT.Rows(0)("DEVICE_Sel")
+                Grid_Info.Rows(6).HeaderCell.Value = "*"
+                Grid_Info.Rows(7).HeaderCell.Value = "*"
+                Grid_Info.Rows(8).HeaderCell.Value = "*"
+            End If
+        End If
+        If Grid_Info_Row = 7 Then
+            StrSQL = "Select DEVICE_Code, DEVICE_Name, DEVICE_Sel  From Device With(NOLOCK) Where DEVICE_Name = '" & Grid_Info_Combo.SelectedItem.ToString() & "'"
+            Re_Count = DB_Select(DBT)
+            Grid_Info_Combo.Items.Clear()
+            If Re_Count <> 0 Then
+                Grid_Info.Item(Grid_Info_Col, 6).Value = DBT.Rows(0)("DEVICE_Code")
+                Grid_Info.Item(Grid_Info_Col, 7).Value = DBT.Rows(0)("DEVICE_Name")
+                Grid_Info.Item(Grid_Info_Col, 8).Value = DBT.Rows(0)("DEVICE_Sel")
+                Grid_Info.Rows(6).HeaderCell.Value = "*"
+                Grid_Info.Rows(7).HeaderCell.Value = "*"
+                Grid_Info.Rows(8).HeaderCell.Value = "*"
+            End If
+        End If
+
+        Grid_Info.Rows(Grid_Info_Row).HeaderCell.Value = "*"
+        Grid_Info_Combo.Visible = False
+
+
+    End Sub
+    Private Sub Grid_Info_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Info.CellValueChanged
+        If Grid_Display_Ch = True Then
+            Grid_Info.CurrentRow.HeaderCell.Value = "*"
+        End If
+    End Sub
+
+
+    Private Sub Save_Com_Click(sender As Object, e As EventArgs) Handles Save_Com.Click
+        'Grid_Info 를 저장 한다.
+        'DataBase에서 필드 이름 가지고 오기
+
+        Dim Table_Name As String
+        Dim j As Long
+        Dim DBT As DataTable = Nothing
+        Dim Field_Name(500) As String
+        Dim i As Integer
+        j = 0
+        For i = 1 To Grid_Info.RowCount - 1
+            If Grid_Info.Rows(i).HeaderCell.Value = "*" Then
+                j = 1
+            End If
+        Next i
+        If j = 0 Then
+        Else
+            Table_Name = "PROCESS_IN"
+            j = 0
+            StrSQL = "Select sys.Columns.Name From sys.Tables with(NOLOCK) , sys.Columns with(NOLOCK) Where sys.Tables.name = '" & Table_Name & "' And sys.Tables.Object_id = sys.Columns.Object_id Order By sys.Columns.column_id"
+            Re_Count = DB_Select(DBT)
+            If Re_Count <> 0 Then
+                For i = 0 To DBT.Rows.Count - 4
+                    Field_Name(j) = DBT.Rows(i)("Name").ToString
+                    j = j + 1
+                Next i
+            End If
+            j = j - 1
+            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+            StrSQL = StrSQL & "UPDATE " & Table_Name & " SET "
+            Field_Name(500) = "Ok"
+            For i = 1 To j
+                If Grid_Info.Rows(i).HeaderCell.Value = "*" Then
+                    If Field_Name(500) = "" Then
+                        StrSQL = StrSQL & ","
+                    End If
+                    StrSQL = StrSQL & " " & Table_Name & "." & Field_Name(i) & " = '" & Replace(Grid_Info.Item(1, i).Value, "'", "''") & "'"
+                    If Field_Name(500) = "Ok" Then
+                        Field_Name(500) = ""
+                    End If
+                End If
+            Next i
+            StrSQL = StrSQL & " WHERE " & Table_Name & "." & Field_Name(0) & " = '" & Grid_Info.Item(1, 0).Value & "'"
+            Re_Count = DB_Execute()
+            MsgBox("저장되었습니다.")
+        End If
+
+        If Grid_Main.Rows.Count = 0 Then
+
+        Else
+            If Grid_Main.Item(0, 0).Value = "1" Then
+            Else
+                Exit Sub
+
+            End If
+        End If
+
+
+
+
+
+
+
+    End Sub
+
+    Private Sub Delete_Com_Click(sender As Object, e As EventArgs) Handles Delete_Com.Click
+
+        '해당 칼럼 삭제
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        If MsgBox("작업지시전표  '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "'를 삭제 하시겠습니까?", vbYesNo + vbQuestion + vbDefaultButton1, "작업지시전표 삭제") = vbNo Then
+            Exit Sub
+        End If
+
+
+
+        Grid_Display_Ch = False
+        '삭제한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Delete PROCESS_IN Where PROCESS_IN_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "' "
+        Re_Count = DB_Execute()
+
+        '삭제한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Delete PROCESS_IN_List Where PROCESS_IN_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "' "
+        Re_Count = DB_Execute()
+
+        Grid_Code_Display()
+        Grid_Info_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+        Grid_Display_Ch = True
+    End Sub
+
+    Private Sub Insert__Main_Click(sender As Object, e As EventArgs) Handles Insert__Main.Click
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+
+        Grid_Display_Ch = False
+
+        '새로운 코드 추가
+        Dim DBT As New DataTable
+        Dim JP_Code As Long
+        Dim My_Date As String
+        Dim My_Time As String
+
+        StrSQL = "Select GETDATE() "
+        Re_Count = DB_Select(DBT)
+
+
+        If Re_Count = 0 Then
+            Exit Sub
+        Else
+            My_Date = DBT.Rows(0).Item(0)
+            JP_Code = Mid(My_Date, 1, 4) & Mid(My_Date, 6, 2) & Mid(My_Date, 9, 2)
+            My_Time = DateTime.Now.ToString("HH:mm:ss")
+            My_Date = Mid(My_Date, 1, 4) & "-" & Mid(My_Date, 6, 2) & "-" & Mid(My_Date, 9, 2)
+        End If
+
+
+        'Dim DBT As New DataTable
+        Dim Db_Sun As Long
+        StrSQL = "Select PROCESS_IN_Sun From PROCESS_IN_List with(NOLOCK) Where PROCESS_IN_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "' Order By Convert(Decimal,PROCESS_IN_Sun) Desc "
+        Re_Count = DB_Select(DBT)
+        If Re_Count = 0 Then
+            Db_Sun = 1
+        Else
+            Db_Sun = DBT.Rows(0).Item(0) + 1
+        End If
+
+
+
+        '추가한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Insert into PROCESS_IN_List  (PROCESS_IN_Code, PROCESS_IN_Sun, PROCESS_IN_Day)  Values ('" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "', '" & Db_Sun & "','" & My_Date & "' )"
+        Re_Count = DB_Execute()
+        Grid_Main_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+        Grid_Display_Ch = True
+    End Sub
+
+    Private Sub Grid_Main_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Main.CellContentClick
+
+    End Sub
+
+    Private Sub Grid_Main_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Main.CellValueChanged
+        If Grid_Display_Ch = True Then
+            Grid_Main.CurrentRow.HeaderCell.Value = "*"
+        End If
+    End Sub
+    Private Sub Save_Main_Click(sender As Object, e As EventArgs) Handles Save_Main.Click
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+        Dim i As Integer
+
+        Grid_Display_Ch = False
+        For i = 0 To Grid_Main.Rows.Count - 1
+            If Grid_Main.Rows(i).HeaderCell.Value = "*" Then
+                'Update
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "update PROCESS_IN_List Set PROCESS_IN_Day = '" & Grid_Main.Item(1, i).Value & "', PROCESS_IN_PRODUCT_Code = '" & Grid_Main.Item(2, i).Value & "', PROCESS_IN_PRODUCT_NAME = '" & Grid_Main.Item(3, i).Value & "', PROCESS_IN_Standard = '" & Grid_Main.Item(4, i).Value & "', PROCESS_IN_Unit = '" & Grid_Main.Item(5, i).Value & "', PROCESS_IN_PR_Gold = '" & Grid_Main.Item(6, i).Value & "', PROCESS_IN_Total = '" & Grid_Main.Item(7, i).Value & "', PROCESS_IN_Bigo = '" & Grid_Main.Item(8, i).Value & "' where PROCESS_IN_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "' And PROCESS_IN_Sun = '" & Grid_Main.Item(0, i).Value & "'"
+                Re_Count = DB_Execute()
+                Grid_Main.Rows(i).HeaderCell.Value = ""
+            End If
+        Next i
+        Grid_Display_Ch = True
+
+    End Sub
+    Private Sub Grid_Main_MouseClick(sender As Object, e As MouseEventArgs) Handles Grid_Main.MouseClick
+
+        If String.IsNullOrEmpty(Grid_Main.CurrentCell.RowIndex) Then
+            Exit Sub
+        End If
+
+        Grid_Main_Row = Grid_Main.CurrentCell.RowIndex
+        Grid_Main_Col = Grid_Main.CurrentCell.ColumnIndex
+        Grid_Main_Combo.Visible = False
+        If Grid_Main_Row < 0 Then
+            Exit Sub
+        End If
+        If Grid_Main_Col < 0 Then
+            Exit Sub
+        End If
+        Dim DBT As New DataTable
+
+        Select Case Grid_Main_Col
+            Case 2
+                StrSQL = "Select Product.PRODUCT_Code, Product.PRODUCT_NAME  From Product with(NOLOCK), Product_Process with(NOLOCK) Where Product_Process.PRODUCT_PROCESS_Pro_Code = '" & Grid_Info.Item(1, 4).Value & "' And  Product_Process.PRODUCT_PROCESS_Code = Product.PRODUCT_Code  Order By PRODUCT_Code"
+                Re_Count = DB_Select(DBT)
+                Grid_Main_Combo.Items.Clear()
+                If Re_Count <> 0 Then
+                    For i = 0 To Re_Count - 1
+                        Grid_Main_Combo.Items.Add(DBT.Rows(i).Item(0))
+                    Next i
+                End If
+                Grid_Main_Combo.Top = Grid_Main.Top + Grid_Main.ColumnHeadersHeight + (Grid_Main_Row) * 24
+                Grid_Main_Combo.Left = Grid_Main.Left + Grid_Main.RowHeadersWidth + Grid_Main.Columns(0).Width + Grid_Main.Columns(1).Width
+                Grid_Main_Combo.Width = Grid_Main.Columns(Grid_Main_Col).Width
+                Grid_Main_Combo.Text = Grid_Main.CurrentCell.Value.ToString
+                Grid_Main_Combo.BackColor = Grid_Main.RowsDefaultCellStyle.BackColor
+                Grid_Main_Combo.Visible = True
+                Grid_Main_Combo.Focus.ToString()
+            Case 3
+                StrSQL = "Select Product.PRODUCT_Code, Product.PRODUCT_NAME  From Product with(NOLOCK), Product_Process with(NOLOCK) Where Product_Process.PRODUCT_PROCESS_Pro_Code = '" & Grid_Info.Item(1, 4).Value & "' And  Product_Process.PRODUCT_PROCESS_Code = Product.PRODUCT_Code  Order By PRODUCT_Name"
+                Re_Count = DB_Select(DBT)
+                Grid_Main_Combo.Items.Clear()
+                If Re_Count <> 0 Then
+                    For i = 0 To Re_Count - 1
+                        Grid_Main_Combo.Items.Add(DBT.Rows(i).Item(1))
+                    Next i
+                End If
+                Grid_Main_Combo.Top = Grid_Main.Top + Grid_Main.ColumnHeadersHeight + (Grid_Main_Row) * 24
+                Grid_Main_Combo.Left = Grid_Main.Left + Grid_Main.RowHeadersWidth + Grid_Main.Columns(0).Width + Grid_Main.Columns(1).Width + Grid_Main.Columns(2).Width
+                Grid_Main_Combo.Width = Grid_Main.Columns(Grid_Main_Col).Width
+                Grid_Main_Combo.Text = Grid_Main.CurrentCell.Value.ToString
+                Grid_Main_Combo.BackColor = Grid_Main.RowsDefaultCellStyle.BackColor
+                Grid_Main_Combo.Visible = True
+                Grid_Main_Combo.Focus.ToString()
+        End Select
+
+
+    End Sub
+    Private Sub Grid_Main_Scroll(sender As Object, e As ScrollEventArgs) Handles Grid_Main.Scroll
+        Grid_Main_Combo.Visible = False
+    End Sub
+
+    Private Sub Grid_Main_Combo_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles Grid_Main_Combo.SelectionChangeCommitted
+        Dim DBT As New DataTable
+        Grid_Main.Item(Grid_Main_Col, Grid_Main_Row).Value = Grid_Main_Combo.SelectedItem.ToString()
+        Select Case Grid_Main_Col
+            Case 2
+                StrSQL = "Select PRODUCT_CODE, PRODUCT_Name, PRODUCT_Standard ,PRODUCT_Unit, PRODUCT_PROCESS_Gold From Product with(NOLOCK), Product_Process with(NOLOCK) Where PRODUCT_CODE = '" & Grid_Main_Combo.SelectedItem.ToString() & "' And PRODUCT_CODE = PRODUCT_PROCESS_Code And PRODUCT_PROCESS_Pro_Code = '" & Grid_Info.Item(1, 4).Value & "'"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Grid_Main.Item(3, Grid_Main_Row).Value = DBT.Rows(0).Item(1)
+                    Grid_Main.Item(4, Grid_Main_Row).Value = DBT.Rows(0).Item(2)
+                    Grid_Main.Item(5, Grid_Main_Row).Value = DBT.Rows(0).Item(3)
+                    Grid_Main.Item(6, Grid_Main_Row).Value = DBT.Rows(0).Item(4)
+
+                End If
+            Case 3
+                StrSQL = "Select PRODUCT_CODE, PRODUCT_Name, PRODUCT_Standard ,PRODUCT_Unit, PRODUCT_PROCESS_Gold From Product with(NOLOCK), Product_Process with(NOLOCK) Where PRODUCT_Name= '" & Replace(Grid_Main_Combo.SelectedItem.ToString(), "'", "''") & "' And PRODUCT_CODE = PRODUCT_PROCESS_Code And PRODUCT_PROCESS_Pro_Code = '" & Grid_Info.Item(1, 4).Value & "'"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Grid_Main.Item(2, Grid_Main_Row).Value = DBT.Rows(0).Item(0)
+                    Grid_Main.Item(4, Grid_Main_Row).Value = DBT.Rows(0).Item(2)
+                    Grid_Main.Item(5, Grid_Main_Row).Value = DBT.Rows(0).Item(3)
+                    Grid_Main.Item(6, Grid_Main_Row).Value = DBT.Rows(0).Item(4)
+                End If
+        End Select
+        Grid_Main_Combo.Visible = False
+    End Sub
+
+    Private Sub Grid_Main_Combo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Grid_Main_Combo.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Delete__Main_Click(sender As Object, e As EventArgs) Handles Delete__Main.Click
+        '해당 칼럼 삭제
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+
+        Grid_Display_Ch = False
+        Dim i As Integer
+        '삭제한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Delete PROCESS_IN_List Where PROCESS_IN_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "' And  PROCESS_IN_Sun = '" & Grid_Main.Item(0, Grid_Main.CurrentCell.RowIndex).Value & "'"
+        Re_Count = DB_Execute()
+
+        For i = Grid_Main.CurrentCell.RowIndex + 1 To Grid_Main.RowCount - 1
+            '수정한다
+            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+            StrSQL = StrSQL & "Update  PROCESS_IN_List Set PROCESS_IN_Sun = '" & i & "' Where PROCESS_IN_Code = '" & Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value & "' And  PROCESS_IN_Sun = '" & i + 1 & "'"
+            Re_Count = DB_Execute()
+        Next i
+        '선택된 갈럼값을 가지고 온다
+        Grid_Main_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+        Grid_Display_Ch = True
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles Com_Excel.Click
+
+    End Sub
+
+    Private Sub Grid_Info_Combo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Grid_Info_Combo.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Com_Main_Click(sender As Object, e As EventArgs) Handles Com_Main.Click
+
+    End Sub
+
+    Private Sub Grid_Code_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Code.CellContentClick
+
+    End Sub
+
+    Private Sub Grid_Main_Combo_DropDownClosed(sender As Object, e As EventArgs) Handles Grid_Main_Combo.DropDownClosed
+
+    End Sub
+
+    Private Sub Grid_Main_Combo_LostFocus(sender As Object, e As EventArgs) Handles Grid_Main_Combo.LostFocus
+        Grid_Main_Combo.Visible = False
+
+    End Sub
+
+    Private Sub Info_Co4_MouseClick(sender As Object, e As MouseEventArgs) Handles Info_Co4.MouseClick, Info_Co5.MouseClick, Info_Co6.MouseClick, Info_Co7.MouseClick, Info_Co11.MouseClick
+        Dim index As Integer
+
+        If Grid_Display_Ch = False Then
+            Exit Sub
+        Else
+            'MsgBox(Mid(sender.name.ToString, 8, 2))
+        End If
+
+        index = Val(Mid(sender.name.ToString, 8, 2))
+        Select Case index
+            Case 4
+                StrSQL = "Select PC_Code  From Process With(NOLOCK) Order By PC_Code"
+            Case 5
+                StrSQL = "Select PC_Name  From Process With(NOLOCK) Order By PC_Name"
+            Case 6
+                StrSQL = "Select DEVICE_CODE  From Device With(NOLOCK), Process_Device With(NOLOCK) Where Process_Device.PROCESS_DEVICE_CODE = '" & Grid_Info.Item(1, 4).Value.ToString & "' And Process_Device.PROCESS_DEVICE_PL_CODE = DEVICE.DEVICE_CODE  Order By Convert(Decimal,Process_Device.PROCESS_DEVICE_Sun) Desc "
+            Case 7
+                StrSQL = "Select DEVICE_Name  From Device With(NOLOCK), Process_Device With(NOLOCK) Where Process_Device.PROCESS_DEVICE_CODE = '" & Grid_Info.Item(1, 4).Value & "' And Process_Device.PROCESS_DEVICE_PL_CODE = DEVICE.DEVICE_CODE  Order By Convert(Decimal,Process_Device.PROCESS_DEVICE_Sun) Desc "
+            Case 11
+                sender.Items.Clear()
+                sender.Items.Add("완료")
+                sender.Items.Add("진행중")
+                sender.text = Info_Txt(index).Text
+                Exit Sub
+            Case Else
+                Exit Sub
+
+        End Select
+        Dim DBT As New DataTable
+
+        Re_Count = DB_Select(DBT)
+        sender.Items.Clear()
+        If Re_Count <> 0 Then
+            For i = 0 To Re_Count - 1
+                sender.Items.Add(DBT.Rows(i).Item(0).ToString)
+            Next i
+        End If
+        sender.text = Info_Txt(index).Text
+    End Sub
+
+    Private Sub Info_Co4_SelectedValueChanged(sender As Object, e As EventArgs) Handles Info_Co4.SelectedValueChanged, Info_Co5.SelectedValueChanged, Info_Co6.SelectedValueChanged, Info_Co7.SelectedValueChanged, Info_Co11.SelectedValueChanged
+        Dim index As Integer
+
+        If Grid_Display_Ch = False Then
+            Exit Sub
+        End If
+        index = Val(Mid(sender.name.ToString, 8, 2))
+
+        Info_Txt(index).Text = Info_Com(index).Text
+        Grid_Info.Rows(index).HeaderCell.Value = "*"
+
+
+        Dim DBT As New DataTable
+        Select Case index
+            Case 4
+                StrSQL = "Select PC_Code, PC_Name From Process With(NOLOCK) Where PC_Code = '" & sender.text.ToString() & "'"
+                Re_Count = DB_Select(DBT)
+                Grid_Info_Combo.Items.Clear()
+                If Re_Count <> 0 Then
+                    Info_Txt(4).Text = DBT.Rows(0)("PC_Code")
+                    Info_Txt(5).Text = DBT.Rows(0)("PC_Name")
+                    ' Info_Txt(7).Text = DBT.Rows(0)("CM_Man_Tel")
+                    Grid_Info.Rows(4).HeaderCell.Value = "*"
+                    Grid_Info.Rows(5).HeaderCell.Value = "*"
+                    ' Grid_Info.Rows(6).HeaderCell.Value = "*"
+                    '  Grid_Info.Rows(7).HeaderCell.Value = "*"
+                End If
+            Case 5
+                StrSQL = "Select PC_Code, PC_Name From Process With(NOLOCK) Where PC_Name = '" & sender.text.ToString() & "'"
+                Re_Count = DB_Select(DBT)
+                Grid_Info_Combo.Items.Clear()
+                If Re_Count <> 0 Then
+                    Info_Txt(4).Text = DBT.Rows(0)("PC_Code")
+                    Info_Txt(5).Text = DBT.Rows(0)("PC_Name")
+                    ' Info_Txt(7).Text = DBT.Rows(0)("CM_Man_Tel")
+                    Grid_Info.Rows(4).HeaderCell.Value = "*"
+                    Grid_Info.Rows(5).HeaderCell.Value = "*"
+                    '    Grid_Info.Rows(6).HeaderCell.Value = "*"
+                    '    Grid_Info.Rows(7).HeaderCell.Value = "*"
+                End If
+
+            Case 6
+                StrSQL = "Select DEVICE_Code, DEVICE_Name From Device With(NOLOCK) Where DEVICE_Code = '" & sender.text.ToString() & "'"
+                Re_Count = DB_Select(DBT)
+                Grid_Info_Combo.Items.Clear()
+                If Re_Count <> 0 Then
+                    Info_Txt(6).Text = DBT.Rows(0)("DEVICE_Code")
+                    Info_Txt(7).Text = DBT.Rows(0)("DEVICE_Name")
+                    '  Info_Txt(7).Text = DBT.Rows(0)("CM_Man_Tel")
+                    '  Grid_Info.Rows(4).HeaderCell.Value = "*"
+                    '  Grid_Info.Rows(5).HeaderCell.Value = "*"
+                    Grid_Info.Rows(6).HeaderCell.Value = "*"
+                    Grid_Info.Rows(7).HeaderCell.Value = "*"
+                End If
+            Case 7
+                StrSQL = "Select DEVICE_Code, DEVICE_Name From Device With(NOLOCK) Where DEVICE_Name = '" & sender.text.ToString() & "'"
+                Re_Count = DB_Select(DBT)
+                Grid_Info_Combo.Items.Clear()
+                If Re_Count <> 0 Then
+                    '  Info_Txt(4).Text = DBT.Rows(0)("CM_Code")
+                    Info_Txt(6).Text = DBT.Rows(0)("DEVICE_Code")
+                    Info_Txt(7).Text = DBT.Rows(0)("DEVICE_Name")
+                    '   Grid_Info.Rows(4).HeaderCell.Value = "*"
+                    '   Grid_Info.Rows(5).HeaderCell.Value = "*"
+                    Grid_Info.Rows(6).HeaderCell.Value = "*"
+                    Grid_Info.Rows(7).HeaderCell.Value = "*"
+                End If
+            Case 11
+                Grid_Info.Item(1, 11).Value = Info_Txt(index).Text
+                Grid_Info.Rows(11).HeaderCell.Value = "*"
+
+        End Select
+
+
+        'Dim DBT As New DataTable
+        'Select Case index
+        '    Case 5
+        '        StrSQL = "Select CM_Code, CM_Name, CM_Man_Name, CM_Man_Tel  From Customer With(NOLOCK) Where CM_Code = '" & sender.text.ToString() & "'"
+        '        Re_Count = DB_Select(DBT)
+        '        Grid_Info_Combo.Items.Clear()
+        '        If Re_Count <> 0 Then
+        '            Info_Txt(5).Text = DBT.Rows(0)("CM_Name")
+        '            Info_Txt(6).Text = DBT.Rows(0)("CM_Man_Name")
+        '            Info_Txt(7).Text = DBT.Rows(0)("CM_Man_Tel")
+        '            Grid_Info.Rows(4).HeaderCell.Value = "*"
+        '            Grid_Info.Rows(5).HeaderCell.Value = "*"
+        '            Grid_Info.Rows(6).HeaderCell.Value = "*"
+        '            Grid_Info.Rows(7).HeaderCell.Value = "*"
+        '        End If
+        '    Case 8
+        '        StrSQL = "Select CM_Code, CM_Name, CM_Man_Name, CM_Man_Tel  From Customer With(NOLOCK) Where CM_Name = '" & sender.text.ToString() & "'"
+        '        Re_Count = DB_Select(DBT)
+        '        Grid_Info_Combo.Items.Clear()
+        '        If Re_Count <> 0 Then
+        '            Info_Txt(4).Text = DBT.Rows(0)("CM_Code")
+        '            Info_Txt(6).Text = DBT.Rows(0)("CM_Man_Name")
+        '            Info_Txt(7).Text = DBT.Rows(0)("CM_Man_Tel")
+        '            Grid_Info.Rows(4).HeaderCell.Value = "*"
+        '            Grid_Info.Rows(5).HeaderCell.Value = "*"
+        '            Grid_Info.Rows(6).HeaderCell.Value = "*"
+        '            Grid_Info.Rows(7).HeaderCell.Value = "*"
+        '        End If
+
+        'End Select
+    End Sub
+
+    Private Sub Info_Tx0_TextChanged(sender As Object, e As EventArgs) Handles Info_Tx0.TextChanged, Info_Tx1.TextChanged, Info_Tx2.TextChanged, Info_Tx3.TextChanged, Info_Tx4.TextChanged, Info_Tx5.TextChanged, Info_Tx6.TextChanged, Info_Tx7.TextChanged, Info_Tx8.TextChanged, Info_Tx9.TextChanged, Info_Tx10.TextChanged
+        Dim index As Integer
+
+        If Grid_Display_Ch = False Then
+            Exit Sub
+
+        Else
+            'MsgBox(Mid(sender.name.ToString, 8, 2))
+        End If
+
+        index = Val(Mid(sender.name.ToString, 8, 2))
+        Grid_Info.Item(1, index).Value = sender.text
+
+        Info_Com(index).Text = sender.text
+    End Sub
+
+
+    Public Function Grid_Info_Display2(Grid As DataGridView, SQL_String As String, Info_Text() As TextBox, Info_Combo() As ComboBox) As Boolean
+        Dim DBT As New DataTable
+        Dim i As Integer
+        StrSQL = SQL_String
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Columns.Count - 4
+                Grid.Item(1, i).Value = DBT.Rows(0).Item(i).ToString
+            Next i
+        Else
+            For i = 0 To DBT.Columns.Count - 4
+                Grid.Item(1, i).Value = ""
+            Next i
+        End If
+
+
+
+        For i = 0 To Grid.Rows.Count - 1
+            Info_Text(i).Text = Grid.Item(1, i).Value
+            Info_Combo(i).Text = Grid.Item(1, i).Value
+        Next i
+
+        Grid_Info_Display2 = True
+
+    End Function
+
+
+End Class

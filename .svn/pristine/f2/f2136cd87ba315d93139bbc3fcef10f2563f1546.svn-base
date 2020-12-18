@@ -1,0 +1,283 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_CO_Report3
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.palMain = New System.Windows.Forms.Panel()
+        Me.pnlResultGrid = New System.Windows.Forms.Panel()
+        Me.lstMain = New System.Windows.Forms.DataGridView()
+        Me.Panel30 = New System.Windows.Forms.Panel()
+        Me.Panel31 = New System.Windows.Forms.Panel()
+        Me.Panel40 = New System.Windows.Forms.Panel()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.pnlSearch1 = New System.Windows.Forms.Panel()
+        Me.btnExcel = New System.Windows.Forms.Button()
+        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.dtpRegDate = New System.Windows.Forms.DateTimePicker()
+        Me.lblSearchItem11 = New System.Windows.Forms.Label()
+        Me.btnSearch = New System.Windows.Forms.Button()
+        Me.Panel43 = New System.Windows.Forms.Panel()
+        Me.Panel44 = New System.Windows.Forms.Panel()
+        Me.Panel57 = New System.Windows.Forms.Panel()
+        Me.palMain.SuspendLayout()
+        Me.pnlResultGrid.SuspendLayout()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlSearch1.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'palMain
+        '
+        Me.palMain.Controls.Add(Me.pnlResultGrid)
+        Me.palMain.Controls.Add(Me.pnlSearch1)
+        Me.palMain.ForeColor = System.Drawing.SystemColors.InfoText
+        Me.palMain.Location = New System.Drawing.Point(15, 15)
+        Me.palMain.Name = "palMain"
+        Me.palMain.Size = New System.Drawing.Size(1662, 656)
+        Me.palMain.TabIndex = 99960
+        '
+        'pnlResultGrid
+        '
+        Me.pnlResultGrid.AutoSize = True
+        Me.pnlResultGrid.Controls.Add(Me.lstMain)
+        Me.pnlResultGrid.Controls.Add(Me.Panel30)
+        Me.pnlResultGrid.Controls.Add(Me.Panel31)
+        Me.pnlResultGrid.Controls.Add(Me.Panel40)
+        Me.pnlResultGrid.Controls.Add(Me.Label25)
+        Me.pnlResultGrid.Location = New System.Drawing.Point(10, 72)
+        Me.pnlResultGrid.Name = "pnlResultGrid"
+        Me.pnlResultGrid.Size = New System.Drawing.Size(1640, 572)
+        Me.pnlResultGrid.TabIndex = 440
+        '
+        'lstMain
+        '
+        Me.lstMain.AllowUserToAddRows = False
+        Me.lstMain.BackgroundColor = System.Drawing.Color.White
+        Me.lstMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.lstMain.GridColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.lstMain.Location = New System.Drawing.Point(10, 42)
+        Me.lstMain.Name = "lstMain"
+        Me.lstMain.ReadOnly = True
+        Me.lstMain.RowHeadersVisible = False
+        Me.lstMain.RowTemplate.Height = 23
+        Me.lstMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.lstMain.Size = New System.Drawing.Size(1620, 518)
+        Me.lstMain.TabIndex = 390
+        '
+        'Panel30
+        '
+        Me.Panel30.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel30.Location = New System.Drawing.Point(10, 41)
+        Me.Panel30.Name = "Panel30"
+        Me.Panel30.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel30.TabIndex = 389
+        Me.Panel30.Visible = False
+        '
+        'Panel31
+        '
+        Me.Panel31.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel31.Location = New System.Drawing.Point(10, 11)
+        Me.Panel31.Name = "Panel31"
+        Me.Panel31.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel31.TabIndex = 387
+        Me.Panel31.Visible = False
+        '
+        'Panel40
+        '
+        Me.Panel40.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel40.Location = New System.Drawing.Point(10, 11)
+        Me.Panel40.Name = "Panel40"
+        Me.Panel40.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel40.TabIndex = 388
+        Me.Panel40.Visible = False
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label25.Location = New System.Drawing.Point(10, 14)
+        Me.Label25.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label25.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(100, 25)
+        Me.Label25.TabIndex = 385
+        Me.Label25.Text = "검색결과"
+        Me.Label25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'pnlSearch1
+        '
+        Me.pnlSearch1.AutoSize = True
+        Me.pnlSearch1.Controls.Add(Me.btnExcel)
+        Me.pnlSearch1.Controls.Add(Me.DateTimePicker1)
+        Me.pnlSearch1.Controls.Add(Me.Label6)
+        Me.pnlSearch1.Controls.Add(Me.dtpRegDate)
+        Me.pnlSearch1.Controls.Add(Me.lblSearchItem11)
+        Me.pnlSearch1.Controls.Add(Me.btnSearch)
+        Me.pnlSearch1.Controls.Add(Me.Panel43)
+        Me.pnlSearch1.Controls.Add(Me.Panel44)
+        Me.pnlSearch1.Controls.Add(Me.Panel57)
+        Me.pnlSearch1.Location = New System.Drawing.Point(10, 10)
+        Me.pnlSearch1.Name = "pnlSearch1"
+        Me.pnlSearch1.Size = New System.Drawing.Size(1640, 51)
+        Me.pnlSearch1.TabIndex = 433
+        '
+        'btnExcel
+        '
+        Me.btnExcel.BackColor = System.Drawing.SystemColors.Info
+        Me.btnExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnExcel.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnExcel.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnExcel.Location = New System.Drawing.Point(1320, 11)
+        Me.btnExcel.Name = "btnExcel"
+        Me.btnExcel.Size = New System.Drawing.Size(150, 31)
+        Me.btnExcel.TabIndex = 460
+        Me.btnExcel.Text = "Excel"
+        Me.btnExcel.UseVisualStyleBackColor = False
+        '
+        'DateTimePicker1
+        '
+        Me.DateTimePicker1.CalendarFont = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.DateTimePicker1.CustomFormat = "yyyy-MM-dd"
+        Me.DateTimePicker1.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.DateTimePicker1.Location = New System.Drawing.Point(308, 14)
+        Me.DateTimePicker1.MaximumSize = New System.Drawing.Size(150, 25)
+        Me.DateTimePicker1.MinimumSize = New System.Drawing.Size(150, 25)
+        Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.Size = New System.Drawing.Size(150, 25)
+        Me.DateTimePicker1.TabIndex = 459
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Label6.Location = New System.Drawing.Point(275, 14)
+        Me.Label6.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.Label6.MinimumSize = New System.Drawing.Size(30, 25)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(30, 25)
+        Me.Label6.TabIndex = 458
+        Me.Label6.Text = " ~ "
+        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'dtpRegDate
+        '
+        Me.dtpRegDate.CalendarFont = New System.Drawing.Font("굴림", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpRegDate.CustomFormat = "yyyy-MM-dd"
+        Me.dtpRegDate.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.dtpRegDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpRegDate.Location = New System.Drawing.Point(123, 14)
+        Me.dtpRegDate.MaximumSize = New System.Drawing.Size(150, 25)
+        Me.dtpRegDate.MinimumSize = New System.Drawing.Size(150, 25)
+        Me.dtpRegDate.Name = "dtpRegDate"
+        Me.dtpRegDate.Size = New System.Drawing.Size(150, 25)
+        Me.dtpRegDate.TabIndex = 457
+        '
+        'lblSearchItem11
+        '
+        Me.lblSearchItem11.AutoSize = True
+        Me.lblSearchItem11.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.lblSearchItem11.Location = New System.Drawing.Point(12, 14)
+        Me.lblSearchItem11.MaximumSize = New System.Drawing.Size(100, 25)
+        Me.lblSearchItem11.MinimumSize = New System.Drawing.Size(100, 25)
+        Me.lblSearchItem11.Name = "lblSearchItem11"
+        Me.lblSearchItem11.Size = New System.Drawing.Size(100, 25)
+        Me.lblSearchItem11.TabIndex = 449
+        Me.lblSearchItem11.Text = "검색기간"
+        Me.lblSearchItem11.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'btnSearch
+        '
+        Me.btnSearch.BackColor = System.Drawing.SystemColors.Info
+        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSearch.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnSearch.ForeColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.btnSearch.Location = New System.Drawing.Point(1480, 11)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(150, 31)
+        Me.btnSearch.TabIndex = 391
+        Me.btnSearch.Text = "조    회"
+        Me.btnSearch.UseVisualStyleBackColor = False
+        '
+        'Panel43
+        '
+        Me.Panel43.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel43.Location = New System.Drawing.Point(10, 41)
+        Me.Panel43.Name = "Panel43"
+        Me.Panel43.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel43.TabIndex = 389
+        Me.Panel43.Visible = False
+        '
+        'Panel44
+        '
+        Me.Panel44.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel44.Location = New System.Drawing.Point(10, 11)
+        Me.Panel44.Name = "Panel44"
+        Me.Panel44.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel44.TabIndex = 387
+        Me.Panel44.Visible = False
+        '
+        'Panel57
+        '
+        Me.Panel57.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.Panel57.Location = New System.Drawing.Point(10, 11)
+        Me.Panel57.Name = "Panel57"
+        Me.Panel57.Size = New System.Drawing.Size(1620, 1)
+        Me.Panel57.TabIndex = 388
+        Me.Panel57.Visible = False
+        '
+        'Frm_CO_Report3
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.palMain)
+        Me.Name = "Frm_CO_Report3"
+        Me.Size = New System.Drawing.Size(2090, 1594)
+        Me.palMain.ResumeLayout(False)
+        Me.palMain.PerformLayout()
+        Me.pnlResultGrid.ResumeLayout(False)
+        Me.pnlResultGrid.PerformLayout()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlSearch1.ResumeLayout(False)
+        Me.pnlSearch1.PerformLayout()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents palMain As Panel
+    Friend WithEvents pnlResultGrid As Panel
+    Friend WithEvents lstMain As DataGridView
+    Friend WithEvents Panel30 As Panel
+    Friend WithEvents Panel31 As Panel
+    Friend WithEvents Panel40 As Panel
+    Friend WithEvents Label25 As Label
+    Friend WithEvents pnlSearch1 As Panel
+    Friend WithEvents btnExcel As Button
+    Friend WithEvents DateTimePicker1 As DateTimePicker
+    Friend WithEvents Label6 As Label
+    Friend WithEvents dtpRegDate As DateTimePicker
+    Friend WithEvents lblSearchItem11 As Label
+    Friend WithEvents btnSearch As Button
+    Friend WithEvents Panel43 As Panel
+    Friend WithEvents Panel44 As Panel
+    Friend WithEvents Panel57 As Panel
+End Class

@@ -1,0 +1,13 @@
+﻿Public Class Err
+    Private Sub Err_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+
+        'Dim DBT As New DataTable
+
+        'StrSQL = "Select * from Err_Test "
+        'Re_Count = DB_Select(DBT)
+
+
+        'Label1.Text = DBT.Rows(0)(0).ToString()
+    End Sub
+End Class

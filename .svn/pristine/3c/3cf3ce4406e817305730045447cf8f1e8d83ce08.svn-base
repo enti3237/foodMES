@@ -1,0 +1,280 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.Data.OleDb
+Public Class Frm_QC_Report4
+    Dim tblMTERCL As New DataTable
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+
+    Private Sub fnFrmTblLoad()
+        tblMTERCL = fnGetTableStructure("dbo.QC_MTERCL")
+    End Sub
+
+    Private Sub Frm_QC_Report4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        palMain.Top = 40
+        palMain.Left = 10
+        Panel41.Top = 40
+        Panel41.Left = 10
+
+        palMain.Visible = True
+        Panel41.Visible = False
+
+        fnFrmTblLoad()
+        btnSearch.PerformClick()
+    End Sub
+
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = "SELECT MTERCL_No, RCL.MTECL_No, MTER_Date, MTE_Name, MTE_Model, MTER_Due_Date, MTER_Issued_Loc, MTER_Return_Date, MTER_Bigo, MTER_Prepared, MTER_Prepare_Date, MTER_Updated, MTER_Update_Date
+                        FROM 
+                        QC_MTERCL RCL with(NOLOCK), QC_MTECL CL with(NOLOCK)
+                        where 1=1
+                        and RCL.MTECL_No = CL.MTECL_No
+                        and MTERCL_No Like '%" & txtMTERCLNo.Text & "%' 
+                        and convert(datetime,'" & dtpDateFrom.Value.ToString("yyyy-MM-dd") & "') <= MTER_Date and convert(datetime,'" & dtpDateTo.Value.ToString("yyyy-MM-dd") & "') >= MTER_Date
+                        order by MTERCL_No"
+        Re_Count = DB_Select(DBT)
+        lstMain.DataSource = DBT
+        If Re_Count > 0 Then
+
+            lstMain.ClearSelection()
+        End If
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        txtMTERCLNo2.Text = ""
+        dtpDate2.Text = ""
+        txtPLName2.Text = ""
+        txtModel2.Text = ""
+        txtMTECLNo2.Text = ""
+        dtpDueDate2.Text = ""
+        txtLoc2.Text = ""
+        dtpReturn2.Text = ""
+        txtBigo2.Text = ""
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        Dim DBT As DataTable
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+
+        DBT = Nothing
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        If MessageBox.Show(txtMTERCLNo2.Text + " 를 삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If txtMTERCLNo2.Text <> "" Then
+                StrSQL = "Delete QC_MTERCL where MTERCL_No = '" & txtMTERCLNo2.Text & "'"
+                Re_Count = DB_Execute()
+
+                If Re_Count > 0 Then
+                    MsgBox("삭제 완료")
+                End If
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 정보 삭제 : " & txtMTERCLNo2.Text & "-" & txtPLName2.Text
+                Man_Log("Frm_QC_Report4", "정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+            Else
+                MsgBox("선택된 관리번호가 없습니다")
+            End If
+            btnSearch.PerformClick()
+        End If
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = "SELECT * from QC_MTERCL where MTERCL_No = '" & txtMTERCLNo2.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+
+        '#1. 기존 입력 값 초기화
+        clearTblRowValues(tblMTERCL)
+        '#2. 입력자료 입력
+        For i = 0 To tblMTERCL.Rows.Count - 1
+
+            Select Case tblMTERCL.Rows(i).Item(0).ToString
+
+                Case "MTERCL_No"
+                    If txtMTERCLNo2.Text = "" Then
+                        tblMTERCL.Rows(i).Item(11) = PK_Make("QC_MTERCL")
+                    Else
+                        tblMTERCL.Rows(i).Item(11) = txtMTERCLNo2.Text
+                    End If
+                Case "MTECL_No"
+                    tblMTERCL.Rows(i).Item(11) = txtMTECLNo2.Text
+                Case "MTER_Date"
+                    tblMTERCL.Rows(i).Item(11) = dtpDate2.Value.ToString(fmtStr)
+                Case "MTER_Due_Date"
+                    tblMTERCL.Rows(i).Item(11) = dtpDueDate2.Value.ToString(fmtStr)
+                Case "MTER_Issued_Loc"
+                    tblMTERCL.Rows(i).Item(11) = txtLoc2.Text
+                Case "MTER_Return_Date"
+                    tblMTERCL.Rows(i).Item(11) = dtpReturn2.Value.ToString(fmtStr)
+                Case "MTER_Bigo"
+                    tblMTERCL.Rows(i).Item(11) = txtBigo2.Text
+
+                Case "MTER_Prepared"
+                    If Re_Count > 0 Then
+                        tblMTERCL.Rows(i).Item(11) = DBT.Rows(0)("MTER_Prepared").ToString
+                    Else
+                        tblMTERCL.Rows(i).Item(11) = logInUserName
+                    End If
+                Case "MTER_Prepare_Date"
+
+                    If Re_Count > 0 Then
+                        tblMTERCL.Rows(i).Item(11) = DBT.Rows(0)("MTER_Prepare_Date").ToString
+                    Else
+                        tblMTERCL.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                    End If
+                Case "MTER_Updated"
+                    If Re_Count > 0 Then
+                        tblMTERCL.Rows(i).Item(11) = logInUserName
+
+                    End If
+                Case "MTER_Update_Date"
+                    If Re_Count > 0 Then
+                        tblMTERCL.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+
+                    End If
+            End Select
+        Next
+
+        If Re_Count > 0 Then
+
+            Re_Count2 = fnTableUpdate("dbo.QC_MTERCL", tblMTERCL)
+
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        Else
+
+            Re_Count2 = fnTableInsert("dbo.QC_MTERCL", tblMTERCL)
+
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        End If
+
+        If Re_Count > 0 Then
+            prcType = "수정" '수정
+        Else
+            prcType = "신규입력" '입력
+        End If
+
+        If prcType = "수정" Then
+            'hsim 20200515 처리 이력
+            histLogStr = "사용자 " & logInUserName & " 불출관리 정보 수정 : " & txtMTERCLNo2.Text & "-" & txtPLName2.Text
+        Else
+            'hsim 20200515 처리 이력
+            histLogStr = "사용자 " & logInUserName & " 불출관리 정보 신규 입력 : " & txtMTERCLNo2.Text & "-" & txtPLName2.Text
+        End If
+        Man_Log("Frm_QC_Report4", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        'hsim 20200515 개정이력 조회 갱신
+        showRevLog("Frm_QC_Report4", DBT2, lstRev)
+
+        btnSearch.PerformClick()
+    End Sub
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        If lstMain.RowCount > 0 Then
+            txtMTERCLNo2.Text = lstMain.Rows(e.RowIndex).Cells("MTERCL_No").Value.ToString
+            dtpDate2.Text = lstMain.Rows(e.RowIndex).Cells("MTER_Date").Value.ToString
+            txtPLName2.Text = lstMain.Rows(e.RowIndex).Cells("MTE_Name").Value.ToString
+            txtModel2.Text = lstMain.Rows(e.RowIndex).Cells("MTE_Model").Value.ToString
+            txtMTECLNo2.Text = lstMain.Rows(e.RowIndex).Cells("MTECL_No").Value.ToString
+            dtpDueDate2.Text = lstMain.Rows(e.RowIndex).Cells("MTER_Due_Date").Value.ToString
+            txtLoc2.Text = lstMain.Rows(e.RowIndex).Cells("MTER_Issued_Loc").Value.ToString
+            dtpReturn2.Text = lstMain.Rows(e.RowIndex).Cells("MTER_Return_Date").Value.ToString
+            txtBigo2.Text = lstMain.Rows(e.RowIndex).Cells("MTER_Bigo").Value.ToString
+        End If
+    End Sub
+
+
+
+    Private Sub btnExcelDown_Click(sender As Object, e As EventArgs) Handles btnExcelDown.Click
+        Dim i As Integer
+        Dim DBT As DataTable
+        DBT = Nothing
+        xlapp = New Excel.Application
+        xlapp.Visible = False
+        xlbook = xlapp.Workbooks.Open(Application.StartupPath + "\\Excel\\품질팀\\MTERCL.xlsx")
+        xlsheet = xlbook.Sheets(1)
+
+        Try
+
+            For i = 0 To lstMain.Rows.Count - 1
+                xlsheet.Range("A" + (i + 4).ToString).Value = lstMain.Rows(i).Cells("MTER_Date").Value.ToString
+                xlsheet.Range("C" + (i + 4).ToString).Value = lstMain.Rows(i).Cells("MTE_Name").Value.ToString & " (" & lstMain.Rows(i).Cells("MTE_Model").Value.ToString & ")"
+                xlsheet.Range("E" + (i + 4).ToString).Value = lstMain.Rows(i).Cells("MTECL_No").Value.ToString
+                xlsheet.Range("F" + (i + 4).ToString).Value = lstMain.Rows(i).Cells("MTER_Due_Date").Value.ToString
+                xlsheet.Range("G" + (i + 4).ToString).Value = lstMain.Rows(i).Cells("MTER_Issued_Loc").Value.ToString
+                xlsheet.Range("I" + (i + 4).ToString).Value = lstMain.Rows(i).Cells("MTER_Return_Date").Value.ToString
+                xlsheet.Range("K" + (i + 4).ToString).Value = lstMain.Rows(i).Cells("MTER_Bigo").Value.ToString
+            Next
+            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                xlapp.ActiveWorkbook.SaveAs(SaveFileDialog1.FileName)
+                MsgBox("Excel 저장 완료")
+            End If
+
+
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        Finally
+            xlsheet = Nothing
+            xlbook.Close()
+            xlbook = Nothing
+            xlapp.Quit()
+
+
+            xlapp = Nothing
+            'releaseObject(xworksheet)
+            'releaseObject(xworkbook)
+            'releaseObject(xls)
+        End Try
+    End Sub
+
+    Private Sub btnMTSearch_Click(sender As Object, e As EventArgs) Handles btnMTSearch.Click
+        Dim pop1 As Frm_MTE_POP = New Frm_MTE_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtMTECLNo2.Text = pop1.lstMain.Rows(pop1.lstMain.CurrentCell.RowIndex).Cells("MTECL_No").Value.ToString
+            txtPLName2.Text = pop1.lstMain.Rows(pop1.lstMain.CurrentCell.RowIndex).Cells("MTE_Name").Value.ToString
+            txtModel2.Text = pop1.lstMain.Rows(pop1.lstMain.CurrentCell.RowIndex).Cells("MTE_Model").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+    End Sub
+End Class

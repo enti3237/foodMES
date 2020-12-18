@@ -1,0 +1,80 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+
+Public Class Frm_PD_Report4
+
+    Private Sub Frm_Contract_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        'Grid_PD_Load()
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT a1,a3,a2,a7,a8
+           FROM  test with(NOLOCK) "
+
+        Re_Count = DB_Select(DBT)
+        DataGridView5.DataSource = DBT
+
+
+
+    End Sub
+
+    Private Sub Grid_PD_Load()
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+        Dim DBT2 As DataTable
+        DBT2 = Nothing
+
+        StrSQL = "SELECT  PO_JOB, PO_Day, PS_PL_Code, PS_PL_Name, PS_En_Day, PS_En_Time, PS_Total, PS_PO_Total, PS_Bigo 
+                    FROM PO_Stock_List join PO_Order on PS_Code = PO_Code"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+
+    End Sub
+
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+        Dim DBT2 As DataTable
+        DBT2 = Nothing
+
+        StrSQL = "SELECT  PO_JOB, PO_Day, PS_PL_Code, PS_PL_Name, PS_En_Day, PS_En_Time, PS_Total, PS_PO_Total, PS_Bigo 
+                    FROM PO_Stock_List join PO_Order on PS_Code = PO_Code where PO_JOB Like '%" & TextBox15.Text & "%'"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+        'Dim DBT As DataTable
+        'DBT = Nothing
+        'Dim DBT2 As DataTable
+        'DBT2 = Nothing
+
+        'StrSQL = "SELECT  PO_JOB, PO_Day, PS_PL_Code, PS_PL_Name, PS_En_Day, PS_En_Time, PS_Total, PS_PO_Total, PS_Bigo 
+        '            FROM PO_Stock_List join PO_Order on PS_Code = PO_Code where PS_PL_Code Like '%" & TextBox16.Text & "%'"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView5.DataSource = DBT
+        'DataGridView5.ClearSelection()
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        'Dim DBT As DataTable
+        'DBT = Nothing
+        'Dim DBT2 As DataTable
+        'DBT2 = Nothing
+
+        'StrSQL = "SELECT  PO_JOB, PO_Day, PS_PL_Code, PS_PL_Name, PS_En_Day, PS_En_Time, PS_Total, PS_PO_Total, PS_Bigo 
+        '            FROM PO_Stock_List join PO_Order on PS_Code = PO_Code where PS_PL_Name Like '%" & TextBox17.Text & "%'"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView5.DataSource = DBT
+        'DataGridView5.ClearSelection()
+    End Sub
+End Class

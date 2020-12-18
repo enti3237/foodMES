@@ -1,0 +1,358 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class UCFrm9
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.DataGridView6 = New System.Windows.Forms.DataGridView()
+        Me.DataGridView5 = New System.Windows.Forms.DataGridView()
+        Me.DataGridView4 = New System.Windows.Forms.DataGridView()
+        Me.DataGridView3 = New System.Windows.Forms.DataGridView()
+        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.PRDCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PRDNM = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DRWPLANDATE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CPPLANDATE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PRPLANDATE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PSPLANDATE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.WHRQSTPLANDATE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.POPLANDATE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.VENDORNM = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DELIVERYPLACE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RIRPLANDATE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RIRRQSTDATE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.QAENDPLANDATE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MRISPLANDATE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.WHPLACE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ITMCD = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PRDCD2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ITMNM = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ITMSP = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SIZE1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.QTY = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Panel1.SuspendLayout()
+        CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.Label4)
+        Me.Panel1.Controls.Add(Me.Label3)
+        Me.Panel1.Controls.Add(Me.Label2)
+        Me.Panel1.Controls.Add(Me.Label1)
+        Me.Panel1.Controls.Add(Me.DataGridView6)
+        Me.Panel1.Controls.Add(Me.DataGridView5)
+        Me.Panel1.Controls.Add(Me.DataGridView4)
+        Me.Panel1.Controls.Add(Me.DataGridView3)
+        Me.Panel1.Controls.Add(Me.DataGridView2)
+        Me.Panel1.Controls.Add(Me.DataGridView1)
+        Me.Panel1.Location = New System.Drawing.Point(0, 0)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1634, 774)
+        Me.Panel1.TabIndex = 1
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(485, 551)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(21, 12)
+        Me.Label4.TabIndex = 9
+        Me.Label4.Text = "PT"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(485, 374)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(22, 12)
+        Me.Label3.TabIndex = 8
+        Me.Label3.Text = "QA"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(485, 194)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(24, 12)
+        Me.Label2.TabIndex = 7
+        Me.Label2.Text = "MS"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(485, 11)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(35, 12)
+        Me.Label1.TabIndex = 6
+        Me.Label1.Text = "R / D"
+        '
+        'DataGridView6
+        '
+        Me.DataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView6.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.MRISPLANDATE, Me.WHPLACE})
+        Me.DataGridView6.Location = New System.Drawing.Point(485, 569)
+        Me.DataGridView6.Name = "DataGridView6"
+        Me.DataGridView6.RowTemplate.Height = 23
+        Me.DataGridView6.Size = New System.Drawing.Size(673, 150)
+        Me.DataGridView6.TabIndex = 5
+        '
+        'DataGridView5
+        '
+        Me.DataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView5.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RIRRQSTDATE, Me.QAENDPLANDATE})
+        Me.DataGridView5.Location = New System.Drawing.Point(485, 389)
+        Me.DataGridView5.Name = "DataGridView5"
+        Me.DataGridView5.RowTemplate.Height = 23
+        Me.DataGridView5.Size = New System.Drawing.Size(673, 150)
+        Me.DataGridView5.TabIndex = 4
+        '
+        'DataGridView4
+        '
+        Me.DataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView4.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.POPLANDATE, Me.VENDORNM, Me.DELIVERYPLACE, Me.RIRPLANDATE})
+        Me.DataGridView4.Location = New System.Drawing.Point(485, 209)
+        Me.DataGridView4.Name = "DataGridView4"
+        Me.DataGridView4.RowTemplate.Height = 23
+        Me.DataGridView4.Size = New System.Drawing.Size(673, 150)
+        Me.DataGridView4.TabIndex = 3
+        '
+        'DataGridView3
+        '
+        Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView3.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DRWPLANDATE, Me.CPPLANDATE, Me.PRPLANDATE, Me.PSPLANDATE, Me.WHRQSTPLANDATE})
+        Me.DataGridView3.Location = New System.Drawing.Point(485, 29)
+        Me.DataGridView3.Name = "DataGridView3"
+        Me.DataGridView3.RowTemplate.Height = 23
+        Me.DataGridView3.Size = New System.Drawing.Size(673, 150)
+        Me.DataGridView3.TabIndex = 2
+        '
+        'DataGridView2
+        '
+        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ITMCD, Me.PRDCD2, Me.ITMNM, Me.ITMSP, Me.SIZE1, Me.QTY})
+        Me.DataGridView2.Location = New System.Drawing.Point(16, 389)
+        Me.DataGridView2.Name = "DataGridView2"
+        Me.DataGridView2.RowTemplate.Height = 23
+        Me.DataGridView2.Size = New System.Drawing.Size(437, 331)
+        Me.DataGridView2.TabIndex = 1
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.PRDCD, Me.PRDNM})
+        Me.DataGridView1.Location = New System.Drawing.Point(16, 29)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.RowTemplate.Height = 23
+        Me.DataGridView1.Size = New System.Drawing.Size(437, 330)
+        Me.DataGridView1.TabIndex = 0
+        '
+        'PRDCD
+        '
+        Me.PRDCD.DataPropertyName = "PRDCD"
+        Me.PRDCD.HeaderText = "번호"
+        Me.PRDCD.Name = "PRDCD"
+        '
+        'PRDNM
+        '
+        Me.PRDNM.DataPropertyName = "PRDNM"
+        Me.PRDNM.HeaderText = "품명"
+        Me.PRDNM.Name = "PRDNM"
+        '
+        'DRWPLANDATE
+        '
+        Me.DRWPLANDATE.DataPropertyName = "DRWPLANDATE"
+        Me.DRWPLANDATE.HeaderText = "도면예정일자"
+        Me.DRWPLANDATE.Name = "DRWPLANDATE"
+        '
+        'CPPLANDATE
+        '
+        Me.CPPLANDATE.DataPropertyName = "CPPLANDATE"
+        Me.CPPLANDATE.HeaderText = "CP예정일자"
+        Me.CPPLANDATE.Name = "CPPLANDATE"
+        '
+        'PRPLANDATE
+        '
+        Me.PRPLANDATE.DataPropertyName = "PRPLANDATE"
+        Me.PRPLANDATE.HeaderText = "PR예정일자"
+        Me.PRPLANDATE.Name = "PRPLANDATE"
+        '
+        'PSPLANDATE
+        '
+        Me.PSPLANDATE.DataPropertyName = "PSPLANDATE"
+        Me.PSPLANDATE.HeaderText = "PS예정일자"
+        Me.PSPLANDATE.Name = "PSPLANDATE"
+        '
+        'WHRQSTPLANDATE
+        '
+        Me.WHRQSTPLANDATE.DataPropertyName = "WHRQSTPLANDATE"
+        Me.WHRQSTPLANDATE.HeaderText = "생산팀입고요청일자"
+        Me.WHRQSTPLANDATE.Name = "WHRQSTPLANDATE"
+        '
+        'POPLANDATE
+        '
+        Me.POPLANDATE.DataPropertyName = "POPLANDATE"
+        Me.POPLANDATE.HeaderText = "PO예정일자"
+        Me.POPLANDATE.Name = "POPLANDATE"
+        '
+        'VENDORNM
+        '
+        Me.VENDORNM.DataPropertyName = "VENDORNM"
+        Me.VENDORNM.HeaderText = "공급업체명"
+        Me.VENDORNM.Name = "VENDORNM"
+        '
+        'DELIVERYPLACE
+        '
+        Me.DELIVERYPLACE.DataPropertyName = "DELIVERYPLACE"
+        Me.DELIVERYPLACE.HeaderText = "납품장소"
+        Me.DELIVERYPLACE.Name = "DELIVERYPLACE"
+        '
+        'RIRPLANDATE
+        '
+        Me.RIRPLANDATE.DataPropertyName = "RIRPLANDATE"
+        Me.RIRPLANDATE.HeaderText = "RIR예정일자"
+        Me.RIRPLANDATE.Name = "RIRPLANDATE"
+        '
+        'RIRRQSTDATE
+        '
+        Me.RIRRQSTDATE.DataPropertyName = "RIRRQSTDATE"
+        Me.RIRRQSTDATE.HeaderText = "RIR접수일자"
+        Me.RIRRQSTDATE.Name = "RIRRQSTDATE"
+        '
+        'QAENDPLANDATE
+        '
+        Me.QAENDPLANDATE.DataPropertyName = "QAENDPLANDATE"
+        Me.QAENDPLANDATE.HeaderText = "완료예정일자"
+        Me.QAENDPLANDATE.Name = "QAENDPLANDATE"
+        '
+        'MRISPLANDATE
+        '
+        Me.MRISPLANDATE.DataPropertyName = "MRISPLANDATE"
+        Me.MRISPLANDATE.HeaderText = "MRIS예정일자"
+        Me.MRISPLANDATE.Name = "MRISPLANDATE"
+        '
+        'WHPLACE
+        '
+        Me.WHPLACE.DataPropertyName = "WHPLACE"
+        Me.WHPLACE.HeaderText = "보관위치"
+        Me.WHPLACE.Name = "WHPLACE"
+        '
+        'ITMCD
+        '
+        Me.ITMCD.DataPropertyName = "ITMCD"
+        Me.ITMCD.HeaderText = "부품번호"
+        Me.ITMCD.Name = "ITMCD"
+        '
+        'PRDCD2
+        '
+        Me.PRDCD2.DataPropertyName = "PRDCD"
+        Me.PRDCD2.HeaderText = "번호"
+        Me.PRDCD2.Name = "PRDCD2"
+        Me.PRDCD2.Visible = False
+        '
+        'ITMNM
+        '
+        Me.ITMNM.DataPropertyName = "ITMNM"
+        Me.ITMNM.HeaderText = "부품명"
+        Me.ITMNM.Name = "ITMNM"
+        '
+        'ITMSP
+        '
+        Me.ITMSP.DataPropertyName = "ITMSP"
+        Me.ITMSP.HeaderText = "재료규격"
+        Me.ITMSP.Name = "ITMSP"
+        '
+        'SIZE1
+        '
+        Me.SIZE1.DataPropertyName = "SIZE"
+        Me.SIZE1.HeaderText = "사이즈"
+        Me.SIZE1.Name = "SIZE1"
+        '
+        'QTY
+        '
+        Me.QTY.DataPropertyName = "QTY"
+        Me.QTY.HeaderText = "수량"
+        Me.QTY.Name = "QTY"
+        '
+        'UCFrm9
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Panel1)
+        Me.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Name = "UCFrm9"
+        Me.Size = New System.Drawing.Size(1959, 737)
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label1 As Label
+    Friend WithEvents DataGridView6 As DataGridView
+    Friend WithEvents DataGridView5 As DataGridView
+    Friend WithEvents DataGridView4 As DataGridView
+    Friend WithEvents DataGridView3 As DataGridView
+    Friend WithEvents DataGridView2 As DataGridView
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents PRDCD As DataGridViewTextBoxColumn
+    Friend WithEvents PRDNM As DataGridViewTextBoxColumn
+    Friend WithEvents DRWPLANDATE As DataGridViewTextBoxColumn
+    Friend WithEvents CPPLANDATE As DataGridViewTextBoxColumn
+    Friend WithEvents PRPLANDATE As DataGridViewTextBoxColumn
+    Friend WithEvents PSPLANDATE As DataGridViewTextBoxColumn
+    Friend WithEvents WHRQSTPLANDATE As DataGridViewTextBoxColumn
+    Friend WithEvents POPLANDATE As DataGridViewTextBoxColumn
+    Friend WithEvents VENDORNM As DataGridViewTextBoxColumn
+    Friend WithEvents DELIVERYPLACE As DataGridViewTextBoxColumn
+    Friend WithEvents RIRPLANDATE As DataGridViewTextBoxColumn
+    Friend WithEvents RIRRQSTDATE As DataGridViewTextBoxColumn
+    Friend WithEvents QAENDPLANDATE As DataGridViewTextBoxColumn
+    Friend WithEvents MRISPLANDATE As DataGridViewTextBoxColumn
+    Friend WithEvents WHPLACE As DataGridViewTextBoxColumn
+    Friend WithEvents ITMCD As DataGridViewTextBoxColumn
+    Friend WithEvents PRDCD2 As DataGridViewTextBoxColumn
+    Friend WithEvents ITMNM As DataGridViewTextBoxColumn
+    Friend WithEvents ITMSP As DataGridViewTextBoxColumn
+    Friend WithEvents SIZE1 As DataGridViewTextBoxColumn
+    Friend WithEvents QTY As DataGridViewTextBoxColumn
+End Class

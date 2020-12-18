@@ -1,0 +1,6 @@
+﻿Public Class UCFrm_PO
+    Private Sub UCFrm_PO_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+    End Sub
+End Class

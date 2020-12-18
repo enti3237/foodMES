@@ -1,0 +1,351 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.Data.OleDb
+Public Class Frm_QC_Report3
+    Dim tblMTECL As New DataTable
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+
+    Private Sub fnFrmTblLoad()
+        tblMTECL = fnGetTableStructure("dbo.QC_MTECL")
+    End Sub
+    Private Sub Frm_QC_Report3_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        palMain.Top = 40
+        palMain.Left = 10
+        Panel41.Top = 40
+        Panel41.Left = 10
+
+        palMain.Visible = True
+        Panel41.Visible = False
+
+        comboSetUp1(cboYn2, "1110")
+        fnFrmTblLoad()
+        btnSearch.PerformClick()
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        txtMTENo2.Text = ""
+        cboYn2.Text = ""
+        txtName2.Text = ""
+        txtModel2.Text = ""
+        txtManuf2.Text = ""
+        txtYear2.Text = ""
+        txtFreq2.Text = ""
+        dtpDate.Text = ""
+        txtAgent2.Text = ""
+        txtPlace2.Text = ""
+        txtBigo2.Text = ""
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = "SELECT *
+                        FROM 
+                        QC_MTECL with(NOLOCK) 
+                        where 1=1
+                        and MTECL_No Like '%" & txtMTENo.Text & "%' 
+                        order by MTECL_No"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstMain.DataSource = DBT
+            lstMain.ClearSelection()
+        Else
+            lstMain.DataSource = DBT
+        End If
+        showRevLog("Frm_QC_Report3", DBT, lstRev)
+    End Sub
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        If lstMain.RowCount > 0 Then
+            txtMTENo2.Text = lstMain.Rows(e.RowIndex).Cells("MTECL_No").Value.ToString
+            cboYn2.Text = lstMain.Rows(e.RowIndex).Cells("Use_Yn").Value.ToString
+            txtName2.Text = lstMain.Rows(e.RowIndex).Cells("MTE_Name").Value.ToString
+            txtModel2.Text = lstMain.Rows(e.RowIndex).Cells("MTE_Model").Value.ToString
+            txtManuf2.Text = lstMain.Rows(e.RowIndex).Cells("MTE_Manufacturer").Value.ToString
+            txtYear2.Text = lstMain.Rows(e.RowIndex).Cells("MTE_Prchs_Year").Value.ToString
+            txtFreq2.Text = lstMain.Rows(e.RowIndex).Cells("MTE_Calib_Freq").Value.ToString
+            dtpDate.Text = lstMain.Rows(e.RowIndex).Cells("MTE_Calib_Date").Value.ToString
+            txtAgent2.Text = lstMain.Rows(e.RowIndex).Cells("MTE_Calib_Agent").Value.ToString
+            txtPlace2.Text = lstMain.Rows(e.RowIndex).Cells("MTE_Used_Place").Value.ToString
+            txtBigo2.Text = lstMain.Rows(e.RowIndex).Cells("MTE_Bigo").Value.ToString
+        End If
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        Dim DBT As DataTable
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+
+        DBT = Nothing
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        If MessageBox.Show(txtMTENo2.Text + " 를 삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If txtMTENo2.Text <> "" Then
+                StrSQL = "Delete QC_MTECL where MTECL_No = '" & txtMTENo2.Text & "'"
+                Re_Count = DB_Execute()
+
+                If Re_Count > 0 Then
+                    MsgBox("삭제 완료")
+                End If
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 정보 삭제 : " & txtMTENo2.Text & "-" & txtName2.Text
+                Man_Log("Frm_QC_Report3", "정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+            Else
+                MsgBox("선택된 품명이 없습니다")
+            End If
+            showRevLog("Frm_QC_Report3", DBT, lstRev)
+            btnSearch.PerformClick()
+        End If
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = "SELECT * from QC_MTECL where MTECL_No = '" & txtMTENo2.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+
+        '#1. 기존 입력 값 초기화
+        clearTblRowValues(tblMTECL)
+        '#2. 입력자료 입력
+        For i = 0 To tblMTECL.Rows.Count - 1
+
+            Select Case tblMTECL.Rows(i).Item(0).ToString
+
+                Case "MTECL_No"
+                    If txtMTENo2.Text = "" Then
+                        tblMTECL.Rows(i).Item(11) = PK_Make("QC_MTECL")
+                    Else
+                        tblMTECL.Rows(i).Item(11) = txtMTENo2.Text
+                    End If
+
+                Case "MTE_Name"
+                    tblMTECL.Rows(i).Item(11) = txtName2.Text
+                Case "MTE_Model"
+                    tblMTECL.Rows(i).Item(11) = txtModel2.Text
+                Case "MTE_Manufacturer"
+                    tblMTECL.Rows(i).Item(11) = txtManuf2.Text
+                Case "MTE_Prchs_Year"
+                    tblMTECL.Rows(i).Item(11) = txtYear2.Text
+                Case "MTE_Calib_Freq"
+                    tblMTECL.Rows(i).Item(11) = txtFreq2.Text
+                Case "MTE_Calib_Date"
+                    tblMTECL.Rows(i).Item(11) = dtpDate.Value.ToString(fmtStr)
+                Case "MTE_Calib_Agent"
+                    tblMTECL.Rows(i).Item(11) = txtAgent2.Text
+                Case "MTE_Used_Place"
+                    tblMTECL.Rows(i).Item(11) = txtPlace2.Text
+                Case "MTE_Bigo"
+                    tblMTECL.Rows(i).Item(11) = txtBigo2.Text
+                Case "Use_Yn"
+                    tblMTECL.Rows(i).Item(11) = cboYn2.Text
+
+                Case "MTE_Prepared"
+                    If Re_Count > 0 Then
+                        tblMTECL.Rows(i).Item(11) = DBT.Rows(0)("MTE_Prepared").ToString
+                    Else
+                        tblMTECL.Rows(i).Item(11) = logInUserName
+                    End If
+                Case "MTE_Prepare_Date"
+                    If Re_Count > 0 Then
+                        tblMTECL.Rows(i).Item(11) = DBT.Rows(0)("MTE_Prepare_Date").ToString
+                    Else
+                        tblMTECL.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                    End If
+                Case "MTE_Updated"
+                    If Re_Count > 0 Then
+                        tblMTECL.Rows(i).Item(11) = logInUserName
+
+                    End If
+                Case "MTE_Update_Date"
+                    If Re_Count > 0 Then
+                        tblMTECL.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+
+                    End If
+            End Select
+        Next
+
+        If Re_Count > 0 Then
+
+            Re_Count2 = fnTableUpdate("dbo.QC_MTECL", tblMTECL)
+
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        Else
+
+            Re_Count2 = fnTableInsert("dbo.QC_MTECL", tblMTECL)
+
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        End If
+
+        If Re_Count > 0 Then
+            prcType = "수정" '수정
+        Else
+            prcType = "신규입력" '입력
+        End If
+
+        If prcType = "수정" Then
+            'hsim 20200515 처리 이력
+            histLogStr = "사용자 " & logInUserName & " 품목 정보 수정 : " & txtMTENo2.Text & "-" & txtName2.Text
+        Else
+            'hsim 20200515 처리 이력
+            histLogStr = "사용자 " & logInUserName & " 품목 정보 신규 입력 : " & txtMTENo2.Text & "-" & txtName2.Text
+        End If
+        Man_Log("Frm_QC_Report3", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        'hsim 20200515 개정이력 조회 갱신
+        showRevLog("Frm_QC_Report3", DBT2, lstRev)
+
+        btnSearch.PerformClick()
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles btnExcelUpLoad.Click
+        Dim vConn As OleDbConnection
+        Dim DS As DataSet
+        Dim myCmd As OleDbDataAdapter
+        Dim i As Integer
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        Try
+            If OpenFileDialog1.ShowDialog = DialogResult.OK Then
+                '# Excel 을 Database로 인식하도록 Connection String 생성
+                vConn = New OleDbConnection("Provider=Microsoft.Ace.OLEDB.12.0;Data Source=" & OpenFileDialog1.FileName & ";Extended Properties=""Excel 12.0;HDR=YES;""")
+                myCmd = New OleDbDataAdapter("Select * FROM [Sheet1$]", vConn)
+                DS = New DataSet
+                myCmd.Fill(DS)      '# DataSet에 엑셀에 있는 내용 모두 담음(조회 된 Query)
+                'DS.Tables(0)
+                'table 컬럼명 변경
+                DS.Tables(0).Columns(0).ColumnName = "MTECL_No" '관리번호
+                DS.Tables(0).Columns(1).ColumnName = "MTE_Name" '품명
+                DS.Tables(0).Columns(2).ColumnName = "MTE_Model" '형식
+                DS.Tables(0).Columns(3).ColumnName = "MTE_Manufacturer" '제조사
+                DS.Tables(0).Columns(4).ColumnName = "MTE_Prchs_Year" '구입년도
+                DS.Tables(0).Columns(5).ColumnName = "MTE_Calib_Freq" '교정주기
+                DS.Tables(0).Columns(6).ColumnName = "MTE_Calib_Date" '교정일자
+                DS.Tables(0).Columns(7).ColumnName = "MTE_Calib_Agent" '교정기관
+                DS.Tables(0).Columns(8).ColumnName = "MTE_Used_Place" ' 사용장소
+                DS.Tables(0).Columns(9).ColumnName = "MTE_Bigo" ' 비고 
+                'table 컬럼 추가
+                DS.Tables(0).Columns.Add("MTE_Prepared")   '작성자
+                DS.Tables(0).Columns.Add("MTE_Prepare_Date") '작성일시
+                'table 추가된 컬럼 로우 값 넣어주기
+                For i = 0 To DS.Tables(0).Rows.Count - 1
+                    DS.Tables(0).Rows(i)("MTE_Prepared") = logInUserName
+                    DS.Tables(0).Rows(i)("MTE_Prepare_Date") = DateTime.Today.ToString("yyyy-MM-dd")
+                Next
+                'lstSub.DataSource = DS.Tables(0)
+                For i = 0 To DS.Tables(0).Rows.Count - 1
+                    'QC_MTECL 조회
+                    StrSQL = "SELECT * FROM QC_MTECL with(NOLOCK) where MTECL_No = '" & DS.Tables(0).Rows(i)("MTECL_No").ToString & "'"
+                    Re_Count = DB_Select(DBT)
+                    '조회된 MTECL_No 존재하면 삭제
+                    If Re_Count > 0 Then
+                        StrSQL = "DELETE FROM QC_MTECL where MTECL_No = '" & DS.Tables(0).Rows(i)("MTECL_No").ToString & "'"
+                        DB_Execute()
+                    End If
+                Next
+
+                'table 값 insert
+                For i = 0 To DS.Tables(0).Rows.Count - 1
+                    If DS.Tables(0).Rows(i)("MTECL_No").ToString = "" Then
+                        DS.Tables(0).Rows(i)("MTECL_No") = PK_Make("QC_MTECL")
+                    End If
+                    StrSQL = " Insert into QC_MTECL (MTECL_No, MTE_Name, MTE_Model, MTE_Manufacturer, MTE_Prchs_Year, " &
+                             "                          MTE_Calib_Freq, MTE_Calib_Date, MTE_Calib_Agent, MTE_Used_Place, MTE_Bigo, " &
+                             "                          MTE_Prepared, MTE_Prepare_Date, MTE_Updated, MTE_Update_Date) " &
+                             "                  Values ('" & DS.Tables(0).Rows(i)("MTECL_No").ToString & "', '" & DS.Tables(0).Rows(i)("MTE_Name").ToString & "', '" & DS.Tables(0).Rows(i)("MTE_Model").ToString & "','" & DS.Tables(0).Rows(i)("MTE_Manufacturer").ToString & "','" & DS.Tables(0).Rows(i)("MTE_Prchs_Year").ToString & "', " &
+                             "                          '" & DS.Tables(0).Rows(i)("MTE_Calib_Freq").ToString & "', '" & DS.Tables(0).Rows(i)("MTE_Calib_Date").ToString & "','" & DS.Tables(0).Rows(i)("MTE_Calib_Agent").ToString & "','" & DS.Tables(0).Rows(i)("MTE_Used_Place").ToString & "','" & DS.Tables(0).Rows(i)("MTE_Bigo").ToString & "', " &
+                             "                          '" & DS.Tables(0).Rows(i)("MTE_Prepared").ToString & "', '" & DS.Tables(0).Rows(i)("MTE_Prepare_Date").ToString & "','" & "" & "','" & "" & "')"
+                    DB_Execute()
+                Next
+                MsgBox("Excel UpLoad 완료")
+            End If
+        Catch ex As Exception
+            MsgBox(ex)
+        End Try
+
+
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles btnExcelDown.Click
+        Dim i As Integer
+        Dim DBT As DataTable
+        DBT = Nothing
+        xlapp = New Excel.Application
+        xlapp.Visible = False
+        xlbook = xlapp.Workbooks.Open(Application.StartupPath + "\\Excel\\품질팀\\MTECL.xlsx")
+        xlsheet = xlbook.Sheets(1)
+
+        Try
+            StrSQL = "SELECT *
+                        FROM 
+                        QC_MTECL with(NOLOCK) 
+                        where 1=1
+                        and Use_Yn = 'Y' 
+                        order by MTECL_No"
+            Re_Count = DB_Select(DBT)
+
+            For i = 0 To DBT.Rows.Count - 1
+                xlsheet.Range("A" + (i + 4).ToString).Value = DBT.Rows(i)("MTECL_No").ToString
+                xlsheet.Range("C" + (i + 4).ToString).Value = DBT.Rows(i)("MTE_Name").ToString & " (" & DBT.Rows(i)("MTE_Model").ToString & ")"
+                xlsheet.Range("E" + (i + 4).ToString).Value = DBT.Rows(i)("MTE_Manufacturer").ToString
+                xlsheet.Range("F" + (i + 4).ToString).Value = DBT.Rows(i)("MTE_Prchs_Year").ToString
+                xlsheet.Range("G" + (i + 4).ToString).Value = DBT.Rows(i)("MTE_Calib_Freq").ToString
+                xlsheet.Range("I" + (i + 4).ToString).Value = DBT.Rows(i)("MTE_Used_Place").ToString
+                xlsheet.Range("K" + (i + 4).ToString).Value = DBT.Rows(i)("MTE_Bigo").ToString
+            Next
+            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                xlapp.ActiveWorkbook.SaveAs(SaveFileDialog1.FileName)
+                MsgBox("Excel 저장 완료")
+            End If
+
+
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        Finally
+            xlsheet = Nothing
+            xlbook.Close()
+            xlbook = Nothing
+            xlapp.Quit()
+
+
+            xlapp = Nothing
+            'releaseObject(xworksheet)
+            'releaseObject(xworkbook)
+            'releaseObject(xls)
+        End Try
+    End Sub
+
+End Class

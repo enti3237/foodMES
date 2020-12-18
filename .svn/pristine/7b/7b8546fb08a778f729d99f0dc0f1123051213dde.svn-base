@@ -1,0 +1,239 @@
+﻿Public Class Frm_Device
+    Dim Grid_Display As Boolean
+    Dim Grid_Display_Ch As Boolean
+
+    Dim Grid_Bom_Row As Integer
+    Dim Grid_Bom_Col As Integer
+
+    Private Sub Frm_Device_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        lstMain_Setup()
+        'Search_Combo.Items.Add("라인코드")
+        'Search_Combo.Items.Add("라인명")
+        'Search_Combo.Text = "라인코드"
+
+
+    End Sub
+    Public Function lstMain_Setup() As Boolean
+
+        Grid_Color(lstMain)
+
+
+        lstMain.AllowUserToAddRows = False
+        lstMain.RowTemplate.Height = 20
+
+
+        '열의 갯수는 하나 더 많아야 함.
+        lstMain.ColumnCount = 8
+        lstMain.RowCount = 1
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        lstMain.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        lstMain.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        lstMain.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+
+        lstMain.RowHeadersWidth = 40
+        lstMain.Columns(0).Width = 60
+        lstMain.Columns(1).Width = 200
+        lstMain.Columns(2).Width = 100
+        lstMain.Columns(3).Width = 60
+        lstMain.Columns(4).Width = 60
+        lstMain.Columns(5).Width = 60
+        lstMain.Columns(6).Width = 105
+        lstMain.Columns(0).HeaderText = "라인코드"
+        lstMain.Columns(1).HeaderText = "라인명"
+        lstMain.Columns(2).HeaderText = "IP"
+        lstMain.Columns(3).HeaderText = "ID"
+        lstMain.Columns(4).HeaderText = "Port"
+        lstMain.Columns(5).HeaderText = "외주코드"
+        lstMain.Columns(6).HeaderText = "Count"
+        lstMain.Columns(7).HeaderText = "비고"
+
+
+        lstMain.Columns(0).ReadOnly = True
+        lstMain_Setup = True
+    End Function
+
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs)
+        lstMain_Display()
+
+    End Sub
+    Public Function lstMain_Display() As Boolean
+
+        Dim i As Integer
+        Dim j As Integer
+        Dim DBT As New DataTable
+        Grid_Display = False
+        lstMain.RowCount = 1
+        'Select Case Search_Combo.Text
+        '    Case "라인코드"
+        '        StrSQL = "Select * From Device with(NOLOCK) Where PL_Code Like '" & Search_Text.Text & "%' Or PL_Code Is Null Order By PL_Code"
+        '    Case "라인명"
+        '        StrSQL = "Select * From Device with(NOLOCK) Where PL_Name Like '" & Search_Text.Text & "%' Or PL_Name Is Null Order By PL_Name"
+        'End Select
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            lstMain.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                For j = 0 To 7
+                    lstMain.Item(j, i).Value = DBT.Rows(i).Item(j)
+                Next j
+            Next i
+        Else
+            lstMain.RowCount = 1
+            For j = 0 To lstMain.ColumnCount - 1
+                lstMain.Item(j, 0).Value = ""
+            Next j
+
+        End If
+        Grid_Display = True
+        lstMain_Display = True
+    End Function
+
+    Private Sub Insert_Com_Click(sender As Object, e As EventArgs)
+        Frm_Insert.Text = "생산라인 코드 추가"
+        Frm_Insert.Show()
+        Frm_Main.Enabled = False
+    End Sub
+
+    Private Sub Save_Com_Click(sender As Object, e As EventArgs)
+        Dim i As Integer
+        Grid_Display = False
+        For i = 0 To lstMain.Rows.Count - 1
+            If lstMain.Rows(i).HeaderCell.Value = "*" Then
+                'Update
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "update Device Set PL_Name = '" & lstMain.Item(1, i).Value & "', PL_Group = '" & lstMain.Item(2, i).Value & "', PL_ID = '" & lstMain.Item(3, i).Value & "', PL_Port = '" & lstMain.Item(4, i).Value & "', PL_Sel = '" & lstMain.Item(5, i).Value & "', PL_Count = '" & lstMain.Item(6, i).Value & "', PL_Bigo = '" & lstMain.Item(7, i).Value & "' where PL_Code = '" & lstMain.Item(0, i).Value & "'"
+                Re_Count = DB_Execute()
+                lstMain.Rows(i).HeaderCell.Value = ""
+            End If
+        Next i
+        Grid_Display = True
+
+    End Sub
+
+    Private Sub lstMain_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs)
+        If Grid_Display = True Then
+            lstMain.CurrentRow.HeaderCell.Value = "*"
+        End If
+
+    End Sub
+
+    Private Sub Delete_Com_Click(sender As Object, e As EventArgs)
+
+        If Len(lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value) < 1 Then
+            MsgBox("라인코드를 선택하세요.")
+            Exit Sub
+        End If
+        If MsgBox("라인코드  '" & lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value & "'를 삭제 하시겠습니까?", vbYesNo + vbQuestion + vbDefaultButton1, "라인코드 삭제") = vbNo Then
+            Exit Sub
+        End If
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Delete Device where PL_Code = '" & lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value & "'"
+        Re_Count = DB_Execute()
+        lstMain_Display()
+        MsgBox("삭제 되었습니다.")
+
+
+    End Sub
+
+    Private Sub Save_Bom_Click(sender As Object, e As EventArgs)
+        If Len(lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+        Dim i As Integer
+        Grid_Display_Ch = False
+        'For i = 0 To Process_Line_QC.Rows.Count - 1
+        '    If Process_Line_QC.Rows(i).HeaderCell.Value = "*" Then
+        '        'Update
+        '        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        '        StrSQL = StrSQL & "update Device_QC Set PQ_History = '" & Process_Line_QC.Item(1, i).Value & "', PQ_Bigo = '" & Process_Line_QC.Item(2, i).Value & "' where PQ_Code = '" & lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value & "' And PQ_Sun = '" & Process_Line_QC.Item(0, i).Value & "'"
+        '        Re_Count = DB_Execute()
+        '        Process_Line_QC.Rows(i).HeaderCell.Value = ""
+        '    End If
+        'Next i
+        Grid_Display_Ch = True
+
+    End Sub
+
+    Private Sub Insert__Bom_Click(sender As Object, e As EventArgs)
+        If Len(lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Grid_Display_Ch = False
+
+        Dim DBT As New DataTable
+        Dim Db_Sun As Long
+        StrSQL = "Select PQ_Sun From Device_QC with(NOLOCK) Where PQ_Code = '" & lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value & "' Order By Convert(Decimal,PQ_Sun) Desc "
+        Re_Count = DB_Select(DBT)
+        If Re_Count = 0 Then
+            Db_Sun = 1
+        Else
+            Db_Sun = DBT.Rows(0).Item(0) + 1
+        End If
+
+        '추가한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Insert into Device_QC (PQ_Code, PQ_Sun)  Values ('" & lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value & "', '" & Db_Sun & "')"
+        Re_Count = DB_Execute()
+        Grid_Display_Ch = True
+
+    End Sub
+
+    Private Sub Put_Bom_Click(sender As Object, e As EventArgs)
+        If Len(lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Grid_Display_Ch = False
+        Dim i As Integer
+        'For i = Process_Line_QC.RowCount - 1 To Process_Line_QC.CurrentCell.RowIndex Step -1
+        '    '수정한다
+        '    StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        '    StrSQL = StrSQL & "Update Device_QC Set PQ_Sun = '" & i + 2 & "' Where PQ_Sun = '" & i + 1 & "' And PQ_Code = '" & lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value & "'"
+        '    Re_Count = DB_Execute()
+        'Next i
+        '선택된 갈럼값을 가지고 온다
+        '추가한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        'StrSQL = StrSQL & "Insert into Device_QC (PQ_Code, PQ_Sun)  Values ('" & lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value & "', '" & Process_Line_QC.CurrentCell.RowIndex + 1 & "')"
+        Re_Count = DB_Execute()
+        Grid_Display_Ch = True
+
+    End Sub
+
+    Private Sub Delete__Bom_Click(sender As Object, e As EventArgs)
+
+
+
+
+
+        If Len(lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Grid_Display_Ch = False
+        Dim i As Integer
+        '삭제한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        'StrSQL = StrSQL & "Delete Device_QC Where PQ_Code = '" & lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value & "' And   PQ_Sun = '" & Process_Line_QC.Item(0, Process_Line_QC.CurrentCell.RowIndex).Value & "'"
+        Re_Count = DB_Execute()
+
+        'For i = Process_Line_QC.CurrentCell.RowIndex + 1 To Process_Line_QC.RowCount - 1
+        '    '수정한다
+        '    StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        '    StrSQL = StrSQL & "Update Device_QC Set PQ_Sun = '" & i & "' Where PQ_Code = '" & lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value & "' And  PQ_Sun = '" & i + 1 & "'"
+        '    Re_Count = DB_Execute()
+        'Next i
+
+        Grid_Display_Ch = True
+
+    End Sub
+
+End Class

@@ -1,0 +1,32 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.Runtime.InteropServices
+Imports System.Reflection
+Public Class Frm_UI_Guide_Sample1
+
+    Dim prcType As New String(String.Empty)
+    Dim histLogStr As New String(String.Empty)
+    Dim fmtStr As New String(String.Format("yyyy-MM-dd")), fmtStr2 As New String(String.Format("yyyy-MM-dd HH:mm:ss"))
+
+    Dim xlapp As New Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+    Dim xRange As Excel.Range
+    Dim xlotno As String
+
+    Dim Excel_Check As Boolean
+
+    Private Sub Frm_UI_Guide_Sample1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        palMain.Top = 40
+        palMain.Left = 10
+        pnlResultGrid.Top = 40
+        pnlResultGrid.Left = 10
+
+        palMain.Visible = True
+        pnlResultGrid.Visible = False
+
+    End Sub
+
+End Class

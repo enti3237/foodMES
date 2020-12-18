@@ -1,0 +1,10 @@
+﻿Public Class UCFrm_MRIS
+    Private Sub UCFrm_MRIS_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+    End Sub
+
+    Private Sub Panel2_Paint(sender As Object, e As PaintEventArgs) Handles Panel2.Paint
+
+    End Sub
+End Class

@@ -1,0 +1,98 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_Insert
+    Inherits System.Windows.Forms.Form
+
+    'Form은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Cancel_Com = New System.Windows.Forms.Button()
+        Me.Insert_Com = New System.Windows.Forms.Button()
+        Me.Search_Text = New System.Windows.Forms.TextBox()
+        Me.Panel1.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(91, Byte), Integer), CType(CType(155, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Panel1.Controls.Add(Me.Cancel_Com)
+        Me.Panel1.Controls.Add(Me.Insert_Com)
+        Me.Panel1.Controls.Add(Me.Search_Text)
+        Me.Panel1.Location = New System.Drawing.Point(14, 15)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(209, 188)
+        Me.Panel1.TabIndex = 7
+        '
+        'Cancel_Com
+        '
+        Me.Cancel_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Cancel_Com.Location = New System.Drawing.Point(3, 121)
+        Me.Cancel_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Cancel_Com.Name = "Cancel_Com"
+        Me.Cancel_Com.Size = New System.Drawing.Size(194, 59)
+        Me.Cancel_Com.TabIndex = 6
+        Me.Cancel_Com.Text = "취소"
+        Me.Cancel_Com.UseVisualStyleBackColor = False
+        '
+        'Insert_Com
+        '
+        Me.Insert_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Insert_Com.Location = New System.Drawing.Point(3, 55)
+        Me.Insert_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Insert_Com.Name = "Insert_Com"
+        Me.Insert_Com.Size = New System.Drawing.Size(194, 59)
+        Me.Insert_Com.TabIndex = 5
+        Me.Insert_Com.Text = "추가"
+        Me.Insert_Com.UseVisualStyleBackColor = False
+        '
+        'Search_Text
+        '
+        Me.Search_Text.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Search_Text.Location = New System.Drawing.Point(3, 16)
+        Me.Search_Text.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Search_Text.Name = "Search_Text"
+        Me.Search_Text.Size = New System.Drawing.Size(194, 29)
+        Me.Search_Text.TabIndex = 3
+        '
+        'Frm_Insert
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(237, 219)
+        Me.Controls.Add(Me.Panel1)
+        Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
+        Me.Name = "Frm_Insert"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "Frm_Insert"
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Cancel_Com As Button
+    Friend WithEvents Insert_Com As Button
+    Friend WithEvents Search_Text As TextBox
+End Class

@@ -1,0 +1,675 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Public Class Frm_QC_Report1
+    Dim xls As New Excel.Application
+    Dim xworkbook As Excel.Workbook
+    Dim xworksheet As Excel.Worksheet
+    Dim tblQC_AVL As New DataTable
+    Dim tblQC_AVL_List As New DataTable
+    Dim file_path As String = ""
+    Dim file_name As String = ""
+    Dim Main As Frm_Main = Application.OpenForms("Frm_Main")
+
+    Private Sub Frm_QC_Report1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        palMain.Top = 40
+        palMain.Left = 10
+        palMain.Visible = True
+
+        'comboSatUp2(cboVendor3, "0001")
+        'fnFrmTblLoad()
+        'btnSearch.PerformClick()
+    End Sub
+
+    '    Private Sub fnFrmTblLoad()
+    '        tblQC_AVL = fnGetTableStructure("dbo.QC_AVL")
+    '        tblQC_AVL_List = fnGetTableStructure("dbo.QC_AVL_List")
+    '    End Sub
+
+    '    Private Sub Button1_Click(sender As Object, e As EventArgs)
+    '        Label_Color(sender, Color_Label, Di_Panel2)
+    '        palMain.Visible = True
+    '        palDetail.Visible = False
+    '    End Sub
+
+    '    Private Sub Button2_Click(sender As Object, e As EventArgs)
+
+    '    End Sub
+
+
+    '    Private Sub btnSearch_Click(sender As Object, e As EventArgs)
+    '        Dim DBT As DataTable, DBT2 As DataTable
+    '        DBT = Nothing
+    '        DBT2 = Nothing
+
+    '        StrSQL = " SELECT AVL_No, AVL_Rev_No, AVL_Prepared, AVL_Prepare_Date " &
+    '                 " FROM QC_AVL AVL with(NOLOCK) " &
+    '                 " where 1=1 " &
+    '                 " AND AVL.AVL_Rev_No = ( select isnull(max(AVL_Rev_No),1) from QC_AVL where AVL_No = AVL.AVL_No) " &
+    '                 " AND AVL.AVL_No Like '%" & txtAVLNo.Text & "%' " &
+    '                 " AND convert(datetime,'" & dtpDateFrom.Value.ToString("yyyy-MM-dd") & "') <= AVL.AVL_Prepare_Date and convert(datetime,'" & dtpDateTo.Value.ToString("yyyy-MM-dd") & "') >= AVL.AVL_Prepare_Date " &
+    '                 " order by AVL.AVL_Prepare_Date desc, AVL.AVL_No "
+
+    '        Re_Count = DB_Select(DBT)
+
+    '        lstMain.DataSource = DBT
+    '        If lstMain.Rows.Count > 0 Then
+    '            lstMain.Rows(0).Selected = True '첫 째 행 선택
+    '        End If
+
+
+    '        showRevLog("Frm_QC_Report1", DBT2, lstRev)
+    '    End Sub
+
+    '    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs)
+    '        Dim DBT As DataTable
+    '        DBT = Nothing
+    '        If e.RowIndex >= 0 Then
+    '            StrSQL = " SELECT * " &
+    '                 " FROM QC_AVL AVL with(NOLOCK) " &
+    '                 " where 1=1 " &
+    '                 " AND AVL.AVL_Rev_No = ( select isnull(max(AVL_Rev_No),1) from QC_AVL where AVL_No = AVL.AVL_No) " &
+    '                 " AND AVL.AVL_No = '" & lstMain.Rows(e.RowIndex).Cells("AVL_No").Value.ToString & "' "
+
+    '            Re_Count = DB_Select(DBT)
+
+    '            If Re_Count > 0 Then
+    '                txtAVLNo2.Text = DBT.Rows(0)("AVL_No").ToString
+    '                txtRev2.Text = DBT.Rows(0)("AVL_Rev_No").ToString
+    '                txtBigo2.Text = DBT.Rows(0)("AVL_Bigo").ToString
+    '                txtPre2.Text = DBT.Rows(0)("AVL_Prepared").ToString
+    '                dtpPreDate2.Text = DBT.Rows(0)("AVL_Prepare_Date").ToString
+    '                txtReview2.Text = DBT.Rows(0)("AVL_Reviewed").ToString
+    '                dtpReviweDate2.Text = DBT.Rows(0)("AVL_Review_Date").ToString
+    '                txtApp2.Text = DBT.Rows(0)("AVL_Approved").ToString
+    '                dtpAppDate2.Text = DBT.Rows(0)("AVL_Approve_Date").ToString
+    '            End If
+    '        End If
+
+    '    End Sub
+
+    '    Private Sub btnAdd_Click(sender As Object, e As EventArgs)
+    '        txtAVLNo2.Text = ""
+    '        txtRev2.Text = ""
+    '        txtBigo2.Text = ""
+    '        txtPre2.Text = ""
+    '        txtAVLNo2.Text = ""
+    '        dtpPreDate2.Text = ""
+    '        txtReview2.Text = ""
+    '        dtpReviweDate2.Text = ""
+    '        txtApp2.Text = ""
+    '        dtpAppDate2.Text = ""
+    '    End Sub
+
+    '    Private Sub btnDelete_Click(sender As Object, e As EventArgs)
+    '        Dim DBT As DataTable
+    '        Dim histLogStr As String
+    '        Dim fmtStr As String, fmtStr2 As String
+
+    '        DBT = Nothing
+    '        fmtStr = String.Format("yyyy-MM-dd")
+    '        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+    '        If MessageBox.Show(txtAVLNo2.Text + " 를 삭제하시겠습니까?" & vbCrLf & "상세 내용도 함께 삭제합니다", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+    '            If txtAVLNo2.Text <> "" Then
+    '                StrSQL = "Delete QC_AVL where AVL_No = '" & txtAVLNo2.Text & "'"
+    '                Re_Count = DB_Execute()
+
+    '                StrSQL = "Delete QC_AVL_List where AVL_No = '" & txtAVLNo2.Text & "'"
+    '                DB_Execute()
+    '                If Re_Count > 0 Then
+    '                    MsgBox("삭제 완료")
+    '                End If
+    '                'hsim 20200515 처리 이력
+    '                histLogStr = "사용자 " & logInUserName & " 정보 삭제 : " & txtAVLNo2.Text
+    '                Man_Log("Frm_QC_Report1", "정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+    '            Else
+    '                MsgBox("선택된 MVL No 가 없습니다")
+    '            End If
+    '            btnSearch.PerformClick()
+    '        End If
+    '    End Sub
+
+    '    Private Sub btnSave_Click(sender As Object, e As EventArgs)
+    '        Dim i%
+    '        Dim DBT As DataTable
+    '        Dim DBT2 As DataTable
+
+    '        'hsim 20200515 개정이력 확인 정보
+    '        Dim prcType As String
+    '        Dim histLogStr As String
+
+    '        Dim fmtStr As String, fmtStr2 As String
+    '        fmtStr = String.Format("yyyy-MM-dd")
+    '        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+    '        DBT = Nothing
+    '        DBT2 = Nothing
+
+    '        StrSQL = "SELECT * from QC_AVL where AVL_No = '" & txtAVLNo2.Text & "' And AVL_Rev_No = (SELECT max(AVL_Rev_No) from QC_AVL where AVL_No = '" & txtAVLNo2.Text & "' and AVL_Rev_No = '" & txtRev2.Text & "')"
+    '        Re_Count = DB_Select(DBT)
+
+    '        StrSQL = "SELECT * from QC_AVL where AVL_No = '" & txtAVLNo2.Text & "' And AVL_Rev_No = (SELECT max(AVL_Rev_No) from QC_AVL where AVL_No = '" & txtAVLNo2.Text & "')"
+    '        Re_Count2 = DB_Select(DBT2)
+
+    '        '#1. 기존 입력 값 초기화
+    '        clearTblRowValues(tblQC_AVL)
+    '        '#2. 입력자료 입력
+    '        For i = 0 To tblQC_AVL.Rows.Count - 1
+
+    '            Select Case tblQC_AVL.Rows(i).Item(0).ToString
+
+    '                Case "AVL_No"
+    '                    If txtAVLNo2.Text <> "" Then
+    '                        tblQC_AVL.Rows(i).Item(11) = txtAVLNo2.Text
+    '                    Else
+    '                        tblQC_AVL.Rows(i).Item(11) = PK_Make("QC_AVL")
+    '                    End If
+    '                Case "AVL_Rev_No"
+    '                    If Re_Count > 0 Then
+    '                        tblQC_AVL.Rows(i).Item(11) = txtRev2.Text
+    '                    Else
+    '                        tblQC_AVL.Rows(i).Item(11) = 1
+    '                    End If
+    '                Case "AVL_Bigo"
+    '                    tblQC_AVL.Rows(i).Item(11) = txtBigo2.Text
+    '                Case "AVL_Prepared"
+    '                    tblQC_AVL.Rows(i).Item(11) = txtPre2.Text
+    '                Case "AVL_Prepare_Date"
+    '                    tblQC_AVL.Rows(i).Item(11) = dtpPreDate2.Value.ToString(fmtStr)
+    '                Case "AVL_Reviewed"
+    '                    tblQC_AVL.Rows(i).Item(11) = txtReview2.Text
+    '                Case "AVL_Review_Date"
+    '                    tblQC_AVL.Rows(i).Item(11) = dtpReviweDate2.Value.ToString(fmtStr)
+    '                Case "AVL_Approved"
+    '                    tblQC_AVL.Rows(i).Item(11) = txtApp2.Text
+    '                Case "AVL_Approve_Date"
+    '                    tblQC_AVL.Rows(i).Item(11) = dtpAppDate2.Value.ToString(fmtStr)
+
+
+    '                Case "AVL_Updated"
+    '                    If Re_Count > 0 Then
+    '                        tblQC_AVL.Rows(i).Item(11) = logInUserName
+    '                    End If
+    '                Case "AVL_Update_Date"
+    '                    If Re_Count > 0 Then
+    '                        tblQC_AVL.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+    '                    End If
+    '            End Select
+    '        Next
+
+    '        If Re_Count > 0 Then
+
+    '            Re_Count2 = fnTableUpdate("dbo.QC_AVL", tblQC_AVL)
+
+    '            If Re_Count2 > 0 Then
+    '                MsgBox("저장 완료")
+    '            Else
+    '                MsgBox("저장 실패")
+    '            End If
+
+    '        Else
+
+    '            Re_Count2 = fnTableInsert("dbo.QC_AVL", tblQC_AVL)
+
+    '            If Re_Count2 > 0 Then
+    '                MsgBox("저장 완료")
+    '            Else
+    '                MsgBox("저장 실패")
+    '            End If
+
+    '        End If
+
+    '        If Re_Count > 0 Then
+    '            prcType = "수정" '수정
+    '        Else
+    '            prcType = "신규입력" '입력
+    '        End If
+
+    '        If prcType = "수정" Then
+    '            'hsim 20200515 처리 이력
+    '            histLogStr = "사용자 " & logInUserName & " AVL 정보 수정 : " & txtAVLNo2.Text
+    '        Else
+    '            'hsim 20200515 처리 이력
+    '            histLogStr = "사용자 " & logInUserName & " AVL 정보 신규 입력 : " & txtAVLNo2.Text
+    '        End If
+    '        Man_Log("Frm_QC_Report1", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+    '        'hsim 20200515 개정이력 조회 갱신
+    '        showRevLog("Frm_QC_Report1", DBT2, lstRev)
+
+    '        btnSearch.PerformClick()
+    '    End Sub
+
+    '    Private Sub lstMain_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs)
+
+
+    '        If e.RowIndex >= 0 Then
+    '            Label_Color(btnDetail, Color_Label, Di_Panel2)
+    '            palMain.Visible = False
+    '            palDetail.Visible = True
+
+    '            Dim DBT As DataTable
+    '            Dim i As Integer
+    '            DBT = Nothing
+
+    '            StrSQL = " SELECT * " &
+    '                 " FROM QC_AVL_List AVL with(NOLOCK), Company COM with(NOLOCK)" &
+    '                 " where 1=1 " &
+    '                 " AND AVL.AVL_Vendor_Code = COM.CM_Code" &
+    '                 " AND AVL.AVL_Rev_No = ( select isnull(max(AVL_Rev_No),1) from QC_AVL_List where AVL_Code = AVL.AVL_Code) " &
+    '                 " AND AVL.AVL_Code = '" & lstMain.Rows(e.RowIndex).Cells("AVL_No").Value.ToString & "' "
+
+    '            Re_Count = DB_Select(DBT)
+
+    '            If Re_Count > 0 Then
+    '                lstDetail.RowCount = Re_Count
+    '                For i = 0 To lstDetail.RowCount - 1
+    '                    lstDetail.Rows(i).Cells("No").Value = (i + 1).ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Rev_No2").Value = DBT.Rows(i)("AVL_Rev_No").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Code2").Value = DBT.Rows(i)("AVL_Code").ToString
+    '                    lstDetail.Rows(i).Cells("CM_Name").Value = DBT.Rows(i)("CM_Name").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Sun").Value = DBT.Rows(i)("AVL_Sun").ToString
+    '                    lstDetail.Rows(i).Cells("CM_Add1").Value = DBT.Rows(i)("CM_Add1").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Scope_Of_Work").Value = DBT.Rows(i)("AVL_Scope_Of_Work").ToString & " / " & DBT.Rows(i)("AVL_Limitation").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_KEPIC_KOLAS_Cert_No").Value = DBT.Rows(i)("AVL_KEPIC_KOLAS_Cert_No").ToString & " / " & DBT.Rows(i)("AVL_KEPIC_KOLAS_Expire_Date").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Moojin_QAM_No").Value = DBT.Rows(i)("AVL_Moojin_QAM_No").ToString & " / " & DBT.Rows(i)("AVL_Moojin_Rev_No").ToString & " / " & DBT.Rows(i)("AVL_Moojin_Rev_Date").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Moojin_SR_AR_No").Value = DBT.Rows(i)("AVL_Moojin_SR_AR_No").ToString & " / " & DBT.Rows(i)("AVL_Moojin_SR_AR_Date").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Moojin_Next_Audit_Date").Value = DBT.Rows(i)("AVL_Moojin_Next_Audit_Date").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Moojin_Expire_Date").Value = DBT.Rows(i)("AVL_Moojin_Expire_Date").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_List_Bigo").Value = DBT.Rows(i)("AVL_List_Bigo").ToString
+    '                Next
+    '            Else
+    '                lstDetail.RowCount = 0
+    '            End If
+
+    '            If lstDetail.RowCount > 0 Then
+    '                txtSun.Text = (Convert.ToInt32(lstDetail.Rows(lstDetail.RowCount - 1).Cells("AVL_Sun").Value.ToString) + 1).ToString
+    '            Else
+    '                txtSun.Text = "1"
+    '            End If
+    '        End If
+
+    '    End Sub
+
+    '    Private Sub Button16_Click(sender As Object, e As EventArgs)
+    '        cboVendor3.Text = ""
+    '        txtAdd3.Text = ""
+    '        txtScope3.Text = ""
+    '        txtLimit3.Text = ""
+    '        txtKKCert3.Text = ""
+    '        dtpKKExpi3.Text = ""
+    '        txtMJQAM3.Text = ""
+    '        txtMJRev3.Text = ""
+    '        dtpMJRevDate3.Text = ""
+    '        txtSRARNo3.Text = ""
+    '        dtpSRARDate3.Text = ""
+    '        dtpNextAudt3.Text = ""
+    '        dtpExpireDate3.Text = ""
+    '        If lstDetail.RowCount > 0 Then
+    '            txtSun.Text = (Convert.ToInt32(lstDetail.Rows(lstDetail.RowCount - 1).Cells("AVL_Sun").Value.ToString) + 1).ToString
+    '        Else
+    '            txtSun.Text = "1"
+    '        End If
+    '    End Sub
+
+    '    Private Sub btnDelete2_Click(sender As Object, e As EventArgs)
+    '        Dim DBT As DataTable
+    '        Dim histLogStr As String
+    '        Dim fmtStr As String, fmtStr2 As String
+
+    '        DBT = Nothing
+    '        fmtStr = String.Format("yyyy-MM-dd")
+    '        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+    '        If MessageBox.Show(txtAVLNo2.Text + " 의 내용을 삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+    '            If txtAVLNo2.Text <> "" Then
+    '                StrSQL = "Delete QC_AVL_List
+    'where 1=1
+    'And AVL_Code = '" & txtAVLNo2.Text & "' 
+    'And AVL_Rev_No = ( select isnull(max(AVL_Rev_No),1) from QC_AVL_List where AVL_Code = '" & txtAVLNo2.Text & "')
+    'And AVL_Sun = '" & txtSun.Text & "'"
+
+    '                DB_Execute()
+    '                If Re_Count > 0 Then
+    '                    MsgBox("삭제 완료")
+    '                End If
+    '                'hsim 20200515 처리 이력
+    '                histLogStr = "사용자 " & logInUserName & " 정보 삭제 : " & txtAVLNo2.Text
+    '                Man_Log("QC_AVL", "정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+    '            Else
+    '                MsgBox("선택된 MVL No 가 없습니다")
+    '            End If
+    '            btnAdd2.PerformClick()
+
+    '            StrSQL = " SELECT * " &
+    '                 " FROM QC_AVL_List AVL with(NOLOCK), Company COM with(NOLOCK)" &
+    '                 " where 1=1 " &
+    '                 " AND AVL.AVL_Vendor_Code = COM.CM_Code" &
+    '                 " AND AVL.AVL_Rev_No = ( select isnull(max(AVL_Rev_No),1) from QC_AVL_List where AVL_Code = AVL.AVL_Code) " &
+    '                 " AND AVL.AVL_Code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("AVL_No").Value.ToString & "' "
+
+    '            Re_Count = DB_Select(DBT)
+
+    '            If Re_Count > 0 Then
+    '                lstDetail.RowCount = Re_Count
+    '                For i = 0 To lstDetail.RowCount - 1
+    '                    lstDetail.Rows(i).Cells("No").Value = (i + 1).ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Rev_No2").Value = DBT.Rows(i)("AVL_Rev_No").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Code2").Value = DBT.Rows(i)("AVL_Code").ToString
+    '                    lstDetail.Rows(i).Cells("CM_Name").Value = DBT.Rows(i)("CM_Name").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Sun").Value = DBT.Rows(i)("AVL_Sun").ToString
+    '                    lstDetail.Rows(i).Cells("CM_Add1").Value = DBT.Rows(i)("CM_Add1").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Scope_Of_Work").Value = DBT.Rows(i)("AVL_Scope_Of_Work").ToString & " / " & DBT.Rows(i)("AVL_Limitation").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_KEPIC_KOLAS_Cert_No").Value = DBT.Rows(i)("AVL_KEPIC_KOLAS_Cert_No").ToString & " / " & DBT.Rows(i)("AVL_KEPIC_KOLAS_Expire_Date").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Moojin_QAM_No").Value = DBT.Rows(i)("AVL_Moojin_QAM_No").ToString & " / " & DBT.Rows(i)("AVL_Moojin_Rev_No").ToString & " / " & DBT.Rows(i)("AVL_Moojin_Rev_Date").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Moojin_SR_AR_No").Value = DBT.Rows(i)("AVL_Moojin_SR_AR_No").ToString & " / " & DBT.Rows(i)("AVL_Moojin_SR_AR_Date").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Moojin_Next_Audit_Date").Value = DBT.Rows(i)("AVL_Moojin_Next_Audit_Date").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_Moojin_Expire_Date").Value = DBT.Rows(i)("AVL_Moojin_Expire_Date").ToString
+    '                    lstDetail.Rows(i).Cells("AVL_List_Bigo").Value = DBT.Rows(i)("AVL_List_Bigo").ToString
+    '                Next
+    '            End If
+
+    '            If lstDetail.RowCount > 0 Then
+    '                txtSun.Text = (Convert.ToInt32(lstDetail.Rows(lstDetail.RowCount - 1).Cells("AVL_Sun").Value.ToString) + 1).ToString
+    '            Else
+    '                txtSun.Text = "1"
+    '            End If
+    '        End If
+    '    End Sub
+
+    '    Private Sub btnSave2_Click(sender As Object, e As EventArgs)
+    '        Dim i%
+    '        Dim DBT As DataTable
+    '        Dim DBT2 As DataTable
+
+    '        'hsim 20200515 개정이력 확인 정보
+    '        Dim prcType As String
+    '        Dim histLogStr As String
+
+    '        Dim fmtStr As String, fmtStr2 As String
+    '        fmtStr = String.Format("yyyy-MM-dd")
+    '        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+    '        DBT = Nothing
+    '        DBT2 = Nothing
+
+    '        StrSQL = "SELECT * from QC_AVL_List where AVL_Code = '" & txtAVLNo2.Text & "' And AVL_Rev_No = (SELECT max(AVL_Rev_No) from QC_AVL_List where AVL_Code = '" & txtAVLNo2.Text & "' and AVL_Sun = '" & txtSun.Text & "')"
+    '        Re_Count = DB_Select(DBT)
+
+    '        'StrSQL = "SELECT * from QC_AVL where AVL_No = '" & txtAVLNo2.Text & "' And AVL_Rev_No = (SELECT max(AVL_Rev_No) from QC_AVL where AVL_No = '" & txtSun.Text & "')"
+    '        'Re_Count2 = DB_Select(DBT2)
+
+    '        '#1. 기존 입력 값 초기화
+    '        clearTblRowValues(tblQC_AVL_List)
+    '        '#2. 입력자료 입력
+    '        For i = 0 To tblQC_AVL_List.Rows.Count - 1
+
+    '            Select Case tblQC_AVL_List.Rows(i).Item(0).ToString
+
+    '                Case "AVL_Code"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = txtAVLNo2.Text
+
+    '                Case "AVL_Rev_No"
+    '                    If Re_Count > 0 Then
+    '                        tblQC_AVL_List.Rows(i).Item(11) = DBT.Rows(0)("AVL_Rev_No")
+    '                    Else
+    '                        tblQC_AVL_List.Rows(i).Item(11) = 1
+    '                    End If
+    '                Case "AVL_Sun"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = txtSun.Text
+    '                Case "AVL_Vendor_Code"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = cboVendor3.SelectedValue
+    '                Case "AVL_Scope_Of_Work"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = txtScope3.Text
+    '                Case "AVL_Limitation"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = txtLimit3.Text
+    '                Case "AVL_KEPIC_KOLAS_Cert_No"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = txtKKCert3.Text
+    '                Case "AVL_KEPIC_KOLAS_Expire_Date"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = dtpKKExpi3.Value.ToString(fmtStr)
+    '                Case "AVL_Moojin_QAM_No"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = txtMJQAM3.Text
+    '                Case "AVL_Moojin_Rev_No"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = txtMJRev3.Text
+    '                Case "AVL_Moojin_Rev_Date"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = dtpMJRevDate3.Value.ToString(fmtStr)
+    '                Case "AVL_Moojin_SR_AR_No"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = txtSRARNo3.Text
+    '                Case "AVL_Moojin_SR_AR_Date"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = dtpSRARDate3.Value.ToString(fmtStr)
+    '                Case "AVL_Moojin_Next_Audit_Date"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = dtpNextAudt3.Value.ToString(fmtStr)
+    '                Case "AVL_Moojin_Expire_Date"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = dtpExpireDate3.Value.ToString(fmtStr)
+    '                Case "AVL_List_Bigo"
+    '                    tblQC_AVL_List.Rows(i).Item(11) = txtBigo3.Text
+
+
+    '                Case "AVL_Prepared"
+    '                    If Re_Count > 0 Then
+    '                    Else
+    '                        tblQC_AVL_List.Rows(i).Item(11) = logInUserName
+    '                    End If
+    '                Case "AVL_Prepare_Date"
+    '                    If Re_Count > 0 Then
+    '                    Else
+    '                        tblQC_AVL_List.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+    '                    End If
+    '                Case "AVL_Updated"
+    '                    If Re_Count > 0 Then
+    '                        tblQC_AVL_List.Rows(i).Item(11) = logInUserName
+    '                    End If
+    '                Case "AVL_Update_Date"
+    '                    If Re_Count > 0 Then
+    '                        tblQC_AVL_List.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+    '                    End If
+    '            End Select
+    '        Next
+
+    '        If Re_Count > 0 Then
+
+    '            Re_Count2 = fnTableUpdate("dbo.QC_AVL_List", tblQC_AVL_List)
+
+    '            If Re_Count2 > 0 Then
+    '                MsgBox("저장 완료")
+    '            Else
+    '                MsgBox("저장 실패")
+    '            End If
+
+    '        Else
+
+    '            Re_Count2 = fnTableInsert("dbo.QC_AVL_List", tblQC_AVL_List)
+
+    '            If Re_Count2 > 0 Then
+    '                MsgBox("저장 완료")
+    '            Else
+    '                MsgBox("저장 실패")
+    '            End If
+
+    '        End If
+
+    '        If Re_Count > 0 Then
+    '            prcType = "수정" '수정
+    '        Else
+    '            prcType = "신규입력" '입력
+    '        End If
+
+    '        If prcType = "수정" Then
+    '            'hsim 20200515 처리 이력
+    '            histLogStr = "사용자 " & logInUserName & " AVL 상세 정보 수정 : " & txtAVLNo2.Text
+    '        Else
+    '            'hsim 20200515 처리 이력
+    '            histLogStr = "사용자 " & logInUserName & " AVL 상세 정보 신규 입력 : " & txtAVLNo2.Text
+    '        End If
+    '        Man_Log("Frm_QC_Report1", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+    '        'hsim 20200515 개정이력 조회 갱신
+    '        showRevLog("Frm_QC_Report1", DBT2, lstRev)
+
+    '        btnSearch.PerformClick()
+
+    '        StrSQL = " SELECT * " &
+    '                 " FROM QC_AVL_List AVL with(NOLOCK), Company COM with(NOLOCK)" &
+    '                 " where 1=1 " &
+    '                 " AND AVL.AVL_Vendor_Code = COM.CM_Code" &
+    '                 " AND AVL.AVL_Rev_No = ( select isnull(max(AVL_Rev_No),1) from QC_AVL_List where AVL_Code = AVL.AVL_Code) " &
+    '                 " AND AVL.AVL_Code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("AVL_No").Value.ToString & "' "
+
+    '        Re_Count = DB_Select(DBT)
+
+    '        If Re_Count > 0 Then
+    '            lstDetail.RowCount = Re_Count
+    '            For i = 0 To lstDetail.RowCount - 1
+    '                lstDetail.Rows(i).Cells("No").Value = (i + 1).ToString
+    '                lstDetail.Rows(i).Cells("AVL_Rev_No2").Value = DBT.Rows(i)("AVL_Rev_No").ToString
+    '                lstDetail.Rows(i).Cells("AVL_Code2").Value = DBT.Rows(i)("AVL_Code").ToString
+    '                lstDetail.Rows(i).Cells("CM_Name").Value = DBT.Rows(i)("CM_Name").ToString
+    '                lstDetail.Rows(i).Cells("AVL_Sun").Value = DBT.Rows(i)("AVL_Sun").ToString
+    '                lstDetail.Rows(i).Cells("CM_Add1").Value = DBT.Rows(i)("CM_Add1").ToString
+    '                lstDetail.Rows(i).Cells("AVL_Scope_Of_Work").Value = DBT.Rows(i)("AVL_Scope_Of_Work").ToString & " / " & DBT.Rows(i)("AVL_Limitation").ToString
+    '                lstDetail.Rows(i).Cells("AVL_KEPIC_KOLAS_Cert_No").Value = DBT.Rows(i)("AVL_KEPIC_KOLAS_Cert_No").ToString & " / " & DBT.Rows(i)("AVL_KEPIC_KOLAS_Expire_Date").ToString
+    '                lstDetail.Rows(i).Cells("AVL_Moojin_QAM_No").Value = DBT.Rows(i)("AVL_Moojin_QAM_No").ToString & " / " & DBT.Rows(i)("AVL_Moojin_Rev_No").ToString & " / " & DBT.Rows(i)("AVL_Moojin_Rev_Date").ToString
+    '                lstDetail.Rows(i).Cells("AVL_Moojin_SR_AR_No").Value = DBT.Rows(i)("AVL_Moojin_SR_AR_No").ToString & " / " & DBT.Rows(i)("AVL_Moojin_SR_AR_Date").ToString
+    '                lstDetail.Rows(i).Cells("AVL_Moojin_Next_Audit_Date").Value = DBT.Rows(i)("AVL_Moojin_Next_Audit_Date").ToString
+    '                lstDetail.Rows(i).Cells("AVL_Moojin_Expire_Date").Value = DBT.Rows(i)("AVL_Moojin_Expire_Date").ToString
+    '                lstDetail.Rows(i).Cells("AVL_List_Bigo").Value = DBT.Rows(i)("AVL_List_Bigo").ToString
+    '            Next
+    '        End If
+
+    '        If lstDetail.RowCount > 0 Then
+    '            txtSun.Text = (Convert.ToInt32(lstDetail.Rows(lstDetail.RowCount - 1).Cells("AVL_Sun").Value.ToString) + 1).ToString
+    '        Else
+    '            txtSun.Text = "1"
+    '        End If
+    '    End Sub
+
+    '    Private Sub lstDetail_CellClick(sender As Object, e As DataGridViewCellEventArgs)
+    '        If e.RowIndex >= 0 Then
+
+    '            cboVendor3.SelectedText = lstDetail.Rows(e.RowIndex).Cells("CM_Name").Value.ToString
+    '            txtAdd3.Text = lstDetail.Rows(e.RowIndex).Cells("CM_Add1").Value.ToString
+    '            txtSun.Text = lstDetail.Rows(e.RowIndex).Cells("AVL_Sun").Value.ToString
+    '            txtScope3.Text = lstDetail.Rows(e.RowIndex).Cells("AVL_Scope_Of_Work").Value.ToString.Split("/")(0).Trim
+    '            txtLimit3.Text = lstDetail.Rows(e.RowIndex).Cells("AVL_Scope_Of_Work").Value.ToString.Split("/")(1).Trim
+    '            txtKKCert3.Text = lstDetail.Rows(e.RowIndex).Cells("AVL_KEPIC_KOLAS_Cert_No").Value.ToString.Split("/")(0).Trim
+    '            dtpKKExpi3.Text = lstDetail.Rows(e.RowIndex).Cells("AVL_KEPIC_KOLAS_Cert_No").Value.ToString.Split("/")(1).Trim
+    '            txtMJQAM3.Text = lstDetail.Rows(e.RowIndex).Cells("AVL_Moojin_QAM_No").Value.ToString.Split("/")(0).Trim
+    '            txtMJRev3.Text = lstDetail.Rows(e.RowIndex).Cells("AVL_Moojin_QAM_No").Value.ToString.Split("/")(1).Trim
+    '            dtpMJRevDate3.Text = lstDetail.Rows(e.RowIndex).Cells("AVL_Moojin_QAM_No").Value.ToString.Split("/")(2).Trim
+    '            txtSRARNo3.Text = lstDetail.Rows(e.RowIndex).Cells("AVL_Moojin_SR_AR_No").Value.ToString.Split("/")(0).Trim
+    '            dtpSRARDate3.Text = lstDetail.Rows(e.RowIndex).Cells("AVL_Moojin_SR_AR_No").Value.ToString.Split("/")(1).Trim
+    '            dtpNextAudt3.Text = lstDetail.Rows(e.RowIndex).Cells("AVL_Moojin_Next_Audit_Date").Value.ToString
+    '            dtpExpireDate3.Text = lstDetail.Rows(e.RowIndex).Cells("AVL_Moojin_Expire_Date").Value.ToString
+    '            txtBigo3.Text = lstDetail.Rows(e.RowIndex).Cells("AVL_List_Bigo").Value.ToString
+    '        End If
+    '    End Sub
+
+    '    Private Sub btnExcelDown_Click(sender As Object, e As EventArgs)
+    '        palMain.Visible = False
+    '        palDetail.Visible = True
+    '        palPOP.Visible = True
+    '        palPOP.BringToFront()
+    '    End Sub
+
+    '    Private Sub btnPOPClose_Click(sender As Object, e As EventArgs)
+    '        palMain.Visible = False
+    '        palDetail.Visible = True
+    '        palPOP.Visible = False
+    '    End Sub
+
+    '    Private Sub btnExcelA_Click(sender As Object, e As EventArgs)
+    '        If lstDetail.RowCount > 0 Then
+    '            Dim i As Integer
+    '            xls = New Excel.Application
+    '            xls.Visible = False
+    '            xworkbook = xls.Workbooks.Open(Application.StartupPath + "\\Excel\\품질팀\\AVL1.xlsx")
+    '            xworksheet = xworkbook.Sheets(1)
+
+    '            Try
+    '                xworksheet.Range("K1").Value = txtAVLNo2.Text
+    '                xworksheet.Range("K2").Value = txtRev2.Text
+    '                xworksheet.Range("K4").Value = dtpPreDate2.Value.ToString("yyyy-MM-dd")
+    '                For i = 0 To lstDetail.Rows.Count - 1
+    '                    xworksheet.Range("A" + (i * 3 + 9).ToString).Value = lstDetail.Rows(i).Cells("CM_Name").Value.ToString
+    '                    xworksheet.Range("C" + (i * 3 + 9).ToString).Value = lstDetail.Rows(i).Cells("CM_Add1").Value.ToString
+    '                    xworksheet.Range("E" + (i * 3 + 9).ToString).Value = lstDetail.Rows(i).Cells("AVL_Scope_Of_Work").Value.ToString
+    '                    xworksheet.Range("G" + (i * 3 + 9).ToString).Value = lstDetail.Rows(i).Cells("AVL_KEPIC_KOLAS_Cert_No").Value.ToString
+    '                    xworksheet.Range("H" + (i * 3 + 9).ToString).Value = lstDetail.Rows(i).Cells("AVL_Moojin_QAM_No").Value.ToString
+    '                    xworksheet.Range("J" + (i * 3 + 9).ToString).Value = lstDetail.Rows(i).Cells("AVL_Moojin_SR_AR_No").Value.ToString
+    '                    xworksheet.Range("J" + (i * 3 + 10).ToString).Value = lstDetail.Rows(i).Cells("AVL_Moojin_Next_Audit_Date").Value.ToString
+    '                    xworksheet.Range("J" + (i * 3 + 11).ToString).Value = lstDetail.Rows(i).Cells("AVL_Moojin_Expire_Date").Value.ToString
+    '                    xworksheet.Range("L" + (i * 3 + 9).ToString).Value = lstDetail.Rows(i).Cells("AVL_List_Bigo").Value.ToString
+    '                Next
+    '                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+    '                    xls.ActiveWorkbook.SaveAs(SaveFileDialog1.FileName)
+    '                    MsgBox("Excel 저장 완료")
+    '                    palPOP.Visible = False
+    '                End If
+
+
+
+    '            Catch ex As Exception
+    '                MsgBox(ex.ToString)
+    '            Finally
+    '                xworksheet = Nothing
+    '                xworkbook.Close()
+    '                xworkbook = Nothing
+    '                xls.Quit()
+
+
+    '                xls = Nothing
+
+    '            End Try
+    '        End If
+
+    '    End Sub
+
+    '    Private Sub btnExcelB_Click(sender As Object, e As EventArgs)
+    '        If lstDetail.RowCount > 0 Then
+    '            Dim i As Integer
+    '            xls = New Excel.Application
+    '            xls.Visible = False
+    '            xworkbook = xls.Workbooks.Open(Application.StartupPath + "\\Excel\\품질팀\\AVL2.xlsx")
+    '            xworksheet = xworkbook.Sheets(1)
+
+    '            Try
+    '                xworksheet.Range("K1").Value = txtAVLNo2.Text
+    '                xworksheet.Range("K2").Value = txtRev2.Text
+    '                xworksheet.Range("K4").Value = dtpPreDate2.Value.ToString("yyyy-MM-dd")
+    '                For i = 0 To lstDetail.Rows.Count - 1
+    '                    xworksheet.Range("A" + (i * 3 + 9).ToString).Value = lstDetail.Rows(i).Cells("CM_Name").Value.ToString
+    '                    xworksheet.Range("C" + (i * 3 + 9).ToString).Value = lstDetail.Rows(i).Cells("CM_Add1").Value.ToString
+    '                    xworksheet.Range("E" + (i * 3 + 9).ToString).Value = lstDetail.Rows(i).Cells("AVL_Scope_Of_Work").Value.ToString
+    '                    xworksheet.Range("G" + (i * 3 + 9).ToString).Value = lstDetail.Rows(i).Cells("AVL_KEPIC_KOLAS_Cert_No").Value.ToString
+    '                    xworksheet.Range("H" + (i * 3 + 9).ToString).Value = lstDetail.Rows(i).Cells("AVL_Moojin_QAM_No").Value.ToString
+    '                    xworksheet.Range("J" + (i * 3 + 9).ToString).Value = lstDetail.Rows(i).Cells("AVL_Moojin_SR_AR_No").Value.ToString
+    '                    xworksheet.Range("J" + (i * 3 + 10).ToString).Value = lstDetail.Rows(i).Cells("AVL_Moojin_Next_Audit_Date").Value.ToString
+    '                    xworksheet.Range("J" + (i * 3 + 11).ToString).Value = lstDetail.Rows(i).Cells("AVL_Moojin_Expire_Date").Value.ToString
+    '                    xworksheet.Range("L" + (i * 3 + 9).ToString).Value = lstDetail.Rows(i).Cells("AVL_List_Bigo").Value.ToString
+    '                Next
+    '                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+    '                    xls.ActiveWorkbook.SaveAs(SaveFileDialog1.FileName)
+    '                    MsgBox("Excel 저장 완료")
+    '                    palPOP.Visible = False
+    '                End If
+
+
+
+    '            Catch ex As Exception
+    '                MsgBox(ex.ToString)
+    '            Finally
+    '                xworksheet = Nothing
+    '                xworkbook.Close()
+    '                xworkbook = Nothing
+    '                xls.Quit()
+
+
+    '                xls = Nothing
+
+    '            End Try
+    '        End If
+    '    End Sub
+
+End Class

@@ -1,0 +1,469 @@
+﻿Public Class Frm_PD_Report11
+    Dim tblPD_Stock As New DataTable
+    Dim tblPD_Stock_List As New DataTable
+    Dim file_path As String = ""
+    Dim file_name As String = ""
+
+    Private Sub fnFrmTblLoad()
+        tblPD_Stock = fnGetTableStructure("dbo.PD_Stock")
+        tblPD_Stock_List = fnGetTableStructure("dbo.PD_Stock_List")
+    End Sub
+
+    Private Sub Frm_PD_Prport11_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = True
+        palDetail.Visible = False
+
+        comboSatUp(cboUnit3, "1050")
+        fnFrmTblLoad()
+        btnSearch.PerformClick()
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles btnMain.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = True
+        palDetail.Visible = False
+    End Sub
+
+
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "Select * From PD_Stock ST
+where 1=1
+and PD_No Like '%" & txtPDNo.Text & "%'
+and PD_Rev = (select isnull(max(PD_Rev),1) from PD_Stock where PD_No = ST.PD_No)
+order by 1
+"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstMain.DataSource = DBT
+
+        End If
+        lstMain.ClearSelection()
+    End Sub
+
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        txtPDNo2.Text = ""
+        txtRev2.Text = ""
+        dtpDate2.Text = ""
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        Dim DBT As DataTable
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+
+        DBT = Nothing
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        If MessageBox.Show(txtPDNo2.Text + " 를 삭제하시겠습니까?" & vbCrLf & "상세내용도 함께 삭제합니다", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If txtPDNo2.Text <> "" Then
+                StrSQL = "Delete PD_Stock where PD_No = '" & txtPDNo2.Text & "'"
+                Re_Count = DB_Execute()
+
+                StrSQL = "Delete PD_Stock_List where PD_No = '" & txtPDNo2.Text & "'"
+                DB_Execute()
+                If Re_Count > 0 Then
+                    MsgBox("삭제 완료")
+                End If
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 정보 삭제 : " & txtPDNo2.Text
+                Man_Log("Frm_PD_Report11", "정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+            Else
+                MsgBox("선택된 재고ID 가 없습니다")
+            End If
+            btnSearch.PerformClick()
+        End If
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+        '업데이트
+        StrSQL = "SELECT * from PD_Stock where PD_No = '" & txtPDNo2.Text & "' And PD_Rev = (SELECT max(PD_Rev) from PD_Stock where PD_No = '" & txtPDNo2.Text & "' and PD_Rev = '" & txtRev2.Text & "')"
+        Re_Count = DB_Select(DBT)
+        '개정번호 증가
+        StrSQL = "SELECT * from PD_Stock where PD_No = '" & txtPDNo2.Text & "' And PD_Rev = (SELECT max(PD_Rev) from PD_Stock where PD_No = '" & txtPDNo2.Text & "')"
+        DB_Select(DBT2)
+
+        '#1. 기존 입력 값 초기화
+        clearTblRowValues(tblPD_Stock)
+        '#2. 입력자료 입력
+        For i = 0 To tblPD_Stock.Rows.Count - 1
+
+            Select Case tblPD_Stock.Rows(i).Item(0).ToString
+
+                Case "PD_No"
+                    If txtPDNo2.Text <> "" Then
+                        tblPD_Stock.Rows(i).Item(11) = txtPDNo2.Text
+                    Else
+                        tblPD_Stock.Rows(i).Item(11) = PK_Make("PD_Stock")
+                    End If
+                Case "PD_Rev"
+                    If txtPDNo2.Text <> "" Then
+                        tblPD_Stock.Rows(i).Item(11) = txtRev2.Text
+                    Else
+                        tblPD_Stock.Rows(i).Item(11) = 1
+                    End If
+                Case "PD_Date"
+                    tblPD_Stock.Rows(i).Item(11) = dtpDate2.Value.ToString(fmtStr)
+
+                Case "PD_Prepared"
+                    If Re_Count > 0 Then
+                        tblPD_Stock.Rows(i).Item(11) = DBT.Rows(0)("PD_Prepared").ToString
+                    Else
+                        If Re_Count2 > 0 Then
+                            tblPD_Stock.Rows(i).Item(11) = DBT2.Rows(0)("PD_Prepared").ToString
+                        Else
+                            tblPD_Stock.Rows(i).Item(11) = logInUserName
+                        End If
+                    End If
+                Case "PD_Prepared_Date"
+                    If Re_Count > 0 Then
+                        tblPD_Stock.Rows(i).Item(11) = DBT.Rows(0)("PD_Prepared_Date").ToString
+                    Else
+                        If Re_Count2 > 0 Then
+                            tblPD_Stock.Rows(i).Item(11) = DBT2.Rows(0)("PD_Prepared_Date").ToString
+                        Else
+                            tblPD_Stock.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+                        End If
+                    End If
+                Case "PD_Updated"
+                    If Re_Count > 0 Then
+                        If DBT.Rows(0)("PD_Prepared").ToString <> "" Then
+                            tblPD_Stock.Rows(i).Item(11) = logInUserName
+                        End If
+
+                    Else
+                        If Re_Count2 > 0 Then
+                            tblPD_Stock.Rows(i).Item(11) = logInUserName
+                        End If
+                    End If
+                Case "PD_Update_Date"
+                    If Re_Count > 0 Then
+                        If DBT.Rows(0)("PD_Prepared").ToString <> "" Then
+                            tblPD_Stock.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+                        End If
+                    Else
+                        If Re_Count2 > 0 Then
+                            tblPD_Stock.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+                        End If
+                    End If
+            End Select
+        Next
+
+        If Re_Count > 0 Then
+            Re_Count2 = fnTableUpdate("dbo.PD_Stock", tblPD_Stock)
+
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+            Else
+                MsgBox("저장 실패")
+            End If
+        Else
+            Re_Count2 = fnTableInsert("dbo.PD_Stock", tblPD_Stock)
+
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        End If
+
+        If Re_Count > 0 Then
+            prcType = "수정" '수정
+        Else
+            prcType = "신규입력" '입력
+        End If
+
+        If prcType = "수정" Then
+            'hsim 20200515 처리 이력
+            histLogStr = "사용자 " & logInUserName & " BOM 정보 수정 : " & txtPDNo2.Text & "-" & txtRev2.Text
+        Else
+            'hsim 20200515 처리 이력
+            histLogStr = "사용자 " & logInUserName & " BOM 정보 신규 입력 : " & txtPDNo2.Text & "-" & txtRev2.Text
+        End If
+        Man_Log("Frm_BOM", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        btnSearch.PerformClick()
+    End Sub
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        If e.RowIndex >= 0 Then
+            txtPDNo2.Text = lstMain.Rows(e.RowIndex).Cells("PD_No").Value.ToString
+            txtRev2.Text = lstMain.Rows(e.RowIndex).Cells("PD_Rev").Value.ToString
+            dtpDate2.Text = lstMain.Rows(e.RowIndex).Cells("PD_Date").Value.ToString
+        End If
+    End Sub
+
+    Private Sub lstMain_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellDoubleClick
+        Label_Color(btnDetail, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        palDetail.Visible = True
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "Select * From PD_Stock_List STL
+where 1=1
+and PD_No = '" & txtPDNo2.Text & "'
+and PD_Rev = (select isnull(max(PD_Rev),1) from PD_Stock_List where PD_No = STL.PD_No)
+order by 1
+"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstDetail.DataSource = DBT
+
+        End If
+        lstDetail.ClearSelection()
+    End Sub
+
+    Private Sub btnAdd2_Click(sender As Object, e As EventArgs) Handles btnAdd2.Click
+        txtDWGNo3.Text = ""
+        txtBOMNo3.Text = ""
+        txtPLCode3.Text = ""
+        txtPLName3.Text = ""
+        txtSpec3.Text = ""
+        txtSize3.Text = ""
+        txtQTY3.Text = ""
+        cboUnit3.Text = ""
+        txtBigo3.Text = ""
+    End Sub
+
+    Private Sub lstDetail_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstDetail.CellClick
+        If e.RowIndex >= 0 Then
+            txtDWGNo3.Text = lstDetail.Rows(e.RowIndex).Cells("").Value.ToString
+            txtBOMNo3.Text = lstDetail.Rows(e.RowIndex).Cells("").Value.ToString
+            txtPLCode3.Text = lstDetail.Rows(e.RowIndex).Cells("").Value.ToString
+            txtPLName3.Text = lstDetail.Rows(e.RowIndex).Cells("").Value.ToString
+            txtSpec3.Text = lstDetail.Rows(e.RowIndex).Cells("").Value.ToString
+            txtSize3.Text = lstDetail.Rows(e.RowIndex).Cells("").Value.ToString
+            txtQTY3.Text = lstDetail.Rows(e.RowIndex).Cells("").Value.ToString
+            cboUnit3.Text = lstDetail.Rows(e.RowIndex).Cells("").Value.ToString
+            txtBigo3.Text = lstDetail.Rows(e.RowIndex).Cells("").Value.ToString
+        End If
+    End Sub
+
+    Private Sub btnDelete2_Click(sender As Object, e As EventArgs) Handles btnDelete2.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+        'hsim 20200515 개정이력 확인 정보
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        If lstDetail.Rows.Count > 0 Then
+            If MessageBox.Show("삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+
+                If txtPLCode3.Text <> "" Then
+
+                    StrSQL = "Delete PD_Stock_List where PD_No = '" & lstDetail.Rows(lstDetail.CurrentCell.RowIndex).Cells("PD_No2").Value.ToString & "' and PD_Rev = '" & lstDetail.Rows(lstDetail.CurrentCell.RowIndex).Cells("PD_Rev2").Value.ToString & "' and PL_Code = " & txtPLCode3.Text
+                    DB_Execute()
+                    If Re_Count > 0 Then
+                        MsgBox("삭제 완료")
+                    End If
+                    'hsim 20200515 처리 이력
+                    histLogStr = "사용자 " & logInUserName & " 재고 상세정보 삭제 : " & txtPDNo2.Text & "-" & txtPLName3.Text
+                    Man_Log("Frm_PD_Report11", "재고 상세정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+                Else
+                    MsgBox("선택된 품목이 없습니다")
+                End If
+
+            End If
+        Else
+            MsgBox("선택된 품목이 없습니다")
+        End If
+
+        StrSQL = "Select * From PD_Stock_List STL
+where 1=1
+and PD_No = '" & txtPDNo2.Text & "'
+and PD_Rev = (select isnull(max(PD_Rev),1) from PD_Stock_List where PD_No = STL.PD_No)
+order by 1
+"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstDetail.DataSource = DBT
+
+        End If
+        lstDetail.ClearSelection()
+        btnAdd2.PerformClick()
+    End Sub
+
+    Private Sub btnSave2_Click(sender As Object, e As EventArgs) Handles btnSave2.Click
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+        '업데이트
+        StrSQL = "SELECT * from PD_Stock_List where PD_No = '" & txtPDNo2.Text & "' And PD_Rev = (SELECT max(PD_Rev) from PD_Stock_List where PD_No = '" & txtPDNo2.Text & "') and PL_Code = '" & txtPLCode3.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+        '#1. 기존 입력 값 초기화
+        clearTblRowValues(tblPD_Stock_List)
+        '#2. 입력자료 입력
+        For i = 0 To tblPD_Stock_List.Rows.Count - 1
+
+            Select Case tblPD_Stock_List.Rows(i).Item(0).ToString
+
+                Case "PD_No"
+                    tblPD_Stock_List.Rows(i).Item(11) = txtPDNo2.Text
+                Case "PD_Rev"
+                    tblPD_Stock_List.Rows(i).Item(11) = "1"
+                Case "DWG_No"
+                    tblPD_Stock_List.Rows(i).Item(11) = txtDWGNo3.Text
+                Case "BOM_No"
+                    tblPD_Stock_List.Rows(i).Item(11) = txtBOMNo3.Text
+                Case "PL_Code"
+                    tblPD_Stock_List.Rows(i).Item(11) = txtPLCode3.Text
+                Case "PL_Name"
+                    tblPD_Stock_List.Rows(i).Item(11) = txtPLName3.Text
+                Case "PL_Spec"
+                    tblPD_Stock_List.Rows(i).Item(11) = txtSpec3.Text
+                Case "PL_Size"
+                    tblPD_Stock_List.Rows(i).Item(11) = txtSize3.Text
+                Case "PL_QTY"
+                    tblPD_Stock_List.Rows(i).Item(11) = txtQTY3.Text
+                Case "PL_Unit"
+                    tblPD_Stock_List.Rows(i).Item(11) = cboUnit3.Text
+                Case "PD_Bigo"
+                    tblPD_Stock_List.Rows(i).Item(11) = txtBigo3.Text
+                Case "PD_Prepared"
+                    If Re_Count > 0 Then
+                        tblPD_Stock_List.Rows(i).Item(11) = DBT.Rows(0)("BO_Prepared").ToString
+                    Else
+                        tblPD_Stock_List.Rows(i).Item(11) = logInUserName
+                    End If
+                Case "PD_Prepared_Date"
+                    If Re_Count > 0 Then
+                        tblPD_Stock_List.Rows(i).Item(11) = DBT.Rows(0)("BO_Prepare_Date").ToString
+                    Else
+                        tblPD_Stock_List.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+                    End If
+                Case "PD_Updated"
+                    If Re_Count > 0 Then
+                        tblPD_Stock_List.Rows(i).Item(11) = logInUserName
+                    End If
+                Case "PD_Update_Date"
+                    If Re_Count > 0 Then
+                        tblPD_Stock_List.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+                    End If
+            End Select
+        Next
+
+        If Re_Count > 0 Then
+            Re_Count2 = fnTableUpdate("dbo.PD_Stock_List", tblPD_Stock_List)
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+            Else
+                MsgBox("저장 실패")
+            End If
+        Else
+            Re_Count2 = fnTableInsert("dbo.PD_Stock_List", tblPD_Stock_List)
+
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+            Else
+                MsgBox("저장 실패")
+            End If
+        End If
+
+        If Re_Count > 0 Then
+            prcType = "수정" '수정
+        Else
+            prcType = "신규입력" '입력
+        End If
+
+        If prcType = "수정" Then
+            'hsim 20200515 처리 이력
+            histLogStr = "사용자 " & logInUserName & " 재고 세부 정보 수정 : " & txtPDNo2.Text & "-" & txtPLName3.Text
+        Else
+            'hsim 20200515 처리 이력
+            histLogStr = "사용자 " & logInUserName & " 재고 세부 정보 신규 입력 : " & txtPDNo2.Text & "-" & txtPLName3.Text
+        End If
+        Man_Log("Frm_PD_Report11", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        StrSQL = "Select * From PD_Stock_List STL
+where 1=1
+and PD_No = '" & txtPDNo2.Text & "'
+and PD_Rev = (select isnull(max(PD_Rev),1) from PD_Stock_List where PD_No = STL.PD_No)
+order by 1
+"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstDetail.DataSource = DBT
+
+        End If
+        lstDetail.ClearSelection()
+
+        btnAdd2.PerformClick()
+    End Sub
+
+    Private Sub btnJobSearch_Click(sender As Object, e As EventArgs) Handles btnJobSearch.Click
+        Dim pop1 As Frm_BOM_POP = New Frm_BOM_POP
+        Dim DBT As DataTable
+        DBT = Nothing
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            StrSQL = "Select * From BO_BOM where 1=1 
+and BO_Code = '" & pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("BO_Code").Value.ToString & "'
+and BO_CR_Code = '" & pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString & "'
+order by BO_Rev_No desc
+"
+            Re_Count = DB_Select(DBT)
+
+            txtBOMNo3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("BO_Code").Value.ToString
+            If Re_Count > 0 Then
+                txtDWGNo3.Text = DBT.Rows(0)("BO_DV_Code").ToString
+            End If
+
+            StrSQL = "Select * From DV_Drawing where 1=1 
+and DV_Code = '" & txtDWGNo3.Text & "'
+order by DV_Rev_No desc
+"
+            Re_Count = DB_Select(DBT)
+            If Re_Count > 0 Then
+                txtPLCode3.Text = DBT.Rows(0)("DV_PL_Code").ToString
+                txtPLName3.Text = DBT.Rows(0)("DV_PL_Name").ToString
+            End If
+        End If
+        pop1.Dispose()
+    End Sub
+End Class

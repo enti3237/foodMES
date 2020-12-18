@@ -1,0 +1,84 @@
+﻿Public Class UCFrm8
+    Private Sub GroupBox1_Enter(sender As Object, e As EventArgs) Handles GroupBox1.Enter
+
+    End Sub
+
+    Private Sub Save_Com_Click(sender As Object, e As EventArgs) Handles Save_Com.Click
+        Dim DBT As DataTable
+
+        DBT = Nothing
+        StrSQL = "SELECT * FROM Plan_List WHERE  PRDCD = '" & ComboBox1.Text & "' AND ITMCD = '" & TextBox6.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            StrSQL = "UPDATE Plan_List SET 
+             PRDCD ='" & ComboBox1.Text & "' ,
+             PRDNM = '" & ComboBox2.Text & "', 
+             ITMCD = '" & TextBox6.Text & "', 
+             ITMNM = '" & TextBox7.Text & "', 
+             ITMSP = '" & TextBox8.Text & "', 
+             SIZE = '" & TextBox9.Text & "', 
+             QTY = '" & TextBox10.Text & "', 
+             WHRQSTPLANDATE ='" & DateTimePicker1.Value.ToString("yyyy-MM-dd HH:mm:ss") & "', 
+             DRWPLANDATE = '" & DateTimePicker2.Value.ToString("yyyy-MM-dd HH:mm:ss") & "', 
+             CPPLANDATE = '" & DateTimePicker3.Value.ToString("yyyy-MM-dd HH:mm:ss") & "', 
+             PRPLANDATE = '" & DateTimePicker4.Value.ToString("yyyy-MM-dd HH:mm:ss") & "', 
+             PSPLANDATE = '" & DateTimePicker5.Value.ToString("yyyy-MM-dd HH:mm:ss") & "', 
+             POPLANDATE = '" & DateTimePicker6.Value.ToString("yyyy-MM-dd HH:mm:ss") & "', 
+             VENDORNM = '" & TextBox21.Text & "', 
+             DELIVERYPLACE = '" & TextBox23.Text & "', 
+             RIRPLANDATE = '" & DateTimePicker7.Value.ToString("yyyy-MM-dd HH:mm:ss") & "', 
+             RIRRQSTDATE = '" & DateTimePicker9.Value.ToString("yyyy-MM-dd HH:mm:ss") & "',  
+             QAENDPLANDATE = '" & DateTimePicker8.Value.ToString("yyyy-MM-dd HH:mm:ss") & "',  
+             MRISPLANDATE = '" & DateTimePicker10.Value.ToString("yyyy-MM-dd HH:mm:ss") & "', 
+             WHPLACE = '" & TextBox12.Text & "',
+            WHERE PRDCD = '" & ComboBox1.Text & "' AND ITMCD = '" & TextBox6.Text & "' "
+
+            Re_Count2 = DB_Execute()
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+            Else
+                MsgBox("저장 실패")
+            End If
+        Else
+            StrSQL = "INSERT INTO Plan_List(PRDCD,PRDNM,ITMCD,ITMNM,ITMSP, SIZE,QTY,WHRQSTPLANDATE,DRWPLANDATE,
+                CPPLANDATE,PRPLANDATE,PSPLANDATE,POPLANDATE,VENDORNM,DELIVERYPLACE,RIRPLANDATE,RIRRQSTDATE,QAENDPLANDATE,MRISPLANDATE,WHPLACE) VALUES 
+            ('" & ComboBox1.Text & "','" & ComboBox2.Text & "','" & TextBox6.Text & "','" & TextBox7.Text & "','" & TextBox8.Text &
+            "','" & TextBox9.Text & "','" & TextBox10.Text &
+            "','" & DateTimePicker1.Value.ToString("yyyy-MM-dd HH:mm:ss") & "','" & DateTimePicker2.Value.ToString("yyyy-MM-dd HH:mm:ss") & "','" & DateTimePicker3.Value.ToString("yyyy-MM-dd HH:mm:ss") & "','" & DateTimePicker4.Value.ToString("yyyy-MM-dd HH:mm:ss") &
+            "','" & DateTimePicker5.Value.ToString("yyyy-MM-dd HH:mm:ss") & "','" & DateTimePicker6.Value.ToString("yyyy-MM-dd HH:mm:ss") &
+            "','" & TextBox21.Text & "','" & TextBox23.Text & "','" & DateTimePicker7.Value.ToString("yyyy-MM-dd HH:mm:ss") & "','" & DateTimePicker9.Value.ToString("yyyy-MM-dd HH:mm:ss") &
+            "','" & DateTimePicker8.Value.ToString("yyyy-MM-dd HH:mm:ss") & "','" & DateTimePicker10.Value.ToString("yyyy-MM-dd HH:mm:ss") & "','" & TextBox12.Text & "')"
+
+            Re_Count2 = DB_Execute()
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        End If
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+
+    End Sub
+
+    Private Sub ComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox2.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Label2_Click(sender As Object, e As EventArgs) Handles Label2.Click
+
+    End Sub
+
+    Private Sub UCFrm8_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+    End Sub
+End Class

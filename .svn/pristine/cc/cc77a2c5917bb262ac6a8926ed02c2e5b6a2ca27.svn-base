@@ -1,0 +1,321 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_CO_Report5
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.palMain = New System.Windows.Forms.Panel()
+        Me.labJobNo = New System.Windows.Forms.Label()
+        Me.btnJobSearch = New System.Windows.Forms.Button()
+        Me.labPOCode = New System.Windows.Forms.Label()
+        Me.labJobName = New System.Windows.Forms.Label()
+        Me.txtPOCode = New System.Windows.Forms.TextBox()
+        Me.txtJobName = New System.Windows.Forms.TextBox()
+        Me.txtJobNo = New System.Windows.Forms.TextBox()
+        Me.btnSearch = New System.Windows.Forms.Button()
+        Me.Panel24 = New System.Windows.Forms.Panel()
+        Me.lstMain = New System.Windows.Forms.DataGridView()
+        Me.CO_JOB = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_WH = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Condition = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_PL_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_PL_Material = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_PL_Spec = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_DwgNo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Qty = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Unit_Price = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Price = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Delivery_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CO_Insu_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.palMain.SuspendLayout()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'palMain
+        '
+        Me.palMain.AutoSize = True
+        Me.palMain.Controls.Add(Me.labJobNo)
+        Me.palMain.Controls.Add(Me.btnJobSearch)
+        Me.palMain.Controls.Add(Me.labPOCode)
+        Me.palMain.Controls.Add(Me.labJobName)
+        Me.palMain.Controls.Add(Me.txtPOCode)
+        Me.palMain.Controls.Add(Me.txtJobName)
+        Me.palMain.Controls.Add(Me.txtJobNo)
+        Me.palMain.Controls.Add(Me.btnSearch)
+        Me.palMain.Controls.Add(Me.Panel24)
+        Me.palMain.Controls.Add(Me.lstMain)
+        Me.palMain.Location = New System.Drawing.Point(60, 124)
+        Me.palMain.Name = "palMain"
+        Me.palMain.Size = New System.Drawing.Size(1660, 1186)
+        Me.palMain.TabIndex = 162
+        '
+        'labJobNo
+        '
+        Me.labJobNo.AutoSize = True
+        Me.labJobNo.Location = New System.Drawing.Point(19, 20)
+        Me.labJobNo.Name = "labJobNo"
+        Me.labJobNo.Size = New System.Drawing.Size(45, 12)
+        Me.labJobNo.TabIndex = 380
+        Me.labJobNo.Text = "Job No"
+        '
+        'btnJobSearch
+        '
+        Me.btnJobSearch.BackColor = System.Drawing.Color.White
+        Me.btnJobSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnJobSearch.Font = New System.Drawing.Font("맑은 고딕", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnJobSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnJobSearch.Location = New System.Drawing.Point(231, 13)
+        Me.btnJobSearch.Name = "btnJobSearch"
+        Me.btnJobSearch.Size = New System.Drawing.Size(31, 27)
+        Me.btnJobSearch.TabIndex = 384
+        Me.btnJobSearch.Text = "⌕"
+        Me.btnJobSearch.UseVisualStyleBackColor = False
+        '
+        'labPOCode
+        '
+        Me.labPOCode.AutoSize = True
+        Me.labPOCode.Location = New System.Drawing.Point(19, 52)
+        Me.labPOCode.Name = "labPOCode"
+        Me.labPOCode.Size = New System.Drawing.Size(50, 12)
+        Me.labPOCode.TabIndex = 383
+        Me.labPOCode.Text = "PO 번호"
+        '
+        'labJobName
+        '
+        Me.labJobName.AutoSize = True
+        Me.labJobName.Location = New System.Drawing.Point(267, 52)
+        Me.labJobName.Name = "labJobName"
+        Me.labJobName.Size = New System.Drawing.Size(53, 12)
+        Me.labJobName.TabIndex = 382
+        Me.labJobName.Text = "도면번호"
+        '
+        'txtPOCode
+        '
+        Me.txtPOCode.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtPOCode.Location = New System.Drawing.Point(75, 46)
+        Me.txtPOCode.Name = "txtPOCode"
+        Me.txtPOCode.Size = New System.Drawing.Size(150, 25)
+        Me.txtPOCode.TabIndex = 378
+        '
+        'txtJobName
+        '
+        Me.txtJobName.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtJobName.Location = New System.Drawing.Point(323, 46)
+        Me.txtJobName.Name = "txtJobName"
+        Me.txtJobName.Size = New System.Drawing.Size(150, 25)
+        Me.txtJobName.TabIndex = 377
+        '
+        'txtJobNo
+        '
+        Me.txtJobNo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.txtJobNo.Location = New System.Drawing.Point(75, 14)
+        Me.txtJobNo.Name = "txtJobNo"
+        Me.txtJobNo.Size = New System.Drawing.Size(150, 25)
+        Me.txtJobNo.TabIndex = 376
+        '
+        'btnSearch
+        '
+        Me.btnSearch.BackColor = System.Drawing.Color.White
+        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSearch.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnSearch.Location = New System.Drawing.Point(1465, 45)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(150, 27)
+        Me.btnSearch.TabIndex = 301
+        Me.btnSearch.Text = "조회"
+        Me.btnSearch.UseVisualStyleBackColor = False
+        '
+        'Panel24
+        '
+        Me.Panel24.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel24.Location = New System.Drawing.Point(16, 85)
+        Me.Panel24.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel24.Name = "Panel24"
+        Me.Panel24.Size = New System.Drawing.Size(1600, 1)
+        Me.Panel24.TabIndex = 299
+        '
+        'lstMain
+        '
+        Me.lstMain.AllowUserToAddRows = False
+        Me.lstMain.BackgroundColor = System.Drawing.Color.White
+        Me.lstMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.lstMain.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CO_JOB, Me.CO_Code, Me.CO_Rev_No, Me.CO_WH, Me.CO_Condition, Me.CO_PL_Name, Me.CO_PL_Material, Me.CO_PL_Spec, Me.CO_DwgNo, Me.CO_Unit, Me.CO_Qty, Me.CO_Unit_Price, Me.CO_Price, Me.CO_Delivery_Date, Me.CO_Insu_Date})
+        Me.lstMain.Location = New System.Drawing.Point(16, 103)
+        Me.lstMain.Name = "lstMain"
+        Me.lstMain.ReadOnly = True
+        Me.lstMain.RowHeadersVisible = False
+        Me.lstMain.RowTemplate.Height = 23
+        Me.lstMain.Size = New System.Drawing.Size(1600, 732)
+        Me.lstMain.TabIndex = 0
+        '
+        'CO_JOB
+        '
+        Me.CO_JOB.DataPropertyName = "CO_JOB"
+        Me.CO_JOB.HeaderText = "Job No"
+        Me.CO_JOB.Name = "CO_JOB"
+        Me.CO_JOB.ReadOnly = True
+        '
+        'CO_Code
+        '
+        Me.CO_Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.CO_Code.DataPropertyName = "CO_Code"
+        Me.CO_Code.HeaderText = "PO No"
+        Me.CO_Code.Name = "CO_Code"
+        Me.CO_Code.ReadOnly = True
+        '
+        'CO_Rev_No
+        '
+        Me.CO_Rev_No.DataPropertyName = "CO_Rev_No"
+        Me.CO_Rev_No.HeaderText = "PO Rev"
+        Me.CO_Rev_No.Name = "CO_Rev_No"
+        Me.CO_Rev_No.ReadOnly = True
+        '
+        'CO_WH
+        '
+        Me.CO_WH.DataPropertyName = "CO_WH"
+        Me.CO_WH.HeaderText = "납품장소"
+        Me.CO_WH.Name = "CO_WH"
+        Me.CO_WH.ReadOnly = True
+        '
+        'CO_Condition
+        '
+        Me.CO_Condition.DataPropertyName = "CO_Condition"
+        Me.CO_Condition.HeaderText = "납품조건"
+        Me.CO_Condition.Name = "CO_Condition"
+        Me.CO_Condition.ReadOnly = True
+        '
+        'CO_PL_Name
+        '
+        Me.CO_PL_Name.DataPropertyName = "CO_PL_Name"
+        Me.CO_PL_Name.HeaderText = "품목"
+        Me.CO_PL_Name.Name = "CO_PL_Name"
+        Me.CO_PL_Name.ReadOnly = True
+        '
+        'CO_PL_Material
+        '
+        Me.CO_PL_Material.DataPropertyName = "CO_PL_Material"
+        Me.CO_PL_Material.HeaderText = "재료"
+        Me.CO_PL_Material.Name = "CO_PL_Material"
+        Me.CO_PL_Material.ReadOnly = True
+        '
+        'CO_PL_Spec
+        '
+        Me.CO_PL_Spec.DataPropertyName = "CO_PL_Spec"
+        Me.CO_PL_Spec.HeaderText = "규격"
+        Me.CO_PL_Spec.Name = "CO_PL_Spec"
+        Me.CO_PL_Spec.ReadOnly = True
+        '
+        'CO_DwgNo
+        '
+        Me.CO_DwgNo.DataPropertyName = "CO_DwgNo"
+        Me.CO_DwgNo.HeaderText = "도면번호"
+        Me.CO_DwgNo.Name = "CO_DwgNo"
+        Me.CO_DwgNo.ReadOnly = True
+        '
+        'CO_Unit
+        '
+        Me.CO_Unit.DataPropertyName = "CO_Unit"
+        Me.CO_Unit.HeaderText = "단위"
+        Me.CO_Unit.Name = "CO_Unit"
+        Me.CO_Unit.ReadOnly = True
+        '
+        'CO_Qty
+        '
+        Me.CO_Qty.DataPropertyName = "CO_Qty"
+        Me.CO_Qty.HeaderText = "수량"
+        Me.CO_Qty.Name = "CO_Qty"
+        Me.CO_Qty.ReadOnly = True
+        '
+        'CO_Unit_Price
+        '
+        Me.CO_Unit_Price.DataPropertyName = "CO_Unit_Price"
+        Me.CO_Unit_Price.HeaderText = "단가"
+        Me.CO_Unit_Price.Name = "CO_Unit_Price"
+        Me.CO_Unit_Price.ReadOnly = True
+        '
+        'CO_Price
+        '
+        Me.CO_Price.DataPropertyName = "CO_Price"
+        Me.CO_Price.HeaderText = "금액"
+        Me.CO_Price.Name = "CO_Price"
+        Me.CO_Price.ReadOnly = True
+        '
+        'CO_Delivery_Date
+        '
+        Me.CO_Delivery_Date.DataPropertyName = "CO_Delivery_Date"
+        Me.CO_Delivery_Date.HeaderText = "납기일자"
+        Me.CO_Delivery_Date.Name = "CO_Delivery_Date"
+        Me.CO_Delivery_Date.ReadOnly = True
+        '
+        'CO_Insu_Date
+        '
+        Me.CO_Insu_Date.DataPropertyName = "CO_Insu_Date"
+        Me.CO_Insu_Date.HeaderText = "인수일자"
+        Me.CO_Insu_Date.Name = "CO_Insu_Date"
+        Me.CO_Insu_Date.ReadOnly = True
+        '
+        'Frm_CO_Report5
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.palMain)
+        Me.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Name = "Frm_CO_Report5"
+        Me.Size = New System.Drawing.Size(1660, 867)
+        Me.palMain.ResumeLayout(False)
+        Me.palMain.PerformLayout()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+
+    Friend WithEvents palMain As Panel
+    Friend WithEvents labJobNo As Label
+    Friend WithEvents btnJobSearch As Button
+    Friend WithEvents labPOCode As Label
+    Friend WithEvents labJobName As Label
+    Friend WithEvents txtPOCode As TextBox
+    Friend WithEvents txtJobName As TextBox
+    Friend WithEvents txtJobNo As TextBox
+    Friend WithEvents btnSearch As Button
+    Friend WithEvents Panel24 As Panel
+    Friend WithEvents lstMain As DataGridView
+    Friend WithEvents CO_JOB As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Rev_No As DataGridViewTextBoxColumn
+    Friend WithEvents CO_WH As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Condition As DataGridViewTextBoxColumn
+    Friend WithEvents CO_PL_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CO_PL_Material As DataGridViewTextBoxColumn
+    Friend WithEvents CO_PL_Spec As DataGridViewTextBoxColumn
+    Friend WithEvents CO_DwgNo As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Unit As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Qty As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Unit_Price As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Price As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Delivery_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CO_Insu_Date As DataGridViewTextBoxColumn
+End Class

@@ -1,0 +1,179 @@
+﻿Public Class Frm_Monitoring45
+    Dim De_CC(100) As String
+    Dim De_Su(100) As String
+    Dim DBT As New DataTable
+    Dim count As Integer = 0
+    Dim today As String = ""
+
+    Private Sub Frm_Monitoring_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Dim DBT As New DataTable
+        Dim k As Integer
+        Dim i As Integer
+        Label2.Text = DateTime.Now.ToString("yyyy-MM-dd")
+        Label3.Text = DateTime.Now.ToString("HH:mm:ss")
+
+
+        PIc_Pic(Picture_Logo, Application.StartupPath & "\Picture\Logo2_" & Setup_Data(9) & ".png")
+        'PIc_Pic(Picture_Logo, Application.StartupPath & "\Picture\Logo2.png")
+
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Grid_Main_Setup()
+        Display()
+    End Sub
+
+    Private Sub Display()
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        Grid_Main.RowCount = 0
+        'StrSQL = "Select Min(PO_Day) F1 , PO_PR_Code, PO_PR_Name, PO_DE_Code, PO_DE_Name, PO_PL_Code, PO_PL_Name, PO_Standard, PO_Unit, PO_PR_Gold, Sum(Convert(Decimal,PO_Total)) AS F2  FROM PC_ORDER with(NOLOCK), PC_Order_List with(NOLOCK)  Where PC_ORDER.PO_Code = PC_ORDER_LIST.PO_Code And PO_Date >= '" & DateTime.Today() & "' And PO_Date <= '" & DateTime.Today() & "' And Len(PO_Total) > 0 And Len(PO_DE_Code) > 0 "
+        'StrSQL = StrSQL & " GROUP BY PO_PR_Code, PO_PR_Name, PO_DE_Code, PO_DE_Name, PO_PL_Code, PO_PL_Name, PO_Standard, PO_Unit, PO_PR_Gold "
+        'StrSQL = StrSQL & " Order By F1, PO_PR_Code, PO_DE_Code "
+
+        'Re_Count = DB_Select(DBT)
+        'If Re_Count <> 0 Then
+        '    Grid_Main.RowCount = Re_Count
+        '    For i = 0 To Re_Count - 1
+        '        Grid_Main.Item(0, i).Value = i + 1
+        '        For j = 1 To 11
+        '            Grid_Main.Item(j, i).Value = DBT.Rows(i).Item(j - 1).ToString
+        '        Next j
+        '    Next i
+        'Else
+        '    Grid_Main.RowCount = 1
+        '    For j = 0 To Grid_Main.ColumnCount - 1
+        '        Grid_Main.Item(j, 0).Value = ""
+        '    Next j
+        'End If
+        ''생산수량 
+        'For i = 0 To Grid_Main.RowCount - 1
+        '    '생산수량
+        '    StrSQL = "Select Sum(Convert(Decimal,PS_Go)) AS F1, Sum(Convert(Decimal,PS_Total)) AS F2, Sum(Convert(Decimal,PS_Er)) AS F3 FROM PC_STOCK with(NOLOCK), PC_Stock_List with(NOLOCK) "
+        '    StrSQL = StrSQL & " Where PC_Stock.PS_Code = PC_STOCK_LIST.PS_Code And PS_St_Day >= '" & DateTime.Today() & "' And PS_En_Day <= '" & DateTime.Today() & "' And Len(PS_Go) > 0 And Len(PS_Total) > 0 And Len(PS_Er) > 0 "
+        '    StrSQL = StrSQL & " And PS_PR_Code = '" & Grid_Main.Item(2, i).Value & "' And PS_DE_Code = '" & Grid_Main.Item(4, i).Value & "' And PS_PL_Code = '" & Grid_Main.Item(6, i).Value & "'"
+
+        '    'StrSQL = StrSQL & " GROUP BY PO_PR_Code, PO_PR_Name, PO_DE_Code, PO_DE_Name, PO_PL_Code, PO_PL_Name, PO_Standard, PO_Unit, PO_PR_Gold "
+        '    'StrSQL = StrSQL & " Order By F1, PO_PR_Code, PO_DE_Code "
+        '    Re_Count = DB_Select(DBT)
+        '    If Re_Count <> 0 Then
+        '        Grid_Main.Item(12, i).Value = DBT.Rows(0).Item(0).ToString
+        '        Grid_Main.Item(13, i).Value = DBT.Rows(0).Item(1).ToString
+        '        Grid_Main.Item(14, i).Value = DBT.Rows(0).Item(2).ToString
+        '    End If
+        '    If Len(Grid_Main.Item(12, i).Value) = 0 Then
+        '        Grid_Main.Item(12, i).Value = "0"
+        '    End If
+        '    If Len(Grid_Main.Item(13, i).Value) = 0 Then
+        '        Grid_Main.Item(13, i).Value = "0"
+        '    End If
+        '    If Len(Grid_Main.Item(14, i).Value) = 0 Then
+        '        Grid_Main.Item(14, i).Value = "0"
+        '    End If
+
+        'Next i
+        ' Button1.Visible = False
+
+
+
+        Grid_Main.MultiSelect = False
+        Grid_Main.ClearSelection()
+
+    End Sub
+
+    Public Function Grid_Main_Setup() As Boolean
+        Grid_Color(Grid_Main)
+
+        Grid_Main.AllowUserToAddRows = False
+        Grid_Main.ColumnHeadersHeight = 30
+        Grid_Main.RowTemplate.Height = 40
+        Grid_Main.ColumnCount = 5
+        Grid_Main.RowCount = 0
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Main.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        'Grid_Main.Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        'Grid_Main.Columns(6).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        'Grid_Main.Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        'Grid_Main.Columns(8).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        'Grid_Main.Columns(9).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        'Grid_Main.Columns(10).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        'Grid_Main.Columns(11).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        'Grid_Main.Columns(12).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        'Grid_Main.Columns(13).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        'Grid_Main.Columns(14).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+
+        Grid_Main.RowHeadersWidth = 10
+
+
+        Grid_Main.Columns(0).HeaderText = "순번"
+        Grid_Main.Columns(1).HeaderText = "일자"
+        Grid_Main.Columns(2).HeaderText = "적합여부"
+        Grid_Main.Columns(3).HeaderText = "이탈내용"
+        Grid_Main.Columns(4).HeaderText = "개선조치 및 결과"
+
+
+
+        Dim i As Integer
+        Grid_Main.Columns(0).Width = 30
+        Grid_Main.Columns(1).Width = 50
+        Grid_Main.Columns(2).Width = 80
+        Grid_Main.Columns(3).Width = 70
+        Grid_Main.Columns(4).Width = 80
+        'Grid_Main.Columns(5).Width = 150
+        'Grid_Main.Columns(6).Width = 150
+        'Grid_Main.Columns(7).Width = 150
+        'Grid_Main.Columns(8).Width = 150
+        'For i = 9 To Grid_Main.ColumnCount - 1
+        '    Grid_Main.Columns(i).Width = 80
+        'Next i
+        Grid_Main_Setup = True
+    End Function
+
+    Private Sub Frm_Monitoring_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles Me.MouseDoubleClick
+        Dim dualMonitor() As Screen = Screen.AllScreens
+        If dualMonitor.Length = 2 Then
+            If Me.Bounds = dualMonitor(1).Bounds Then
+                Me.Bounds = dualMonitor(0).WorkingArea
+            Else
+                Me.Bounds = dualMonitor(1).WorkingArea
+            End If
+        End If
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Label3.Text = DateTime.Now.ToString("HH:mm:ss")
+    End Sub
+
+
+    Private Sub Picture_Logo_Click(sender As Object, e As EventArgs) Handles Picture_Logo.Click
+        End
+
+    End Sub
+
+    Private Sub Label21_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        Display()
+
+    End Sub
+
+    Private Sub Label3_Click(sender As Object, e As EventArgs) Handles Label3.Click
+        End
+    End Sub
+
+    Private Sub Label2_Click(sender As Object, e As EventArgs) Handles Label2.Click
+        End
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+
+    End Sub
+End Class

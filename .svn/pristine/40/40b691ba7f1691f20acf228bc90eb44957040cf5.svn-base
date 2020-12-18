@@ -1,0 +1,48 @@
+﻿Public Class UCFrm5
+    Private Sub UCFrm5_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        '기본정보
+        Panel1.Top = 30
+        Panel1.Left = 10
+        '재료불출청구서
+        Panel2.Top = 40
+        Panel2.Left = 10
+
+        Panel1.Visible = True
+        Panel2.Visible = False
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles Com_Contract.Click
+        Label_Color(sender, Label16, Di_Panel2)
+        Panel1.Visible = True
+        Panel2.Visible = False
+    End Sub
+
+    Private Sub Com_DRW1_Click(sender As Object, e As EventArgs) Handles Com_DRW1.Click
+        Label_Color(sender, Label16, Di_Panel2)
+        Panel2.Visible = True
+        Panel1.Visible = False
+    End Sub
+
+    Private Sub CheckChang()
+        If CheckBox1.Checked = True Then
+            '재료불출청구서
+            TextBox10.Text = "MRIS-19-"
+        End If
+
+        If CheckBox1.Checked = False Then
+            '재료불출청구서
+            TextBox10.Text = ""
+        End If
+    End Sub
+
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+        CheckChang()
+    End Sub
+
+    Private Sub DataGridView4_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView4.CellContentClick
+
+    End Sub
+End Class

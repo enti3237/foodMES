@@ -1,0 +1,42 @@
+﻿Public Class Frm_PD_Report7
+    Private Sub Frm_PD_Report7_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        palMain.Top = 40
+        palMain.Left = 10
+
+        btnSearch.PerformClick()
+    End Sub
+
+    Private Sub CM_Lode()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT No, TerminalID, CreateTime, SaveTime FROM EventData order by No"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstMain.DataSource = DBT
+            lstMain.ClearSelection()
+        End If
+
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT No, TerminalID, CreateTime, SaveTime FROM EventData 
+where 1=1
+and TerminalID Like '%" & txtCode.Text & "%'
+and convert(datetime,'" & dtpTimeFrom.Value.ToString("yyyy-MM-dd") & "') <= CreateTime and convert(datetime,'" & dtpTimeTo.Value.ToString("yyyy-MM-dd") & "') >= SaveTime 
+order by No"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstMain.DataSource = DBT
+            lstMain.ClearSelection()
+        End If
+    End Sub
+End Class

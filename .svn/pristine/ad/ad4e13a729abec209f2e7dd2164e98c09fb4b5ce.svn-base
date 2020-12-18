@@ -1,0 +1,54 @@
+﻿Public Class Frm_Man_POP
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Me.Close()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.DialogResult = DialogResult.OK
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = "SELECT Man_Code, Man_Name, Man_Bu, Man_Gik, Man_Sex, Man_Phon, Man_Email
+                  FROM Man where 1=1
+                  and Man_Name Like '%" & TextBox15.Text & "%' "
+        Re_Count = DB_Select(DBT)
+
+
+        If Re_Count > 0 Then
+                DataGridView1.DataSource = DBT
+                DataGridView1.ClearSelection()
+            End If
+
+
+        For i = 0 To DataGridView1.Rows.Count - 1
+            StrSQL = "SELECT Base_Name
+                        FROM Base_Code where 1=1
+                        and Base_Sel_Code = '0001' 
+                        and Base_Code = '" & DataGridView1.Rows(i).Cells("Man_Bu").Value.ToString & "'"
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count > 0 Then
+                DataGridView1.Rows(i).Cells("Man_Bu").Value = DBT.Rows(0)("Base_Name").ToString
+            Else
+                'DataGridView1.Rows(i).Cells("Man_Bu").Value = ""
+            End If
+
+            StrSQL = "SELECT Base_Name
+                        FROM Base_Code where 1=1
+                        and Base_Sel_Code = '0002' 
+                        and Base_Code = '" & DataGridView1.Rows(i).Cells("Man_Gik").Value.ToString & "'"
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count > 0 Then
+                DataGridView1.Rows(i).Cells("Man_Gik").Value = DBT.Rows(0)("Base_Name").ToString
+            Else
+                'DataGridView1.Rows(i).Cells("Man_Gik").Value = ""
+            End If
+        Next
+
+    End Sub
+End Class

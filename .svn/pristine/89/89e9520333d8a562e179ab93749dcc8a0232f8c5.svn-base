@@ -1,0 +1,1081 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+
+Public Class Frm_Selng_Tax_Info
+
+    Dim Grid_Display_Ch As Boolean
+    'hsim 20200803 사용 테이블 개체 Load
+    Dim tblSelTaxInfo As New DataTable
+    Dim tblSelTaxDetailInfo As New DataTable
+    Dim tblCustomer As New DataTable
+
+    Dim tblList As String
+
+    Dim fmtStr As String, fmtStr2 As String
+
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+
+    Private Sub Frm_Selng_Tax_Info_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        'hsim 20200806 Tab순서 자동 설정
+        Dim tom As TabOrderManager = New TabOrderManager(Me)
+        tom.SetTabOrder(TabOrderManager.TabScheme.AcrossFirst)
+
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        Dim SupDBT As DataTable
+        SupDBT = Nothing
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = True
+        palDetail.Visible = False
+
+        'hsim 20200803 사용 테이블 Schema Load
+        tblSelTaxInfo = fnGetTableStructure("dbo.Sel_Tax_Info")
+        tblSelTaxDetailInfo = fnGetTableStructure("dbo.Sel_Tax_Detail_Info")
+        tblCustomer = fnGetTableStructure("dbo.Customer")
+
+        'Combo 설정
+        comboSetUp1(cboPrdUnit, "1050")
+        comboSetUp1(cboCMTaxImposeGubun, "1060")
+        comboSetUp1(cboCalcSe, "1060")
+        comboSetUp1(cboRqestRcptSe2, "1070")
+
+        '공급자
+        SupDBT = getCustomerInfo(My.Resources.AppResource.CompanyCustCode) '수영ING 사업자 정보 가져오기
+        txtCMOpNumber.Text = SupDBT.Rows(0).Item("CM_Op_Number")
+        txtCMName.Text = SupDBT.Rows(0).Item("CM_Name")
+        txtCMLeader.Text = SupDBT.Rows(0).Item("CM_Leader")
+        txtCMAddr.Text = SupDBT.Rows(0).Item("CM_Add1") & " " & SupDBT.Rows(0).Item("CM_Add2")
+        txtCMConditions.Text = SupDBT.Rows(0).Item("CM_Conditions")
+        txtCMItem.Text = convNullToStr(SupDBT.Rows(0).Item("CM_Item"))
+        cboCMTaxImposeGubun.SelectedValue = SupDBT.Rows(0).Item("CM_Tax_Impose_Gubun")
+        txtCMManName.Text = SupDBT.Rows(0).Item("CM_Man_Name")
+        txtCMManTel.Text = SupDBT.Rows(0).Item("CM_Man_Tel")
+        txtCMManCell.Text = SupDBT.Rows(0).Item("CM_Man_Cell")
+        txtCMManEmail.Text = SupDBT.Rows(0).Item("CM_Man_Email")
+
+        Grid_Display_Ch = False
+        Grid_Display_Main()
+
+    End Sub
+
+    Public Function Grid_Display_Main() As Boolean
+        Grid_Display_Ch = False
+        Dim DBT As New DataTable
+        DBT = Nothing
+        Dim i As Integer
+        Dim j As Integer
+
+        '#0. 임시변수 초기화
+        Dim tblData1 As Tuple(Of String, String)
+        Dim selectStr As New String("")
+        Dim whereStr As New String("")
+        '#1. select column List
+        '#1-1. tblSelTaxDetailInfo
+        For z = 0 To tblSelTaxInfo.Rows.Count - 1
+            selectStr += tblSelTaxInfo.TableName & "." & tblSelTaxInfo.Rows(z).Item(0).ToString & " " & tblSelTaxInfo.Rows(z).Item(0).ToString
+            If z < tblSelTaxInfo.Rows.Count - 1 Then
+                selectStr += ", "
+            End If
+        Next
+        'hsim 20200804 Select Column List Comma로 연결
+        selectStr += ", "
+        '#1-2. tblCustomer
+        For z = 0 To tblCustomer.Rows.Count - 1
+            selectStr += tblCustomer.TableName & "." & tblCustomer.Rows(z).Item(0).ToString & " " & tblCustomer.Rows(z).Item(0).ToString
+            If z < tblCustomer.Rows.Count - 1 Then
+                selectStr += ", "
+            End If
+        Next
+        '#1-Z. Adding Extra Column(s)
+
+        '#2. where condition
+        whereStr = " AND CUSTOMER.CM_Name like '" & txtSearchItem11.Text & "%' "
+        whereStr += " AND convert(datetime,'" & dtpRegDateFrom.Value.ToString("yyyy-MM-dd") & "') <= SEL_TAX_INFO.ISU_DE and convert(datetime,'" & dtpRegDateTo.Value.ToString("yyyy-MM-dd") & "') >= SEL_TAX_INFO.ISU_DE "
+        '#3. 변수 조합
+        tblData1 = New Tuple(Of String, String)(selectStr, whereStr)
+
+        DBT = fnExecSelectSql(2, ' ByVal tblCnt As Integer
+                                "dbo.Sel_Tax_Info Sel_Tax_Info", 'ByVal tblNm1 As String
+                                "dbo.Customer Customer", 'ByVal tblNm2 As String
+                                "", 'ByVal tblNm3 As String
+                                "", 'ByVal tblNm4 As String
+                                "", 'ByVal tblNm5 As String
+                                "", 'ByVal tblNm6 As String
+                                tblData1, 'ByVal tblData1 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData2 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData3 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData4 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData5 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData6 As Tuple(Of String, String)
+                                "0",   'ByVal joinCond1 As String
+                                "",   'ByVal joinCond2 As String
+                                "",   'ByVal joinCond3 As String
+                                "",   'ByVal joinCond4 As String
+                                "",   'ByVal joinCond5 As String
+                                " ON SEL_TAX_INFO.BCNC_CODE = CUSTOMER.CM_CODE ",   'ByVal joinCondStr1 As String
+                                "",   'ByVal joinCondStr2 As String
+                                "",   'ByVal joinCondStr3 As String
+                                "",   'ByVal joinCondStr4 As String
+                                ""    'ByVal joinCondStr5 As String
+                                )
+
+        lstMain.DataSource = DBT
+        'hsim 20200803 Grid의 컬럼항목 설정
+        tblList = "('Sel_Tax_Info','Customer')"
+        fillGridColumns(lstMain, DBT, tblList)
+        lstMain.ClearSelection()
+
+        Grid_Display_Main = True
+        Grid_Display_Ch = True
+
+    End Function
+
+    Public Function Grid_Display_Detail() As Boolean
+
+        Grid_Display_Ch = False
+        Dim DBT As New DataTable
+        DBT = Nothing
+        Dim i As Integer
+        Dim j As Integer
+
+        '#0. 임시변수 초기화
+        Dim tblData1 As Tuple(Of String, String)
+        Dim selectStr As New String("")
+        Dim whereStr As New String("")
+        '#1. select column List
+        '#1-1. tblSelTaxDetailInfo
+        For z = 0 To tblSelTaxDetailInfo.Rows.Count - 1
+            selectStr += tblSelTaxDetailInfo.TableName & "." & tblSelTaxDetailInfo.Rows(z).Item(0).ToString & " " & tblSelTaxDetailInfo.Rows(z).Item(0).ToString
+            If z < tblSelTaxDetailInfo.Rows.Count - 1 Then
+                selectStr += ", "
+            End If
+        Next
+        '#1-Z. Adding Extra Column(s)
+
+        '#2. where condition
+        whereStr = " AND SELNG_TAX_INFO_ID = '" & txtSelngTaxInfoID.Text & "' Order By SELNG_TAX_INFO_SN "
+        '#3. 변수 조합
+        tblData1 = New Tuple(Of String, String)(selectStr, whereStr)
+
+        DBT = fnExecSelectSql(1, ' ByVal tblCnt As Integer
+                                "dbo.Sel_Tax_Detail_Info Sel_Tax_Detail_Info", 'ByVal tblNm1 As String
+                                "", 'ByVal tblNm2 As String
+                                "", 'ByVal tblNm3 As String
+                                "", 'ByVal tblNm4 As String
+                                "", 'ByVal tblNm5 As String
+                                "", 'ByVal tblNm6 As String
+                                tblData1, 'ByVal tblData1 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData2 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData3 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData4 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData5 As Tuple(Of String, String)
+                                New Tuple(Of String, String)(String.Empty, String.Empty),   'ByVal tblData6 As Tuple(Of String, String)
+                                "",   'ByVal joinCond1 As String
+                                "",   'ByVal joinCond2 As String
+                                "",   'ByVal joinCond3 As String
+                                "",   'ByVal joinCond4 As String
+                                "",   'ByVal joinCond5 As String
+                                "",   'ByVal joinCondStr1 As String
+                                "",   'ByVal joinCondStr2 As String
+                                "",   'ByVal joinCondStr3 As String
+                                "",   'ByVal joinCondStr4 As String
+                                ""    'ByVal joinCondStr5 As String
+                                )
+
+        lstDetail.DataSource = DBT
+        'hsim 20200803 Grid의 컬럼항목 설정
+        'Column Comment가져오기
+        tblList = "('Sel_Tax_Detail_Info')"
+        fillGridColumns(lstDetail, DBT, tblList)
+        lstDetail.ClearSelection()
+
+        Grid_Display_Detail = True
+        Grid_Display_Ch = True
+
+    End Function
+
+    Private Sub tab_Main_Click(sender As Object, e As MouseEventArgs) Handles tab_Main.Click
+
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = True
+        palDetail.Visible = False
+
+    End Sub
+
+    Private Sub tab_Detail_Click(sender As Object, e As MouseEventArgs) Handles tab_Detail.Click
+
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = False
+        palDetail.Visible = True
+
+    End Sub
+
+    Private Sub btnItemSearch11_Click(sender As Object, e As EventArgs) Handles btnItemSearch11.Click
+        Dim pop1 As Frm_Customer_POP = New Frm_Customer_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            txtSearchItem11.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            txtSearchItem12.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Code").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+
+        If e.RowIndex >= 0 Then
+            '공급받는자
+            txtSelngTaxInfoID.Text = lstMain.Rows(e.RowIndex).Cells("Selng_Tax_Info_ID").Value.ToString
+            txtCMOpNumber2.Text = lstMain.Rows(e.RowIndex).Cells("CM_Op_Number").Value.ToString
+            txtBKw.Text = lstMain.Rows(e.RowIndex).Cells("B_KW").Value.ToString
+            txtBHo.Text = lstMain.Rows(e.RowIndex).Cells("B_HO").Value.ToString
+            txtCMName2.Text = lstMain.Rows(e.RowIndex).Cells("CM_Name").Value.ToString
+            txtCMCode2.Text = lstMain.Rows(e.RowIndex).Cells("CM_Code").Value.ToString
+            txtCMLeader2.Text = lstMain.Rows(e.RowIndex).Cells("CM_Leader").Value.ToString
+            txtCMAddr2.Text = lstMain.Rows(e.RowIndex).Cells("CM_Add1").Value.ToString & " " & lstMain.Rows(e.RowIndex).Cells("CM_Add2").Value.ToString
+            txtCMConditions2.Text = lstMain.Rows(e.RowIndex).Cells("CM_Conditions").Value.ToString
+            txtCMItem2.Text = lstMain.Rows(e.RowIndex).Cells("CM_Item").Value.ToString
+            txtCMManName2.Text = lstMain.Rows(e.RowIndex).Cells("CM_Man_Name").Value.ToString
+            txtCMManTel2.Text = lstMain.Rows(e.RowIndex).Cells("CM_Man_Tel").Value.ToString
+            txtCMManCell2.Text = lstMain.Rows(e.RowIndex).Cells("CM_Man_Cell").Value.ToString
+            txtCMManEmail2.Text = lstMain.Rows(e.RowIndex).Cells("CM_Man_Email").Value.ToString
+            txtSelngId.Text = lstMain.Rows(e.RowIndex).Cells("Selng_Id").Value.ToString
+            txtSnNo.Text = lstMain.Rows(e.RowIndex).Cells("Sn_No").Value.ToString
+            txtSiNo.Text = lstMain.Rows(e.RowIndex).Cells("Si_No").Value.ToString
+            dtpIsuDe.Text = lstMain.Rows(e.RowIndex).Cells("Isu_De").Value.ToString
+            txtSplPc.Text = lstMain.Rows(e.RowIndex).Cells("Splpc").Value.ToString
+            txtTaxAmt.Text = lstMain.Rows(e.RowIndex).Cells("Tax_Amt").Value.ToString
+            txtAmount.Text = lstMain.Rows(e.RowIndex).Cells("Amount").Value.ToString
+            cboRqestRcptSe2.SelectedValue = lstMain.Rows(e.RowIndex).Cells("Rqest_Rcpt_Se").Value.ToString
+            txtRm.Text = lstMain.Rows(e.RowIndex).Cells("RM").Value.ToString
+            txtCashAmount.Text = lstMain.Rows(e.RowIndex).Cells("CASH_AMT").Value.ToString
+            txtCheckAmount.Text = lstMain.Rows(e.RowIndex).Cells("CHECK_AMT").Value.ToString
+            txtNoteAmount.Text = lstMain.Rows(e.RowIndex).Cells("NOTE_AMT").Value.ToString
+            txtReceivableAmount.Text = lstMain.Rows(e.RowIndex).Cells("RECEIVABLE_AMT").Value.ToString
+        End If
+
+    End Sub
+
+    Private Sub lstDetail_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstDetail.CellClick
+        If lstDetail.CurrentRow.Index < 0 Then
+            Exit Sub
+        End If
+        txtSelngTaxDtlInfoID.Text = lstDetail.Rows(e.RowIndex).Cells("Selng_Tax_Detail_Info_Id").Value.ToString
+        txtSelngTaxInfoID2.Text = lstDetail.Rows(e.RowIndex).Cells("Selng_Tax_Info_Id").Value.ToString
+        txtSelngTaxInfoSeq.Text = lstDetail.Rows(e.RowIndex).Cells("Selng_Tax_Info_Sn").Value.ToString
+        txtPrdCode.Text = lstDetail.Rows(e.RowIndex).Cells("Prd_Code").Value.ToString
+        cboPrdUnit.SelectedValue = lstDetail.Rows(e.RowIndex).Cells("Prd_Unit").Value.ToString
+        txtPrdPc.Text = lstDetail.Rows(e.RowIndex).Cells("Prd_Pc").Value.ToString
+        txtPrdQy.Text = lstDetail.Rows(e.RowIndex).Cells("Prd_Qy").Value.ToString
+        txtSplPc2.Text = lstDetail.Rows(e.RowIndex).Cells("Splpc").Value.ToString
+        txtTaxAmt2.Text = lstDetail.Rows(e.RowIndex).Cells("Tax_Amt").Value.ToString
+        txtAmount2.Text = lstDetail.Rows(e.RowIndex).Cells("Amount").Value.ToString
+        chkVATInclsAt.Checked = lstDetail.Rows(e.RowIndex).Cells("Vat_Incls_At").Value.ToString
+    End Sub
+
+    Private Sub btnCMSearch_Click(sender As Object, e As EventArgs) Handles btnCMSearch.Click
+        Dim pop1 As Frm_Customer_POP = New Frm_Customer_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            txtCMOpNumber2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Op_Number").Value.ToString
+            txtCMName2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            txtCMLeader2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Leader").Value.ToString
+            txtCMCode2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Code").Value.ToString
+            txtCMAddr2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Addr").Value.ToString '& " " & pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Add2").Value.ToString
+            txtCMConditions2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Conditions").Value.ToString
+            txtCMItem2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Item").Value.ToString
+            txtCMManName2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Man_Name").Value.ToString
+            txtCMManTel2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Man_Tel").Value.ToString
+            txtCMManCell2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Man_Cell").Value.ToString
+            txtCMManEmail2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Man_Email").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnPrdSearch_Click(sender As Object, e As EventArgs) Handles btnPrdSearch.Click
+        Dim pop1 As Frm_Product_POP = New Frm_Product_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            txtPrdCode.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Product_Code").Value.ToString
+            txtPrdName.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Product_Name").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub calcTotalAmt(inType As Int32)
+        Dim DBT As DataTable
+        Dim grdRowCount As Int32
+        Dim i As Int32
+        Dim totalSplPc As Long, totalTaxAmt As Long, totalAmount As Long
+
+        totalSplPc = 0
+        totalTaxAmt = 0
+        totalAmount = 0
+
+        DBT = Nothing
+        grdRowCount = lstDetail.Rows.Count
+
+        'hsim 20200806 업데이트 불가시 빠져나감
+        If (txtSelngTaxInfoID.Text = "" Or txtSelngTaxInfoID2.Text = "") Or
+           (txtSelngTaxInfoID.Text <> txtSelngTaxInfoID2.Text) Or
+           grdRowCount < 1 Then
+            MsgBox("세금계산서 총액을 계산하기 위한 정보가 부족합니다. 시스템관리자에게 문의하세요.")
+            Exit Sub
+        End If
+
+        For i = 0 To grdRowCount - 1
+            totalSplPc += CLng(lstDetail.Rows(i).Cells("Splpc").Value)
+            totalTaxAmt += CLng(lstDetail.Rows(i).Cells("Tax_Amt").Value)
+            totalAmount += CLng(lstDetail.Rows(i).Cells("Amount").Value)
+        Next
+
+        txtSplPc.Text = totalSplPc
+        txtTaxAmt.Text = totalTaxAmt
+        txtAmount.Text = totalAmount
+        'hsim 20200806 합계금액 변동시 업데이트 처리
+        Try
+            StrSQL = " Update SEL_TAX_INFO " &
+                        " Set SPLPC = " & totalSplPc &
+                        "    ,Tax_Amt = " & totalTaxAmt &
+                        "    ,Amount = " & totalAmount &
+                        " where SELNG_TAX_INFO_ID = '" & txtSelngTaxInfoID.Text & "'"
+            Re_Count = DB_Execute()
+
+            If Re_Count < 0 Then
+                MsgBox("계산서 총액 업데이트에 실패하였습니다. 관리자에게 문의하세요.")
+                Exit Sub
+            End If
+            Grid_Display_Main()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
+    Private Sub btnNew1_Click(sender As Object, e As EventArgs) Handles btnNew1.Click
+        '공급받는자
+        txtSelngTaxInfoID.Text = ""
+        txtCMOpNumber2.Text = ""
+        txtBKw.Text = ""
+        txtBHo.Text = ""
+        txtCMName2.Text = ""
+        txtCMCode2.Text = ""
+        txtCMLeader2.Text = ""
+        txtCMAddr2.Text = ""
+        txtCMConditions2.Text = ""
+        txtCMItem2.Text = ""
+        txtCMManName2.Text = ""
+        txtCMManTel2.Text = ""
+        txtCMManCell2.Text = ""
+        txtCMManEmail2.Text = ""
+        txtSelngId.Text = ""
+        txtSiNo.Text = ""
+        txtSnNo.Text = ""
+        dtpIsuDe.Text = ""
+        txtSplPc.Text = ""
+        txtTaxAmt.Text = ""
+        txtAmount.Text = ""
+        cboRqestRcptSe2.SelectedValue = "01"
+        txtRm.Text = ""
+    End Sub
+
+    Private Sub btnNew2_Click(sender As Object, e As EventArgs) Handles btnNew2.Click
+        Dim DBT As DataTable
+
+        DBT = Nothing
+        '증가일련번호
+        Dim MaxSnNo As Int32
+
+        '일련번호 증가
+        StrSQL = "SELECT isnull(max(SELNG_TAX_INFO_SN),0)+1 SELNG_TAX_INFO_SN from Sel_Tax_Detail_Info where SELNG_TAX_DETAIL_INFO_ID = '" & txtSelngTaxDtlInfoID.Text & "'"
+        If DB_Select(DBT) > 0 Then
+            MaxSnNo = Int32.Parse(DBT.Rows(0)("SELNG_TAX_INFO_SN"))
+        Else
+            MaxSnNo = 1
+        End If
+        Console.WriteLine("신규 일련번호=>" & MaxSnNo)
+
+        '세금상세내역
+        txtSelngTaxDtlInfoID.Text = ""
+        txtSelngTaxInfoID2.Text = lstMain.Rows(lstMain.CurrentRow.Index).Cells("Selng_Tax_Info_ID").Value.ToString
+        If txtSelngTaxInfoID2.Text = "" Then
+            txtSelngTaxInfoID2.Text = txtSelngTaxInfoID.Text
+        End If
+        txtSelngTaxInfoSeq.Text = MaxSnNo
+        txtPrdName.Text = ""
+        txtPrdCode.Text = ""
+        cboPrdUnit.SelectedValue = ""
+        txtPrdPc.Text = "0"
+        txtPrdQy.Text = "0"
+        txtSplPc2.Text = "0"
+        txtTaxAmt2.Text = "0"
+        txtAmount2.Text = "0"
+        chkVATInclsAt.Checked = False
+    End Sub
+
+    Private Sub btnDel1_Click(sender As Object, e As EventArgs) Handles btnDel1.Click
+
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        prcType = "삭제"
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        If txtSelngTaxInfoID.Text = "" Then
+            MsgBox("삭제 대상을 선택하세요.")
+            Exit Sub
+        End If
+
+        Try
+            If MessageBox.Show("세부 내역까지 동시에 삭제됩니다. 삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                If txtSelngTaxInfoID.Text <> "" Then
+                    StrSQL = "Delete SEL_TAX_INFO where SELNG_TAX_INFO_ID = '" & txtSelngTaxInfoID.Text & "'"
+                    Re_Count = DB_Execute()
+                    StrSQL = "Delete SEL_TAX_DETAIL_INFO where SELNG_TAX_INFO_ID = '" & txtSelngTaxInfoID.Text & "'"
+                    DB_Execute()
+
+                    If Re_Count > 0 Then
+                        MsgBox("삭제 완료")
+                    End If
+
+                    'hsim 20200805 처리 이력
+                    histLogStr = "사용자 " & logInUserName & " 매출세금 정보 삭제 : " & txtSelngTaxInfoID.Text
+                    Man_Log("Frm_Selng_Tax_Info", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+                Else
+                    MsgBox("선택된 매출세금 정보가 없습니다")
+                End If
+
+            End If
+
+            Grid_Display_Main()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Exit Sub
+        End Try
+
+    End Sub
+
+    Private Sub btnDel2_Click(sender As Object, e As EventArgs) Handles btnDel2.Click
+
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        prcType = "삭제"
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        If txtSelngTaxDtlInfoID.Text = "" Then
+            MsgBox("삭제 대상을 선택하세요.")
+            Exit Sub
+        End If
+
+        Try
+            If MessageBox.Show("삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                If txtSelngTaxDtlInfoID.Text <> "" Then
+                    StrSQL = "Delete SEL_TAX_DETAIL_INFO where SELNG_TAX_DETAIL_INFO_ID = '" & txtSelngTaxDtlInfoID.Text & "'N"
+                    DB_Execute()
+
+                    If Re_Count > 0 Then
+                        MsgBox("삭제 완료")
+                    End If
+
+                    'hsim 20200805 처리 이력
+                    histLogStr = "사용자 " & logInUserName & " 매출세금 상세정보 삭제 : " & txtSelngTaxDtlInfoID.Text
+                    Man_Log("Frm_Selng_Tax_Info", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+                Else
+                    MsgBox("선택된 매출세금 상세정보가 없습니다")
+                End If
+
+            End If
+
+            Grid_Display_Main()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Exit Sub
+        End Try
+
+    End Sub
+
+    Private Sub btnSave1_Click(sender As Object, e As EventArgs) Handles btnSave1.Click
+
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        DBT = Nothing
+        DBT2 = Nothing
+        '증가일련번호
+        Dim MaxSnNo As Int32
+
+        '금액 Check
+        If chkTaxPayComp() = False Then
+            Exit Sub
+        End If
+        '일련번호 증가
+        StrSQL = "SELECT isnull(max(SN_NO),0)+1 SN_NO from Sel_Tax_Info where ISU_DE = '" & dtpIsuDe.Value.ToString(fmtStr) & "'"
+        If DB_Select(DBT2) > 0 Then
+            MaxSnNo = Int32.Parse(DBT2.Rows(0)("SN_NO"))
+        Else
+            MaxSnNo = 1
+        End If
+        Console.WriteLine("신규 일련번호=>" & MaxSnNo)
+
+        '업데이트여부 확인
+        StrSQL = "SELECT * from Sel_Tax_Info where SELNG_TAX_INFO_ID = '" & txtSelngTaxInfoID.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+        Try
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblSelTaxInfo)
+
+            '#2. 입력자료 입력
+            For i = 0 To tblSelTaxInfo.Rows.Count - 1
+
+                Select Case tblSelTaxInfo.Rows(i).Item(0).ToString
+
+                    Case "SELNG_TAX_INFO_ID"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = DBT.Rows(0)("SELNG_TAX_INFO_ID").ToString
+                        Else
+                            tblSelTaxInfo.Rows(i).Item(11) = PK_Make("SEL_TAX_INFO")
+                        End If
+                    Case "ISU_DE"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = DBT.Rows(0)("ISU_DE").ToString
+                        Else
+                            tblSelTaxInfo.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+                        End If
+                    Case "SN_NO"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = DBT.Rows(0)("SN_NO").ToString
+                        Else
+                            tblSelTaxInfo.Rows(i).Item(11) = MaxSnNo
+                        End If
+                    Case "B_KW"
+                        If Re_Count > 0 Or txtBKw.Text <> "" Then
+                            tblSelTaxInfo.Rows(i).Item(11) = txtBKw.Text
+                        End If
+                    Case "B_HO"
+                        If Re_Count > 0 Or txtBHo.Text <> "" Then
+                            tblSelTaxInfo.Rows(i).Item(11) = txtBHo.Text
+                        End If
+                    Case "SE"
+
+                    Case "SPLPC"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = removeComma(txtSplPc.Text)
+                        Else
+                            tblSelTaxInfo.Rows(i).Item(11) = 0
+                        End If
+                    Case "TAX_AMT"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = removeComma(txtTaxAmt.Text)
+                        Else
+                            tblSelTaxInfo.Rows(i).Item(11) = 0
+                        End If
+                    Case "AMOUNT"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = removeComma(txtAmount.Text)
+                        Else
+                            tblSelTaxInfo.Rows(i).Item(11) = 0
+                        End If
+                    Case "CALC_SE"
+                        If Re_Count > 0 Or cboCalcSe.SelectedValue <> "" Then
+                            tblSelTaxInfo.Rows(i).Item(11) = cboCalcSe.SelectedValue
+                        End If
+                    Case "BCNC_CODE"
+                        If Re_Count > 0 Or txtCMCode2.Text <> "" Then
+                            tblSelTaxInfo.Rows(i).Item(11) = txtCMCode2.Text
+                        End If
+                    Case "RQEST_RCPT_SE"
+                        If Re_Count > 0 Or cboRqestRcptSe2.SelectedValue <> "" Then
+                            tblSelTaxInfo.Rows(i).Item(11) = cboRqestRcptSe2.SelectedValue
+                        End If
+                    Case "SELNG_ID"
+                        If Re_Count > 0 Or txtSelngTaxInfoID.Text <> "" Then
+                            tblSelTaxInfo.Rows(i).Item(11) = txtSelngTaxInfoID.Text
+                        End If
+                    Case "CASH_AMT"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = removeComma(txtCashAmount.Text)
+                        Else
+                            tblSelTaxInfo.Rows(i).Item(11) = 0
+                        End If
+                    Case "CHECK_AMT"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = removeComma(txtCheckAmount.Text)
+                        Else
+                            tblSelTaxInfo.Rows(i).Item(11) = 0
+                        End If
+                    Case "NOTE_AMT"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = removeComma(txtNoteAmount.Text)
+                        Else
+                            tblSelTaxInfo.Rows(i).Item(11) = 0
+                        End If
+                    Case "RECEIVABLE_AMT"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = removeComma(txtReceivableAmount.Text)
+                        Else
+                            tblSelTaxInfo.Rows(i).Item(11) = 0
+                        End If
+                    Case "SI_NO"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = DBT.Rows(0)("SI_NO").ToString
+                        Else
+                            tblSelTaxInfo.Rows(i).Item(11) = txtSiNo.Text
+                        End If
+                    Case "PS_TEXT"
+
+                    Case "TRANSMIS_ST"
+
+                    Case "TR_ST_LIST"
+
+                    Case "RM"
+                        If Re_Count > 0 Or txtRm.Text <> "" Then
+                            tblSelTaxInfo.Rows(i).Item(11) = txtRm.Text
+                        End If
+                    Case "UPD_DE"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = DBT.Rows(0)("UPD_DE").ToString
+                        Else
+                            tblSelTaxInfo.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                    Case "UPD_MG"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = DBT.Rows(0)("UPD_MG").ToString
+                        Else
+                            tblSelTaxInfo.Rows(i).Item(11) = loginID
+                        End If
+                    Case "UPDT_DE"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                    Case "UPDT_EMPL"
+                        If Re_Count > 0 Then
+                            tblSelTaxInfo.Rows(i).Item(11) = DBT.Rows(0)("UPDT_EMPL").ToString
+                        Else
+                            tblSelTaxInfo.Rows(i).Item(11) = loginID
+                        End If
+
+                End Select
+
+            Next
+
+            If Re_Count > 0 Then
+                Re_Count2 = fnTableUpdate("dbo.Sel_Tax_Info", tblSelTaxInfo)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("수정 완료")
+                Else
+                    MsgBox("수정 실패")
+                End If
+            Else
+                Re_Count2 = fnTableInsert("dbo.Sel_Tax_Info", tblSelTaxInfo)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 매출세금 정보 수정 : " & txtSelngTaxInfoID.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 매출세금 정보 신규 입력 : " & txtSelngTaxInfoID.Text
+            End If
+            Man_Log("Frm_Selng_Tax_Info", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+
+        '합계 재계산
+        calcTotalAmt(0)
+
+        Grid_Display_Main()
+
+    End Sub
+
+    Private Sub Amount_LostFocus(sender As Object, e As EventArgs) Handles txtSplPc.TextChanged, txtTaxAmt.TextChanged, txtAmount.TextChanged, txtCashAmount.LostFocus,
+                                                                           txtCheckAmount.LostFocus, txtNoteAmount.LostFocus, txtReceivableAmount.LostFocus, txtSplPc2.TextChanged, txtTaxAmt2.TextChanged, txtAmount2.TextChanged
+
+        If sender.Text.Length > 13 Or sender.Text.Length < 1 Then
+            MsgBox("입력 자릿수 초과이거나 1 미만입니다.")
+            sender.Text = "0"
+            Exit Sub
+        End If
+        sender.Text = String.Format("{0:n0}", CType(sender.Text, Long))
+    End Sub
+
+    Private Sub PrdPc_LostFocus(sender As Object, e As EventArgs) Handles txtPrdPc.LostFocus, txtPrdQy.LostFocus
+
+        'hsim 20200806 단가 혹은 수량 중 하나가 값이 없으면 빠져나간다
+        If txtPrdPc.Text = "" Or txtPrdPc.Text = "0" _
+            Or txtPrdQy.Text = "" Or txtPrdPc.Text = "0" Then
+            Exit Sub
+        End If
+
+        If sender.Text.Length > 13 Or sender.Text.Length < 1 Then
+            MsgBox("입력 자릿수 초과이거나 1 미만입니다.")
+            sender.Text = "0"
+            Exit Sub
+        End If
+        sender.Text = String.Format("{0:n0}", CType(sender.Text, Long))
+        calcIndTaxAmount()
+    End Sub
+
+    Private Sub calcIndTaxAmount()
+
+        Dim tmpTotal As Long, tmpTaxAmt As Long, tmpAmount As Long, tmpDiffAmt As Long
+        '#1. 공급가액 구함
+        If txtPrdQy.Text <> "" And txtPrdQy.Text > "0" Then
+            tmpTotal = CLng(txtPrdPc.Text) * CLng(txtPrdQy.Text)
+        Else
+            tmpTotal = 0
+        End If
+        '#2. 부가세 산정
+        If chkVATInclsAt.Checked Then
+            tmpTaxAmt = Math.Truncate(tmpTotal / 11)
+            tmpTotal = tmpTaxAmt * 10
+            tmpAmount = tmpTaxAmt * 11
+            '금액이 안 맞으면...? 차액을 보정
+            If tmpAmount < tmpTotal Then
+                tmpDiffAmt = tmpTotal - tmpAmount
+                tmpTaxAmt += tmpDiffAmt
+                tmpAmount += tmpDiffAmt
+            End If
+        Else
+            tmpTaxAmt = Math.Truncate(tmpTotal * 0.1)
+            tmpAmount = tmpTotal + tmpTaxAmt
+        End If
+        '#3. 관련 Column Update
+        txtSplPc2.Text = tmpTotal.ToString
+        txtTaxAmt2.Text = tmpTaxAmt.ToString
+        txtAmount2.Text = tmpAmount.ToString
+
+    End Sub
+
+    Private Function chkTaxPayComp() As Boolean
+        Dim tmpTotalAmt As Long
+        tmpTotalAmt = CLng(txtCashAmount.Text) + CLng(txtCheckAmount.Text) + CLng(txtNoteAmount.Text) * CLng(txtReceivableAmount.Text)
+        If tmpTotalAmt <> CLng(txtAmount.Text) Then
+            MsgBox("합계금액은 현금/수표/어음/외상매출금 금액의 합과 동일하여야 합니다.")
+            Return False
+        End If
+        Return True
+    End Function
+    Private Sub btnSave2_Click(sender As Object, e As EventArgs) Handles btnSave2.Click
+
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        DBT = Nothing
+        DBT2 = Nothing
+        '증가일련번호
+        Dim MaxSnNo As Int32
+
+        '일련번호 증가
+        StrSQL = "SELECT isnull(max(SELNG_TAX_INFO_SN),0)+1 SELNG_TAX_INFO_SN from Sel_Tax_Detail_Info where SELNG_TAX_DETAIL_INFO_ID = '" & txtSelngTaxDtlInfoID.Text & "'"
+        If DB_Select(DBT2) > 0 Then
+            MaxSnNo = Int32.Parse(DBT2.Rows(0)("SELNG_TAX_INFO_SN"))
+        Else
+            MaxSnNo = 1
+        End If
+        Console.WriteLine("신규 일련번호=>" & MaxSnNo)
+
+        '업데이트여부 확인
+        StrSQL = "SELECT * from Sel_Tax_Detail_Info where SELNG_TAX_DETAIL_INFO_ID = '" & txtSelngTaxDtlInfoID.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+        'Try
+
+        '#1. 기존 입력 값 초기화
+        clearTblRowValues(tblSelTaxDetailInfo)
+
+            '#2. 입력자료 입력
+            For i = 0 To tblSelTaxDetailInfo.Rows.Count - 1
+
+                Select Case tblSelTaxDetailInfo.Rows(i).Item(0).ToString
+
+                    Case "SELNG_TAX_DETAIL_INFO_ID"
+                        If Re_Count > 0 Then
+                            tblSelTaxDetailInfo.Rows(i).Item(11) = DBT.Rows(0)("SELNG_TAX_DETAIL_INFO_ID").ToString
+                        Else
+                            tblSelTaxDetailInfo.Rows(i).Item(11) = PK_Make("SEL_TAX_DETAIL_INFO")
+                        End If
+                    Case "SELNG_TAX_INFO_ID"
+                    If Re_Count > 0 Then
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = DBT.Rows(0)("SELNG_TAX_INFO_ID").ToString()
+                    Else
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = txtSelngTaxInfoID2.Text
+                    End If
+                Case "SELNG_TAX_INFO_SN"
+                    If Re_Count > 0 Then
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = DBT.Rows(0)("SELNG_TAX_INFO_SN").ToString
+                    Else
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = MaxSnNo
+                        End If
+                    Case "PRD_CODE"
+                        If Re_Count > 0 Or txtPrdCode.Text <> "" Then
+                            tblSelTaxDetailInfo.Rows(i).Item(11) = txtPrdCode.Text
+                        End If
+                    Case "PRD_UNIT"
+                        If Re_Count > 0 Or cboPrdUnit.SelectedValue <> "" Then
+                            tblSelTaxDetailInfo.Rows(i).Item(11) = cboPrdUnit.SelectedValue
+                        End If
+                    Case "PRD_PC"
+                    If Re_Count > 0 Then
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = CDbl(txtPrdPc.Text)
+                    Else
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = 0
+                    End If
+                Case "PRD_QY"
+                    If Re_Count > 0 Then
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = CInt(txtPrdQy.Text)
+                    Else
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = 0
+                    End If
+                Case "SPLPC"
+                    If Re_Count > 0 Then
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = CDbl(removeComma(txtSplPc2.Text))
+                    Else
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = 0
+                    End If
+                Case "TAX_AMT"
+                    If Re_Count > 0 Then
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = CDbl(removeComma(txtTaxAmt2.Text))
+                    Else
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = 0
+                    End If
+                Case "AMOUNT"
+                    If Re_Count > 0 Then
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = CDbl(removeComma(txtAmount2.Text))
+                    Else
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = 0
+                    End If
+                Case "VAT_INCLS_AT"
+                    If Re_Count > 0 Then
+                        tblSelTaxDetailInfo.Rows(i).Item(11) = DBT.Rows(0)("VAT_INCLS_AT").ToString
+                    Else
+                        If chkVATInclsAt.Checked Then
+                            tblSelTaxDetailInfo.Rows(i).Item(11) = "1"
+                        Else
+                            tblSelTaxDetailInfo.Rows(i).Item(11) = "0"
+                        End If
+                    End If
+                Case "UPD_DE"
+                    If Re_Count > 0 Then
+                            tblSelTaxDetailInfo.Rows(i).Item(11) = DBT.Rows(0)("UPD_DE").ToString
+                        Else
+                            tblSelTaxDetailInfo.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                    Case "UPD_MG"
+                        If Re_Count > 0 Then
+                            tblSelTaxDetailInfo.Rows(i).Item(11) = DBT.Rows(0)("UPD_MG").ToString
+                        Else
+                            tblSelTaxDetailInfo.Rows(i).Item(11) = loginID
+                        End If
+                    Case "UPDT_DE"
+                        If Re_Count > 0 Then
+                            tblSelTaxDetailInfo.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                    Case "UPDT_EMPL"
+                        If Re_Count > 0 Then
+                            tblSelTaxDetailInfo.Rows(i).Item(11) = DBT.Rows(0)("UPDT_EMPL").ToString
+                        Else
+                            tblSelTaxDetailInfo.Rows(i).Item(11) = loginID
+                        End If
+
+                End Select
+
+            Next
+
+            If Re_Count > 0 Then
+                Re_Count2 = fnTableUpdate("dbo.Sel_Tax_Detail_Info", tblSelTaxDetailInfo)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("수정 완료")
+                Else
+                    MsgBox("수정 실패")
+                End If
+            Else
+                Re_Count2 = fnTableInsert("dbo.Sel_Tax_Detail_Info", tblSelTaxDetailInfo)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 매출세금 상세정보 수정 : " & txtSelngTaxInfoID.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 매출세금 상세정보 신규 입력 : " & txtSelngTaxInfoID.Text
+            End If
+            Man_Log("Frm_Selng_Tax_Info", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        'Catch ex As Exception
+
+        'MsgBox(ex.Message)
+        'Exit Sub
+
+        'End Try
+
+        '총액 재계산
+        calcTotalAmt(1)
+        Grid_Display_Detail()
+
+    End Sub
+
+    Private Sub tab_Main_Click(sender As Object, e As EventArgs) Handles tab_Main.Click
+
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = True
+        palDetail.Visible = False
+
+    End Sub
+
+    Private Sub tab_Detail_Click(sender As Object, e As EventArgs) Handles tab_Detail.Click
+
+        If lstMain.Rows.Count < 1 Or lstMain.SelectedRows.Count < 1 Then
+            MsgBox("먼저 계산서 기본정보 조회 후에 선택하셔야 이동이 가능합니다.")
+            Exit Sub
+        End If
+
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = False
+        palDetail.Visible = True
+
+        Grid_Display_Detail()
+
+    End Sub
+
+    Private Sub chkVATInclsAt_Click(sender As Object, e As EventArgs) Handles chkVATInclsAt.Click
+        calcIndTaxAmount()
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Grid_Display_Ch = False
+        Grid_Display_Main()
+    End Sub
+
+    Private Sub lstMain_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellDoubleClick
+        If lstMain.Rows.Count < 1 Or lstMain.SelectedRows.Count < 1 Then
+            MsgBox("매출 세금 내역을 먼저 조회 하셔야 합니다.")
+            Exit Sub
+        End If
+        Grid_Display_Detail()
+
+    End Sub
+
+    Private Sub txtCashAmount_Enter(sender As Object, e As EventArgs) Handles txtCashAmount.Enter
+        txtCashAmount.SelectAll()
+    End Sub
+
+    Private Sub txtCheckAmount_Enter(sender As Object, e As EventArgs) Handles txtCheckAmount.Enter
+        txtCheckAmount.SelectAll()
+    End Sub
+
+    Private Sub txtNoteAmount_Enter(sender As Object, e As EventArgs) Handles txtNoteAmount.Enter
+        txtNoteAmount.SelectAll()
+    End Sub
+
+    Private Sub txtPrdPc_Enter(sender As Object, e As EventArgs) Handles txtPrdPc.Enter
+        txtPrdPc.SelectAll()
+    End Sub
+
+    Private Sub txtPrdQy_Enter(sender As Object, e As EventArgs) Handles txtPrdQy.Enter
+        txtPrdQy.SelectAll()
+    End Sub
+
+    Private Sub txtPrdCode_TextChanged(sender As Object, e As EventArgs) Handles txtPrdCode.TextChanged
+        Dim DBT As DataTable
+        DBT = Nothing
+        If txtPrdName.Text = "" Then
+            StrSQL = " select Product_Name from Product Where Product_Code ='" & txtPrdCode.Text & "'"
+            DB_Select(DBT)
+            txtPrdName.Text = DBT.Rows(0)("Product_Name").ToString
+        End If
+    End Sub
+
+    Private Sub txtReceivableAmount_Enter(sender As Object, e As EventArgs) Handles txtReceivableAmount.Enter
+        txtReceivableAmount.SelectAll()
+    End Sub
+
+
+
+End Class

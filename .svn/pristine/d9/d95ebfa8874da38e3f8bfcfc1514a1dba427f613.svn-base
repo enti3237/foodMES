@@ -1,0 +1,72 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Public Class Frm_CC_Report2
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+    Dim Excel_Check As Boolean
+
+
+    Private Sub Frm_CC_Report1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT a1,a13,a17,a3,a21
+           FROM test with(NOLOCK)"
+
+
+
+        Re_Count = DB_Select(DBT)
+
+        Grid_Main.DataSource = DBT
+
+
+        Grid_DL_Load()
+        Grid_Main.ClearSelection()
+    End Sub
+
+    Private Sub Grid_DL_Load()
+        '    Me.Dock = DockStyle.Fill
+        '    Me.BringToFront()
+        '    Dim DBT As DataTable
+        '    DBT = Nothing
+
+        '    StrSQL = "SELECT a1,a5,a13,a17,a18,a23,a20,a3,a21,a10
+        '       FROM  test with(NOLOCK)"
+
+
+
+        '    Re_Count = DB_Select(DBT)
+
+        '    Grid_Main.DataSource = DBT
+
+
+    End Sub
+
+
+    Private Sub Button15_Click(sender As Object, e As EventArgs) Handles Button15.Click
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT DL_Code,DL_Name,DL_Customer_Name,DL_Total,DL_Date1,
+        '              DL_Gold1 FROM Deliver where DL_JOB = '" & TextBox18.Text & "' order by DL_Code"
+        'Re_Count = DB_Select(DBT)
+
+        'Grid_Main.DataSource = DBT
+        'Grid_Main.ClearSelection()
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT DL_Code,DL_Name,DL_Customer_Name,DL_Total,DL_Date1,
+        '              DL_Gold1 FROM Deliver where DL_Name = '" & TextBox17.Text & "' order by DL_Code"
+        'Re_Count = DB_Select(DBT)
+
+        'Grid_Main.DataSource = DBT
+        'Grid_Main.ClearSelection()
+    End Sub
+End Class
+

@@ -1,0 +1,454 @@
+﻿Public Class Frm_Collection
+    Private Sub Frm_Collection_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Item_Grid_Setup()
+        'Customer_Grid_Setup()
+        Customer_Grid.Visible = False
+        Chart1.Visible = False
+        DateTimePicker1.Value = Today.AddDays(-Today.Day + 1) '해당 달의 첫 날 
+
+
+        Chart1.Series("Series1").Name = "매출액"
+
+
+    End Sub
+
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs) Handles Search_Com.Click
+        Dim DBT As New DataTable
+
+        Dim i, j As Integer
+        If RadioButton1.Checked Then
+            Day1.Text = Format(DateTimePicker1.Value, "yyyy")
+            Day2.Text = Format(DateTimePicker2.Value.AddMonths(12 - DateTimePicker2.Value.Month + 1).AddDays(0 - DateTimePicker2.Value.Day), "yyyy-MM-dd")
+        ElseIf RadioButton2.Checked Then
+            Day1.Text = Format(DateTimePicker1.Value, "yyyy-MM")
+            Day2.Text = Format(DateTimePicker2.Value.AddMonths(1).AddDays(0 - DateTimePicker2.Value.Day), "yyyy-MM-dd")
+        ElseIf RadioButton3.Checked Then
+            Day1.Text = Format(DateTimePicker1.Value, "yyyy-MM-dd")
+            Day2.Text = Format(DateTimePicker2.Value, "yyyy-MM-dd")
+        End If
+
+        StrSQL = "Select SALES_OUT_Date, SALES_OUT_Customer_Name, sum(convert(decimal, SALES_OUT_Gold)) AS SALES_OUT_Total_Gold, SALES_OUT.SALES_OUT_Bigo
+                  from SALES_OUT_List SL with(NOLOCK), SALES_OUT with(nolock) 
+                  where SALES_OUT_Date >= '" & Day1.Text & "' and SALES_OUT_Date <='" & Day2.Text & "' and SL.SALES_OUT_Code=SALES_OUT.SALES_OUT_Code and SALES_OUT_Gold !='' and SALES_OUT_Name!='' group by SALES_OUT_Date, SALES_OUT_Customer_Name, SALES_OUT_PRODUCT_Code, SALES_OUT.SALES_OUT_Bigo"
+        Re_Count = DB_Select(DBT)
+
+        '추가 코드
+        Dim SALES_OUT_Date2 As String = ""
+        Dim SALES_OUT_Date3 As String = ""
+        Dim SALES_OUT_Date4 As String = ""
+        Dim Total_Sum_Gold As Integer = 0
+        Dim Total_Gold2 As Integer = 0
+        Dim SALES_OUT_Date As String = ""
+        Dim SALES_OUT_Total_Gold As Integer = 0
+        Dim SALES_OUT_Total_Gold2 As Integer = 0
+
+        Dim date1 As String = ""
+        Dim date2 As String = ""
+        Dim date3 As String = ""
+        Dim date4 As String = ""
+
+        Chart1.Visible = True
+        '그리드값
+        If Re_Count <> 0 Then
+
+            Item_Grid.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                For j = 0 To DBT.Columns.Count - 1
+                    Item_Grid.Item(j + 1, i).Value = DBT.Rows(i).Item(j)
+                Next j
+                Item_Grid.Item(0, i).Value = i + 1
+            Next i
+        End If
+
+
+        '그래프 초기화
+        Chart1.Series("매출액").Points.Clear()
+
+        '   MsgBox(Int32.Parse(Day1.Text) + 1)
+
+        '그래프값
+
+        If RadioButton1.Checked Then
+            date1 = Day1.Text & "-" & "12-31" '20xx - 12 - 31 
+            date2 = Day2.Text.Substring(0, 4) ' 20xx
+
+
+            If Day1.Text = date2 Then
+                '같은 연도일때
+
+                StrSQL = "Select SALES_OUT_Date, SALES_OUT_Customer_Name, sum(convert(decimal, SALES_OUT_Gold)) AS SALES_OUT_Total_Gold, SALES_OUT.SALES_OUT_Bigo
+                      from SALES_OUT_List SL with(NOLOCK), SALES_OUT with(nolock) 
+                      where SALES_OUT_Date >= '" & date2 & "' and SALES_OUT_Date <='" & Day2.Text & "' and SL.SALES_OUT_Code=SALES_OUT.SALES_OUT_Code and SALES_OUT_Gold !='' and SALES_OUT_Name!='' group by SALES_OUT_Date, SALES_OUT_Customer_Name, SALES_OUT_PRODUCT_Code, SALES_OUT.SALES_OUT_Bigo"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    For i = 0 To Re_Count - 1
+                        SALES_OUT_Total_Gold += DBT.Rows(i)("SALES_OUT_Total_Gold")
+                    Next
+
+                End If
+
+                Chart1.Series("매출액").Points.AddXY(Day1.Text, SALES_OUT_Total_Gold)
+            Else
+                '다른 연도일때
+
+                '두 연도의 차이를 구한다
+                Dim ysub As Integer
+                Dim d1 As Integer
+                Dim d2 As Integer
+
+                Dim d3 As String = ""
+
+                d1 = Integer.Parse(Day1.Text)
+                d2 = Integer.Parse(date2)
+                'd1 = d1 - 1
+
+                ysub = d2 - d1
+
+                For k = 0 To ysub
+
+                    StrSQL = "Select SALES_OUT_Date, SALES_OUT_Customer_Name, sum(convert(decimal, SALES_OUT_Gold)) AS SALES_OUT_Total_Gold, SALES_OUT.SALES_OUT_Bigo
+                      from SALES_OUT_List SL with(NOLOCK), SALES_OUT with(nolock) 
+                      where SALES_OUT_Date >= '" & d1.ToString & "' and SALES_OUT_Date <='" & date1 & "' and SL.SALES_OUT_Code=SALES_OUT.SALES_OUT_Code and SALES_OUT_Gold !='' and SALES_OUT_Name!='' group by SALES_OUT_Date, SALES_OUT_Customer_Name, SALES_OUT_PRODUCT_Code, SALES_OUT.SALES_OUT_Bigo"
+
+                    Re_Count = DB_Select(DBT)
+                    If Re_Count <> 0 Then
+                        For i = 0 To Re_Count - 1
+                            SALES_OUT_Total_Gold += DBT.Rows(i)("SALES_OUT_Total_Gold")
+                        Next
+
+                    End If
+
+                    d3 = d1.ToString
+
+                    Chart1.Series("매출액").Points.AddXY(d3, SALES_OUT_Total_Gold)
+                    d1 = d1 + 1
+                    date1 = d1 & "-" & "12-31"
+                    SALES_OUT_Total_Gold = 0
+                Next k
+
+            End If
+
+
+
+            ''2019
+            'StrSQL = "Select SALES_OUT_Date, SALES_OUT_Customer_Name, sum(convert(decimal, SALES_OUT_Gold)) AS SALES_OUT_Total_Gold, SALES_OUT.SALES_OUT_Bigo
+            '      from SALES_OUT_List SL with(NOLOCK), SALES_OUT with(nolock) 
+            '      where SALES_OUT_Date >= '" & Day1.Text & "' and SALES_OUT_Date <='" & date1 & "' and SL.SALES_OUT_Code=SALES_OUT.SALES_OUT_Code and SALES_OUT_Gold !='' and SALES_OUT_Name!='' group by SALES_OUT_Date, SALES_OUT_Customer_Name, SALES_OUT_PRODUCT_Code, SALES_OUT.SALES_OUT_Bigo"
+            'Re_Count = DB_Select(DBT)
+            'If Re_Count <> 0 Then
+            '    For i = 0 To Re_Count - 1
+            '        SALES_OUT_Total_Gold += DBT.Rows(i)("SALES_OUT_Total_Gold")
+            '    Next
+
+            'End If
+            ''2020
+            'StrSQL = "Select SALES_OUT_Date, SALES_OUT_Customer_Name, sum(convert(decimal, SALES_OUT_Gold)) AS SALES_OUT_Total_Gold, SALES_OUT.SALES_OUT_Bigo
+            '      from SALES_OUT_List SL with(NOLOCK), SALES_OUT with(nolock) 
+            '      where SALES_OUT_Date >= '" & date2 & "' and SALES_OUT_Date <='" & Day2.Text & "' and SL.SALES_OUT_Code=SALES_OUT.SALES_OUT_Code and SALES_OUT_Gold !='' and SALES_OUT_Name!='' group by SALES_OUT_Date, SALES_OUT_Customer_Name, SALES_OUT_PRODUCT_Code, SALES_OUT.SALES_OUT_Bigo"
+            'Re_Count = DB_Select(DBT)
+            'If Re_Count <> 0 Then
+            '    For i = 0 To Re_Count - 1
+            '        SALES_OUT_Total_Gold2 += DBT.Rows(i)("SALES_OUT_Total_Gold")
+            '    Next
+
+            'End If
+
+
+            '그래프로 나타낼 개수 (2019-2020이면 2개고 두개가 같으면 1개만 표시)
+            '3개 이상 for문은 내일!
+
+
+
+
+
+        ElseIf RadioButton2.Checked Then
+
+            date1 = Day1.Text & "-" & "31" '2020-mm-dd
+            date2 = Day2.Text.Substring(0, 7) '2020-mm
+
+            If Day1.Text = date2 Then
+                '같은 달일때
+
+                StrSQL = "Select SALES_OUT_Date, SALES_OUT_Customer_Name, sum(convert(decimal, SALES_OUT_Gold)) AS SALES_OUT_Total_Gold, SALES_OUT.SALES_OUT_Bigo
+                      from SALES_OUT_List SL with(NOLOCK), SALES_OUT with(nolock) 
+                      where SALES_OUT_Date >= '" & date2 & "' and SALES_OUT_Date <='" & Day2.Text & "' and SL.SALES_OUT_Code=SALES_OUT.SALES_OUT_Code and SALES_OUT_Gold !='' and SALES_OUT_Name!='' group by SALES_OUT_Date, SALES_OUT_Customer_Name, SALES_OUT_PRODUCT_Code, SALES_OUT.SALES_OUT_Bigo"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    For i = 0 To Re_Count - 1
+                        SALES_OUT_Total_Gold += DBT.Rows(i)("SALES_OUT_Total_Gold")
+                    Next
+
+                End If
+
+                Chart1.Series("매출액").Points.AddXY(Day1.Text, SALES_OUT_Total_Gold)
+            Else
+                '다른 달일때
+
+                '두 달의 차이를 구한다
+                Dim ysub As Integer
+                Dim month1, month2 As Integer
+
+                Dim dd As String
+                dd = Day1.Text
+
+                'date2 = Day2.Text.Substring(0, 7)
+                month1 = Integer.Parse(Day1.Text.Substring(5)) 'mm
+                month2 = Integer.Parse(date2.Substring(5)) 'mm
+
+
+
+                ysub = month2 - month1
+
+                For k = 0 To ysub
+
+                    StrSQL = "Select SALES_OUT_Date, SALES_OUT_Customer_Name, sum(convert(decimal, SALES_OUT_Gold)) AS SALES_OUT_Total_Gold, SALES_OUT.SALES_OUT_Bigo
+                      from SALES_OUT_List SL with(NOLOCK), SALES_OUT with(nolock) 
+                      where SALES_OUT_Date >= '" & dd & "' and SALES_OUT_Date <='" & date1 & "' and SL.SALES_OUT_Code=SALES_OUT.SALES_OUT_Code and SALES_OUT_Gold !='' and SALES_OUT_Name!='' group by SALES_OUT_Date, SALES_OUT_Customer_Name, SALES_OUT_PRODUCT_Code, SALES_OUT.SALES_OUT_Bigo"
+
+                    Re_Count = DB_Select(DBT)
+                    If Re_Count <> 0 Then
+                        For i = 0 To Re_Count - 1
+                            SALES_OUT_Total_Gold += DBT.Rows(i)("SALES_OUT_Total_Gold")
+                        Next
+
+                    End If
+
+                    Chart1.Series("매출액").Points.AddXY(dd, SALES_OUT_Total_Gold)
+                    If Len(month1 < 2) Then
+                        month1 = "0" & month1 + 1
+                    End If
+                    dd = dd.Substring(0, 6) & month1
+                    date1 = dd & "-31"
+                    ' MsgBox(dd)
+                    SALES_OUT_Total_Gold = 0
+                Next k
+
+            End If
+
+
+        ElseIf RadioButton3.Checked Then
+
+            StrSQL = "Select SALES_OUT_Date, SALES_OUT_Customer_Name, sum(convert(decimal, SALES_OUT_Gold)) AS SALES_OUT_Total_Gold, SALES_OUT.SALES_OUT_Bigo
+                  from SALES_OUT_List SL with(NOLOCK), SALES_OUT with(nolock) 
+                  where SALES_OUT_Date >= '" & Day1.Text & "' and SALES_OUT_Date <='" & Day2.Text & "' and SL.SALES_OUT_Code=SALES_OUT.SALES_OUT_Code and SALES_OUT_Gold !='' and SALES_OUT_Name!='' group by SALES_OUT_Date, SALES_OUT_Customer_Name, SALES_OUT_PRODUCT_Code, SALES_OUT.SALES_OUT_Bigo"
+            Re_Count = DB_Select(DBT)
+
+            Re_Count = DB_Select(DBT)
+            If Re_Count <> 0 Then
+                For i = 0 To Re_Count - 1
+                    SALES_OUT_Total_Gold += DBT.Rows(i)("SALES_OUT_Total_Gold")
+                Next
+
+            End If
+
+
+            Chart1.Series("매출액").Points.AddXY(Day1.Text & " ~ " & Day2.Text, SALES_OUT_Total_Gold)
+
+
+        End If
+
+
+
+
+
+        Item_Grid.MultiSelect = False
+        Item_Grid.ClearSelection()
+
+    End Sub
+    Private Sub Customer_Grid_Display(code1 As String)
+        Dim DBT As New DataTable
+        Dim i, j As Integer
+        StrSQL = "Select SALES_OUT_Day, SALES_OUT_PRODUCT_Name, SALES_OUT_PRODUCT_Code, SALES_OUT_Total, SL.SALES_OUT_Bigo
+                  from SALES_OUT_List SL with(NOLOCK), SALES_OUT with(nolock)
+                  where SALES_OUT_Date = '" & code1 & "' and SL.SALES_OUT_Code= SALES_OUT.SALES_OUT_Code "
+        'where SALES_OUT_Date >= '" & Day1.Text & "' and SALES_OUT_Date <='" & Day2.Text & "' and SL.SALES_OUT_Code=SALES_OUT.SALES_OUT_Code and SALES_OUT_Gold !='' and SALES_OUT_Name!='' group by SALES_OUT_Date, SALES_OUT_Customer_Name, SALES_OUT_PRODUCT_Code, SALES_OUT.SALES_OUT_Bigo"
+
+
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+
+            Customer_Grid.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                For j = 0 To DBT.Columns.Count - 1
+                    Customer_Grid.Item(j + 1, i).Value = DBT.Rows(i).Item(j)
+                Next j
+                Customer_Grid.Item(0, i).Value = i + 1
+            Next i
+        Else
+
+            Customer_Grid.RowCount = 0
+            'For j = 0 To Customer_Grid.ColumnCount - 1
+            '    Customer_Grid.Item(j, 0).Value = ""
+            'Next j
+        End If
+
+        Customer_Grid.MultiSelect = False
+        Customer_Grid.ClearSelection()
+
+    End Sub
+
+    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton2.CheckedChanged, RadioButton3.CheckedChanged, RadioButton1.CheckedChanged
+
+        If sender.checked Then
+            If sender.text.Equals("연간") Then
+                DateTimePicker1.CustomFormat = "yyyy년"
+                DateTimePicker2.CustomFormat = "yyyy년"
+            ElseIf sender.text.Equals("월간") Then
+                DateTimePicker1.CustomFormat = "yyyy년 MM월"
+                DateTimePicker2.CustomFormat = "yyyy년 MM월"
+            ElseIf sender.text.Equals("일간") Then
+                DateTimePicker1.CustomFormat = "yyyy년 MM월 dd일"
+                DateTimePicker2.CustomFormat = "yyyy년 MM월 dd일"
+            End If
+        End If
+
+
+
+    End Sub
+
+    Public Function Item_Grid_Setup() As Boolean
+
+        Grid_Color(Item_Grid)
+        'Item_Grid.GridColor = Color.White
+        'Item_Grid.GridColor = Color.White
+        'Item_Grid.BackgroundColor = Color.White
+        'Item_Grid.EnableHeadersVisualStyles = False
+        'Item_Grid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(91, 155, 213)
+        'Item_Grid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White
+        'Item_Grid.RowsDefaultCellStyle.BackColor = Color.FromArgb(210, 222, 239)
+        'Item_Grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(234, 239, 247)
+
+        Item_Grid.AllowUserToAddRows = False
+        Item_Grid.RowTemplate.Height = 24
+        Item_Grid.ColumnCount = 5
+        Item_Grid.RowCount = 0
+
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Item_Grid.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+
+        Item_Grid.RowHeadersWidth = 10
+        Item_Grid.Columns(0).Width = 60
+        Item_Grid.RowHeadersVisible = False
+        Item_Grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+
+        Item_Grid.Columns(0).HeaderText = "순번"
+        Item_Grid.Columns(1).HeaderText = "납품일자"
+        Item_Grid.Columns(2).HeaderText = "납품업체"
+        Item_Grid.Columns(3).HeaderText = "매출액"
+        Item_Grid.Columns(4).HeaderText = "비고"
+
+        For i = 0 To Item_Grid.ColumnCount - 1
+            Item_Grid.Columns(i).Width = 80
+            Item_Grid.Columns(i).ReadOnly = True
+        Next i
+        Item_Grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+
+        Item_Grid_Setup = True
+    End Function
+
+    Public Function Customer_Grid_Setup() As Boolean
+        Customer_Grid.GridColor = Color.White
+        Customer_Grid.GridColor = Color.White
+        Customer_Grid.BackgroundColor = Color.White
+        Customer_Grid.EnableHeadersVisualStyles = False
+        Customer_Grid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(91, 155, 213)
+        Customer_Grid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White
+        Customer_Grid.RowsDefaultCellStyle.BackColor = Color.FromArgb(210, 222, 239)
+        Customer_Grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(234, 239, 247)
+
+        Customer_Grid.AllowUserToAddRows = False
+        Customer_Grid.RowTemplate.Height = 24
+        Customer_Grid.ColumnCount = 6
+        Customer_Grid.RowCount = 0
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Customer_Grid.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Customer_Grid.RowHeadersWidth = 10
+        Customer_Grid.Columns(0).Width = 60
+        Customer_Grid.RowHeadersVisible = False
+        Customer_Grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+
+        Customer_Grid.Columns(0).HeaderText = "순번"
+        Customer_Grid.Columns(1).HeaderText = "납품일자"
+        Customer_Grid.Columns(2).HeaderText = "제품명"
+        Customer_Grid.Columns(3).HeaderText = "Part No"
+        Customer_Grid.Columns(4).HeaderText = "납품수"
+        Customer_Grid.Columns(5).HeaderText = "비고"
+
+        For i = 0 To Customer_Grid.ColumnCount - 1
+            Customer_Grid.Columns(i).Width = 80
+            Customer_Grid.Columns(i).ReadOnly = True
+        Next i
+
+        Customer_Grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+
+        Customer_Grid_Setup = True
+    End Function
+
+
+    Private Sub Item_Grid_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Item_Grid.CellEnter
+        If Len(Item_Grid.Item(0, Item_Grid.CurrentCell.RowIndex).Value) > 0 Then
+            'Save_Excel.Visible = True
+            'Print_Excel.Visible = True
+            ' Customer_Grid_Display(Item_Grid.Item(1, Item_Grid.CurrentCell.RowIndex).Value)
+
+            'Add_Result_Chart()
+        End If
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+    End Sub
+
+    'Private Sub Add_Result_Chart()
+    '    Dim Date1, Date2 As Date
+    '    Dim i As Integer = 0
+    '    Dim dv As New DataView
+    '    Dim DBT As New DataTable
+
+    '    Chart1.Visible = True
+
+    '    If RadioButton1.Checked Then
+    '    ElseIf RadioButton2.Checked Then
+    '    ElseIf RadioButton3.Checked Then
+    '        Date1 = New Date(Val(Mid(Day1.Text, 1, 4)), Val(Mid(Day1.Text, 6, 2)), Val(Mid(Day1.Text, 9, 2)))
+    '        Date2 = New Date(Val(Mid(Day2.Text, 1, 4)), Val(Mid(Day2.Text, 6, 2)), Val(Mid(Day2.Text, 9, 2)))
+
+
+    '        StrSQL = "SELECT SUM(CONVERT(DECIMAL,SALES_OUT_TOTAL))
+    '                    FROM SALES_OUT_List "
+
+    '        Re_Count = DB_Select(DBT)
+    '        If Re_Count <> 0 Then
+
+
+
+
+
+    '            ' Chart1.Series(0).Points.AddXY("메출액", "")
+
+    '        Else
+    '        End If
+    '        'Do While Date1 <= Date2
+
+    '        'Loop
+
+    '        'dt = Item_Grid.DataSource
+    '        'dv = New DataView(dt.DataSet.Tables(0), "납품일자 = '" & Format(Date1, "yyyy-MM-dd") & "' ", "납품일자 asc", DataViewRowState.CurrentRows)
+    '        'dv = New DataView(dt)
+    '        'dv.RowFilter = "납품일자 = '" & Format(Date1, "yyyy-MM-dd") & "'"
+    '        ' Dim drv() As DataRowView = dv.FindRows("납품일자 = '" & Format(Date1, "yyyy-MM-dd") & "'")
+    '        'MsgBox(drv.Count)
+    '        'Chart1.Series(0).Points.AddXY(Format(Date1, "yyyy-MM-dd"), )
+
+
+
+
+    '    End If
+    'End Sub
+
+End Class

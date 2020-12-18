@@ -1,0 +1,179 @@
+﻿Public Class Frm_CO_Report6
+
+    Dim file_path As String = ""
+    Dim file_name As String = ""
+    Private Sub Frm_CO_Report6_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = True
+        palDetail.Visible = False
+
+        btnSearch.PerformClick()
+    End Sub
+
+
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles btnMain.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = True
+        palDetail.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles btnDetail.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        palDetail.Visible = True
+
+    End Sub
+
+    Private Sub Text_Clear()
+
+
+    End Sub
+
+
+
+
+
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles btnJobSearch.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo.Text = pop1.result
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles palMain.Paint
+
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT CQ_JOB_Code,CQ_Code,CM_Name,CQ_Name,CQ_Date,CQ_PS_Code,
+                    CQ_PR_Code,CQ_PO_Code,CQ_Prepared 
+FROM CM_Stock_QC CM, Company COM
+where 1=1
+and CQ_Rev_No = (select isnull(max(CQ_Rev_No),1) from CM_Stock_QC where CQ_Code = CM.CQ_Code)
+and CM_Code = CQ_Vendor_Code
+and CQ_JOB_Code Like '%" & txtJobNo.Text & "%'
+and CQ_Name Like '%" & txtJobName.Text & "%'
+and CQ_Code Like '%" & txtRIRCode.Text & "%'
+and CM_Name Like '%" & txtVendor.Text & "%'
+and convert(datetime,'" & dtpDateFrom.Value.ToString("yyyy-MM-dd") & "') <= CQ_Date
+and convert(datetime,'" & dtpDateTo.Value.ToString("yyyy-MM-dd") & "') >= CQ_Date
+order by CQ_JOB_Code"
+        Re_Count = DB_Select(DBT)
+
+        lstMain.DataSource = DBT
+        lstMain.ClearSelection()
+    End Sub
+
+    Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        Dim DBT As DataTable
+        DBT = Nothing
+        If e.RowIndex >= 0 Then
+            StrSQL = "SELECT * 
+From CM_Stock_QC CQ, Company COM
+where 1=1
+and CM_Code = CQ_Vendor_Code
+and CQ.CQ_Rev_No = (select isnull(max(CQ_Rev_No),1) from CM_Stock_QC where CQ_Code = CQ.CQ_Code)
+and CQ_Code = '" & lstMain.Rows(e.RowIndex).Cells("CQ_Code").Value.ToString & "'
+"
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count > 0 Then
+                txtJobNo2.Text = DBT.Rows(0)("CQ_JOB_Code").ToString
+                txtRIRCode2.Text = DBT.Rows(0)("CQ_Code").ToString
+                dtpDate2.Text = DBT.Rows(0)("CQ_Date").ToString
+                txtRIRRev2.Text = DBT.Rows(0)("CQ_Rev_No").ToString
+                txtVendor2.Text = DBT.Rows(0)("CM_Name").ToString
+                txtAddress2.Text = DBT.Rows(0)("CM_Add1").ToString
+                dtpWHDate2.Text = DBT.Rows(0)("CQ_WH_Date").ToString
+                txtName2.Text = DBT.Rows(0)("CQ_Name").ToString
+                txtCustomer2.Text = DBT.Rows(0)("").ToString
+                txtPS2.Text = DBT.Rows(0)("CQ_PS_Code").ToString
+                txtPR2.Text = DBT.Rows(0)("CQ_PR_Code").ToString
+                txtPO2.Text = DBT.Rows(0)("CQ_PO_Code").ToString
+                txtMTIden.Text = DBT.Rows(0)("CQ_MT_Identification").ToString
+                txtCFSI.Text = DBT.Rows(0)("CQ_CFSI").ToString
+                txtEQ2.Text = DBT.Rows(0)("CQ_M_TE_Equipment").ToString
+                txtEqSerial2.Text = DBT.Rows(0)("CQ_M_TE_Eq_Serial").ToString
+                dtpEqEXDate.Text = DBT.Rows(0)("CQ_M_TE_Eq_Expire_Date").ToString
+                txtExternal2.Text = DBT.Rows(0)("CQ_Externals").ToString
+                txtDimension2.Text = DBT.Rows(0)("CQ_Dimension").ToString
+                txtOther2.Text = DBT.Rows(0)("CQ_Other_Req").ToString
+                txtClean2.Text = DBT.Rows(0)("CQ_Cleanness").ToString
+                txtPacking2.Text = DBT.Rows(0)("CQ_Packing_Status").ToString
+                txtNCRYN2.Text = DBT.Rows(0)("NCR_YN").ToString
+                txtNCRNo2.Text = DBT.Rows(0)("NCR_No").ToString
+                txtPre2.Text = DBT.Rows(0)("CQ_Prepared").ToString
+                dtpPre2.Text = DBT.Rows(0)("CQ_Prepare_Date").ToString
+                txtReview2.Text = DBT.Rows(0)("CQ_Reviewed").ToString
+                dtpReview2.Text = DBT.Rows(0)("CQ_Review_Date").ToString
+                txtInspecPre2.Text = DBT.Rows(0)("CQ_Inspection_Prepared").ToString
+                dtpInspecPre2.Text = DBT.Rows(0)("CQ_Inspection_Prepare_Date").ToString
+                txtInspecCon2.Text = DBT.Rows(0)("CQ_Inspection_Confirmed").ToString
+                dtpInspecCon2.Text = DBT.Rows(0)("CQ_Inspection_Confirm_Date").ToString
+
+            End If
+        End If
+
+    End Sub
+
+    Private Sub Button16_Click(sender As Object, e As EventArgs) Handles Button16.Click
+        Label_Color(btnMain, Color_Label, Di_Panel2)
+        palMain.Visible = True
+        palDetail.Visible = False
+    End Sub
+
+    Private Sub lstMain_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellDoubleClick
+        Label_Color(btnMain, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        palDetail.Visible = True
+
+        Dim DBT As DataTable
+        DBT = Nothing
+        If e.RowIndex >= 0 Then
+            StrSQL = "SELECT CQ_Sun, CQ_DWG_Code, CQ_Item, CQ_Spec, CQ_Size, CQ_Unit, CQ_Qty, CQL.CQ_CFSI, CQ_MCE 
+From CM_Stock_QC CQ, CM_Stock_QC_List CQL
+where 1=1
+and CQ.CQ_Rev_No = (select isnull(max(CQ_Rev_No),1) from CM_Stock_QC where CQ_Code = CQ.CQ_Code)
+and CQL.CQ_Rev_No = (select isnull(max(CQ_Rev_No),1) from CM_Stock_QC where CQ_Code = CQL.CQ_Code)
+and CQ.CQ_Code = '" & lstMain.Rows(e.RowIndex).Cells("CQ_Code").Value.ToString & "'
+and CQL.CQ_Code = '" & lstMain.Rows(e.RowIndex).Cells("CQ_Code").Value.ToString & "'
+"
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count > 0 Then
+                lstDetail.DataSource = DBT
+                lstDetail.ClearSelection()
+            End If
+
+
+
+        End If
+    End Sub
+
+    Private Sub lstDetail_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstDetail.CellClick
+        If e.RowIndex > 0 Then
+            txtDWGCode4.Text = lstDetail.Rows(e.RowIndex).Cells("CQ_DRW_Code").Value.ToString
+            txtITM4.Text = lstDetail.Rows(e.RowIndex).Cells("CQ_Item").Value.ToString
+            txtSpec4.Text = lstDetail.Rows(e.RowIndex).Cells("CQ_Spec").Value.ToString
+            txtSize4.Text = lstDetail.Rows(e.RowIndex).Cells("CQ_Size").Value.ToString
+            txtUnit4.Text = lstDetail.Rows(e.RowIndex).Cells("CQ_Unit").Value.ToString
+            txtQTY4.Text = lstDetail.Rows(e.RowIndex).Cells("CQ_Qty").Value.ToString
+            txtCFSI4.Text = lstDetail.Rows(e.RowIndex).Cells("CQ_CFSI").Value.ToString
+            txtMCE4.Text = lstDetail.Rows(e.RowIndex).Cells("CQ_MCE").Value.ToString
+        End If
+    End Sub
+End Class

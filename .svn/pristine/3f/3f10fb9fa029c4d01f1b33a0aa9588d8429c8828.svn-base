@@ -1,0 +1,774 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.Data.OleDb
+
+Public Class Frm_BOM
+    Dim tblBOM As New DataTable
+    Dim tblBOM_lst As New DataTable
+
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+    Dim Main_From As Frm_Main = Application.OpenForms("Frm_Main")
+
+    Public Property Grid_Main As Object
+
+    Private Sub fnFrmTblLoad()
+
+        tblBOM = fnGetTableStructure("dbo.BO_BOM")
+        tblBOM_lst = fnGetTableStructure("dbo.BO_BOM_List")
+
+    End Sub
+
+    Private Sub Frm_BOM_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+
+        palMain.Visible = True
+        palDetail.Visible = False
+
+        comboSatUp(cboItmUnit3, "1050")
+        fnFrmTblLoad()
+        BOM_Main_Load()
+
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles btnMain.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = True
+        palDetail.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles btnDetail.Click
+
+    End Sub
+
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles btnJobSearch.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo.Text = pop1.result
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub BOM_Main_Load()
+        Me.btnSearch.PerformClick()
+    End Sub
+
+    Private Sub BOM_Detail_Load()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        Try
+            StrSQL = " Select BOL.BO_List_Code, BOL.BO_Code, BOL.BO_Rev_No, BOL.BO_Sun, BOL.BO_Itm_Code, BOL.BO_Itm_Name, BOL.BO_Itm_Standard, BOL.BO_Itm_Size, BOL.BO_Itm_Unit, BOL.BO_Itm_Qty, " &
+                     " BOL.BO_Prepared, BOL.BO_Prepare_Date, BOL.BO_Updated, BOL.BO_Update_Date, BOL.BO_Bigo " &
+                     " From BO_BOM BO with(NOLOCK), BO_BOM_List BOL with(NOLOCK)  " &
+                     "  where 1=1 " &
+                     "  and BO.BO_Code = BOL.BO_Code " &
+                     "  and BO.BO_Code = '" & txtBOCode2.Text & "' " &
+                     "  and BO.BO_Rev_No = (select isnull(max(BO_Rev_No),1) from BO_BOM where BO_Code = BO.BO_Code) " &
+                     "  and BOL.BO_Rev_No = (select isnull(max(BO_Rev_No),1) from BO_BOM_List where BO_Code = BOL.BO_Code) " &
+                     "  order by BOL.BO_Code, BOL.BO_Rev_No, BOL.BO_Sun, BOL.BO_Itm_Code, BOL.BO_Itm_Name "
+
+            Console.WriteLine("BOM Detail SQL : " & StrSQL)
+            Re_Count = DB_Select(DBT)
+            lstDetail.DataSource = DBT
+            lstDetail.ClearSelection()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable, DBT2 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+
+        Try
+            StrSQL = " Select BO.BO_CR_Code BO_CR_Code, CR.CR_Name CR_Name, BO.BO_Code BO_Code, 									 " &
+                     " 		 BO.BO_Rev_No BO_Rev_No, BO.BO_Name BO_Name, BO.BO_DV_Code BO_DV_Code,                               " &
+                     " 		 BOL.BO_Itm_Code BO_Itm_Code,                                                                       " &
+                     " 		 BOL.BO_Itm_Name BO_Itm_Name,                                                                        " &
+                     " 		 BO.BO_Manager BO_Manager, BO.BO_Prepared, BO.BO_Prepare_Date, " &
+                     " 		 (select Man_Name from Man where BO.BO_Manager <> '' And Man_Code = BO.BO_Manager) BO_Manager_Name,   " &
+                     " 		 BO.BO_Updated, BO.BO_Update_Date, BO.BO_Bigo, DV.DV_Code, DV.DV_Name, DV.DV_CR_Code, DV.DV_PL_Code   " &
+                     " From                                                                                                       " &
+                     " BO_BOM BO                                                                                                  " &
+                     " FULL OUTER JOIN BO_BOM_List BOL                                                                            " &
+                     " ON BO.BO_Code = BOL.BO_Code And BO.BO_Rev_No = BOL.BO_Rev_No                                               " &
+                     " RIGHT OUTER  JOIN CR_Contract CR                                                                           " &
+                     " ON BO.BO_CR_Code = CR.CR_Code                                                                              " &
+                     " RIGHT OUTER  JOIN CR_Contract_List CL                                                                      " &
+                     " ON CR.CR_Code = CL.CR_Code And CR.CR_Rev_No = CL.CR_Rev_No                                                 " &
+                     " FULL OUTER  JOIN DV_Drawing DV                                                                            " &
+                     " ON CL.CR_Code = DV.DV_CR_Code And CL.CR_PL_Code = DV.DV_PL_Code                                            " &
+                     " where 1=1                                                                                                  " &
+                     " And CR.CR_Rev_No = (select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code)           " &
+                     " And BO.BO_Rev_No = (select isnull(max(BO_Rev_No),1) from BO_BOM where BO_Code = BO.BO_Code)                " &
+                     " And BOL.BO_Sun = 1 " & '" And DV.DV_Rev_No = (select isnull(max(DV_Rev_No),1) from DV_Drawing where DV_Code = BO.BO_DV_Code)         " &
+                     " And BO.BO_CR_Code Like '%" & txtJobNo.Text & "%' " &
+                     " And CR.CR_Name Like '%" & txtJobName.Text & "%' " &
+                     " And CL.CR_PL_Code Like '%" & txtPLCode.Text & "%' " & '" And DV.DV_Code Like '%" & txtDWG.Text & "%' " &
+                     " order by BO.BO_Code, BO.BO_Rev_No, BO.BO_Name  "
+            Console.WriteLine("BOM SQL : " & StrSQL)
+            Re_Count = DB_Select(DBT)
+            lstMain.DataSource = DBT
+            lstMain.ClearSelection()
+
+            showRevLog("Frm_BOM", DBT2, lstRev)
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Exit Sub
+        End Try
+
+    End Sub
+
+    Private Sub btnExcelUpLoad_Click(sender As Object, e As EventArgs) Handles btnExcelUpLoad.Click
+        Excel2Grid()
+    End Sub
+
+    Private Sub Excel2Grid()
+        Dim vConn As OleDbConnection
+        Dim DS As DataSet
+        Dim myCmd As OleDbDataAdapter
+        Dim i As Integer
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        Try
+            If OpenFileDialog1.ShowDialog = DialogResult.OK Then
+                '# Excel 을 Database로 인식하도록 Connection String 생성
+                vConn = New OleDbConnection("Provider=Microsoft.Ace.OLEDB.12.0;Data Source=" & OpenFileDialog1.FileName & ";Extended Properties=""Excel 12.0;HDR=YES;""")
+                myCmd = New OleDbDataAdapter("Select * FROM [Sheet1$]", vConn)
+                DS = New DataSet
+                myCmd.Fill(DS)      '# DataSet에 엑셀에 있는 내용 모두 담음(조회 된 Query)
+                'DS.Tables(0)
+                'table 컬럼명 변경
+                DS.Tables(0).Columns(0).ColumnName = "BO_Itm_Code" '부품번호
+                DS.Tables(0).Columns(1).ColumnName = "BO_Itm_Name" '부품명
+                DS.Tables(0).Columns(2).ColumnName = "BO_Itm_Form" '형태
+                DS.Tables(0).Columns(3).ColumnName = "BO_Itm_Method" '방법
+                DS.Tables(0).Columns(4).ColumnName = "BO_Itm_Standard" '규격
+                DS.Tables(0).Columns(5).ColumnName = "BO_Itm_Size" '치수
+                DS.Tables(0).Columns(6).ColumnName = "BO_Itm_Unit" '단위
+                DS.Tables(0).Columns(7).ColumnName = "BO_Itm_Qty" '수량
+                DS.Tables(0).Columns(8).ColumnName = "BO_Bigo" '비고
+                'table 컬럼 추가
+                DS.Tables(0).Columns.Add("BO_Code")   'BOM코드
+                DS.Tables(0).Columns.Add("BO_Rev_No") '개정번호
+                DS.Tables(0).Columns.Add("BO_Sun") '순번
+                DS.Tables(0).Columns.Add("BO_Prepared") '작성자
+                DS.Tables(0).Columns.Add("BO_Prepare_Date") '작성일자
+                'table 추가된 컬럼 로우 값 넣어주기
+                For i = 0 To DS.Tables(0).Rows.Count - 1
+                    DS.Tables(0).Rows(i)("BO_Code") = Me.txtBOCode2.Text
+                    DS.Tables(0).Rows(i)("BO_Rev_No") = Me.txtRev2.Text
+                    DS.Tables(0).Rows(i)("BO_Sun") = i + 1
+                    DS.Tables(0).Rows(i)("BO_Prepared") = Main_From.Text_Man_Name.Text
+                    DS.Tables(0).Rows(i)("BO_Prepare_Date") = DateTime.Today.ToString("yyyy-MM-dd")
+                Next
+                'lstSub.DataSource = DS.Tables(0)
+
+                'BOM Code 조회
+                StrSQL = "SELECT * FROM BO_BOM_List with(NOLOCK) where BO_Code = '" & DS.Tables(0).Rows(0)("BO_Code").ToString & "'"
+                Re_Count = DB_Select(DBT)
+                '조회된 Job No 존재하면 삭제
+                If Re_Count > 0 Then
+                    StrSQL = "DELETE FROM BO_BOM_List where BO_Code = '" & DS.Tables(0).Rows(0)("BO_Code").ToString & "'"
+                    DB_Execute()
+                End If
+                'CR_Contract_List 조회 txtDWG3나중에변경
+                StrSQL = "  SELECT * 
+                            FROM CR_Contract_List with(NOLOCK), DV_Drawing DV with(NOLOCK)
+                            where 1=1
+                            and DV_Code = '" & txtDWG2.Text & "'
+                            and DV.DV_Rev_No = (select isnull(max(DV_Rev_No),1) from DV_Drawing where DV_Code = DV.DV_Code)
+                            and CR_PL_Code = DV_PL_Code
+                            and CR_PL_Name = DV_PL_Name
+                            "
+                Re_Count = DB_Select(DBT)
+                'table 값 insert
+                For i = 0 To DS.Tables(0).Rows.Count - 1
+                    StrSQL = " Insert into BO_BOM_List (BO_List_Code, BO_Code, BO_Rev_No, BO_Sun, BO_CR_List_Code, BO_DV_Code, " &
+                             "                          BO_Itm_Code, BO_Itm_Name, BO_Itm_Form, BO_Itm_Method, BO_Itm_Standard, " &
+                             "                          BO_Itm_Size, BO_Itm_Unit, BO_Itm_Qty, BO_Bigo, BO_Prepared, " &
+                             "                          BO_Prepare_Date, BO_Updated, BO_Update_Date) " &
+                             "                  Values ('" & PK_Make("BO_BOM_List") & "', '" & DS.Tables(0).Rows(i)("BO_Code").ToString & "', " & DS.Tables(0).Rows(i)("BO_Rev_No").ToString & ", " & DS.Tables(0).Rows(i)("BO_Sun").ToString &
+                                                        ", '" & DBT.Rows(0)("CR_List_Code").ToString & "', '" & DBT.Rows(0)("DV_Code").ToString & "', " & "'" & DS.Tables(0).Rows(i)("BO_Itm_Code").ToString & "', '" & DS.Tables(0).Rows(i)("BO_Itm_Name").ToString &
+                                                        "','" & DS.Tables(0).Rows(i)("BO_Itm_Form").ToString & "','" & DS.Tables(0).Rows(i)("BO_Itm_Method").ToString & "','" & DS.Tables(0).Rows(i)("BO_Itm_Standard").ToString &
+                                                        "','" & DS.Tables(0).Rows(i)("BO_Itm_Size").ToString & "','" & DS.Tables(0).Rows(i)("BO_Itm_Unit").ToString & "','" & DS.Tables(0).Rows(i)("BO_Itm_Qty").ToString &
+                                                        "','" & DS.Tables(0).Rows(i)("BO_Bigo").ToString & "','" & DS.Tables(0).Rows(i)("BO_Prepared").ToString &
+                                                        "','" & DS.Tables(0).Rows(i)("BO_Prepare_Date").ToString & "', '','')"
+                    Console.WriteLine(StrSQL)
+                    DB_Execute()
+                Next
+                MsgBox("Excel UpLoad 완료")
+
+                prcType = "Excel업로드"
+
+                histLogStr = "사용자 " & logInUserName & " BOM 정보 Excel업로드 : " & txtJobNo2.Text & "-" & txtJobName2.Text
+                Man_Log("Frm_BOM", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+                'hsim 20200515 개정이력 조회 갱신
+                showRevLog("Frm_BOM", DBT2, lstRev)
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Exit Sub
+        End Try
+
+        BOM_Detail_Load()
+
+    End Sub
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        If e.RowIndex >= 0 Then
+            txtJobNo2.Text = lstMain.Rows(e.RowIndex).Cells("BO_CR_Code").Value.ToString
+            txtJobName2.Text = lstMain.Rows(e.RowIndex).Cells("CR_Name").Value.ToString
+            txtBOCode2.Text = lstMain.Rows(e.RowIndex).Cells("BO_Code").Value.ToString
+            txtDWG2.Text = lstMain.Rows(e.RowIndex).Cells("BO_DV_Code").Value.ToString
+            txtBOName2.Text = lstMain.Rows(e.RowIndex).Cells("BO_Name").Value.ToString
+            dtpDate.Value = lstMain.Rows(e.RowIndex).Cells("BO_Prepare_Date").Value.ToString
+            txtRev2.Text = lstMain.Rows(e.RowIndex).Cells("BO_Rev_No").Value.ToString
+            txtPLCode2.Text = lstMain.Rows(e.RowIndex).Cells("BO_Itm_Code").Value.ToString
+            txtBOBigo2.Text = lstMain.Rows(e.RowIndex).Cells("BO_Bigo").Value.ToString
+            txtManager2.Text = lstMain.Rows(e.RowIndex).Cells("BO_Manager_Name").Value.ToString
+        End If
+
+    End Sub
+
+    Private Sub lstMain_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellDoubleClick
+
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        Try
+            Label_Color(btnDetail, Color_Label, Di_Panel2)
+            palMain.Visible = False
+            palDetail.Visible = True
+            StrSQL = "  Select BOL.BO_List_Code BO_List_Code, BOL.BO_Code BO_Code, BOL.BO_Rev_No BO_Rev_No, BOL.BO_Sun BO_Sun, BOL.BO_CR_List_Code BO_CR_List_Code, BOL.BO_DV_Code BO_DV_Code, " &
+                     "         BOL.BO_Itm_Code BO_Itm_Code, BOL.BO_Itm_Name BO_Itm_Name, BOL.BO_Itm_Standard BO_Itm_Standard, BOL.BO_Itm_Size BO_Itm_Size, BOL.BO_Itm_Unit BO_Itm_Unit, BOL.BO_Itm_Qty BO_Itm_Qty, " &
+                     "         BOL.BO_Prepared BO_Prepared, BOL.BO_Prepare_Date BO_Prepare_Date, BOL.BO_Updated BO_Updated, BOL.BO_Update_Date BO_Update_Date, BOL.BO_Bigo BO_Bigo " &
+                     "         ,(select Base_Name from Base_Code where Base_Sel_Code = '1050' and Base_Code = BOL.BO_Itm_Unit ) BO_Itm_Unit_Name " & '수량 단위"
+                     "  From BO_BOM BO with(NOLOCK), BO_BOM_List BOL with(NOLOCK) " &
+                     "  where 1=1 " &
+                     "  And BO.BO_Rev_No = (select isnull(max(BO_Rev_No),1) from BO_BOM where BO_Code = BO.BO_Code) " &
+                     "  And BOL.BO_Rev_No = (select isnull(max(BO_Rev_No),1) from BO_BOM_List where BO_Code = BOL.BO_Code) " &
+                     "  And BO.BO_Code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("BO_Code").Value.ToString & "' " &
+                     "  and BOL.BO_Code = '" & lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("BO_Code").Value.ToString & "' " &
+                     "  order by BOL.BO_Code, BOL.BO_Rev_No, BOL.BO_Sun, BOL.BO_Itm_Code, BOL.BO_Itm_Name "
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count > 0 Then
+                lstDetail.DataSource = DBT
+                lstDetail.ClearSelection()
+            End If
+
+            btnAdd2.PerformClick()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+        If lstDetail.Rows.Count > 0 Then
+            txtSun3.Text = (Convert.ToInt32(lstDetail.Rows(lstDetail.Rows.Count - 1).Cells("BO_Sun_d").Value.ToString) + 1).ToString
+        Else
+            txtSun3.Text = "1"
+        End If
+    End Sub
+
+    Private Sub lstDetail_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstDetail.CellClick
+        If e.RowIndex < 0 Then
+            Exit Sub
+        End If
+        lblBOListCode.Text = lstDetail.Rows(e.RowIndex).Cells("BO_List_Code_d").Value.ToString
+        txtBOCode2.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Code_d").Value.ToString
+        txtBORev3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Rev_No_d").Value.ToString
+        txtSun3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Sun_d").Value.ToString
+        lblBOCRListCode3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_CR_List_Code_d").Value.ToString
+        txtDWG3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_DV_Code_d").Value.ToString
+        txtItmCode3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Itm_Code_d").Value.ToString
+        txtItmName3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Itm_Name_d").Value.ToString
+        txtItmStandard3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Itm_Standard_d").Value.ToString
+        txtItmSize3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Itm_Size_d").Value.ToString
+        txtItmQty3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Itm_Qty_d").Value.ToString
+        cboItmUnit3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Itm_Unit_d").Value.ToString
+        txtBigo3.Text = lstDetail.Rows(e.RowIndex).Cells("BO_Bigo_d").Value.ToString
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        txtJobNo2.Text = ""
+        txtJobName2.Text = ""
+        txtDWG2.Text = ""
+        txtPLCode2.Text = ""
+        txtBOCode2.Text = ""
+        txtBOName2.Text = ""
+        dtpDate.Text = ""
+        txtManager2.Text = ""
+        txtRev2.Text = ""
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        Try
+            If MessageBox.Show(txtBOCode2.Text + " 를 삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                If txtJobNo2.Text <> "" Then
+                    StrSQL = "Delete BO_BOM where BO_Code = '" & txtBOCode2.Text & "' and BO_Rev_No = " & txtRev2.Text
+                    Re_Count = DB_Execute()
+
+                    StrSQL = "Delete BO_BOM_List where BO_Code = '" & txtBOCode2.Text & "' and BO_Rev_No = " & txtRev2.Text
+                    DB_Execute()
+                    If Re_Count > 0 Then
+                        MsgBox("삭제 완료")
+                    End If
+                    'hsim 20200515 처리 이력
+                    histLogStr = "사용자 " & logInUserName & " BOM 삭제 : " & txtBOCode2.Text & "-" & txtRev2.Text
+                    Man_Log("Frm_BOM", "BOM 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+                Else
+                    MsgBox("선택된 BOM이 없습니다")
+                End If
+
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Exit Sub
+        End Try
+
+        BOM_Main_Load()
+    End Sub
+
+    Private Sub btnDWGSearch_Click(sender As Object, e As EventArgs) Handles btnDWGSearch.Click
+        Dim pop1 As Frm_DV_POP = New Frm_DV_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString
+            txtJobName2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Name").Value.ToString
+            txtDWG2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("DV_Code").Value.ToString
+            txtPLCode2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("DV_PL_Code").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        Try
+
+            '업데이트
+            StrSQL = "SELECT * from BO_BOM where BO_Code = '" & txtBOCode2.Text & "' And BO_Rev_No = (SELECT max(BO_Rev_No) from BO_BOM where BO_Code = '" & txtBOCode2.Text & "' and BO_Rev_No = '" & txtRev2.Text & "')"
+            Re_Count = DB_Select(DBT)
+
+            '개정번호 증가
+            StrSQL = "SELECT * from BO_BOM where BO_Code = '" & txtBOCode2.Text & "' And BO_Rev_No = (SELECT max(BO_Rev_No) from BO_BOM where BO_Code = '" & txtBOCode2.Text & "')"
+            DB_Select(DBT2)
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblBOM)
+
+            '#2. 입력자료 입력
+            For i = 0 To tblBOM.Rows.Count - 1
+
+                Select Case tblBOM.Rows(i).Item(0).ToString
+
+                    Case "BO_Code"
+                        If txtBOCode2.Text <> "" Then
+                            tblBOM.Rows(i).Item(11) = txtBOCode2.Text
+                        Else
+                            tblBOM.Rows(i).Item(11) = PK_Make("BO_BOM")
+                        End If
+                    Case "BO_Rev_No"
+                        If txtBOCode2.Text <> "" Then
+                            tblBOM.Rows(i).Item(11) = txtRev2.Text
+                        Else
+                            tblBOM.Rows(i).Item(11) = 1
+                        End If
+                    Case "BO_Name"
+                        tblBOM.Rows(i).Item(11) = txtBOName2.Text
+                    Case "BO_CR_Code"
+                        tblBOM.Rows(i).Item(11) = txtJobNo2.Text
+                    Case "BO_DV_Code"
+                        tblBOM.Rows(i).Item(11) = txtDWG2.Text
+                    'Case "BO_PL_Code"
+                    '    tblBOM.Rows(i).Item(11) = txtPLCode2.Text
+                    Case "BO_Manager"
+                        tblBOM.Rows(i).Item(11) = cboManager2.SelectedValue
+                    Case "BO_Bigo"
+                        tblBOM.Rows(i).Item(11) = txtBOBigo2.Text
+                    Case "BO_Prepared"
+                        If Re_Count > 0 Then
+                            tblBOM.Rows(i).Item(11) = DBT.Rows(0)("BO_Prepared").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblBOM.Rows(i).Item(11) = DBT2.Rows(0)("BO_Prepared").ToString
+                            Else
+                                tblBOM.Rows(i).Item(11) = Main_From.Text_Man_Name.Text
+                            End If
+                        End If
+                    Case "BO_Prepare_Date"
+                        If Re_Count > 0 Then
+                            tblBOM.Rows(i).Item(11) = DBT.Rows(0)("BO_Prepare_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblBOM.Rows(i).Item(11) = DBT2.Rows(0)("BO_Prepare_Date").ToString
+                            Else
+                                tblBOM.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+                            End If
+                        End If
+                    Case "BO_Updated"
+                        If Re_Count > 0 Then
+                            If DBT.Rows(0)("BO_Prepared").ToString <> "" Then
+                                tblBOM.Rows(i).Item(11) = Main_From.Text_Man_Name.Text
+                            End If
+
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblBOM.Rows(i).Item(11) = Main_From.Text_Man_Name.Text
+                            End If
+                        End If
+                    Case "BO_Update_Date"
+                        If Re_Count > 0 Then
+                            If DBT.Rows(0)("BO_Prepared").ToString <> "" Then
+                                tblBOM.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+                            End If
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblBOM.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+                            End If
+                        End If
+                End Select
+            Next
+
+            If Re_Count > 0 Then
+                Re_Count2 = fnTableUpdate("dbo.BO_BOM", tblBOM)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+            Else
+                Re_Count2 = fnTableInsert("dbo.BO_BOM", tblBOM)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " BOM 정보 수정 : " & txtBOCode2.Text & "-" & txtBOName2.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " BOM 정보 신규 입력 : " & txtBOCode2.Text & "-" & txtBOName2.Text
+            End If
+            Man_Log("Frm_BOM", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+
+        BOM_Main_Load()
+
+    End Sub
+
+    Private Sub btnAdd2_Click(sender As Object, e As EventArgs) Handles btnAdd2.Click
+
+        txtBORev3.Text = ""
+        txtSun3.Text = ""
+        txtItmCode3.Text = ""
+        txtItmName3.Text = ""
+        txtItmStandard3.Text = ""
+        txtItmSize3.Text = ""
+        txtItmQty3.Text = ""
+        cboItmUnit3.Text = ""
+        txtBigo3.Text = ""
+
+        'hsim 20200514 순번은 현재 존재하는 목록의 MAX+1
+        Dim DBT As DataTable
+        DBT = Nothing
+        StrSQL = "select isnull(max(BO_Sun),1) + 1 AS A from BO_BOM_List where BO_Code = '" & txtBOCode2.Text & "' and BO_Rev_No = '" & txtRev2.Text & "'"
+        Re_Count = DB_Select(DBT)
+        txtSun3.Text = DBT.Rows(0).Item("A")
+
+    End Sub
+
+    Private Sub btnDelete2_Click(sender As Object, e As EventArgs) Handles btnDelete2.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+        'hsim 20200515 개정이력 확인 정보
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        If lstDetail.Rows.Count > 0 Then
+            If MessageBox.Show("삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+
+                If txtBOCode2.Text <> "" Then
+
+                    StrSQL = "Delete BO_BOM_List where BO_Code = '" & txtBOCode2.Text & "' and BO_Rev_No = '" & lstDetail.Rows(lstDetail.CurrentCell.RowIndex).Cells("BO_Rev_No2").Value.ToString & "' and BO_Sun = " & txtSun3.Text
+                    DB_Execute()
+                    If Re_Count > 0 Then
+                        MsgBox("삭제 완료")
+                    End If
+                    'hsim 20200515 처리 이력
+                    histLogStr = "사용자 " & logInUserName & " BOM 항목 삭제 : " & txtBOCode2.Text & "-" &
+                                 lstDetail.Rows(lstDetail.CurrentCell.RowIndex).Cells("BO_Rev_No2").Value.ToString & "-" & txtSun3.Text
+                    Man_Log("Frm_BOM", "BOM 항목 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+                Else
+                    MsgBox("선택된 BOM 목록이 없습니다")
+                End If
+
+            End If
+        Else
+            MsgBox("선택된 BOM 목록이 없습니다")
+        End If
+
+        BOM_Detail_Load()
+        btnAdd2.PerformClick()
+    End Sub
+
+    'BOM목록 저장
+    Private Sub btnSave2_Click(sender As Object, e As EventArgs) Handles btnSave2.Click
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        Try
+            '업데이트
+            StrSQL = "SELECT * from BO_BOM_List where BO_Code = '" & txtBOCode2.Text & "' And BO_Rev_No = (SELECT max(BO_Rev_No) from BO_BOM_List where BO_Code = '" & txtBOCode2.Text & "') and BO_Sun = '" & txtSun3.Text & "'"
+            Re_Count = DB_Select(DBT)
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblBOM_lst)
+            '#2. 입력자료 입력
+            For i = 0 To tblBOM_lst.Rows.Count - 1
+
+                Select Case tblBOM_lst.Rows(i).Item(0).ToString
+
+                    Case "BO_List_Code"
+                        tblBOM_lst.Rows(i).Item(11) = lblBOListCode.Text
+                    Case "BO_Code"
+                        tblBOM_lst.Rows(i).Item(11) = txtBOCode2.Text
+                    Case "BO_Rev_No"
+                        tblBOM_lst.Rows(i).Item(11) = txtRev2.Text
+                    Case "BO_Sun"
+                        tblBOM_lst.Rows(i).Item(11) = txtSun3.Text
+                    Case "BO_CR_List_Code"
+                        tblBOM_lst.Rows(i).Item(11) = lblBOCRListCode3.Text
+                    Case "BO_DV_Code"
+                        tblBOM_lst.Rows(i).Item(11) = txtDWG3.Text
+                    Case "BO_Itm_Code"
+                        tblBOM_lst.Rows(i).Item(11) = txtItmCode3.Text
+                    Case "BO_Itm_Name"
+                        tblBOM_lst.Rows(i).Item(11) = txtItmName3.Text
+                    Case "BO_Itm_Standard"
+                        tblBOM_lst.Rows(i).Item(11) = txtItmStandard3.Text
+                    Case "BO_Itm_Size"
+                        tblBOM_lst.Rows(i).Item(11) = txtItmSize3.Text
+                    Case "BO_Itm_Unit"
+                        tblBOM_lst.Rows(i).Item(11) = cboItmUnit3.Text
+                    Case "BO_Itm_Qty"
+                        tblBOM_lst.Rows(i).Item(11) = txtItmQty3.Text
+                    Case "BO_Bigo"
+                        tblBOM_lst.Rows(i).Item(11) = txtBigo3.Text
+                    Case "BO_Prepared"
+                        If Re_Count > 0 Then
+                            tblBOM_lst.Rows(i).Item(11) = DBT.Rows(0)("BO_Prepared").ToString
+                        Else
+                            tblBOM_lst.Rows(i).Item(11) = Main_From.Text_Man_Code.Text
+                        End If
+                    Case "BO_Prepare_Date"
+                        If Re_Count > 0 Then
+                            tblBOM_lst.Rows(i).Item(11) = DBT.Rows(0)("BO_Prepare_Date").ToString
+                        Else
+                            tblBOM_lst.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+                        End If
+                    Case "BO_Updated"
+                        If Re_Count > 0 Then
+                            tblBOM_lst.Rows(i).Item(11) = Main_From.Text_Man_Code.Text
+                        End If
+                    Case "BO_Update_Date"
+                        If Re_Count > 0 Then
+                            tblBOM_lst.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+                        End If
+                End Select
+            Next
+
+            If Re_Count > 0 Then
+                Re_Count2 = fnTableUpdate("dbo.BO_BOM_List", tblBOM_lst)
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+            Else
+                Re_Count2 = fnTableInsert("dbo.BO_BOM_List", tblBOM_lst)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " BOM 세부 정보 수정 : " & txtBOCode2.Text & "-" & txtBOName2.Text & "-" & txtSun3.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " BOM 세부 정보 신규 입력 : " & txtBOCode2.Text & "-" & txtBOName2.Text & "-" & txtSun3.Text
+            End If
+            Man_Log("Frm_BOM", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+
+        BOM_Detail_Load()
+        btnAdd2.PerformClick()
+    End Sub
+
+    Private Sub btnManSearch_Click(sender As Object, e As EventArgs) Handles btnManSearch.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Man_POP = New Frm_Man_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            cboDBT.Columns.Add("Man_Code")
+            cboDBT.Columns.Add("Man_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            txtManager2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            cboManager2.DataSource = cboDBT
+            cboManager2.ValueMember = "Man_Code"
+            cboManager2.DisplayMember = "Man_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnPLSearch_Click(sender As Object, e As EventArgs) Handles btnPLSearch.Click
+        Dim pop1 As Frm_PL_POP = New Frm_PL_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtPLCode.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_PL_Code").Value.ToString
+            txtPLName.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_PL_Name").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+
+    Private Sub btnPLSearch2_Click(sender As Object, e As EventArgs) Handles btnPLSearch2.Click
+        Dim pop1 As Frm_PL_POP = New Frm_PL_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtPLCode3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_PL_Code").Value.ToString
+            txtBOCode2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("BO_Code").Value.ToString
+            txtBORev3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("BO_Rev_No").Value.ToString
+            txtSun3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("BO_Sun").Value.ToString
+            txtItmCode3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("BO_Itm_Code").Value.ToString
+            txtItmName3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("BO_Itm_Name").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnDVCodeSearch_Click(sender As Object, e As EventArgs) Handles btnDVCodeSearch.Click
+        Dim pop1 As Frm_DV_POP = New Frm_DV_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtDWG.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("DV_Code").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnDVCodeSearch2_Click(sender As Object, e As EventArgs) Handles btnDVCodeSearch2.Click
+        Dim pop1 As Frm_DV_POP = New Frm_DV_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtDWG3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("DV_Code").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnJobSearch2_Click(sender As Object, e As EventArgs) Handles btnJobSearch2.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString
+            txtJobName2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Name").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+End Class

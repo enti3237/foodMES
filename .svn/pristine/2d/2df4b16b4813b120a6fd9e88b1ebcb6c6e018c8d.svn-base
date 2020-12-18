@@ -1,0 +1,136 @@
+﻿Public Class Frm_QC_Report3
+    Dim Grid_Display_Ch As Boolean
+    Dim Man_Grid_Row As Integer
+    Dim Man_Grid_Col As Integer
+
+    Private Sub rm_Inven_Adj_Stat_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Dim DBT As New DataTable
+
+
+        Grid_Display_Ch = False
+
+        '현재 일자
+        Dim tDate As Date
+        Dim tDate1 As DateTime
+        Dim tDateStr As String
+        tDate = Now()
+        tDateStr = tDate.ToString("yyyy-MM-dd")
+        '해당월 1일
+        start_day.Text = Mid(tDateStr, 1, 8) & "01"
+        '마지막일자
+        tDate1 = New System.DateTime(CInt(Mid(tDateStr, 1, 4)), CInt(Mid(tDateStr, 6, 2)), 1, 0, 0, 0)
+        tDate1 = DateAdd("m", 1, tDate1)
+        tDate1 = DateAdd("d", -1, tDate1)
+        end_day.Text = tDate1.ToString("yyyy-MM-dd")
+
+        Grid_Setup()
+        Grid_Display()
+    End Sub
+
+    Public Function Grid_Setup() As Boolean
+        Dim i As Integer
+        Grid_Color(Main_Grid)
+        Main_Grid.EnableHeadersVisualStyles = False
+
+        Main_Grid.AllowUserToAddRows = False
+        Main_Grid.RowTemplate.Height = 20
+        Main_Grid.ColumnCount = 13
+        Main_Grid.RowCount = 1
+
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Main_Grid.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Main_Grid.RowHeadersWidth = 45
+        Main_Grid.Columns(0).Width = 120
+        For i = 1 To Main_Grid.ColumnCount - 1
+            Main_Grid.Columns(i).Width = 100
+            Main_Grid.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Next i
+        Main_Grid.Columns(5).Width = 150
+
+        Main_Grid.Columns(0).HeaderText = "생산일자"
+        Main_Grid.Columns(1).HeaderText = "제품코드"
+        Main_Grid.Columns(2).HeaderText = "제품명"
+        Main_Grid.Columns(3).HeaderText = "규격"
+        Main_Grid.Columns(4).HeaderText = "단위"
+        Main_Grid.Columns(5).HeaderText = "생산수량"
+        Main_Grid.Columns(6).HeaderText = "투입품목코드"
+        Main_Grid.Columns(7).HeaderText = "투입품목명"
+        Main_Grid.Columns(8).HeaderText = "규격"
+        Main_Grid.Columns(9).HeaderText = "단위"
+        Main_Grid.Columns(10).HeaderText = "투입수량"
+        Main_Grid.Columns(11).HeaderText = "최근입고일자"
+        Main_Grid.Columns(12).HeaderText = "최근입고수량"
+
+        For i = 0 To Main_Grid.Columns.Count - 1
+            Main_Grid.Columns(i).ReadOnly = True
+        Next i
+
+        Grid_Setup = True
+
+    End Function
+    Public Function Grid_Display() As Boolean
+        Grid_Display_Ch = False
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        Main_Grid.RowCount = 0
+
+
+        StrSQL = "SELECT PS_En_Day, PS_PL_Code, PS_PL_Name, PS_Standard, PS_Unit, PS_Total, B.PRODUCT_SUB_CODE, C.PRODUCT_NAME
+	                        ,C.PRODUCT_STANDARD, C.PRODUCT_UNIT,CONVERT(decimal, A.PS_Total) * CONVERT(decimal, B.PRODUCT_QTY) AS IN_TOTAL
+	                        ,E.LAST_DATE, E.MATERIAL_OUT_TOTAL
+                       FROM [PO_STOCK_LIST] AS A with(NOLOCK)
+                            LEFT JOIN PRODUCT_BOM AS B with(NOLOCK) ON A.PS_PL_Code = B.PRODUCT_CODE
+                            LEFT JOIN PRODUCT AS C with(NOLOCK) ON B.PRODUCT_SUB_CODE = C.PRODUCT_CODE
+                            LEFT JOIN MATERIAL_OUT_LIST AS D with(NOLOCK) ON B.PRODUCT_SUB_CODE = D.MATERIAL_OUT_CODE
+                            LEFT JOIN (SELECT A.MATERIAL_OUT_PRODUCT_CODE, A.MATERIAL_OUT_PRODUCT_NAME, A.LAST_DATE, C.MATERIAL_OUT_TOTAL
+			                           FROM (SELECT B.MATERIAL_OUT_PRODUCT_CODE, B.MATERIAL_OUT_PRODUCT_NAME, MAX(MATERIAL_OUT_DATE) AS LAST_DATE
+					                         FROM [MATERIAL_OUT] AS A with(NOLOCK) LEFT JOIN MATERIAL_OUT_LIST AS B ON A.MATERIAL_OUT_CODE = B.MATERIAL_OUT_CODE
+                           					GROUP BY B.MATERIAL_OUT_PRODUCT_CODE, B.MATERIAL_OUT_PRODUCT_NAME) AS A
+					                   ,    MATERIAL_OUT AS B with(NOLOCK) LEFT JOIN MATERIAL_OUT_LIST AS C with(NOLOCK) ON B.MATERIAL_OUT_CODE = C.MATERIAL_OUT_CODE
+					                    WHERE A.MATERIAL_OUT_PRODUCT_CODE = C.MATERIAL_OUT_PRODUCT_CODE AND A.LAST_DATE = B.MATERIAL_OUT_DAY) AS E
+			                ON B.PRODUCT_SUB_CODE = C.PRODUCT_CODE 
+                       WHERE PS_En_Day IS NOT NULL AND PS_PL_Code IS NOT NULL AND PS_En_Day BETWEEN '" & start_day.Text & "' AND '" & end_day.Text & "' AND PS_PL_Name LIKE '%" & Search_Text.Text & "%'
+                       GROUP BY PS_En_Day, PS_PL_Code, PS_PL_Name, PS_Standard, PS_Unit, PS_Total, B.PRODUCT_SUB_CODE, C.PRODUCT_NAME, C.PRODUCT_STANDARD, C.PRODUCT_UNIT,
+			                    B.PRODUCT_QTY, E.LAST_DATE, E.MATERIAL_OUT_TOTAL"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Main_Grid.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                For j = 0 To DBT.Columns.Count - 1
+                    Main_Grid.Item(j, i).Value = DBT.Rows(i)(j).ToString
+                Next J
+
+            Next i
+        Else
+            Main_Grid.RowCount = 1
+            For j = 0 To Main_Grid.ColumnCount - 1
+                Main_Grid.Item(j, 0).Value = ""
+            Next j
+        End If
+
+
+
+        Grid_Display = True
+        Grid_Display_Ch = True
+
+    End Function
+
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs) Handles Search_Com.Click
+        Grid_Display()
+
+    End Sub
+
+
+
+    Private Sub Main_Grid_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles Main_Grid.CellValueChanged
+        If Grid_Display_Ch = True Then
+            sender.CurrentRow.HeaderCell.Value = "*"
+        End If
+
+    End Sub
+
+End Class

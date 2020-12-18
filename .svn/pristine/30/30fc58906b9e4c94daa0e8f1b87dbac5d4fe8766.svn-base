@@ -1,0 +1,187 @@
+﻿Public Class Frm_Notice
+    Private Sub Frm_Notice_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Panel1.Top = 45
+        Panel1.Left = 10
+        Panel41.Top = 45
+        Panel41.Left = 10
+
+        Panel1.Visible = True
+        Panel41.Visible = False
+        'Notice_Lode()
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles Com_Contract.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles Com_Excel.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+        Count()
+    End Sub
+    Private Sub Count()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT COUNT(NT_Code) +1 AS NT_COUNT
+                  FROM Notice"
+        Re_Count = DB_Select(DBT)
+
+        Label1.Text = DBT.Rows(0)("NT_COUNT").ToString
+    End Sub
+    Private Sub Notice_Lode()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT NT_Code, NT_Title, NT_Content, NT_Date, NT_Name, NT_Bu
+                  FROM Notice
+                  ORDER BY NT_Code"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+
+    End Sub
+    Private Sub Text_Clear()
+        Label1.Text = ""        '순번
+        TextBox101.Text = ""    '제목
+        TextBox104.Text = ""    '작성자
+        TextBox98.Text = ""     '부서명
+        TextBox2.Text = ""      '내용
+    End Sub
+    Private Sub DataGridView5_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView5.CellDoubleClick
+        Text_Clear()
+        Label_Color(Com_Excel, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = "SELECT * 
+                  FROM Notice 
+                  Where NT_Code = '" & DataGridView5.Rows(e.RowIndex).Cells("NT_Code").Value.ToString() & "'"
+        Re_Count = DB_Select(DBT)
+
+        Label1.Text = DBT.Rows(0)("NT_Code").ToString
+        TextBox101.Text = DBT.Rows(0)("NT_Title").ToString
+        TextBox104.Text = DBT.Rows(0)("NT_Name").ToString
+        TextBox98.Text = DBT.Rows(0)("NT_Bu").ToString
+        TextBox2.Text = DBT.Rows(0)("NT_Content").ToString
+    End Sub
+    Private Sub Com_Can_Click(sender As Object, e As EventArgs) Handles Com_Can.Click
+        Label_Color(Com_Contract, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+        Text_Clear()
+    End Sub
+    Private Sub Com_OK_Click(sender As Object, e As EventArgs) Handles Com_OK.Click
+        Dim DBT As DataTable
+        Dim File As String = ""
+        Dim Today As String
+        DBT = Nothing
+        Today = Format(Now, "yyyyMMdd")
+
+        If Re_Count > 0 Then
+            StrSQL = "SELECT * FROM Notice WHERE NT_Code = '" & Label1.Text & "'"
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count > 0 Then
+                StrSQL = "Update Notice Set 
+                                         NT_Code = '" & Label1.Text & "',
+                                         NT_Title ='" & TextBox101.Text & "',
+                                         NT_Name = '" & TextBox104.Text & "',
+                                         NT_Date = '" & Today.ToString & "',
+                                         NT_Bu = '" & TextBox98.Text & "',
+                                         NT_Content = '" & TextBox2.Text & "'
+                                         WHERE NT_Code = '" & Label1.Text & "'"
+                Re_Count2 = DB_Execute()
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+
+                Else
+                    MsgBox("저장 실패")
+                End If
+            Else
+                StrSQL = "SELECT * FROM Notice WHERE NT_Code = '" & Label1.Text & "'"
+                Re_Count = DB_Select(DBT)
+
+                StrSQL = "Insert into Notice (NT_Code, NT_Title, NT_Name, NT_Date, NT_Bu, NT_Content) 
+                                   Values ('" & Label1.Text & "','" & TextBox101.Text & "', '" & TextBox104.Text & "', '" & Today.ToString & "',
+                                           '" & TextBox98.Text & "','" & TextBox2.Text & "')"
+                Re_Count2 = DB_Execute()
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            End If
+
+        Else
+            StrSQL = "Insert into Notice (NT_Code, NT_Title, NT_Name, NT_Date, NT_Bu, NT_Content) 
+                                   Values ('" & Label1.Text & "','" & TextBox101.Text & "', '" & TextBox104.Text & "', '" & Today.ToString & "',
+                                           '" & TextBox98.Text & "','" & TextBox2.Text & "')"
+            Re_Count2 = DB_Execute()
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+        End If
+
+        Notice_Lode()
+        Text_Clear()
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT NT_Code, NT_Title, NT_Content, NT_Date, NT_Name, NT_Bu
+                  FROM Notice where NT_Title Like '%" & TextBox15.Text & "%'
+                  ORDER BY NT_Code"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT NT_Code, NT_Title, NT_Content, NT_Date, NT_Name, NT_Bu
+                  FROM Notice where NT_Name Like '%" & TextBox16.Text & "%'
+                  ORDER BY NT_Code"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT NT_Code, NT_Title, NT_Content, NT_Date, NT_Name, NT_Bu
+                  FROM Notice where NT_Bu Like '%" & TextBox17.Text & "%'
+                  ORDER BY NT_Code"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+    End Sub
+End Class

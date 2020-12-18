@@ -1,0 +1,326 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Public Class Frm_PC_Report4
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+    Dim Excel_Check As Boolean
+    Private Sub Frm_PC_Report3_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        S_Text_Setup()
+        Grid_Main_Setup()
+
+        Panel_Main.Top = 136
+        Panel_Main.Left = 12
+        Panel_Chart.Top = 136
+        Panel_Chart.Left = 12
+
+        Panel_Main.Visible = True
+        Panel_Chart.Visible = False
+
+        '차트 범례 수정
+        Chart1.Series("Series1").Name = "수량"
+
+        Com_Excel_Print.Visible = False
+
+    End Sub
+
+    Public Function S_Text_Setup() As Boolean
+        E_Day.Text = Format(Now, "yyyy-MM-dd")
+        S_Day.Text = Mid(E_Day.Text, 1, 8) & "01"
+        S_Time.Text = "00:00"
+        E_Time.Text = "23:59"
+
+
+        S_Text_Setup = True
+
+    End Function
+
+    Public Function Grid_Main_Setup() As Boolean
+        Grid_Color(Grid_Main)
+
+        Grid_Main.AllowUserToAddRows = False
+        Grid_Main.RowTemplate.Height = 24
+        Grid_Main.ColumnCount = 9
+        Grid_Main.RowCount = 0
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Main.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.Columns(3).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        Grid_Main.Columns(4).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        Grid_Main.Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        Grid_Main.Columns(6).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+        Grid_Main.Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Main.Columns(8).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+
+        Grid_Main.RowHeadersWidth = 10
+
+
+        Grid_Main.Columns(0).HeaderText = "순번"
+        Grid_Main.Columns(1).HeaderText = "입고코드"
+        Grid_Main.Columns(2).HeaderText = "제품코드"
+        Grid_Main.Columns(3).HeaderText = "제품명"
+        Grid_Main.Columns(4).HeaderText = "규격"
+        Grid_Main.Columns(5).HeaderText = "단위"
+        Grid_Main.Columns(6).HeaderText = "입고날짜"
+        Grid_Main.Columns(7).HeaderText = "납품날짜"
+        Grid_Main.Columns(8).HeaderText = "재공재고"
+
+
+        Dim i As Integer
+        Grid_Main.Columns(0).Width = 60
+        Grid_Main.Columns(1).Width = 100
+        Grid_Main.Columns(2).Width = 180
+        Grid_Main.Columns(3).Width = 100
+        Grid_Main.Columns(4).Width = 100
+        Grid_Main.Columns(5).Width = 100
+        Grid_Main.Columns(6).Width = 100
+        Grid_Main.Columns(7).Width = 100
+        Grid_Main.Columns(8).Width = 100
+        Grid_Main_Setup = True
+    End Function
+
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs) Handles Search_Com.Click
+        Grid_Main.Columns(0).HeaderText = "순번"
+        Grid_Main.Columns(1).HeaderText = "입고코드"
+        Grid_Main.Columns(2).HeaderText = "제품코드"
+        Grid_Main.Columns(3).HeaderText = "제품명"
+        Grid_Main.Columns(4).HeaderText = "규격"
+        Grid_Main.Columns(5).HeaderText = "단위"
+        Grid_Main.Columns(6).HeaderText = "입고날짜"
+        Grid_Main.Columns(7).HeaderText = "납품날짜"
+        Grid_Main.Columns(8).HeaderText = "재공재고"
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+
+        '납품날짜 변수
+        Dim SALES_OUT_Day As String = ""
+        '재공재고 변수
+        Dim WorkIn As String = ""
+
+        Grid_Main.RowCount = 0
+
+        '재공재고 오리지널
+        StrSQL = "Select DISTINCT MATERIAL_OUT.MATERIAL_OUT_Code,
+                            MATERIAL_OUT_LIST.MATERIAL_OUT_PRODUCT_Code,
+                            MATERIAL_OUT_LIST.MATERIAL_OUT_PRODUCT_Name,
+                            MATERIAL_OUT_LIST.MATERIAL_OUT_Standard,
+                            MATERIAL_OUT_LIST.MATERIAL_OUT_Unit,
+                            MATERIAL_OUT.MATERIAL_OUT_Day,
+                            SALES_OUT_LIST.SALES_OUT_Day,
+                            SUM(CONVERT(INT, MATERIAL_OUT_LIST.MATERIAL_OUT_Total)) - SUM(CONVERT(INT, SALES_OUT_LIST.SALES_OUT_Total)) AS WorkIn
+                  From MATERIAL_OUT With(NOLOCK), MATERIAL_OUT_LIST(NOLOCK)
+                  LEFT OUTER JOIN SALES_OUT_LIST with(NOLOCK) ON SALES_OUT_LIST.SALES_OUT_PRODUCT_Code = MATERIAL_OUT_LIST.MATERIAL_OUT_PRODUCT_Code
+                  Where MATERIAL_OUT.MATERIAL_OUT_Code = MATERIAL_OUT_LIST.MATERIAL_OUT_Code 
+                            and SALES_OUT_LIST.SALES_OUT_Day >= '" & S_Day.Text & "'
+                            and SALES_OUT_LIST.SALES_OUT_Day <= '" & E_Day.Text & "' 
+                            and MATERIAL_OUT_LIST.MATERIAL_OUT_PRODUCT_Code = 
+		                        ALL	(	select PRODUCT_Sub_Code
+				                        from Product_BOM 
+				                        where MATERIAL_OUT_LIST.MATERIAL_OUT_PRODUCT_Code = Product_BOM.PRODUCT_Sub_Code 
+			                        )
+                                        GROUP BY MATERIAL_OUT.MATERIAL_OUT_Code, MATERIAL_OUT_LIST.MATERIAL_OUT_PRODUCT_Code, MATERIAL_OUT_LIST.MATERIAL_OUT_PRODUCT_Name, MATERIAL_OUT_LIST.MATERIAL_OUT_Standard, MATERIAL_OUT_LIST.MATERIAL_OUT_Unit, MATERIAL_OUT.MATERIAL_OUT_Day, SALES_OUT_LIST.SALES_OUT_Day"
+
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Grid_Main.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                Grid_Main.Item(0, i).Value = i + 1
+                For j = 1 To 8
+                    Grid_Main.Item(j, i).Value = DBT.Rows(i).Item(j - 1).ToString
+                Next j
+            Next i
+        Else
+            Grid_Main.RowCount = 1
+            For j = 0 To Grid_Main.ColumnCount - 1
+                Grid_Main.Item(j, 0).Value = ""
+            Next j
+        End If
+
+        '재공재고 진이사님이 요구힌 형태
+        'StrSQL = "Select DISTINCT MATERIAL_OUT.MATERIAL_OUT_Code,
+        '                    MATERIAL_OUT_LIST.MATERIAL_OUT_PRODUCT_Code,
+        '                    MATERIAL_OUT_LIST.MATERIAL_OUT_PRODUCT_Name,
+        '                    MATERIAL_OUT_LIST.MATERIAL_OUT_Standard,
+        '                    MATERIAL_OUT_LIST.MATERIAL_OUT_Unit,
+        '                    MATERIAL_OUT.MATERIAL_OUT_Day,
+        '                    SALES_OUT_LIST.SALES_OUT_Day
+        '          From MATERIAL_OUT With(NOLOCK), MATERIAL_OUT_LIST(NOLOCK)
+        '          LEFT OUTER JOIN SALES_OUT_LIST with(NOLOCK) ON SALES_OUT_LIST.SALES_OUT_PRODUCT_Code = MATERIAL_OUT_LIST.MATERIAL_OUT_PRODUCT_Code 
+        '          Where MATERIAL_OUT.MATERIAL_OUT_Code = MATERIAL_OUT_LIST.MATERIAL_OUT_Code 
+        '                and SALES_OUT_LIST.SALES_OUT_Day >= '" & S_Day.Text & "'
+        '                and SALES_OUT_LIST.SALES_OUT_Day <= '" & E_Day.Text & "' "
+
+        'Re_Count = DB_Select(DBT)
+        'If Re_Count <> 0 Then
+        '    Grid_Main.RowCount = Re_Count
+        '    For i = 0 To Re_Count - 1
+        '        Grid_Main.Item(0, i).Value = i + 1
+        '        For j = 1 To 7
+        '            Grid_Main.Item(j, i).Value = DBT.Rows(i).Item(j - 1).ToString
+        '        Next j
+        '    Next i
+        'Else
+        '    Grid_Main.RowCount = 1
+        '    For j = 0 To Grid_Main.ColumnCount - 1
+        '        Grid_Main.Item(j, 0).Value = ""
+        '    Next j
+        'End If
+
+        'Dim t1 As DateTime
+        'Dim t2 As DateTime
+
+        'For i = 0 To Grid_Main.RowCount - 1
+
+        '    If Re_Count <> 0 Then
+        '        t1 = DateTime.Parse(Grid_Main.Item(6, i).Value)
+        '        t2 = DateTime.Parse(Grid_Main.Item(7, i).Value)
+        '        WorkIn = (t2 - t1).Days.ToString
+        '        Grid_Main.Item(8, i).Value = WorkIn & "일"
+        '    Else
+        '        Grid_Main.Item(8, i).Value = ""
+        '    End If
+
+        'Next i
+
+
+    End Sub
+
+    Private Sub Com_Chart_Click(sender As Object, e As EventArgs) Handles Com_Chart.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        '판넬 보이기
+        Panel_Main.Visible = False
+        Panel_Chart.Visible = True
+        'Com_Excel_Print.Visible = True
+
+        Cursor = Cursors.AppStarting
+
+        Dim WorkIn As String = ""
+        Chart1.Series("수량").Points.Clear()
+
+        'Chart1.ChartAreas(0).AxisY.Title = "개" 글자 90도 전환 찾아보기
+        '그래프       
+        For i = 0 To Grid_Main.RowCount - 1
+            WorkIn = Grid_Main.Item(3, i).Value & "(" & Grid_Main.Item(1, i).Value & ")"
+            Chart1.Series("수량").Points.AddXY(WorkIn, Grid_Main.Item(8, i).Value)
+
+        Next i
+
+
+        '여기서 처리
+
+        'If Excel_Check = True Then
+        '    xlbook.Close()
+        '    xlapp.Quit()
+        '    xlsheet = Nothing
+        '    xlbook = Nothing
+        '    xlapp = Nothing
+        '    releaseObject(xlsheet)
+        '    releaseObject(xlbook)
+        '    releaseObject(xlapp)
+        '    Excel_Check = False
+
+        'End If
+
+        'Dim i As Integer
+        'Dim j As Integer
+
+
+        'xlapp = New Excel.Application
+        'xlbook = xlapp.Workbooks.Open(Application.StartupPath & "\excel\null.xlsx")
+        'xlsheet = xlbook.ActiveSheet
+        'xlapp.DisplayAlerts = False
+        'xlapp.WindowState = Excel.XlWindowState.xlMinimized
+        'xlapp.Visible = False
+        'xlapp.DisplayFormulaBar = False
+        'xlapp.DisplayStatusBar = False
+
+
+
+
+        ''PInvoke 에러시 프로젝트 속성에서 컴파일을 x64로 하거나 Any CPU일 경우 32비트 기본 사용 체크를 해제한다.
+        ''SetWindowLong(xlapp.Hwnd, GWL_STYLE, GetWindowLong(xlapp.Hwnd, GWL_STYLE) And Not WS_CAPTION)
+
+        'xlapp.ActiveWindow.DisplayWorkbookTabs = False
+        'xlapp.ActiveWindow.DisplayHeadings = False
+
+        ''xlapp.ActiveWindow.DisplayWorkbookTabs = True
+        ''xlapp.ActiveWindow.DisplayHeadings = True
+
+
+        'SetParent(xlapp.Hwnd, Panel_Chart.Handle)
+        'SendMessage(xlapp.Hwnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0)
+
+
+
+        ''제목
+
+        'For j = 0 To Grid_Main.ColumnCount - 1
+        '    xlsheet.Cells(1, j + 1).Value = Grid_Main.Columns(j).HeaderText
+        '    xlsheet.Columns(j + 1).ColumnWidth = Grid_Main.Columns(j).Width / 10
+
+        'Next j
+
+        'For i = 0 To Grid_Main.RowCount - 1
+        '    For j = 0 To Grid_Main.ColumnCount - 1
+        '        xlsheet.Cells(i + 2, j + 1).Value = "'" & Grid_Main.Item(j, i).Value
+        '    Next j
+        'Next i
+
+
+
+        'xlbook.SaveAs(Application.StartupPath & "\Excel\내역서\" & Format(Now, "yyyyMMddHHmmss") & ".xlsx")
+        'Cursor = Cursors.Default
+        'Excel_Check = True
+    End Sub
+
+    Private Sub Panel_Excel_Paint(sender As Object, e As PaintEventArgs) Handles Panel_Chart.Paint
+
+    End Sub
+
+    Private Sub Excel_Timer_Tick(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Com_Excel_Print_Click(sender As Object, e As EventArgs) Handles Com_Excel_Print.Click
+        If Excel_Check = True Then
+            xlsheet.PrintOut(From:=1, To:=1, Copies:=1, Collate:=True)
+        End If
+
+    End Sub
+
+    Private Sub Frm_CC_Report1_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
+        Dim i As Long
+        i = i
+    End Sub
+
+    Private Sub Frm_CC_Report1_VisibleChanged(sender As Object, e As EventArgs) Handles Me.VisibleChanged
+        If Excel_Check = True Then
+            xlbook.Close()
+            xlapp.Quit()
+            xlsheet = Nothing
+            xlbook = Nothing
+            xlapp = Nothing
+            releaseObject(xlsheet)
+            releaseObject(xlbook)
+            releaseObject(xlapp)
+            Excel_Check = False
+        End If
+    End Sub
+
+    Private Sub Com_Excel_Print_VisibleChanged(sender As Object, e As EventArgs) Handles Com_Excel_Print.VisibleChanged
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles Com_Contract.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        '판넬 보이기
+        Panel_Main.Visible = True
+        Panel_Chart.Visible = False
+        Com_Excel_Print.Visible = False
+    End Sub
+End Class

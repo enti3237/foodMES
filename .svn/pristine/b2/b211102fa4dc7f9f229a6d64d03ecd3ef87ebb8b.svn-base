@@ -1,0 +1,579 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.Runtime.InteropServices
+
+Public Class Frm_PD_Report8
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+    Dim tblMRIS As New DataTable
+    Dim tblMRIS_lst As New DataTable
+
+    Private Sub fnFrmTblLoad()
+        tblMRIS = fnGetTableStructure("dbo.PD_MRIS")
+        tblMRIS_lst = fnGetTableStructure("dbo.PD_MRIS_List")
+    End Sub
+
+    Private Sub Frm_PD_Report8_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim DBT As DataTable
+        DBT = Nothing
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        palMain.Top = 40
+        palMain.Left = 10
+        palDetail.Top = 40
+        palDetail.Left = 10
+        dtpDateFrom.Text = DateTime.Now.ToString("yyyy") & "-01-01"
+        dtpDateTo.Text = DateTime.Now.ToString("yyyy") & "-12-31"
+
+        palMain.Visible = True
+        palDetail.Visible = False
+
+        fnFrmTblLoad()
+        btnSearch.PerformClick()
+        showRevLog("Frm_PD_Report8", DBT, lstRev)
+    End Sub
+
+    Private Sub MR_Load()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT MR_Job, CR_Name, MR_Code, MR_Rev_No, MR_Prepare_Date FROM CR_Contract with(NOLOCK), MR_Order with(NOLOCK) where MR_Job = CR_Code order by MR_Job"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstMain.DataSource = DBT
+        End If
+
+        lstMain.ClearSelection()
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles btnMain.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = True
+        palDetail.Visible = False
+    End Sub
+
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        Try
+            If e.RowIndex >= 0 Then
+                StrSQL = "SELECT * FROM PD_MRIS MR with(NOLOCK), CR_Contract CR with(NOLOCK) 
+where 
+CR_Code = '" & lstMain.Rows(e.RowIndex).Cells("MR_CR_Code").Value.ToString & "' 
+CR.CR_Rev_No = (select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code)
+and MR_Code = '" & lstMain.Rows(e.RowIndex).Cells("MR_Code").Value.ToString & "' 
+And MR_Rev_No = '" & lstMain.Rows(e.RowIndex).Cells("MR_Rev_No").Value.ToString & "' 
+order by MR_Job"
+                Re_Count = DB_Select(DBT)
+
+                If Re_Count > 0 Then
+                    txtJobNo2.Text = DBT.Rows(0)("MR_Job").ToString
+                    txtJobName2.Text = DBT.Rows(0)("CR_Name").ToString
+                    txtMRISNo2.Text = DBT.Rows(0)("MR_Code").ToString
+                    txtMRISName2.Text = DBT.Rows(0)("MR_Name").ToString
+                    txtMRISRev2.Text = DBT.Rows(0)("MR_Rev_No").ToString
+                    txtPre2.Text = DBT.Rows(0)("MR_Prepared").ToString
+                    dtpPreDate2.Text = DBT.Rows(0)("MR_Prepare_Date").ToString
+                    txtApp2.Text = DBT.Rows(0)("MR_Approved").ToString
+                    dtpAppDate2.Text = DBT.Rows(0)("MR_Approve_Date").ToString
+                    txtIssu2.Text = DBT.Rows(0)("MR_Issued").ToString
+                    dtpIssu2.Text = DBT.Rows(0)("MR_Issue_Date").ToString
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Exit Sub
+        End Try
+    End Sub
+
+    Private Sub lstMain_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellDoubleClick
+        Label_Color(btnDetail, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        palDetail.Visible = True
+
+        Dim DBT As DataTable
+        DBT = Nothing
+        Try
+            StrSQL = "SELECT * FROM MR_Order_List with(NOLOCK) where MR_Code = '" & lstMain.Rows(e.RowIndex).Cells("MR_Code").Value.ToString & "' order by MR_Sun"
+            Re_Count = DB_Select(DBT)
+
+            lstDetail.DataSource = DBT
+            If Re_Count > 0 Then
+
+                lstDetail.ClearSelection()
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Exit Sub
+        End Try
+
+    End Sub
+
+    Private Sub lstDetail_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstDetail.CellClick
+        If e.RowIndex >= 0 Then
+            txtPLName3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_PL_Name").Value.ToString
+            txtSun3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_Sun").Value.ToString
+            txtSpec3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_PL_Spec").Value.ToString
+            txtSize3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_PL_Size").Value.ToString
+            cboUnit3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_Unit").Value.ToString
+            txtQTY3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_QTY").Value.ToString
+            txtTSNo3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_Ts_Code").Value.ToString
+            txtBigo3.Text = lstDetail.Rows(e.RowIndex).Cells("MR_Bigo").Value.ToString
+        End If
+
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        txtJobNo2.Text = ""
+        txtJobName2.Text = ""
+        txtMRISNo2.Text = ""
+        txtMRISRev2.Text = ""
+        txtPre2.Text = ""
+        dtpPreDate2.Text = ""
+        txtApp2.Text = ""
+        dtpAppDate2.Text = ""
+        txtIssu2.Text = ""
+        dtpIssu2.Text = ""
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        Dim DBT As DataTable
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+
+        DBT = Nothing
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+        Try
+            If MessageBox.Show(txtMRISNo2.Text + " 를 삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                If txtJobNo2.Text <> "" Then
+                    StrSQL = "Delete PD_MRIS where MR_Code = '" & txtMRISNo2.Text & "'"
+                    Re_Count = DB_Execute()
+
+                    StrSQL = "Delete PD_MRIS_List where MR_Code = '" & txtMRISNo2.Text & "'"
+                    DB_Execute()
+                    If Re_Count > 0 Then
+                        MsgBox("삭제 완료")
+                    End If
+                    'hsim 20200515 처리 이력
+                    histLogStr = "사용자 " & logInUserName & " 정보 삭제 : " & txtMRISNo2.Text
+                    Man_Log("Frm_PD_Report8", "정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+                Else
+                    MsgBox("선택된 MRIS가 없습니다")
+                    Exit Sub
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Exit Sub
+        End Try
+
+    End Sub
+
+    Private Sub btnJobSearch_Click(sender As Object, e As EventArgs) Handles btnJobSearch.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo.Text = pop1.result
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable, DBT2 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = " SELECT MR_CR_Code, MR_Code, MR_Rev_No, MR_Name, MR_Date " &
+                 " FROM PD_MRIS MR with(NOLOCK) " &
+                 " where 1=1 " &
+                 " AND MR.MR_Rev_No = ( select isnull(max(MR_Rev_No),1) from PD_MRIS where MR_Code = MR.MR_Code) " &
+                 " AND MR_CR_Code Like '%" & txtJobNo.Text & "%' " &
+                 " AND MR_Code Like '%" & txtMRISNo.Text & "%' " &
+                 " AND convert(datetime,'" & dtpDateFrom.Value.ToString("yyyy-MM-dd") & "') <= MR_Date and convert(datetime,'" & dtpDateTo.Value.ToString("yyyy-MM-dd") & "') >= MR_Date " &
+                 " order by MR_CR_Code "
+
+        Re_Count = DB_Select(DBT)
+
+        lstMain.DataSource = DBT
+        'lstMain.Rows(0).Selected = True '첫 째 행 선택
+
+        showRevLog("Frm_PD_Report8", DBT2, lstRev)
+
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        Try
+
+            StrSQL = "SELECT * from PD_MRIS where MR_Code = '" & txtMRISNo2.Text & "' And MR_Rev_No = '" & txtMRISRev2.Text & "'"
+            Re_Count = DB_Select(DBT)
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblMRIS)
+            '#2. 입력자료 입력
+            For i = 0 To tblMRIS.Rows.Count - 1
+
+                Select Case tblMRIS.Rows(i).Item(0).ToString
+
+                    Case "MR_Code"
+                        If txtMRISNo2.Text <> "" Then
+                            tblMRIS.Rows(i).Item(11) = txtMRISNo2.Text
+                        Else
+                            tblMRIS.Rows(i).Item(11) = PK_Make("PD_MRIS")
+                        End If
+                    Case "MR_Rev_No"
+                        If txtMRISNo2.Text <> "" Then
+                            tblMRIS.Rows(i).Item(11) = txtMRISRev2.Text
+                        Else
+                            tblMRIS.Rows(i).Item(11) = 1
+                        End If
+                    Case "MR_Name"
+                        tblMRIS.Rows(i).Item(11) = txtMRISName2.Text
+                    Case "MR_CR_Code"
+                        tblMRIS.Rows(i).Item(11) = txtJobNo2.Text
+                    Case "MR_Date"
+                        If Re_Count > 0 Then
+                            tblMRIS.Rows(i).Item(11) = DBT.Rows(0)("MR_Date").ToString
+                        Else
+                            tblMRIS.Rows(i).Item(11) = DateTime.Today.ToString("yyyy-MM-dd")
+                        End If
+                    Case "MR_Prepared"
+                        tblMRIS.Rows(i).Item(11) = txtPre2.Text
+                    Case "MR_Approved"
+                        tblMRIS.Rows(i).Item(11) = txtApp2.Text
+                    Case "MR_Issued"
+                        tblMRIS.Rows(i).Item(11) = txtIssu2.Text
+                    Case "MR_Prepare_Date"
+                        tblMRIS.Rows(i).Item(11) = dtpPreDate2.Value.ToString(fmtStr2)
+                    Case "MR_Approve_Date"
+                        tblMRIS.Rows(i).Item(11) = dtpAppDate2.Value.ToString(fmtStr2)
+                    Case "MR_Issue_Date"
+                        tblMRIS.Rows(i).Item(11) = dtpIssu2.Value.ToString(fmtStr2)
+                    Case "MR_Updated"
+                        If Re_Count > 0 Then
+                            tblMRIS.Rows(i).Item(11) = loginID
+                        End If
+                    Case "MR_Update_Date"
+                        If Re_Count > 0 Then
+                            tblMRIS.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                End Select
+            Next
+
+            If Re_Count > 0 Then
+
+                Re_Count2 = fnTableUpdate("dbo.PD_MRIS", tblMRIS)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            Else
+
+                Re_Count2 = fnTableInsert("dbo.PD_MRIS", tblMRIS)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " MRIS 정보 수정 : " & txtMRISNo2.Text & "-" & txtMRISName2.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " MRIS 정보 신규 입력 : " & txtMRISNo2.Text & "-" & txtMRISName2.Text
+            End If
+            Man_Log("Frm_PD_Report8", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+            'hsim 20200515 개정이력 조회 갱신
+            showRevLog("Frm_PD_Report8", DBT2, lstRev)
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+        btnSearch.PerformClick()
+
+    End Sub
+
+    Private Sub btnAdd2_Click(sender As Object, e As EventArgs) Handles btnAdd2.Click
+        txtPLName3.Text = ""
+        txtSun3.Text = ""
+        txtSpec3.Text = ""
+        txtSize3.Text = ""
+        cboUnit3.Text = ""
+        txtQTY3.Text = ""
+        txtTSNo3.Text = ""
+        txtBigo3.Text = ""
+    End Sub
+
+    Private Sub btnDelete2_Click(sender As Object, e As EventArgs) Handles btnDelete2.Click
+        Dim DBT As DataTable
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+
+        DBT = Nothing
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+        Try
+            If MessageBox.Show(txtMRISNo2.Text & " - " & txtPLName3.Text + " 를 삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                If txtJobNo2.Text <> "" Then
+
+                    StrSQL = "Delete PD_MRIS_List where MR_Code = '" & txtMRISNo2.Text & "' and MR_Rev_No = '" & txtMRISRev2.Text & "' and MR_Sun = '" & txtSun3.Text & "'"
+                    DB_Execute()
+                    If Re_Count > 0 Then
+                        MsgBox("삭제 완료")
+                    End If
+                    'hsim 20200515 처리 이력
+                    histLogStr = "사용자 " & logInUserName & " 정보 삭제 : " & txtMRISNo2.Text & " - " & txtPLName3.Text
+                    Man_Log("Frm_PD_Report8", "정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+                Else
+                    MsgBox("선택된 제품이 없습니다")
+                    Exit Sub
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Exit Sub
+        End Try
+    End Sub
+
+    Private Sub btnSave2_Click(sender As Object, e As EventArgs) Handles btnSave2.Click
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        Try
+            StrSQL = "SELECT * from PD_MRIS_List where  MR_Code = '" & txtMRISNo2.Text & "' And MR_Rev_No = '" & txtMRISRev2.Text & "' and MR_Sun = '" & txtSun3.Text & "'"
+
+            Re_Count = DB_Select(DBT)
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblMRIS)
+            '#2. 입력자료 입력
+            For i = 0 To tblMRIS_lst.Rows.Count - 1
+
+                Select Case tblMRIS_lst.Rows(i).Item(0).ToString
+
+                    Case "MR_List_Code"
+                        If Re_Count > 0 Then
+                            tblMRIS_lst.Rows(i).Item(11) = DBT.Rows(0)("MR_List_Code").ToString
+                        Else
+                            tblMRIS_lst.Rows(i).Item(11) = PK_Make("PD_MRIS_List")
+                        End If
+
+                    Case "MR_Code"
+                        tblMRIS_lst.Rows(i).Item(11) = txtMRISNo2.Text
+                    Case "MR_Rev_No"
+                        tblMRIS_lst.Rows(i).Item(11) = txtMRISRev2.Text
+                    Case "MR_Sun"
+                        tblMRIS_lst.Rows(i).Item(11) = txtSun3.Text
+                    Case "MR_Itm_Desc"
+                        tblMRIS_lst.Rows(i).Item(11) = txtPLName3.Text
+                    Case "MR_Itm_Spec"
+                        tblMRIS_lst.Rows(i).Item(11) = txtSpec3.Text
+                    Case "MR_Itm_Unit"
+                        tblMRIS_lst.Rows(i).Item(11) = cboUnit3.Text
+                    Case "MR_Itm_Qty"
+                        tblMRIS_lst.Rows(i).Item(11) = txtQTY3.Text
+                    Case "MR_TS_Code"
+                        tblMRIS_lst.Rows(i).Item(11) = txtTSNo3.Text
+                    Case "MR_Itm_Bigo"
+                        tblMRIS_lst.Rows(i).Item(11) = txtBigo3.Text
+                    Case "MR_Itm_Size"
+                        tblMRIS_lst.Rows(i).Item(11) = txtSize3.Text
+                    Case "MR_Prepared"
+                        If Re_Count > 0 Then
+                            tblMRIS_lst.Rows(i).Item(11) = DBT.Rows(0)("MR_Prepared").ToString
+                        Else
+                            tblMRIS_lst.Rows(i).Item(11) = loginID
+                        End If
+                    Case "MR_Prepare_Date"
+                        If Re_Count > 0 Then
+                            tblMRIS_lst.Rows(i).Item(11) = DBT.Rows(0)("MR_Prepare_Date").ToString
+                        Else
+                            tblMRIS_lst.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                    Case "MR_Updated"
+                        If Re_Count > 0 Then
+                            tblMRIS_lst.Rows(i).Item(11) = loginID
+                        End If
+                    Case "MR_Update_Date"
+                        If Re_Count > 0 Then
+                            tblMRIS_lst.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                End Select
+            Next
+
+            If Re_Count > 0 Then
+
+                Re_Count2 = fnTableUpdate("dbo.PD_MRIS_List", tblMRIS_lst)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            Else
+
+                Re_Count2 = fnTableInsert("dbo.PD_MRIS_List", tblMRIS_lst)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " MRIS 정보 수정 : " & txtMRISNo2.Text & "-" & txtMRISName2.Text & "-" & txtPLName3.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " MRIS 정보 신규 입력 : " & txtMRISNo2.Text & "-" & txtMRISName2.Text & "-" & txtPLName3.Text
+            End If
+            Man_Log("Frm_PD_Report8", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+            'hsim 20200515 개정이력 조회 갱신
+            showRevLog("Frm_PD_Report8", DBT2, lstRev)
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+    End Sub
+
+    Private Sub btnExcelDown_Click(sender As Object, e As EventArgs) Handles btnExcelDown.Click
+        Dim i As Integer
+        Dim DBT As DataTable
+        DBT = Nothing
+        xlapp = New Excel.Application
+        xlbook = xlapp.Workbooks.Add(Application.StartupPath + "\\Excel\\생산팀\\재료불출청구서.xlsx")
+        xlsheet = xlbook.Worksheets(1)
+        Try
+
+
+            If lstDetail.RowCount > 0 Then
+
+                xlsheet.Range("I" + (1).ToString).Value = txtMRISNo2.Text
+                xlsheet.Range("I" + (2).ToString).Value = lstMain.Rows(lstMain.CurrentCell.RowIndex).Cells("").Value.ToString
+                xlsheet.Range("C" + (3).ToString).Value = txtJobNo2.Text
+                xlsheet.Range("H" + (3).ToString).Value = txtJobName2.Text
+
+                For i = 0 To lstDetail.RowCount - 1
+                    xlsheet.Range("A" + (i + 5).ToString).Value = i + 1
+                    xlsheet.Range("B" + (i + 5).ToString).Value = lstDetail.Rows(i).Cells("MR_Itm_Desc").Value.ToString
+                    xlsheet.Range("C" + (i + 5).ToString).Value = lstDetail.Rows(i).Cells("MR_Itm_Spec").Value.ToString
+                    xlsheet.Range("D" + (i + 5).ToString).Value = lstDetail.Rows(i).Cells("MR_Itm_Size").Value.ToString
+                    xlsheet.Range("F" + (i + 5).ToString).Value = lstDetail.Rows(i).Cells("MR_Itm_Unit").Value.ToString
+                    xlsheet.Range("G" + (i + 5).ToString).Value = lstDetail.Rows(i).Cells("MR_Itm_Qty").Value.ToString
+                    xlsheet.Range("H" + (i + 5).ToString).Value = lstDetail.Rows(i).Cells("MR_Ts_Code").Value.ToString
+                    xlsheet.Range("I" + (i + 5).ToString).Value = lstDetail.Rows(i).Cells("MR_Itm_Bigo").Value.ToString
+                Next
+                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                    xlapp.ActiveWorkbook.SaveAs(SaveFileDialog1.FileName)
+
+
+                    MsgBox("Excel 저장 완료")
+                End If
+            End If
+
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            Exit Sub
+        Finally
+            xlapp.DisplayAlerts = False
+
+            Try
+                If xlbook IsNot Nothing Then
+                    xlbook.Close(Nothing, Nothing, Nothing)
+                End If
+                xlapp.Workbooks.Close()
+                xlapp.Quit()
+                If xlsheet IsNot Nothing Then
+                    Marshal.ReleaseComObject(xlsheet)
+                End If
+                If xlbook IsNot Nothing Then
+                    Marshal.ReleaseComObject(xlbook)
+                End If
+                If xlapp IsNot Nothing Then
+                    Marshal.ReleaseComObject(xlapp)
+                End If
+
+            Catch
+            End Try
+            xlsheet = Nothing
+            xlbook = Nothing
+            xlapp = Nothing
+            GC.Collect()
+            GC.WaitForPendingFinalizers()
+        End Try
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo2.Text = pop1.result
+            txtJobName2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Name").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+End Class

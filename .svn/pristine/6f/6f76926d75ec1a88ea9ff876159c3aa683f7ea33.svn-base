@@ -1,0 +1,41 @@
+﻿Public Class Frm_PR_POP
+
+
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = " SELECT LO.LO_Code LO_Code, LO.LO_Rev_No LO_Rev_No, LO.LO_Name LO_Name, LO.LO_Prepared LO_Prepared, CR.CR_Code CR_Code, CR.CR_Name CR_Name, " &
+                 " ( select Man_Name from Man where LO.LO_Prepared <> '' And Man_Code = LO.LO_Prepared ) LO_Prepared_Name, LO.LO_Prepare_Date LO_Prepare_Date " &
+                 " FROM CR_Contract CR , LA_Order LO " &
+                 " where 1=1 " &
+                 " And CR_Rev_No = (select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code) " &
+                 " And LO.LO_Rev_No = (select isnull(max(LO_Rev_No),1) from LA_Order where LO_Code = LO.LO_Code) " &
+                 " And CR.CR_Code = LO.LO_Job_No " &
+                 " And CR.CR_Code Like '%" & txtJobNo.Text & "%' " &
+                 " And CR.CR_Name Like '%" & txtJobName.Text & "%' " &
+                 " And LO.LO_Code Like '%" & txtLOCode.Text & "%' " &
+                 " order by LO.LO_Code, LO.LO_Name, LO.LO_Prepare_Date "
+
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+        DataGridView1.ClearSelection()
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.DialogResult = DialogResult.OK
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Me.Close()
+    End Sub
+
+    Private Sub Frm_PR_POP_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.btnSearch.PerformClick()
+    End Sub
+
+End Class

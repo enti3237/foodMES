@@ -1,0 +1,18 @@
+﻿Public Class UCFrm_DRW1
+    Private Sub TextBox34_TextChanged(sender As Object, e As EventArgs) Handles TextBox34.TextChanged
+
+    End Sub
+
+    Private Sub Label37_Click(sender As Object, e As EventArgs) Handles Label37.Click
+
+    End Sub
+
+    Private Sub Label32_Click(sender As Object, e As EventArgs) Handles Label32.Click
+
+    End Sub
+
+    Private Sub UCFrm_DRW1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+    End Sub
+End Class

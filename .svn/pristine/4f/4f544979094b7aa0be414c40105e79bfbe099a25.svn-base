@@ -1,0 +1,605 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+SmartFactory
+</name>
+</assembly>
+<members>
+<member name="T:SmartFactory.My.Resources.AppResource">
+<summary>
+  지역화된 문자열 등을 찾기 위한 강력한 형식의 리소스 클래스입니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.ResourceManager">
+<summary>
+  이 클래스에서 사용하는 캐시된 ResourceManager 인스턴스를 반환합니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.Culture">
+<summary>
+  이 강력한 형식의 리소스 클래스를 사용하여 모든 리소스 조회에 대해 현재 스레드의 CurrentUICulture 속성을
+  재정의합니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.CompanyCustCode">
+<summary>
+  0000000001과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.DBConnStr">
+<summary>
+  Data Source=222.96.30.167,12501;initial catalog=SmartFactory_수영ING;User ID=sa;Password=cins1004과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.DBConnStrDev">
+<summary>
+  Data Source=222.96.30.167,12501;initial catalog=SmartFactory_수영ING;User ID=sa;Password=cins1004과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.DBConnStrLocal">
+<summary>
+  Data Source=localhost,1433;initial catalog=SmartFactory_수영ING;User ID=sa;Password=cins1004과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.DefaultPassword">
+<summary>
+  SYING1234!과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.DevPasswd">
+<summary>
+  devadm1234!과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.DevUser">
+<summary>
+  devadm과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.IsPrd">
+<summary>
+  N과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgDeleteFail">
+<summary>
+  정보 삭제 도중 오류가 발생하였습니다. 시스템 관리자에 문의하세요.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgDeleteSuccess">
+<summary>
+  정보가 정상 삭제되었습니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgDownloadFail">
+<summary>
+  정보 Download 도중 오류가 발생하였습니다. 시스템 관리자에 문의하세요.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgDownloadSuccess">
+<summary>
+  정보가 정상 Download되었습니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgExportFail">
+<summary>
+  정보 Export도중 오류가 발생하였습니다. 시스템 관리자에 문의하세요.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgExportSuccess">
+<summary>
+  정보가 정상 Export되었습니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgImportFail">
+<summary>
+  정보 import도중 오류가 발생하였습니다. 시스템 관리자에 문의하세요.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgImportSuccess">
+<summary>
+  정보가 정상 Import되었습니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgInsertFail">
+<summary>
+  정보 입력 도중 오류가 발생하였습니다. 시스템 관리자에 문의하세요.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgInsertSuccess">
+<summary>
+  정보가 정상 입력되었습니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgSelectFail">
+<summary>
+  정보 조회 도중 오류가 발생하였습니다. 시스템 관리자에 문의하세요.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgSelectSuccess">
+<summary>
+  정보가 정상 조회되었습니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgUpdateFail">
+<summary>
+  정보 수정 도중 오류가 발생하였습니다. 시스템 관리자에 문의하세요.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgUpdateSuccess">
+<summary>
+  정보가 정상 수정되었습니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgUploadFail">
+<summary>
+  정보 Upload 도중 오류가 발생하였습니다. 시스템 관리자에 문의하세요.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.MsgUploadSuccess">
+<summary>
+  정보가 정상 Upload되었습니다.과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.AppResource.PrgVersion">
+<summary>
+  0.8과(와) 유사한 지역화된 문자열을 찾습니다.
+</summary>
+</member>
+<member name="T:SmartFactory.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:SmartFactory.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="T:SmartFactory.GanttChart">
+ <summary>
+ Adds an easy to use Gantt Chart to your application
+ 
+ Created by Adrian "Adagio" Grau
+ 
+ Version 0.55
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.AllowManualEditBar">
+ <summary>
+ Sets to true if the user should be able to manually edit bars
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.FromDate">
+ <summary>
+ The start date/time of the chart
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.ToDate">
+ <summary>
+ The end date/time of the chart
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.MouseOverRowText">
+ <summary>
+ The text for the current row the mouse hovers above
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.MouseOverRowValue">
+ <summary>
+ The value for the current bar the mouse hovers above
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.MouseOverColumnDate">
+ <summary>
+ The date/time the mouse hovers above
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.GridColor">
+ <summary>
+ The color of the grid
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.RowFont">
+ <summary>
+ The font used for the row text
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.DateFont">
+ <summary>
+ The font used for the "date" text in the columns
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.TimeFont">
+ <summary>
+ The font used for the "time" text in the colums)
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.#ctor">
+ <summary>
+ Default constructor
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.AddChartBar(System.String,System.Object,System.DateTime,System.DateTime,System.Drawing.Color,System.Drawing.Color,System.Int32)">
+ <summary>
+ Adds a bar to the list
+ </summary>
+ <param name="rowText">Text for the row</param>
+ <param name="barValue">Value for the row</param>
+ <param name="fromTime">The date/time the bar starts</param>
+ <param name="toTime">The date/time the bar ends</param>
+ <param name="color">The color of the bar</param>
+ <param name="hoverColor">The hover color of the bar</param>
+ <param name="rowIndex">The rowindex of the bar (useful if you want several bars on the same row)</param>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.AddChartBar(System.String,System.Object,System.DateTime,System.DateTime,System.Drawing.Color,System.Drawing.Color,System.Int32,System.Boolean)">
+ <summary>
+ Adds a bar to the list
+ </summary>
+ <param name="rowText">Text for the row</param>
+ <param name="barValue">Value for the row</param>
+ <param name="fromTime">The date/time the bar starts</param>
+ <param name="toTime">The date/time the bar ends</param>
+ <param name="color">The color of the bar</param>
+ <param name="hoverColor">The hover color of the bar</param>
+ <param name="rowIndex">The rowindex of the bar (useful if you want several bars on the same row)</param>
+ <param name="hideFromMouseMove">If you want to "hide" the bar from mousemove event</param>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.GetIndexChartBar(System.String)">
+ <summary>
+ Gets the next index
+ </summary>
+ <param name="rowText"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.RemoveBars">
+ <summary>
+ Removes all bars from list
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.PaintChart">
+ <summary>
+ Redraws the Gantt chart
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.PaintChart(System.Drawing.Graphics)">
+ <summary>
+ Redraws the Gantt chart
+ </summary>
+ <param name="gfx"></param>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.OnPaint(System.Windows.Forms.PaintEventArgs)">
+ <summary>
+ Redraws the Gantt chart
+ </summary>
+ <param name="pe"></param>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.DrawHeader(System.Drawing.Graphics,System.Collections.Generic.List{SmartFactory.GanttChart.Header})">
+ <summary>
+ Draws the list of headers. Automatically shows which headers to draw, based on the width of the Gantt Chart
+ </summary>
+ <param name="gfx"></param>
+ <param name="headerList"></param>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.DrawBars(System.Drawing.Graphics,System.Boolean)">
+ <summary>
+ Draws the bars
+ </summary>
+ <param name="grfx"></param>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.DrawNetVertical(System.Drawing.Graphics)">
+ <summary>
+ Draws the vertical lines
+ </summary>
+ <param name="grfx"></param>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.DrawNetHorizontal(System.Drawing.Graphics)">
+ <summary>
+ Draws the horizontal lines
+ </summary>
+ <param name="grfx"></param>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.GetFullHeaderList">
+ <summary>
+ Gets the full header list, consisting of hours between the two dates set
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.GanttChart_MouseMove(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ Finds the current row and column based on mouse position
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.GanttChart_MouseLeave(System.Object,System.EventArgs)">
+ <summary>
+ Mouse leave event
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.GanttChart_MouseDragged(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ Mouse drag event
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.ToolTipTextTitle">
+ <summary>
+ The title to draw
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.ToolTipText">
+ <summary>
+ Gets or sets the ToolTipText lines
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks>Don not use the add function directly on this, use ToolTipText = value</remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.ToolTipText_Draw(System.Object,System.Windows.Forms.DrawToolTipEventArgs)">
+ <summary>
+ Draws the ToolTip window
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.ToolTipText_Popup(System.Object,System.Windows.Forms.PopupEventArgs)">
+ <summary>
+ Automatically resizes the ToolTip window
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.Header.HeaderTextInsteadOfTime">
+ <summary>
+ If this string is larger than 0, this will be used instead of Time
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.Header.Time">
+ <summary>
+ Time to display
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.OnResize(System.EventArgs)">
+ <summary>
+ On resize the Gantt Chart is redrawn
+ </summary>
+ <param name="e"></param>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.DrawScrollBar(System.Drawing.Graphics)">
+ <summary>
+ Draws a scrollbar to the component, if there's a need for it
+ </summary>
+ <param name="grfx"></param>
+ <remarks></remarks>
+</member>
+<member name="P:SmartFactory.GanttChart.ScrollPositionY">
+ <summary>
+ The Y-position of the center of the scroll
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.ScrollOneup">
+ <summary>
+ Scrolls one row up
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.ScrollOneDown">
+ <summary>
+ Scrolls one row down
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.GanttChart_Click(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ If the user clicks on the scrollbar, scrolling functions will be called
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.GanttChart_MouseWheel(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ When mousewheel is used, the scrollbar will scroll
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+ <remarks></remarks>
+</member>
+<member name="M:SmartFactory.GanttChart.SaveImage(System.String)">
+ <summary>
+ Saves the GanttChart to specified image file
+ </summary>
+ <param name="filePath"></param>
+ <remarks></remarks>
+</member>
+<member name="T:SmartFactory.TabOrderManager">
+ <summary>
+ Dynamically determine and set a tab order for a container and children according to a given strategy.
+ </summary>
+</member>
+<member name="T:SmartFactory.TabOrderManager.TabSchemeComparer">
+ <summary>
+ Compare two controls in the selected tab scheme.
+ </summary>
+</member>
+<member name="F:SmartFactory.TabOrderManager.container">
+ <summary>
+ The container whose tab order we manage.
+ </summary>
+</member>
+<member name="F:SmartFactory.TabOrderManager.schemeOverrides">
+ <summary>
+ Hash of controls to schemes so that individual containers can have different ordering
+ strategies than their parents.
+ </summary>
+</member>
+<member name="F:SmartFactory.TabOrderManager.curTabIndex">
+ <summary>
+ The tab index we start numbering from when the tab order is applied.
+ </summary>
+</member>
+<member name="T:SmartFactory.TabOrderManager.TabScheme">
+ <summary>
+ The general tab-ordering strategy (i.e. whether we tab across rows first, or down columns).
+ </summary>
+</member>
+<member name="M:SmartFactory.TabOrderManager.#ctor(System.Windows.Forms.Control)">
+ <summary>
+ Constructor
+ </summary>
+ <param name="container">The container whose tab order we manage.</param>
+</member>
+<member name="M:SmartFactory.TabOrderManager.#ctor(System.Windows.Forms.Control,System.Int32,System.Collections.Hashtable)">
+ <summary>
+ Construct a tab order manager that starts numbering at the given tab index.
+ </summary>
+ <param name="container">The container whose tab order we manage.</param>
+ <param name="curTabIndex">Where to start numbering.</param>
+ <param name="schemeOverrides">List of controls with explicitly defined schemes.</param>
+</member>
+<member name="M:SmartFactory.TabOrderManager.SetSchemeForControl(System.Windows.Forms.Control,SmartFactory.TabOrderManager.TabScheme)">
+ <summary>
+ Explicitly set a tab order scheme for a given (presumably container) control.
+ </summary>
+ <param name="c">The control to set the scheme for.</param>
+ <param name="scheme">The requested scheme.</param>
+</member>
+<member name="M:SmartFactory.TabOrderManager.SetTabOrder(SmartFactory.TabOrderManager.TabScheme)">
+ <summary>
+ Recursively set the tab order on this container and all of its children.
+ </summary>
+ <param name="scheme">The tab ordering strategy to apply.</param>
+ <returns>The next tab index to be used.</returns>
+</member>
+<member name="T:SmartFactory.TabSchemeProvider">
+ <summary>
+ Wrap the TabOrderManager class and supply extendee controls with a custom tab scheme.
+ </summary>
+</member>
+<member name="F:SmartFactory.TabSchemeProvider.extendees">
+ <summary>
+ Hashtable to store the controls that use our extender property.
+ </summary>
+</member>
+<member name="F:SmartFactory.TabSchemeProvider.topLevelForm">
+ <summary>
+ The form we're hosted on, which will be calculated by watching the extendees entering the control hierarchy.
+ </summary>
+</member>
+<member name="M:SmartFactory.TabSchemeProvider.GetTabScheme(System.Windows.Forms.Control)">
+ <summary>
+ Get whether or not we're managing a given control.
+ </summary>
+ <param name="c"></param>
+ <returns></returns>
+</member>
+<member name="M:SmartFactory.TabSchemeProvider.HookFormLoad">
+ <summary>
+ Hook up to the form load event and indicate that we've done so.
+ </summary>
+</member>
+<member name="M:SmartFactory.TabSchemeProvider.UnhookFormLoad">
+ <summary>
+ Unhook from the form load event and indicate that we need to do so again before applying tab schemes.
+ </summary>
+</member>
+<member name="M:SmartFactory.TabSchemeProvider.HookParentChangedEvents(System.Windows.Forms.Control)">
+ <summary>
+ Hook up to all of the parent changed events for this control and its ancestors so that we are informed
+ if and when they are added to the top-level form (whose load event we need).
+ It's not adequate to look at just the control, because it may have been added to its parent, but the parent
+ may not be descendent of the form -yet-.
+ </summary>
+ <param name="c"></param>
+</member>
+<member name="M:SmartFactory.TabSchemeProvider.SetTabScheme(System.Windows.Forms.Control,SmartFactory.TabOrderManager.TabScheme)">
+ <summary>
+ Set the tab scheme to use on a given control
+ </summary>
+ <param name="c"></param>
+ <returns></returns>
+</member>
+<member name="M:SmartFactory.TabSchemeProvider.Extendee_ParentChanged(System.Object,System.EventArgs)">
+ <summary>
+ We track when each extendee's parent is changed, and also when their parents are changed, until
+ SOMEBODY finally changes their parent to the form, at which point we can hook the load to apply
+ the tab schemes.
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+</members>
+</doc>

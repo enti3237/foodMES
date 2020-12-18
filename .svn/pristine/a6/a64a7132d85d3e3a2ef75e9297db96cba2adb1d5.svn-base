@@ -1,0 +1,153 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Public Class Frm_CC_Report4
+    Dim xls As New Excel.Application
+    Dim xworkbook As Excel.Workbook
+    Dim xworksheet As Excel.Worksheet
+    Dim xRange As Excel.Range
+    Dim Excel_Check As Boolean
+
+    Private Sub Frm_CC_Report4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        DateTimePicker6.Text = "2015-01-01"
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Panel1.Top = 40
+        Panel1.Left = 10
+
+        Panel1.Visible = True
+
+        Button1.PerformClick()
+
+        Grid_Main.AutoResizeColumn(DataGridViewAutoSizeColumnsMode.AllCells)
+    End Sub
+
+    Private Sub Grid_DL_Load()
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT CR_Code,CR_Name,CL_Sun,CL_PL_Code,CL_PL_Name,CM_Name,CL_Date,CL_QTY,CL_Unit_Amount,CL_Total
+           FROM  
+Company with(NOLOCK),CR_Contract CR with(NOLOCK),CR_Contract_List CL with(NOLOCK) 
+where 1=1
+and CR.CR_Rev_No = (select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code)
+and CL.CL_Rev_No = (select isnull(max(CL_Rev_No),1) from CR_Contract_List where CL_Code = CL.CL_Code)
+and CM_Code = CR_Customer_Code 
+and CR_Code = CL_Code"
+        Re_Count = DB_Select(DBT)
+
+        Grid_Main.DataSource = DBT
+        Grid_Main.ClearSelection()
+
+    End Sub
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            Search_Text.Text = pop1.result
+        End If
+        pop1.Dispose()
+    End Sub
+
+
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL =
+            "SELECT CR.CR_Code,CR_Name,CR_Sun,CR_PL_Code,CR_PL_Name,CM_Name,CL.CR_Date,CR_QTY,CR_Unit_Amount,CR_Total
+           FROM  
+Company with(NOLOCK),CR_Contract CR with(NOLOCK),CR_Contract_List CL with(NOLOCK) 
+where 1=1
+and CR.CR_Rev_No = (select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code)
+and CL.CR_Rev_No = (select isnull(max(CR_Rev_No),1) from CR_Contract_List where CR_Code = CL.CR_Code)
+and CM_Code = CR_Customer_Code 
+and CR.CR_Code = CL.CR_Code
+and CR.CR_Code Like '%" & Search_Text.Text & "%'
+and CR_Name Like '%" & TextBox18.Text & "%'
+and CRS_Code Like '%" & TextBox16.Text & "%'
+and CM_Name Like '%" & TextBox17.Text & "%'
+and '" & DateTimePicker6.Value.ToString("yyyyMMdd") & "' <= CL.CR_Date 
+And '" & DateTimePicker7.Value.ToString("yyyyMMdd") & "' >= CL.CR_Date
+order by 1 asc"
+
+        '"SELECT CR_Code,CR_Name,CL_Sun,CL_PL_Code,CL_PL_Name,CM_Name,CL_Date,CL_QTY,CL_Unit_Amount,CL_Total
+        '      FROM  Company with(NOLOCK),CR_Contract with(NOLOCK),CR_Contract_List with(NOLOCK)  where CM_Code = CR_Customer_Code And CR_Code = CL_Code And
+        '                                                                                                       CR_Code Like '%" & Search_Text.Text & "%' And
+        '                                                                                                       CR_Name Like '%" & TextBox18.Text & "%' And
+        '                                                                                                       CRS_Code Like '%" & TextBox16.Text & "%' And
+        '                                                                                                       CM_Name Like '%" & TextBox17.Text & "%' And
+        '                                                                                                       '" & DateTimePicker6.Value.ToString("yyyyMMdd") & "' <= CL_Date 
+        '                                                                                                       And '" & DateTimePicker7.Value.ToString("yyyyMMdd") & "' >= CL_Date order by CR_Code"
+        Console.WriteLine(StrSQL)
+
+        'MsgBox(StrSQL)
+
+        Re_Count = DB_Select(DBT)
+
+        Grid_Main.DataSource = DBT
+
+        Grid_Main.ClearSelection()
+
+
+
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        If Grid_Main.Rows.Count > 0 Then
+            excel_Save()
+        End If
+    End Sub
+
+    Private Sub excel_Save()
+        Dim i As Integer
+        xls = New Excel.Application
+        xls.Visible = False
+        xworkbook = xls.Workbooks.Open(Application.StartupPath + "\\Excel\\수주납품내역.xlsx")
+        xworksheet = xworkbook.Sheets(1)
+
+        Try
+            For i = 0 To Grid_Main.Rows.Count - 1
+                xworksheet.Range("A" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Code").Value.ToString
+                xworksheet.Range("B" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Name").Value.ToString
+                xworksheet.Range("C" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Sun").Value.ToString
+                xworksheet.Range("D" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_PL_Code").Value.ToString
+                xworksheet.Range("E" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_PL_Name").Value.ToString
+                xworksheet.Range("F" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CM_Name").Value.ToString
+                xworksheet.Range("G" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Date").Value.ToString
+                xworksheet.Range("H" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_QTY").Value.ToString
+                xworksheet.Range("I" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Unit_Amount").Value.ToString
+                xworksheet.Range("J" + (i + 2).ToString).Value = Grid_Main.Rows(i).Cells("CR_Total").Value.ToString
+            Next
+            If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                xls.ActiveWorkbook.SaveAs(SaveFileDialog1.FileName)
+                MsgBox("Excel 저장 완료")
+            End If
+
+
+
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        Finally
+            xworksheet = Nothing
+            xworkbook.Close()
+            xworkbook = Nothing
+            xls.Quit()
+
+
+            xls = Nothing
+            'releaseObject(xworksheet)
+            'releaseObject(xworkbook)
+            'releaseObject(xls)
+        End Try
+
+
+
+
+
+    End Sub
+End Class

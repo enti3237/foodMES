@@ -1,0 +1,57 @@
+﻿Public Class Frm_PR_Report1
+    Private Sub lstMain_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellContentClick
+
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub labDate_Click(sender As Object, e As EventArgs) Handles labDate.Click
+
+    End Sub
+
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+
+    End Sub
+
+    Private Sub dtpDateFrom_ValueChanged(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub CheckedListBox1_SelectedIndexChanged(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub palMain_Paint(sender As Object, e As PaintEventArgs) Handles palMain.Paint
+
+    End Sub
+
+    Private Sub Label2_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub labDueDate_Click(sender As Object, e As EventArgs) Handles labDueDate.Click
+
+    End Sub
+
+    Private Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub palDetail_Paint(sender As Object, e As PaintEventArgs) Handles palDetail.Paint
+
+    End Sub
+
+    Private Sub Label9_Click(sender As Object, e As EventArgs) Handles Label9.Click
+
+    End Sub
+
+    Private Sub Label10_Click(sender As Object, e As EventArgs) Handles Label10.Click
+
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+
+    End Sub
+End Class

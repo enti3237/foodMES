@@ -1,0 +1,562 @@
+﻿Imports System.Globalization
+Imports System.IO
+Imports Microsoft.Office.Interop
+
+Public Class Frm_DV_Drawing
+    Dim tblDV_Drawing As New DataTable
+
+    Dim file_path As String = ""
+    Dim file_name As String = ""
+    Dim day As DateTime
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+    Dim Range As Excel.Range
+    Dim Excel_Check As Boolean
+    Dim Grid_Display_Ch As Boolean
+    Dim Main_From As Frm_Main = Application.OpenForms("Frm_Main")
+
+    Private Sub Frm_DV_Drawing_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        '참조 TABLE 구조 LOAD
+        fnFrmTblLoad()
+
+        palMain.Top = 45
+        palMain.Left = 10
+        palDetail.Top = 45
+        palDetail.Left = 10
+
+        palMain.Visible = True
+        palDetail.Visible = False
+        DV_Load()
+    End Sub
+
+    Private Sub fnFrmTblLoad()
+
+        tblDV_Drawing = fnGetTableStructure("dbo.DV_Drawing")
+
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles btnMain.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = True
+        palDetail.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles btnDetail.Click
+        'Label_Color(sender, Color_Label, Di_Panel2)
+        'palMain.Visible = False
+        'palDetail.Visible = True
+    End Sub
+
+    Private Sub DV_Load()
+        Me.btnSearch.PerformClick()
+
+    End Sub
+
+    Private Sub Text_Clear()
+        txtJobNo3.Text = ""
+        txtJobName3.Text = ""
+        txtDWG3.Text = ""
+        txtPLCode3.Text = ""
+        txtPLName3.Text = ""
+        txtRev3.Text = ""
+        txtManager3.Text = ""
+        txtManager3.Text = ""
+        txtBigo3.Text = ""
+        ListBox1.Items.Clear()
+        ListBox2.Items.Clear()
+    End Sub
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs)
+        Text_Clear()
+        Label_Color(btnDetail, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        palDetail.Visible = True
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+
+        Dim DBT As DataTable, DBT2 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = " SELECT CR.CR_Code CR_Code, CR.CR_Name CR_Name, DV.DV_Code DV_Code, " &
+                 " DV.DV_Name DV_Name, DV.DV_Rev_No DV_Rev_No, DV.DV_Date DV_Date, " &
+                 " DV.DV_Prepared DV_Prepared, DV.DV_Prepare_Date DV_Prepare_Date, " &
+                 " DV.DV_Updated DV_Updated, DV.DV_Update_Date DV_Update_Date " &
+                 " FROM DV_Drawing DV with(NOLOCK), CR_Contract CR with(NOLOCK) " &
+                 " where 1=1 " &
+                 " And CR.CR_Code Like '%" & txtJobNo.Text & "%' " &
+                 " And CR.CR_Name Like '%" & txtJobName.Text & "%' " &
+                 " And DV.DV_Code Like '%" & txtDWG.Text & "%' " &
+                 " And CR.CR_Code = DV.DV_CR_Code " &
+                 " And CR_Rev_No = (select isnull(max(CR_Rev_No),1) " &
+                 "                   from CR_Contract " &
+                 "                   where CR_Code = CR.CR_Code) And " &
+                 "                   DV_Rev_No = (select isnull(max(DV_Rev_No),1) " &
+                 "                   from DV_Drawing where DV_Code = DV.DV_Code) " &
+                 "    order by 1 asc "
+
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            lstMain.DataSource = DBT
+            lstMain.ClearSelection()
+        End If
+
+        'hsim 20200517 이력 조회
+        showRevLog("Frm_DV_Drawing", DBT2, lstRev)
+
+    End Sub
+
+    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellDoubleClick
+        Label_Color(btnDetail, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        palDetail.Visible = True
+
+        Dim DBT As DataTable
+        DBT = Nothing
+        Try
+            StrSQL = " select DV.*, CR.*, " &
+                     " (SELECT Man_Name from Man where DV.DV_Manager <> '' and Man_Code = DV.DV_Manager) DV_Manager_Name " &
+                     "  FROM DV_Drawing DV, CR_Contract CR " &
+                     "  where 1=1 " &
+                     "  and CR.CR_Code = DV.DV_CR_Code " &
+                     "  and CR_Rev_No = (select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code) " &
+                     "  and DV_Code = '" & lstMain.Rows(e.RowIndex).Cells("DV_Code").Value.ToString & "' " &
+                     "  and DV_Rev_No = (select isnull(max(DV_Rev_No),1) " &
+                     "                   From DV_Drawing " &
+                     "                   Where DV_Code = DV.DV_Code) " &
+                     "  Order by 1 asc "
+
+            Console.WriteLine("DV Detail SQL:" & StrSQL)
+            Re_Count = DB_Select(DBT)
+
+            If Re_Count > 0 Then
+                txtJobNo3.Text = DBT.Rows(0)("DV_CR_Code").ToString
+                txtJobName3.Text = DBT.Rows(0)("CR_Name").ToString
+                txtDWG3.Text = DBT.Rows(0)("DV_Code").ToString
+                txtRev3.Text = DBT.Rows(0)("DV_Rev_No").ToString
+                txtDWGName3.Text = DBT.Rows(0)("DV_Name").ToString
+                txtPLCode3.Text = DBT.Rows(0)("DV_PL_Code").ToString
+                txtPLName3.Text = DBT.Rows(0)("DV_PL_Name").ToString
+                txtBigo3.Text = DBT.Rows(0)("DV_Bigo").ToString
+            End If
+
+            'hsim 20200602 담당자 combo setting
+            If DBT.Rows(0)("DV_Manager") <> "" Then
+                Dim cboDBT As New DataTable()
+                cboDBT.Columns.Add("DV_Manager")
+                cboDBT.Columns.Add("DV_Manager_Name")
+                cboDBT.Rows.Add()
+                cboDBT.Rows(0).Item(0) = DBT.Rows(0)("DV_Manager")
+                cboDBT.Rows(0).Item(1) = DBT.Rows(0)("DV_Manager_Name")
+                txtManager3.Text = DBT.Rows(0)("DV_Manager_Name")
+                cboManager3.DataSource = cboDBT
+                cboManager3.ValueMember = "DV_Manager"
+                cboManager3.DisplayMember = "DV_Manager_Name"
+                cboManager3.SelectedValue = DBT.Rows(0)("DV_Manager")
+            End If
+            'hsim 20200602 담당자 combo setting - 끝
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
+    Private Sub Button10_Click_1(sender As Object, e As EventArgs) Handles btnJobSearch.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo.Text = pop1.result
+        End If
+        pop1.Dispose()
+    End Sub
+
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        If e.RowIndex >= 0 Then
+            txtJobNo2.Text = lstMain.Rows(e.RowIndex).Cells("CR_Code").Value.ToString
+            txtJobName2.Text = lstMain.Rows(e.RowIndex).Cells("CR_Name").Value.ToString
+            txtDWG2.Text = lstMain.Rows(e.RowIndex).Cells("DV_Code").Value.ToString
+            txtDVName.Text = lstMain.Rows(e.RowIndex).Cells("DV_Name").Value.ToString
+            dtpDate.Text = lstMain.Rows(e.RowIndex).Cells("DV_Date").Value.ToString
+            txtRev.Text = lstMain.Rows(e.RowIndex).Cells("DV_Rev_No").Value.ToString
+        End If
+
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        Dim DBT As DataTable
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        Try
+            If MessageBox.Show(txtDWG2.Text + " 를 삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+                If txtJobNo2.Text <> "" Then
+                    StrSQL = "Delete DV_Drawing where DV_Code = '" & txtDWG2.Text & "'and DV_Rev_No = " & txtRev.Text
+                    Re_Count = DB_Execute()
+
+                    If Re_Count > 0 Then
+                        MsgBox("삭제 완료")
+                    End If
+
+                    'hsim 20200515 처리 이력
+                    histLogStr = "사용자 " & logInUserName & " 도면 정보 삭제 : " & txtDWG2.Text & "-" & txtRev.Text
+                    Man_Log("Frm_DV_Drawing", "도면 정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+                Else
+                    MsgBox("선택된 도면이 없습니다")
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Exit Sub
+        End Try
+        DV_Load()
+
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        If InputCheck(txtDWG2.Text, "도면번호를 입력해주세요.") = 1 Then
+            Exit Sub
+        End If
+
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        Try
+
+            StrSQL = "SELECT * from DV_Drawing where DV_Code = '" & txtDWG2.Text & "' And DV_Rev_No = (SELECT max(DV_Rev_No) from DV_Drawing where DV_Code = '" & txtDWG2.Text & "' and DV_Rev_No = '" & txtRev.Text & "')"
+            Re_Count = DB_Select(DBT)
+            StrSQL = "SELECT * from DV_Drawing where DV_Code = '" & txtDWG2.Text & "' And DV_Rev_No = (SELECT max(DV_Rev_No) from DV_Drawing where DV_Code = '" & txtDWG2.Text & "')"
+            Re_Count2 = DB_Select(DBT2)
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblDV_Drawing)
+            '#2. 입력자료 입력
+            For i = 0 To tblDV_Drawing.Rows.Count - 1
+
+                Select Case tblDV_Drawing.Rows(i).Item(0).ToString
+
+                    Case "DV_Code"
+                        If txtDWG2.Text <> "" Then
+                            tblDV_Drawing.Rows(i).Item(11) = txtDWG2.Text
+                        Else
+                            tblDV_Drawing.Rows(i).Item(11) = PK_Make("DV_Drawing")
+                        End If
+                    Case "DV_Rev_No"
+                        If Re_Count > 0 Then
+                            tblDV_Drawing.Rows(i).Item(11) = txtRev.Text
+                        Else
+                            If txtRev.Text = "" Then
+                                tblDV_Drawing.Rows(i).Item(11) = 1
+                            Else
+                                tblDV_Drawing.Rows(i).Item(11) = txtRev.Text
+                            End If
+                        End If
+                    Case "DV_Name"
+                        tblDV_Drawing.Rows(i).Item(11) = txtDVName.Text
+                    Case "DV_Date"
+                        tblDV_Drawing.Rows(i).Item(11) = dtpDate.Value.ToString(fmtStr)
+                    Case "DV_CR_Code"
+                        tblDV_Drawing.Rows(i).Item(11) = txtJobNo2.Text
+                    Case "DV_PL_Code"
+                        If Re_Count > 0 Then
+                            tblDV_Drawing.Rows(i).Item(11) = DBT.Rows(0)("DV_PL_Code").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblDV_Drawing.Rows(i).Item(11) = DBT2.Rows(0)("DV_PL_Code").ToString
+                            End If
+                        End If
+                    Case "DV_PL_Name"
+                        If Re_Count > 0 Then
+                            tblDV_Drawing.Rows(i).Item(11) = DBT.Rows(0)("DV_PL_Name").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblDV_Drawing.Rows(i).Item(11) = DBT2.Rows(0)("DV_PL_Name").ToString
+                            End If
+                        End If
+                    Case "DV_Manager"
+                        If Re_Count > 0 Then
+                            tblDV_Drawing.Rows(i).Item(11) = DBT.Rows(0)("DV_Manager").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblDV_Drawing.Rows(i).Item(11) = DBT2.Rows(0)("DV_Manager").ToString
+                            End If
+                        End If
+                    Case "DV_Bigo"
+                        If Re_Count > 0 Then
+                            tblDV_Drawing.Rows(i).Item(11) = DBT.Rows(0)("DV_Bigo").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblDV_Drawing.Rows(i).Item(11) = DBT2.Rows(0)("DV_Bigo").ToString
+                            End If
+                        End If
+                    Case "DV_Prepared"
+                        If Re_Count > 0 Then
+                            tblDV_Drawing.Rows(i).Item(11) = DBT.Rows(0)("DV_Prepared").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblDV_Drawing.Rows(i).Item(11) = DBT2.Rows(0)("DV_Prepared").ToString
+                            End If
+                        End If
+                    Case "DV_Prepare_Date"
+                        If Re_Count > 0 Then
+                            tblDV_Drawing.Rows(i).Item(11) = DBT.Rows(0)("DV_Prepare_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblDV_Drawing.Rows(i).Item(11) = DBT2.Rows(0)("DV_Prepare_Date").ToString
+                            End If
+                        End If
+                    Case "DV_Updated"
+                        If Re_Count > 0 Then
+                            tblDV_Drawing.Rows(i).Item(11) = DBT.Rows(0)("DV_Updated").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblDV_Drawing.Rows(i).Item(11) = DBT2.Rows(0)("DV_Updated").ToString
+                            End If
+                        End If
+                    Case "DV_Update_Date"
+                        If Re_Count > 0 Then
+                            tblDV_Drawing.Rows(i).Item(11) = DBT.Rows(0)("DV_Update_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblDV_Drawing.Rows(i).Item(11) = DBT2.Rows(0)("DV_Update_Date").ToString
+                            End If
+                        End If
+                End Select
+            Next
+
+            If Re_Count > 0 Then
+                Re_Count2 = fnTableUpdate("dbo.DV_Drawing", tblDV_Drawing)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            Else
+                Re_Count2 = fnTableInsert("dbo.DV_Drawing", tblDV_Drawing)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 품목 정보 수정 : " & txtDWG2.Text & "-" & txtRev.Text & "-" & txtDVName.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 품목 정보 신규 입력 : " & txtDWG2.Text & "-" & txtRev.Text & "-" & txtDVName.Text
+            End If
+            Man_Log("Frm_DV_Drawing", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+
+        DV_Load()
+
+    End Sub
+
+    Private Sub btnJobSearch2_Click(sender As Object, e As EventArgs) Handles btnJobSearch2.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString
+            txtJobName2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Name").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        txtDWG2.Text = ""
+        txtDVName.Text = ""
+        dtpDate.Text = ""
+        txtRev.Text = ""
+    End Sub
+
+    Private Sub btnSave2_Click(sender As Object, e As EventArgs) Handles btnSave2.Click
+
+        Dim i%
+        Dim DBT As DataTable
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+
+        Try
+
+            StrSQL = "SELECT * from DV_Drawing where DV_Code = '" & txtDWG3.Text & "' And DV_Rev_No = (SELECT max(DV_Rev_No) from DV_Drawing where DV_Code = '" & txtDWG3.Text & "')"
+            Re_Count = DB_Select(DBT)
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblDV_Drawing)
+            '#2. 입력자료 입력
+            For i = 0 To tblDV_Drawing.Rows.Count - 1
+
+                Select Case tblDV_Drawing.Rows(i).Item(0).ToString
+
+                    Case "DV_Code"
+                        tblDV_Drawing.Rows(i).Item(11) = txtDWG3.Text
+                    Case "DV_Rev_No"
+                        tblDV_Drawing.Rows(i).Item(11) = txtRev.Text
+                    Case "DV_Name"
+                        If Re_Count > 0 Then
+                            tblDV_Drawing.Rows(i).Item(11) = DBT.Rows(0)("DV_Name").ToString
+                        End If
+                    Case "DV_Date"
+                        If Re_Count > 0 Then
+                            tblDV_Drawing.Rows(i).Item(11) = DBT.Rows(0)("DV_Date").ToString
+                        End If
+                    Case "DV_CR_Code"
+                        If Re_Count > 0 Then
+                            tblDV_Drawing.Rows(i).Item(11) = DBT.Rows(0)("DV_CR_Code").ToString
+                        End If
+                    Case "DV_CR_Customer_Code"
+                        tblDV_Drawing.Rows(i).Item(11) = DBT.Rows(0)("DV_CR_Customer_Code").ToString
+                    Case "DV_PL_Code"
+                        tblDV_Drawing.Rows(i).Item(11) = txtPLCode3.Text
+                    Case "DV_PL_Name"
+                        tblDV_Drawing.Rows(i).Item(11) = txtPLName3.Text
+                    Case "DV_Manager"
+                        tblDV_Drawing.Rows(i).Item(11) = cboManager3.SelectedValue
+                    Case "DV_Bigo"
+                        tblDV_Drawing.Rows(i).Item(11) = txtBigo3.Text
+                    Case "DV_Prepared"
+                        If DBT.Rows(0)("DV_Prepared") = "" Then
+                            tblDV_Drawing.Rows(i).Item(11) = Main_From.Text_Man_Name.Text
+                        Else
+                            tblDV_Drawing.Rows(i).Item(11) = DBT.Rows(0)("DV_Prepared").ToString
+                        End If
+                    Case "DV_Prepare_Date"
+                        If DBT.Rows(0)("DV_Prepare_Date") = "" Then
+                            tblDV_Drawing.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+                        Else
+                            tblDV_Drawing.Rows(i).Item(11) = DBT.Rows(0)("DV_Prepare_Date").ToString
+                        End If
+                    Case "DV_Updated"
+                        If DBT.Rows(0)("DV_Prepared") = "" Then
+                        Else
+                            tblDV_Drawing.Rows(i).Item(11) = Main_From.Text_Man_Name.Text
+                        End If
+                    Case "DV_Update_Date"
+                        If DBT.Rows(0)("DV_Prepared") = "" Then
+                        Else
+                            tblDV_Drawing.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr)
+                        End If
+
+                End Select
+
+            Next
+
+            If Re_Count > 0 Then
+                Re_Count2 = fnTableUpdate("dbo.DV_Drawing", tblDV_Drawing)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 품목 정보 수정 : " & txtDWG3.Text & "-" & txtRev.Text & "-" & txtDWGName3.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 품목 정보 신규 입력 : " & txtDWG3.Text & "-" & txtRev.Text & "-" & txtDWGName3.Text
+            End If
+            Man_Log("Frm_DV_Drawing", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+            Label_Color(btnMain, Color_Label, Di_Panel2)
+            palDetail.Visible = False
+            palMain.Visible = True
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+        DV_Load()
+
+    End Sub
+
+    Private Sub btnPLSearch_Click(sender As Object, e As EventArgs) Handles btnPLSearch.Click
+        Dim pop1 As Frm_PL_POP = New Frm_PL_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtPLCode3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_PL_Code").Value.ToString
+            txtPLName3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_PL_Name").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnManSearch_Click(sender As Object, e As EventArgs) Handles btnManSearch.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Man_POP = New Frm_Man_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            cboDBT.Columns.Add("Man_Code")
+            cboDBT.Columns.Add("Man_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            txtManager3.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            cboManager3.DataSource = cboDBT
+            cboManager3.ValueMember = "Man_Code"
+            cboManager3.DisplayMember = "Man_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnDVSearch_Click(sender As Object, e As EventArgs) Handles btnDVSearch.Click
+        Dim pop1 As Frm_DV_POP = New Frm_DV_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtDWG.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("DV_Code").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+End Class

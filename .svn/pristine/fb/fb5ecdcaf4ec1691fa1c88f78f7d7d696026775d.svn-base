@@ -1,0 +1,1748 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_QA
+    Inherits System.Windows.Forms.Form
+
+    'Form은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.TextBox86 = New System.Windows.Forms.TextBox()
+        Me.Label34 = New System.Windows.Forms.Label()
+        Me.TextBox87 = New System.Windows.Forms.TextBox()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.Label36 = New System.Windows.Forms.Label()
+        Me.TextBox85 = New System.Windows.Forms.TextBox()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.TextBox84 = New System.Windows.Forms.TextBox()
+        Me.Label32 = New System.Windows.Forms.Label()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.Panel25 = New System.Windows.Forms.Panel()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.Panel24 = New System.Windows.Forms.Panel()
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.TextBox82 = New System.Windows.Forms.TextBox()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.TextBox83 = New System.Windows.Forms.TextBox()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.Panel23 = New System.Windows.Forms.Panel()
+        Me.TextBox80 = New System.Windows.Forms.TextBox()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.TextBox81 = New System.Windows.Forms.TextBox()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.Panel22 = New System.Windows.Forms.Panel()
+        Me.Panel21 = New System.Windows.Forms.Panel()
+        Me.TextBox78 = New System.Windows.Forms.TextBox()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.TextBox79 = New System.Windows.Forms.TextBox()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.TextBox67 = New System.Windows.Forms.TextBox()
+        Me.TextBox68 = New System.Windows.Forms.TextBox()
+        Me.TextBox69 = New System.Windows.Forms.TextBox()
+        Me.TextBox70 = New System.Windows.Forms.TextBox()
+        Me.TextBox71 = New System.Windows.Forms.TextBox()
+        Me.TextBox72 = New System.Windows.Forms.TextBox()
+        Me.TextBox73 = New System.Windows.Forms.TextBox()
+        Me.TextBox74 = New System.Windows.Forms.TextBox()
+        Me.TextBox75 = New System.Windows.Forms.TextBox()
+        Me.TextBox76 = New System.Windows.Forms.TextBox()
+        Me.TextBox77 = New System.Windows.Forms.TextBox()
+        Me.TextBox56 = New System.Windows.Forms.TextBox()
+        Me.TextBox57 = New System.Windows.Forms.TextBox()
+        Me.TextBox58 = New System.Windows.Forms.TextBox()
+        Me.TextBox59 = New System.Windows.Forms.TextBox()
+        Me.TextBox60 = New System.Windows.Forms.TextBox()
+        Me.TextBox61 = New System.Windows.Forms.TextBox()
+        Me.TextBox62 = New System.Windows.Forms.TextBox()
+        Me.TextBox63 = New System.Windows.Forms.TextBox()
+        Me.TextBox64 = New System.Windows.Forms.TextBox()
+        Me.TextBox65 = New System.Windows.Forms.TextBox()
+        Me.TextBox66 = New System.Windows.Forms.TextBox()
+        Me.TextBox45 = New System.Windows.Forms.TextBox()
+        Me.TextBox46 = New System.Windows.Forms.TextBox()
+        Me.TextBox47 = New System.Windows.Forms.TextBox()
+        Me.TextBox48 = New System.Windows.Forms.TextBox()
+        Me.TextBox49 = New System.Windows.Forms.TextBox()
+        Me.TextBox50 = New System.Windows.Forms.TextBox()
+        Me.TextBox51 = New System.Windows.Forms.TextBox()
+        Me.TextBox52 = New System.Windows.Forms.TextBox()
+        Me.TextBox53 = New System.Windows.Forms.TextBox()
+        Me.TextBox54 = New System.Windows.Forms.TextBox()
+        Me.TextBox55 = New System.Windows.Forms.TextBox()
+        Me.TextBox34 = New System.Windows.Forms.TextBox()
+        Me.TextBox35 = New System.Windows.Forms.TextBox()
+        Me.TextBox36 = New System.Windows.Forms.TextBox()
+        Me.TextBox37 = New System.Windows.Forms.TextBox()
+        Me.TextBox38 = New System.Windows.Forms.TextBox()
+        Me.TextBox39 = New System.Windows.Forms.TextBox()
+        Me.TextBox40 = New System.Windows.Forms.TextBox()
+        Me.TextBox41 = New System.Windows.Forms.TextBox()
+        Me.TextBox42 = New System.Windows.Forms.TextBox()
+        Me.TextBox43 = New System.Windows.Forms.TextBox()
+        Me.TextBox44 = New System.Windows.Forms.TextBox()
+        Me.TextBox23 = New System.Windows.Forms.TextBox()
+        Me.TextBox24 = New System.Windows.Forms.TextBox()
+        Me.TextBox25 = New System.Windows.Forms.TextBox()
+        Me.TextBox26 = New System.Windows.Forms.TextBox()
+        Me.TextBox27 = New System.Windows.Forms.TextBox()
+        Me.TextBox28 = New System.Windows.Forms.TextBox()
+        Me.TextBox29 = New System.Windows.Forms.TextBox()
+        Me.TextBox30 = New System.Windows.Forms.TextBox()
+        Me.TextBox31 = New System.Windows.Forms.TextBox()
+        Me.TextBox32 = New System.Windows.Forms.TextBox()
+        Me.TextBox33 = New System.Windows.Forms.TextBox()
+        Me.TextBox22 = New System.Windows.Forms.TextBox()
+        Me.TextBox21 = New System.Windows.Forms.TextBox()
+        Me.TextBox20 = New System.Windows.Forms.TextBox()
+        Me.TextBox19 = New System.Windows.Forms.TextBox()
+        Me.TextBox18 = New System.Windows.Forms.TextBox()
+        Me.TextBox17 = New System.Windows.Forms.TextBox()
+        Me.TextBox16 = New System.Windows.Forms.TextBox()
+        Me.TextBox15 = New System.Windows.Forms.TextBox()
+        Me.TextBox14 = New System.Windows.Forms.TextBox()
+        Me.TextBox13 = New System.Windows.Forms.TextBox()
+        Me.TextBox12 = New System.Windows.Forms.TextBox()
+        Me.Panel20 = New System.Windows.Forms.Panel()
+        Me.Panel19 = New System.Windows.Forms.Panel()
+        Me.Panel18 = New System.Windows.Forms.Panel()
+        Me.Panel17 = New System.Windows.Forms.Panel()
+        Me.Panel16 = New System.Windows.Forms.Panel()
+        Me.Panel15 = New System.Windows.Forms.Panel()
+        Me.Panel14 = New System.Windows.Forms.Panel()
+        Me.Panel13 = New System.Windows.Forms.Panel()
+        Me.Panel12 = New System.Windows.Forms.Panel()
+        Me.Panel11 = New System.Windows.Forms.Panel()
+        Me.Panel10 = New System.Windows.Forms.Panel()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Panel9 = New System.Windows.Forms.Panel()
+        Me.Panel8 = New System.Windows.Forms.Panel()
+        Me.Panel7 = New System.Windows.Forms.Panel()
+        Me.Panel6 = New System.Windows.Forms.Panel()
+        Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.TextBox11 = New System.Windows.Forms.TextBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.TextBox10 = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.TextBox9 = New System.Windows.Forms.TextBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.TextBox8 = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.TextBox7 = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.TextBox6 = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.TextBox5 = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.TextBox108 = New System.Windows.Forms.TextBox()
+        Me.Label37 = New System.Windows.Forms.Label()
+        Me.Panel1.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.TextBox108)
+        Me.Panel1.Controls.Add(Me.Label37)
+        Me.Panel1.Controls.Add(Me.TextBox86)
+        Me.Panel1.Controls.Add(Me.Label34)
+        Me.Panel1.Controls.Add(Me.TextBox87)
+        Me.Panel1.Controls.Add(Me.Label35)
+        Me.Panel1.Controls.Add(Me.Label36)
+        Me.Panel1.Controls.Add(Me.TextBox85)
+        Me.Panel1.Controls.Add(Me.Label33)
+        Me.Panel1.Controls.Add(Me.TextBox84)
+        Me.Panel1.Controls.Add(Me.Label32)
+        Me.Panel1.Controls.Add(Me.Label31)
+        Me.Panel1.Controls.Add(Me.Panel25)
+        Me.Panel1.Controls.Add(Me.Label30)
+        Me.Panel1.Controls.Add(Me.Panel24)
+        Me.Panel1.Controls.Add(Me.CheckBox2)
+        Me.Panel1.Controls.Add(Me.CheckBox1)
+        Me.Panel1.Controls.Add(Me.Label29)
+        Me.Panel1.Controls.Add(Me.TextBox82)
+        Me.Panel1.Controls.Add(Me.Label27)
+        Me.Panel1.Controls.Add(Me.TextBox83)
+        Me.Panel1.Controls.Add(Me.Label28)
+        Me.Panel1.Controls.Add(Me.Panel23)
+        Me.Panel1.Controls.Add(Me.TextBox80)
+        Me.Panel1.Controls.Add(Me.Label25)
+        Me.Panel1.Controls.Add(Me.TextBox81)
+        Me.Panel1.Controls.Add(Me.Label26)
+        Me.Panel1.Controls.Add(Me.Panel22)
+        Me.Panel1.Controls.Add(Me.Panel21)
+        Me.Panel1.Controls.Add(Me.TextBox78)
+        Me.Panel1.Controls.Add(Me.Label23)
+        Me.Panel1.Controls.Add(Me.TextBox79)
+        Me.Panel1.Controls.Add(Me.Label24)
+        Me.Panel1.Controls.Add(Me.TextBox67)
+        Me.Panel1.Controls.Add(Me.TextBox68)
+        Me.Panel1.Controls.Add(Me.TextBox69)
+        Me.Panel1.Controls.Add(Me.TextBox70)
+        Me.Panel1.Controls.Add(Me.TextBox71)
+        Me.Panel1.Controls.Add(Me.TextBox72)
+        Me.Panel1.Controls.Add(Me.TextBox73)
+        Me.Panel1.Controls.Add(Me.TextBox74)
+        Me.Panel1.Controls.Add(Me.TextBox75)
+        Me.Panel1.Controls.Add(Me.TextBox76)
+        Me.Panel1.Controls.Add(Me.TextBox77)
+        Me.Panel1.Controls.Add(Me.TextBox56)
+        Me.Panel1.Controls.Add(Me.TextBox57)
+        Me.Panel1.Controls.Add(Me.TextBox58)
+        Me.Panel1.Controls.Add(Me.TextBox59)
+        Me.Panel1.Controls.Add(Me.TextBox60)
+        Me.Panel1.Controls.Add(Me.TextBox61)
+        Me.Panel1.Controls.Add(Me.TextBox62)
+        Me.Panel1.Controls.Add(Me.TextBox63)
+        Me.Panel1.Controls.Add(Me.TextBox64)
+        Me.Panel1.Controls.Add(Me.TextBox65)
+        Me.Panel1.Controls.Add(Me.TextBox66)
+        Me.Panel1.Controls.Add(Me.TextBox45)
+        Me.Panel1.Controls.Add(Me.TextBox46)
+        Me.Panel1.Controls.Add(Me.TextBox47)
+        Me.Panel1.Controls.Add(Me.TextBox48)
+        Me.Panel1.Controls.Add(Me.TextBox49)
+        Me.Panel1.Controls.Add(Me.TextBox50)
+        Me.Panel1.Controls.Add(Me.TextBox51)
+        Me.Panel1.Controls.Add(Me.TextBox52)
+        Me.Panel1.Controls.Add(Me.TextBox53)
+        Me.Panel1.Controls.Add(Me.TextBox54)
+        Me.Panel1.Controls.Add(Me.TextBox55)
+        Me.Panel1.Controls.Add(Me.TextBox34)
+        Me.Panel1.Controls.Add(Me.TextBox35)
+        Me.Panel1.Controls.Add(Me.TextBox36)
+        Me.Panel1.Controls.Add(Me.TextBox37)
+        Me.Panel1.Controls.Add(Me.TextBox38)
+        Me.Panel1.Controls.Add(Me.TextBox39)
+        Me.Panel1.Controls.Add(Me.TextBox40)
+        Me.Panel1.Controls.Add(Me.TextBox41)
+        Me.Panel1.Controls.Add(Me.TextBox42)
+        Me.Panel1.Controls.Add(Me.TextBox43)
+        Me.Panel1.Controls.Add(Me.TextBox44)
+        Me.Panel1.Controls.Add(Me.TextBox23)
+        Me.Panel1.Controls.Add(Me.TextBox24)
+        Me.Panel1.Controls.Add(Me.TextBox25)
+        Me.Panel1.Controls.Add(Me.TextBox26)
+        Me.Panel1.Controls.Add(Me.TextBox27)
+        Me.Panel1.Controls.Add(Me.TextBox28)
+        Me.Panel1.Controls.Add(Me.TextBox29)
+        Me.Panel1.Controls.Add(Me.TextBox30)
+        Me.Panel1.Controls.Add(Me.TextBox31)
+        Me.Panel1.Controls.Add(Me.TextBox32)
+        Me.Panel1.Controls.Add(Me.TextBox33)
+        Me.Panel1.Controls.Add(Me.TextBox22)
+        Me.Panel1.Controls.Add(Me.TextBox21)
+        Me.Panel1.Controls.Add(Me.TextBox20)
+        Me.Panel1.Controls.Add(Me.TextBox19)
+        Me.Panel1.Controls.Add(Me.TextBox18)
+        Me.Panel1.Controls.Add(Me.TextBox17)
+        Me.Panel1.Controls.Add(Me.TextBox16)
+        Me.Panel1.Controls.Add(Me.TextBox15)
+        Me.Panel1.Controls.Add(Me.TextBox14)
+        Me.Panel1.Controls.Add(Me.TextBox13)
+        Me.Panel1.Controls.Add(Me.TextBox12)
+        Me.Panel1.Controls.Add(Me.Panel20)
+        Me.Panel1.Controls.Add(Me.Panel19)
+        Me.Panel1.Controls.Add(Me.Panel18)
+        Me.Panel1.Controls.Add(Me.Panel17)
+        Me.Panel1.Controls.Add(Me.Panel16)
+        Me.Panel1.Controls.Add(Me.Panel15)
+        Me.Panel1.Controls.Add(Me.Panel14)
+        Me.Panel1.Controls.Add(Me.Panel13)
+        Me.Panel1.Controls.Add(Me.Panel12)
+        Me.Panel1.Controls.Add(Me.Panel11)
+        Me.Panel1.Controls.Add(Me.Panel10)
+        Me.Panel1.Controls.Add(Me.Label22)
+        Me.Panel1.Controls.Add(Me.Label21)
+        Me.Panel1.Controls.Add(Me.Label20)
+        Me.Panel1.Controls.Add(Me.Label19)
+        Me.Panel1.Controls.Add(Me.Label18)
+        Me.Panel1.Controls.Add(Me.Label17)
+        Me.Panel1.Controls.Add(Me.Label16)
+        Me.Panel1.Controls.Add(Me.Label15)
+        Me.Panel1.Controls.Add(Me.Label14)
+        Me.Panel1.Controls.Add(Me.Label13)
+        Me.Panel1.Controls.Add(Me.Label12)
+        Me.Panel1.Controls.Add(Me.Panel9)
+        Me.Panel1.Controls.Add(Me.Panel8)
+        Me.Panel1.Controls.Add(Me.Panel7)
+        Me.Panel1.Controls.Add(Me.Panel6)
+        Me.Panel1.Controls.Add(Me.Panel5)
+        Me.Panel1.Controls.Add(Me.Panel4)
+        Me.Panel1.Controls.Add(Me.Panel3)
+        Me.Panel1.Controls.Add(Me.Panel2)
+        Me.Panel1.Controls.Add(Me.TextBox11)
+        Me.Panel1.Controls.Add(Me.Label11)
+        Me.Panel1.Controls.Add(Me.TextBox10)
+        Me.Panel1.Controls.Add(Me.Label10)
+        Me.Panel1.Controls.Add(Me.TextBox9)
+        Me.Panel1.Controls.Add(Me.Label9)
+        Me.Panel1.Controls.Add(Me.TextBox8)
+        Me.Panel1.Controls.Add(Me.Label8)
+        Me.Panel1.Controls.Add(Me.TextBox7)
+        Me.Panel1.Controls.Add(Me.Label7)
+        Me.Panel1.Controls.Add(Me.TextBox6)
+        Me.Panel1.Controls.Add(Me.Label6)
+        Me.Panel1.Controls.Add(Me.TextBox5)
+        Me.Panel1.Controls.Add(Me.Label5)
+        Me.Panel1.Controls.Add(Me.TextBox4)
+        Me.Panel1.Controls.Add(Me.Label4)
+        Me.Panel1.Controls.Add(Me.TextBox3)
+        Me.Panel1.Controls.Add(Me.Label3)
+        Me.Panel1.Controls.Add(Me.TextBox2)
+        Me.Panel1.Controls.Add(Me.Label2)
+        Me.Panel1.Controls.Add(Me.TextBox1)
+        Me.Panel1.Controls.Add(Me.Label1)
+        Me.Panel1.Location = New System.Drawing.Point(46, 38)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1205, 1050)
+        Me.Panel1.TabIndex = 1
+        '
+        'TextBox86
+        '
+        Me.TextBox86.Location = New System.Drawing.Point(713, 899)
+        Me.TextBox86.Name = "TextBox86"
+        Me.TextBox86.Size = New System.Drawing.Size(277, 21)
+        Me.TextBox86.TabIndex = 163
+        '
+        'Label34
+        '
+        Me.Label34.AutoSize = True
+        Me.Label34.Location = New System.Drawing.Point(632, 899)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(77, 24)
+        Me.Label34.TabIndex = 162
+        Me.Label34.Text = "Approved By" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "승인자"
+        '
+        'TextBox87
+        '
+        Me.TextBox87.Location = New System.Drawing.Point(713, 861)
+        Me.TextBox87.Name = "TextBox87"
+        Me.TextBox87.Size = New System.Drawing.Size(277, 21)
+        Me.TextBox87.TabIndex = 161
+        '
+        'Label35
+        '
+        Me.Label35.AutoSize = True
+        Me.Label35.Location = New System.Drawing.Point(632, 861)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(75, 24)
+        Me.Label35.TabIndex = 160
+        Me.Label35.Text = "Prepared By" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "작성자"
+        '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Location = New System.Drawing.Point(541, 872)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(63, 36)
+        Me.Label36.TabIndex = 159
+        Me.Label36.Text = "Receiving" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Inspection" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "인수검사"
+        '
+        'TextBox85
+        '
+        Me.TextBox85.Location = New System.Drawing.Point(178, 899)
+        Me.TextBox85.Name = "TextBox85"
+        Me.TextBox85.Size = New System.Drawing.Size(277, 21)
+        Me.TextBox85.TabIndex = 158
+        '
+        'Label33
+        '
+        Me.Label33.AutoSize = True
+        Me.Label33.Location = New System.Drawing.Point(97, 899)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(79, 24)
+        Me.Label33.TabIndex = 157
+        Me.Label33.Text = "Reviewed By" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "검토자"
+        '
+        'TextBox84
+        '
+        Me.TextBox84.Location = New System.Drawing.Point(178, 861)
+        Me.TextBox84.Name = "TextBox84"
+        Me.TextBox84.Size = New System.Drawing.Size(277, 21)
+        Me.TextBox84.TabIndex = 156
+        '
+        'Label32
+        '
+        Me.Label32.AutoSize = True
+        Me.Label32.Location = New System.Drawing.Point(97, 861)
+        Me.Label32.Name = "Label32"
+        Me.Label32.Size = New System.Drawing.Size(75, 24)
+        Me.Label32.TabIndex = 155
+        Me.Label32.Text = "Prepared By" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "작성자"
+        '
+        'Label31
+        '
+        Me.Label31.AutoSize = True
+        Me.Label31.Location = New System.Drawing.Point(23, 881)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(51, 24)
+        Me.Label31.TabIndex = 154
+        Me.Label31.Text = "Request" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "의뢰"
+        '
+        'Panel25
+        '
+        Me.Panel25.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel25.Location = New System.Drawing.Point(18, 847)
+        Me.Panel25.Name = "Panel25"
+        Me.Panel25.Size = New System.Drawing.Size(1092, 1)
+        Me.Panel25.TabIndex = 153
+        '
+        'Label30
+        '
+        Me.Label30.AutoSize = True
+        Me.Label30.Location = New System.Drawing.Point(19, 832)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(611, 12)
+        Me.Label30.TabIndex = 152
+        Me.Label30.Text = "Mark astrisked(*) shall be filled by Management Support Team. (*)표시된 부분은 경영지원팀에서 " &
+    "작성할 것."
+        '
+        'Panel24
+        '
+        Me.Panel24.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel24.Location = New System.Drawing.Point(18, 828)
+        Me.Panel24.Name = "Panel24"
+        Me.Panel24.Size = New System.Drawing.Size(1092, 1)
+        Me.Panel24.TabIndex = 151
+        '
+        'CheckBox2
+        '
+        Me.CheckBox2.AutoSize = True
+        Me.CheckBox2.Location = New System.Drawing.Point(552, 806)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(40, 16)
+        Me.CheckBox2.TabIndex = 150
+        Me.CheckBox2.Text = "No"
+        Me.CheckBox2.UseVisualStyleBackColor = True
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.Location = New System.Drawing.Point(500, 806)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(46, 16)
+        Me.CheckBox1.TabIndex = 149
+        Me.CheckBox1.Text = "Yes"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
+        'Label29
+        '
+        Me.Label29.AutoSize = True
+        Me.Label29.Location = New System.Drawing.Point(450, 807)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(39, 12)
+        Me.Label29.TabIndex = 148
+        Me.Label29.Text = "NCR :"
+        '
+        'TextBox82
+        '
+        Me.TextBox82.Location = New System.Drawing.Point(146, 765)
+        Me.TextBox82.Name = "TextBox82"
+        Me.TextBox82.Size = New System.Drawing.Size(277, 21)
+        Me.TextBox82.TabIndex = 147
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.Location = New System.Drawing.Point(19, 765)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(110, 24)
+        Me.Label27.TabIndex = 146
+        Me.Label27.Text = "Other Requirement" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "기타요건"
+        '
+        'TextBox83
+        '
+        Me.TextBox83.Location = New System.Drawing.Point(626, 765)
+        Me.TextBox83.Name = "TextBox83"
+        Me.TextBox83.Size = New System.Drawing.Size(312, 21)
+        Me.TextBox83.TabIndex = 145
+        '
+        'Label28
+        '
+        Me.Label28.AutoSize = True
+        Me.Label28.Location = New System.Drawing.Point(450, 765)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(170, 24)
+        Me.Label28.TabIndex = 144
+        Me.Label28.Text = "Cleanliness / Packing Status" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "청결 / 포장상태"
+        '
+        'Panel23
+        '
+        Me.Panel23.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel23.Location = New System.Drawing.Point(18, 747)
+        Me.Panel23.Name = "Panel23"
+        Me.Panel23.Size = New System.Drawing.Size(1092, 1)
+        Me.Panel23.TabIndex = 143
+        '
+        'TextBox80
+        '
+        Me.TextBox80.Location = New System.Drawing.Point(212, 718)
+        Me.TextBox80.Name = "TextBox80"
+        Me.TextBox80.Size = New System.Drawing.Size(211, 21)
+        Me.TextBox80.TabIndex = 142
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Location = New System.Drawing.Point(19, 718)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(185, 24)
+        Me.Label25.TabIndex = 141
+        Me.Label25.Text = "M & TE / Serial No. / Expired" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "측정 장비 / 고유 번호 / 만료일자"
+        '
+        'TextBox81
+        '
+        Me.TextBox81.Location = New System.Drawing.Point(588, 718)
+        Me.TextBox81.Name = "TextBox81"
+        Me.TextBox81.Size = New System.Drawing.Size(312, 21)
+        Me.TextBox81.TabIndex = 140
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(450, 718)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(132, 24)
+        Me.Label26.TabIndex = 139
+        Me.Label26.Text = "Externals / Dimension" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "외관 / 치수"
+        '
+        'Panel22
+        '
+        Me.Panel22.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel22.Location = New System.Drawing.Point(18, 705)
+        Me.Panel22.Name = "Panel22"
+        Me.Panel22.Size = New System.Drawing.Size(1092, 1)
+        Me.Panel22.TabIndex = 138
+        '
+        'Panel21
+        '
+        Me.Panel21.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel21.Location = New System.Drawing.Point(18, 664)
+        Me.Panel21.Name = "Panel21"
+        Me.Panel21.Size = New System.Drawing.Size(1092, 1)
+        Me.Panel21.TabIndex = 137
+        '
+        'TextBox78
+        '
+        Me.TextBox78.Location = New System.Drawing.Point(147, 675)
+        Me.TextBox78.Name = "TextBox78"
+        Me.TextBox78.Size = New System.Drawing.Size(211, 21)
+        Me.TextBox78.TabIndex = 136
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(19, 675)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(124, 24)
+        Me.Label23.TabIndex = 135
+        Me.Label23.Text = "Material Identification" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "재료 식별"
+        '
+        'TextBox79
+        '
+        Me.TextBox79.Location = New System.Drawing.Point(500, 675)
+        Me.TextBox79.Name = "TextBox79"
+        Me.TextBox79.Size = New System.Drawing.Size(312, 21)
+        Me.TextBox79.TabIndex = 134
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.Location = New System.Drawing.Point(385, 675)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(107, 24)
+        Me.Label24.TabIndex = 133
+        Me.Label24.Text = "CFSI Confirmation" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "위·변조품목 확인"
+        '
+        'TextBox67
+        '
+        Me.TextBox67.Location = New System.Drawing.Point(1021, 616)
+        Me.TextBox67.Multiline = True
+        Me.TextBox67.Name = "TextBox67"
+        Me.TextBox67.Size = New System.Drawing.Size(89, 42)
+        Me.TextBox67.TabIndex = 132
+        '
+        'TextBox68
+        '
+        Me.TextBox68.Location = New System.Drawing.Point(939, 616)
+        Me.TextBox68.Multiline = True
+        Me.TextBox68.Name = "TextBox68"
+        Me.TextBox68.Size = New System.Drawing.Size(83, 42)
+        Me.TextBox68.TabIndex = 131
+        '
+        'TextBox69
+        '
+        Me.TextBox69.Location = New System.Drawing.Point(810, 616)
+        Me.TextBox69.Multiline = True
+        Me.TextBox69.Name = "TextBox69"
+        Me.TextBox69.Size = New System.Drawing.Size(130, 42)
+        Me.TextBox69.TabIndex = 130
+        '
+        'TextBox70
+        '
+        Me.TextBox70.Location = New System.Drawing.Point(635, 616)
+        Me.TextBox70.Multiline = True
+        Me.TextBox70.Name = "TextBox70"
+        Me.TextBox70.Size = New System.Drawing.Size(176, 42)
+        Me.TextBox70.TabIndex = 129
+        '
+        'TextBox71
+        '
+        Me.TextBox71.Location = New System.Drawing.Point(584, 616)
+        Me.TextBox71.Multiline = True
+        Me.TextBox71.Name = "TextBox71"
+        Me.TextBox71.Size = New System.Drawing.Size(52, 42)
+        Me.TextBox71.TabIndex = 128
+        '
+        'TextBox72
+        '
+        Me.TextBox72.Location = New System.Drawing.Point(534, 616)
+        Me.TextBox72.Multiline = True
+        Me.TextBox72.Name = "TextBox72"
+        Me.TextBox72.Size = New System.Drawing.Size(51, 42)
+        Me.TextBox72.TabIndex = 127
+        '
+        'TextBox73
+        '
+        Me.TextBox73.Location = New System.Drawing.Point(443, 616)
+        Me.TextBox73.Multiline = True
+        Me.TextBox73.Name = "TextBox73"
+        Me.TextBox73.Size = New System.Drawing.Size(92, 42)
+        Me.TextBox73.TabIndex = 126
+        '
+        'TextBox74
+        '
+        Me.TextBox74.Location = New System.Drawing.Point(288, 616)
+        Me.TextBox74.Multiline = True
+        Me.TextBox74.Name = "TextBox74"
+        Me.TextBox74.Size = New System.Drawing.Size(156, 42)
+        Me.TextBox74.TabIndex = 125
+        '
+        'TextBox75
+        '
+        Me.TextBox75.Location = New System.Drawing.Point(205, 616)
+        Me.TextBox75.Multiline = True
+        Me.TextBox75.Name = "TextBox75"
+        Me.TextBox75.Size = New System.Drawing.Size(84, 42)
+        Me.TextBox75.TabIndex = 124
+        '
+        'TextBox76
+        '
+        Me.TextBox76.Location = New System.Drawing.Point(79, 616)
+        Me.TextBox76.Multiline = True
+        Me.TextBox76.Name = "TextBox76"
+        Me.TextBox76.Size = New System.Drawing.Size(127, 42)
+        Me.TextBox76.TabIndex = 123
+        '
+        'TextBox77
+        '
+        Me.TextBox77.Location = New System.Drawing.Point(18, 616)
+        Me.TextBox77.Multiline = True
+        Me.TextBox77.Name = "TextBox77"
+        Me.TextBox77.Size = New System.Drawing.Size(62, 42)
+        Me.TextBox77.TabIndex = 122
+        '
+        'TextBox56
+        '
+        Me.TextBox56.Location = New System.Drawing.Point(1021, 577)
+        Me.TextBox56.Multiline = True
+        Me.TextBox56.Name = "TextBox56"
+        Me.TextBox56.Size = New System.Drawing.Size(89, 42)
+        Me.TextBox56.TabIndex = 121
+        '
+        'TextBox57
+        '
+        Me.TextBox57.Location = New System.Drawing.Point(939, 577)
+        Me.TextBox57.Multiline = True
+        Me.TextBox57.Name = "TextBox57"
+        Me.TextBox57.Size = New System.Drawing.Size(83, 42)
+        Me.TextBox57.TabIndex = 120
+        '
+        'TextBox58
+        '
+        Me.TextBox58.Location = New System.Drawing.Point(810, 577)
+        Me.TextBox58.Multiline = True
+        Me.TextBox58.Name = "TextBox58"
+        Me.TextBox58.Size = New System.Drawing.Size(130, 42)
+        Me.TextBox58.TabIndex = 119
+        '
+        'TextBox59
+        '
+        Me.TextBox59.Location = New System.Drawing.Point(635, 577)
+        Me.TextBox59.Multiline = True
+        Me.TextBox59.Name = "TextBox59"
+        Me.TextBox59.Size = New System.Drawing.Size(176, 42)
+        Me.TextBox59.TabIndex = 118
+        '
+        'TextBox60
+        '
+        Me.TextBox60.Location = New System.Drawing.Point(584, 577)
+        Me.TextBox60.Multiline = True
+        Me.TextBox60.Name = "TextBox60"
+        Me.TextBox60.Size = New System.Drawing.Size(52, 42)
+        Me.TextBox60.TabIndex = 117
+        '
+        'TextBox61
+        '
+        Me.TextBox61.Location = New System.Drawing.Point(534, 577)
+        Me.TextBox61.Multiline = True
+        Me.TextBox61.Name = "TextBox61"
+        Me.TextBox61.Size = New System.Drawing.Size(51, 42)
+        Me.TextBox61.TabIndex = 116
+        '
+        'TextBox62
+        '
+        Me.TextBox62.Location = New System.Drawing.Point(443, 577)
+        Me.TextBox62.Multiline = True
+        Me.TextBox62.Name = "TextBox62"
+        Me.TextBox62.Size = New System.Drawing.Size(92, 42)
+        Me.TextBox62.TabIndex = 115
+        '
+        'TextBox63
+        '
+        Me.TextBox63.Location = New System.Drawing.Point(288, 577)
+        Me.TextBox63.Multiline = True
+        Me.TextBox63.Name = "TextBox63"
+        Me.TextBox63.Size = New System.Drawing.Size(156, 42)
+        Me.TextBox63.TabIndex = 114
+        '
+        'TextBox64
+        '
+        Me.TextBox64.Location = New System.Drawing.Point(205, 577)
+        Me.TextBox64.Multiline = True
+        Me.TextBox64.Name = "TextBox64"
+        Me.TextBox64.Size = New System.Drawing.Size(84, 42)
+        Me.TextBox64.TabIndex = 113
+        '
+        'TextBox65
+        '
+        Me.TextBox65.Location = New System.Drawing.Point(79, 577)
+        Me.TextBox65.Multiline = True
+        Me.TextBox65.Name = "TextBox65"
+        Me.TextBox65.Size = New System.Drawing.Size(127, 42)
+        Me.TextBox65.TabIndex = 112
+        '
+        'TextBox66
+        '
+        Me.TextBox66.Location = New System.Drawing.Point(18, 577)
+        Me.TextBox66.Multiline = True
+        Me.TextBox66.Name = "TextBox66"
+        Me.TextBox66.Size = New System.Drawing.Size(62, 42)
+        Me.TextBox66.TabIndex = 111
+        '
+        'TextBox45
+        '
+        Me.TextBox45.Location = New System.Drawing.Point(1021, 539)
+        Me.TextBox45.Multiline = True
+        Me.TextBox45.Name = "TextBox45"
+        Me.TextBox45.Size = New System.Drawing.Size(89, 42)
+        Me.TextBox45.TabIndex = 110
+        '
+        'TextBox46
+        '
+        Me.TextBox46.Location = New System.Drawing.Point(939, 539)
+        Me.TextBox46.Multiline = True
+        Me.TextBox46.Name = "TextBox46"
+        Me.TextBox46.Size = New System.Drawing.Size(83, 42)
+        Me.TextBox46.TabIndex = 109
+        '
+        'TextBox47
+        '
+        Me.TextBox47.Location = New System.Drawing.Point(810, 539)
+        Me.TextBox47.Multiline = True
+        Me.TextBox47.Name = "TextBox47"
+        Me.TextBox47.Size = New System.Drawing.Size(130, 42)
+        Me.TextBox47.TabIndex = 108
+        '
+        'TextBox48
+        '
+        Me.TextBox48.Location = New System.Drawing.Point(635, 539)
+        Me.TextBox48.Multiline = True
+        Me.TextBox48.Name = "TextBox48"
+        Me.TextBox48.Size = New System.Drawing.Size(176, 42)
+        Me.TextBox48.TabIndex = 107
+        '
+        'TextBox49
+        '
+        Me.TextBox49.Location = New System.Drawing.Point(584, 539)
+        Me.TextBox49.Multiline = True
+        Me.TextBox49.Name = "TextBox49"
+        Me.TextBox49.Size = New System.Drawing.Size(52, 42)
+        Me.TextBox49.TabIndex = 106
+        '
+        'TextBox50
+        '
+        Me.TextBox50.Location = New System.Drawing.Point(534, 539)
+        Me.TextBox50.Multiline = True
+        Me.TextBox50.Name = "TextBox50"
+        Me.TextBox50.Size = New System.Drawing.Size(51, 42)
+        Me.TextBox50.TabIndex = 105
+        '
+        'TextBox51
+        '
+        Me.TextBox51.Location = New System.Drawing.Point(443, 539)
+        Me.TextBox51.Multiline = True
+        Me.TextBox51.Name = "TextBox51"
+        Me.TextBox51.Size = New System.Drawing.Size(92, 42)
+        Me.TextBox51.TabIndex = 104
+        '
+        'TextBox52
+        '
+        Me.TextBox52.Location = New System.Drawing.Point(288, 539)
+        Me.TextBox52.Multiline = True
+        Me.TextBox52.Name = "TextBox52"
+        Me.TextBox52.Size = New System.Drawing.Size(156, 42)
+        Me.TextBox52.TabIndex = 103
+        '
+        'TextBox53
+        '
+        Me.TextBox53.Location = New System.Drawing.Point(205, 539)
+        Me.TextBox53.Multiline = True
+        Me.TextBox53.Name = "TextBox53"
+        Me.TextBox53.Size = New System.Drawing.Size(84, 42)
+        Me.TextBox53.TabIndex = 102
+        '
+        'TextBox54
+        '
+        Me.TextBox54.Location = New System.Drawing.Point(79, 539)
+        Me.TextBox54.Multiline = True
+        Me.TextBox54.Name = "TextBox54"
+        Me.TextBox54.Size = New System.Drawing.Size(127, 42)
+        Me.TextBox54.TabIndex = 101
+        '
+        'TextBox55
+        '
+        Me.TextBox55.Location = New System.Drawing.Point(18, 539)
+        Me.TextBox55.Multiline = True
+        Me.TextBox55.Name = "TextBox55"
+        Me.TextBox55.Size = New System.Drawing.Size(62, 42)
+        Me.TextBox55.TabIndex = 100
+        '
+        'TextBox34
+        '
+        Me.TextBox34.Location = New System.Drawing.Point(1021, 501)
+        Me.TextBox34.Multiline = True
+        Me.TextBox34.Name = "TextBox34"
+        Me.TextBox34.Size = New System.Drawing.Size(89, 42)
+        Me.TextBox34.TabIndex = 99
+        '
+        'TextBox35
+        '
+        Me.TextBox35.Location = New System.Drawing.Point(939, 501)
+        Me.TextBox35.Multiline = True
+        Me.TextBox35.Name = "TextBox35"
+        Me.TextBox35.Size = New System.Drawing.Size(83, 42)
+        Me.TextBox35.TabIndex = 98
+        '
+        'TextBox36
+        '
+        Me.TextBox36.Location = New System.Drawing.Point(810, 501)
+        Me.TextBox36.Multiline = True
+        Me.TextBox36.Name = "TextBox36"
+        Me.TextBox36.Size = New System.Drawing.Size(130, 42)
+        Me.TextBox36.TabIndex = 97
+        '
+        'TextBox37
+        '
+        Me.TextBox37.Location = New System.Drawing.Point(635, 501)
+        Me.TextBox37.Multiline = True
+        Me.TextBox37.Name = "TextBox37"
+        Me.TextBox37.Size = New System.Drawing.Size(176, 42)
+        Me.TextBox37.TabIndex = 96
+        '
+        'TextBox38
+        '
+        Me.TextBox38.Location = New System.Drawing.Point(584, 501)
+        Me.TextBox38.Multiline = True
+        Me.TextBox38.Name = "TextBox38"
+        Me.TextBox38.Size = New System.Drawing.Size(52, 42)
+        Me.TextBox38.TabIndex = 95
+        '
+        'TextBox39
+        '
+        Me.TextBox39.Location = New System.Drawing.Point(534, 501)
+        Me.TextBox39.Multiline = True
+        Me.TextBox39.Name = "TextBox39"
+        Me.TextBox39.Size = New System.Drawing.Size(51, 42)
+        Me.TextBox39.TabIndex = 94
+        '
+        'TextBox40
+        '
+        Me.TextBox40.Location = New System.Drawing.Point(443, 501)
+        Me.TextBox40.Multiline = True
+        Me.TextBox40.Name = "TextBox40"
+        Me.TextBox40.Size = New System.Drawing.Size(92, 42)
+        Me.TextBox40.TabIndex = 93
+        '
+        'TextBox41
+        '
+        Me.TextBox41.Location = New System.Drawing.Point(288, 501)
+        Me.TextBox41.Multiline = True
+        Me.TextBox41.Name = "TextBox41"
+        Me.TextBox41.Size = New System.Drawing.Size(156, 42)
+        Me.TextBox41.TabIndex = 92
+        '
+        'TextBox42
+        '
+        Me.TextBox42.Location = New System.Drawing.Point(205, 501)
+        Me.TextBox42.Multiline = True
+        Me.TextBox42.Name = "TextBox42"
+        Me.TextBox42.Size = New System.Drawing.Size(84, 42)
+        Me.TextBox42.TabIndex = 91
+        '
+        'TextBox43
+        '
+        Me.TextBox43.Location = New System.Drawing.Point(79, 501)
+        Me.TextBox43.Multiline = True
+        Me.TextBox43.Name = "TextBox43"
+        Me.TextBox43.Size = New System.Drawing.Size(127, 42)
+        Me.TextBox43.TabIndex = 90
+        '
+        'TextBox44
+        '
+        Me.TextBox44.Location = New System.Drawing.Point(18, 501)
+        Me.TextBox44.Multiline = True
+        Me.TextBox44.Name = "TextBox44"
+        Me.TextBox44.Size = New System.Drawing.Size(62, 42)
+        Me.TextBox44.TabIndex = 89
+        '
+        'TextBox23
+        '
+        Me.TextBox23.Location = New System.Drawing.Point(1021, 465)
+        Me.TextBox23.Multiline = True
+        Me.TextBox23.Name = "TextBox23"
+        Me.TextBox23.Size = New System.Drawing.Size(89, 42)
+        Me.TextBox23.TabIndex = 88
+        '
+        'TextBox24
+        '
+        Me.TextBox24.Location = New System.Drawing.Point(939, 465)
+        Me.TextBox24.Multiline = True
+        Me.TextBox24.Name = "TextBox24"
+        Me.TextBox24.Size = New System.Drawing.Size(83, 42)
+        Me.TextBox24.TabIndex = 87
+        '
+        'TextBox25
+        '
+        Me.TextBox25.Location = New System.Drawing.Point(810, 465)
+        Me.TextBox25.Multiline = True
+        Me.TextBox25.Name = "TextBox25"
+        Me.TextBox25.Size = New System.Drawing.Size(130, 42)
+        Me.TextBox25.TabIndex = 86
+        '
+        'TextBox26
+        '
+        Me.TextBox26.Location = New System.Drawing.Point(635, 465)
+        Me.TextBox26.Multiline = True
+        Me.TextBox26.Name = "TextBox26"
+        Me.TextBox26.Size = New System.Drawing.Size(176, 42)
+        Me.TextBox26.TabIndex = 85
+        '
+        'TextBox27
+        '
+        Me.TextBox27.Location = New System.Drawing.Point(584, 465)
+        Me.TextBox27.Multiline = True
+        Me.TextBox27.Name = "TextBox27"
+        Me.TextBox27.Size = New System.Drawing.Size(52, 42)
+        Me.TextBox27.TabIndex = 84
+        '
+        'TextBox28
+        '
+        Me.TextBox28.Location = New System.Drawing.Point(534, 465)
+        Me.TextBox28.Multiline = True
+        Me.TextBox28.Name = "TextBox28"
+        Me.TextBox28.Size = New System.Drawing.Size(51, 42)
+        Me.TextBox28.TabIndex = 83
+        '
+        'TextBox29
+        '
+        Me.TextBox29.Location = New System.Drawing.Point(443, 465)
+        Me.TextBox29.Multiline = True
+        Me.TextBox29.Name = "TextBox29"
+        Me.TextBox29.Size = New System.Drawing.Size(92, 42)
+        Me.TextBox29.TabIndex = 82
+        '
+        'TextBox30
+        '
+        Me.TextBox30.Location = New System.Drawing.Point(288, 465)
+        Me.TextBox30.Multiline = True
+        Me.TextBox30.Name = "TextBox30"
+        Me.TextBox30.Size = New System.Drawing.Size(156, 42)
+        Me.TextBox30.TabIndex = 81
+        '
+        'TextBox31
+        '
+        Me.TextBox31.Location = New System.Drawing.Point(205, 465)
+        Me.TextBox31.Multiline = True
+        Me.TextBox31.Name = "TextBox31"
+        Me.TextBox31.Size = New System.Drawing.Size(84, 42)
+        Me.TextBox31.TabIndex = 80
+        '
+        'TextBox32
+        '
+        Me.TextBox32.Location = New System.Drawing.Point(79, 465)
+        Me.TextBox32.Multiline = True
+        Me.TextBox32.Name = "TextBox32"
+        Me.TextBox32.Size = New System.Drawing.Size(127, 42)
+        Me.TextBox32.TabIndex = 79
+        '
+        'TextBox33
+        '
+        Me.TextBox33.Location = New System.Drawing.Point(18, 465)
+        Me.TextBox33.Multiline = True
+        Me.TextBox33.Name = "TextBox33"
+        Me.TextBox33.Size = New System.Drawing.Size(62, 42)
+        Me.TextBox33.TabIndex = 78
+        '
+        'TextBox22
+        '
+        Me.TextBox22.Location = New System.Drawing.Point(1021, 426)
+        Me.TextBox22.Multiline = True
+        Me.TextBox22.Name = "TextBox22"
+        Me.TextBox22.Size = New System.Drawing.Size(89, 42)
+        Me.TextBox22.TabIndex = 77
+        '
+        'TextBox21
+        '
+        Me.TextBox21.Location = New System.Drawing.Point(939, 426)
+        Me.TextBox21.Multiline = True
+        Me.TextBox21.Name = "TextBox21"
+        Me.TextBox21.Size = New System.Drawing.Size(83, 42)
+        Me.TextBox21.TabIndex = 76
+        '
+        'TextBox20
+        '
+        Me.TextBox20.Location = New System.Drawing.Point(810, 426)
+        Me.TextBox20.Multiline = True
+        Me.TextBox20.Name = "TextBox20"
+        Me.TextBox20.Size = New System.Drawing.Size(130, 42)
+        Me.TextBox20.TabIndex = 75
+        '
+        'TextBox19
+        '
+        Me.TextBox19.Location = New System.Drawing.Point(635, 426)
+        Me.TextBox19.Multiline = True
+        Me.TextBox19.Name = "TextBox19"
+        Me.TextBox19.Size = New System.Drawing.Size(176, 42)
+        Me.TextBox19.TabIndex = 74
+        '
+        'TextBox18
+        '
+        Me.TextBox18.Location = New System.Drawing.Point(584, 426)
+        Me.TextBox18.Multiline = True
+        Me.TextBox18.Name = "TextBox18"
+        Me.TextBox18.Size = New System.Drawing.Size(52, 42)
+        Me.TextBox18.TabIndex = 73
+        '
+        'TextBox17
+        '
+        Me.TextBox17.Location = New System.Drawing.Point(534, 426)
+        Me.TextBox17.Multiline = True
+        Me.TextBox17.Name = "TextBox17"
+        Me.TextBox17.Size = New System.Drawing.Size(51, 42)
+        Me.TextBox17.TabIndex = 72
+        '
+        'TextBox16
+        '
+        Me.TextBox16.Location = New System.Drawing.Point(443, 426)
+        Me.TextBox16.Multiline = True
+        Me.TextBox16.Name = "TextBox16"
+        Me.TextBox16.Size = New System.Drawing.Size(92, 42)
+        Me.TextBox16.TabIndex = 71
+        '
+        'TextBox15
+        '
+        Me.TextBox15.Location = New System.Drawing.Point(288, 426)
+        Me.TextBox15.Multiline = True
+        Me.TextBox15.Name = "TextBox15"
+        Me.TextBox15.Size = New System.Drawing.Size(156, 42)
+        Me.TextBox15.TabIndex = 70
+        '
+        'TextBox14
+        '
+        Me.TextBox14.Location = New System.Drawing.Point(205, 426)
+        Me.TextBox14.Multiline = True
+        Me.TextBox14.Name = "TextBox14"
+        Me.TextBox14.Size = New System.Drawing.Size(84, 42)
+        Me.TextBox14.TabIndex = 69
+        '
+        'TextBox13
+        '
+        Me.TextBox13.Location = New System.Drawing.Point(79, 426)
+        Me.TextBox13.Multiline = True
+        Me.TextBox13.Name = "TextBox13"
+        Me.TextBox13.Size = New System.Drawing.Size(127, 42)
+        Me.TextBox13.TabIndex = 68
+        '
+        'TextBox12
+        '
+        Me.TextBox12.Location = New System.Drawing.Point(18, 426)
+        Me.TextBox12.Multiline = True
+        Me.TextBox12.Name = "TextBox12"
+        Me.TextBox12.Size = New System.Drawing.Size(62, 42)
+        Me.TextBox12.TabIndex = 67
+        '
+        'Panel20
+        '
+        Me.Panel20.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel20.Location = New System.Drawing.Point(1021, 363)
+        Me.Panel20.Name = "Panel20"
+        Me.Panel20.Size = New System.Drawing.Size(1, 63)
+        Me.Panel20.TabIndex = 66
+        '
+        'Panel19
+        '
+        Me.Panel19.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel19.Location = New System.Drawing.Point(939, 363)
+        Me.Panel19.Name = "Panel19"
+        Me.Panel19.Size = New System.Drawing.Size(1, 63)
+        Me.Panel19.TabIndex = 65
+        '
+        'Panel18
+        '
+        Me.Panel18.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel18.Location = New System.Drawing.Point(810, 364)
+        Me.Panel18.Name = "Panel18"
+        Me.Panel18.Size = New System.Drawing.Size(1, 63)
+        Me.Panel18.TabIndex = 64
+        '
+        'Panel17
+        '
+        Me.Panel17.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel17.Location = New System.Drawing.Point(635, 363)
+        Me.Panel17.Name = "Panel17"
+        Me.Panel17.Size = New System.Drawing.Size(1, 63)
+        Me.Panel17.TabIndex = 63
+        '
+        'Panel16
+        '
+        Me.Panel16.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel16.Location = New System.Drawing.Point(584, 364)
+        Me.Panel16.Name = "Panel16"
+        Me.Panel16.Size = New System.Drawing.Size(1, 63)
+        Me.Panel16.TabIndex = 62
+        '
+        'Panel15
+        '
+        Me.Panel15.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel15.Location = New System.Drawing.Point(534, 364)
+        Me.Panel15.Name = "Panel15"
+        Me.Panel15.Size = New System.Drawing.Size(1, 63)
+        Me.Panel15.TabIndex = 61
+        '
+        'Panel14
+        '
+        Me.Panel14.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel14.Location = New System.Drawing.Point(443, 364)
+        Me.Panel14.Name = "Panel14"
+        Me.Panel14.Size = New System.Drawing.Size(1, 63)
+        Me.Panel14.TabIndex = 60
+        '
+        'Panel13
+        '
+        Me.Panel13.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel13.Location = New System.Drawing.Point(288, 364)
+        Me.Panel13.Name = "Panel13"
+        Me.Panel13.Size = New System.Drawing.Size(1, 63)
+        Me.Panel13.TabIndex = 59
+        '
+        'Panel12
+        '
+        Me.Panel12.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel12.Location = New System.Drawing.Point(205, 364)
+        Me.Panel12.Name = "Panel12"
+        Me.Panel12.Size = New System.Drawing.Size(1, 63)
+        Me.Panel12.TabIndex = 58
+        '
+        'Panel11
+        '
+        Me.Panel11.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel11.Location = New System.Drawing.Point(79, 364)
+        Me.Panel11.Name = "Panel11"
+        Me.Panel11.Size = New System.Drawing.Size(1, 63)
+        Me.Panel11.TabIndex = 57
+        '
+        'Panel10
+        '
+        Me.Panel10.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel10.Location = New System.Drawing.Point(18, 426)
+        Me.Panel10.Name = "Panel10"
+        Me.Panel10.Size = New System.Drawing.Size(1092, 1)
+        Me.Panel10.TabIndex = 56
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(1049, 383)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(48, 24)
+        Me.Label22.TabIndex = 55
+        Me.Label22.Text = "Remark" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "비고"
+        Me.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(964, 382)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(40, 24)
+        Me.Label21.TabIndex = 54
+        Me.Label21.Text = "Result" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "결과"
+        Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Location = New System.Drawing.Point(835, 382)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(87, 24)
+        Me.Label20.TabIndex = 53
+        Me.Label20.Text = "Heat/Lot No." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "히트/로트 번호"
+        Me.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(659, 376)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(135, 36)
+        Me.Label19.TabIndex = 52
+        Me.Label19.Text = "*(C)MTR/C of C/etc." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "재료시험보고서(성적서)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " /재료확인서/기타"
+        Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(591, 382)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(38, 24)
+        Me.Label18.TabIndex = 51
+        Me.Label18.Text = "* Q`ty" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  수량"
+        Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Location = New System.Drawing.Point(541, 383)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(37, 24)
+        Me.Label17.TabIndex = 50
+        Me.Label17.Text = "* Unit" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  단위"
+        Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(469, 382)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(40, 24)
+        Me.Label16.TabIndex = 49
+        Me.Label16.Text = "* Size" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  치수"
+        Me.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(318, 383)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(97, 24)
+        Me.Label15.TabIndex = 48
+        Me.Label15.Text = "* Material Spec." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  재료 규격"
+        Me.Label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Location = New System.Drawing.Point(226, 382)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(39, 24)
+        Me.Label14.TabIndex = 47
+        Me.Label14.Text = "* Item" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  품목"
+        Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(110, 382)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(66, 24)
+        Me.Label13.TabIndex = 46
+        Me.Label13.Text = "* DWG No." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  도면번호"
+        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(29, 383)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(37, 24)
+        Me.Label12.TabIndex = 45
+        Me.Label12.Text = "* No." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  번호"
+        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Panel9
+        '
+        Me.Panel9.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel9.Location = New System.Drawing.Point(18, 363)
+        Me.Panel9.Name = "Panel9"
+        Me.Panel9.Size = New System.Drawing.Size(1092, 1)
+        Me.Panel9.TabIndex = 44
+        '
+        'Panel8
+        '
+        Me.Panel8.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel8.Location = New System.Drawing.Point(18, 319)
+        Me.Panel8.Name = "Panel8"
+        Me.Panel8.Size = New System.Drawing.Size(1092, 1)
+        Me.Panel8.TabIndex = 43
+        '
+        'Panel7
+        '
+        Me.Panel7.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel7.Location = New System.Drawing.Point(18, 274)
+        Me.Panel7.Name = "Panel7"
+        Me.Panel7.Size = New System.Drawing.Size(1092, 1)
+        Me.Panel7.TabIndex = 42
+        '
+        'Panel6
+        '
+        Me.Panel6.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel6.Location = New System.Drawing.Point(18, 230)
+        Me.Panel6.Name = "Panel6"
+        Me.Panel6.Size = New System.Drawing.Size(1092, 1)
+        Me.Panel6.TabIndex = 41
+        '
+        'Panel5
+        '
+        Me.Panel5.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel5.Location = New System.Drawing.Point(18, 183)
+        Me.Panel5.Name = "Panel5"
+        Me.Panel5.Size = New System.Drawing.Size(1092, 1)
+        Me.Panel5.TabIndex = 40
+        '
+        'Panel4
+        '
+        Me.Panel4.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel4.Location = New System.Drawing.Point(18, 143)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Size = New System.Drawing.Size(1092, 1)
+        Me.Panel4.TabIndex = 39
+        '
+        'Panel3
+        '
+        Me.Panel3.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel3.Location = New System.Drawing.Point(18, 100)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(1092, 1)
+        Me.Panel3.TabIndex = 38
+        '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel2.Location = New System.Drawing.Point(18, 58)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(1092, 1)
+        Me.Panel2.TabIndex = 37
+        '
+        'TextBox11
+        '
+        Me.TextBox11.Location = New System.Drawing.Point(124, 334)
+        Me.TextBox11.Name = "TextBox11"
+        Me.TextBox11.Size = New System.Drawing.Size(329, 21)
+        Me.TextBox11.TabIndex = 21
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(28, 333)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(77, 24)
+        Me.Label11.TabIndex = 20
+        Me.Label11.Text = "* PO No." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  발주서 번호"
+        '
+        'TextBox10
+        '
+        Me.TextBox10.Location = New System.Drawing.Point(135, 287)
+        Me.TextBox10.Name = "TextBox10"
+        Me.TextBox10.Size = New System.Drawing.Size(318, 21)
+        Me.TextBox10.TabIndex = 19
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(28, 287)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(101, 24)
+        Me.Label10.TabIndex = 18
+        Me.Label10.Text = "* PR No." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  구매요구서 번호"
+        '
+        'TextBox9
+        '
+        Me.TextBox9.Location = New System.Drawing.Point(188, 244)
+        Me.TextBox9.Name = "TextBox9"
+        Me.TextBox9.Size = New System.Drawing.Size(265, 21)
+        Me.TextBox9.TabIndex = 17
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(27, 242)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(155, 24)
+        Me.Label9.TabIndex = 16
+        Me.Label9.Text = "* PS No./Rev. No" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  구매시방서 번호/개정번호"
+        '
+        'TextBox8
+        '
+        Me.TextBox8.Location = New System.Drawing.Point(147, 196)
+        Me.TextBox8.Name = "TextBox8"
+        Me.TextBox8.Size = New System.Drawing.Size(305, 21)
+        Me.TextBox8.TabIndex = 15
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(28, 195)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(113, 24)
+        Me.Label8.TabIndex = 14
+        Me.Label8.Text = "* Customer/Owner" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  고객/발전사업자"
+        '
+        'TextBox7
+        '
+        Me.TextBox7.Location = New System.Drawing.Point(127, 153)
+        Me.TextBox7.Name = "TextBox7"
+        Me.TextBox7.Size = New System.Drawing.Size(324, 21)
+        Me.TextBox7.TabIndex = 13
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(28, 153)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(92, 24)
+        Me.Label7.TabIndex = 12
+        Me.Label7.Text = "* Project Name" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  프로젝트명"
+        '
+        'TextBox6
+        '
+        Me.TextBox6.Location = New System.Drawing.Point(127, 111)
+        Me.TextBox6.Name = "TextBox6"
+        Me.TextBox6.Size = New System.Drawing.Size(163, 21)
+        Me.TextBox6.TabIndex = 11
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(28, 111)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(61, 24)
+        Me.Label6.TabIndex = 10
+        Me.Label6.Text = "* Job No." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  제조번호"
+        '
+        'TextBox5
+        '
+        Me.TextBox5.Location = New System.Drawing.Point(452, 110)
+        Me.TextBox5.Name = "TextBox5"
+        Me.TextBox5.Size = New System.Drawing.Size(312, 21)
+        Me.TextBox5.TabIndex = 9
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(334, 111)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(121, 24)
+        Me.Label5.TabIndex = 8
+        Me.Label5.Text = "* Warehousing Date " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  입고일자"
+        '
+        'TextBox4
+        '
+        Me.TextBox4.Location = New System.Drawing.Point(452, 71)
+        Me.TextBox4.Name = "TextBox4"
+        Me.TextBox4.Size = New System.Drawing.Size(311, 21)
+        Me.TextBox4.TabIndex = 7
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(334, 71)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(110, 24)
+        Me.Label4.TabIndex = 6
+        Me.Label4.Text = "* Vendor Address " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  공급업체 주소"
+        '
+        'TextBox3
+        '
+        Me.TextBox3.Location = New System.Drawing.Point(127, 71)
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.Size = New System.Drawing.Size(163, 21)
+        Me.TextBox3.TabIndex = 5
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(28, 71)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(97, 24)
+        Me.Label3.TabIndex = 4
+        Me.Label3.Text = "* Vendor Name " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  공급업체명"
+        '
+        'TextBox2
+        '
+        Me.TextBox2.Location = New System.Drawing.Point(388, 27)
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(142, 21)
+        Me.TextBox2.TabIndex = 3
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(334, 26)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(44, 24)
+        Me.Label2.TabIndex = 2
+        Me.Label2.Text = "* Date " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  일자"
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(127, 27)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(162, 21)
+        Me.TextBox1.TabIndex = 1
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(28, 28)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(73, 24)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "* RIR No. " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "  보고서번호"
+        '
+        'TextBox108
+        '
+        Me.TextBox108.Location = New System.Drawing.Point(88, 935)
+        Me.TextBox108.Multiline = True
+        Me.TextBox108.Name = "TextBox108"
+        Me.TextBox108.Size = New System.Drawing.Size(367, 105)
+        Me.TextBox108.TabIndex = 165
+        '
+        'Label37
+        '
+        Me.Label37.AutoSize = True
+        Me.Label37.Location = New System.Drawing.Point(19, 974)
+        Me.Label37.Name = "Label37"
+        Me.Label37.Size = New System.Drawing.Size(53, 12)
+        Me.Label37.TabIndex = 164
+        Me.Label37.Text = "파일첨부"
+        Me.Label37.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Frm_QA
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.White
+        Me.ClientSize = New System.Drawing.Size(1433, 1100)
+        Me.Controls.Add(Me.Panel1)
+        Me.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
+        Me.Name = "Frm_QA"
+        Me.Text = "Frm_QA"
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents TextBox86 As TextBox
+    Friend WithEvents Label34 As Label
+    Friend WithEvents TextBox87 As TextBox
+    Friend WithEvents Label35 As Label
+    Friend WithEvents Label36 As Label
+    Friend WithEvents TextBox85 As TextBox
+    Friend WithEvents Label33 As Label
+    Friend WithEvents TextBox84 As TextBox
+    Friend WithEvents Label32 As Label
+    Friend WithEvents Label31 As Label
+    Friend WithEvents Panel25 As Panel
+    Friend WithEvents Label30 As Label
+    Friend WithEvents Panel24 As Panel
+    Friend WithEvents CheckBox2 As CheckBox
+    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents Label29 As Label
+    Friend WithEvents TextBox82 As TextBox
+    Friend WithEvents Label27 As Label
+    Friend WithEvents TextBox83 As TextBox
+    Friend WithEvents Label28 As Label
+    Friend WithEvents Panel23 As Panel
+    Friend WithEvents TextBox80 As TextBox
+    Friend WithEvents Label25 As Label
+    Friend WithEvents TextBox81 As TextBox
+    Friend WithEvents Label26 As Label
+    Friend WithEvents Panel22 As Panel
+    Friend WithEvents Panel21 As Panel
+    Friend WithEvents TextBox78 As TextBox
+    Friend WithEvents Label23 As Label
+    Friend WithEvents TextBox79 As TextBox
+    Friend WithEvents Label24 As Label
+    Friend WithEvents TextBox67 As TextBox
+    Friend WithEvents TextBox68 As TextBox
+    Friend WithEvents TextBox69 As TextBox
+    Friend WithEvents TextBox70 As TextBox
+    Friend WithEvents TextBox71 As TextBox
+    Friend WithEvents TextBox72 As TextBox
+    Friend WithEvents TextBox73 As TextBox
+    Friend WithEvents TextBox74 As TextBox
+    Friend WithEvents TextBox75 As TextBox
+    Friend WithEvents TextBox76 As TextBox
+    Friend WithEvents TextBox77 As TextBox
+    Friend WithEvents TextBox56 As TextBox
+    Friend WithEvents TextBox57 As TextBox
+    Friend WithEvents TextBox58 As TextBox
+    Friend WithEvents TextBox59 As TextBox
+    Friend WithEvents TextBox60 As TextBox
+    Friend WithEvents TextBox61 As TextBox
+    Friend WithEvents TextBox62 As TextBox
+    Friend WithEvents TextBox63 As TextBox
+    Friend WithEvents TextBox64 As TextBox
+    Friend WithEvents TextBox65 As TextBox
+    Friend WithEvents TextBox66 As TextBox
+    Friend WithEvents TextBox45 As TextBox
+    Friend WithEvents TextBox46 As TextBox
+    Friend WithEvents TextBox47 As TextBox
+    Friend WithEvents TextBox48 As TextBox
+    Friend WithEvents TextBox49 As TextBox
+    Friend WithEvents TextBox50 As TextBox
+    Friend WithEvents TextBox51 As TextBox
+    Friend WithEvents TextBox52 As TextBox
+    Friend WithEvents TextBox53 As TextBox
+    Friend WithEvents TextBox54 As TextBox
+    Friend WithEvents TextBox55 As TextBox
+    Friend WithEvents TextBox34 As TextBox
+    Friend WithEvents TextBox35 As TextBox
+    Friend WithEvents TextBox36 As TextBox
+    Friend WithEvents TextBox37 As TextBox
+    Friend WithEvents TextBox38 As TextBox
+    Friend WithEvents TextBox39 As TextBox
+    Friend WithEvents TextBox40 As TextBox
+    Friend WithEvents TextBox41 As TextBox
+    Friend WithEvents TextBox42 As TextBox
+    Friend WithEvents TextBox43 As TextBox
+    Friend WithEvents TextBox44 As TextBox
+    Friend WithEvents TextBox23 As TextBox
+    Friend WithEvents TextBox24 As TextBox
+    Friend WithEvents TextBox25 As TextBox
+    Friend WithEvents TextBox26 As TextBox
+    Friend WithEvents TextBox27 As TextBox
+    Friend WithEvents TextBox28 As TextBox
+    Friend WithEvents TextBox29 As TextBox
+    Friend WithEvents TextBox30 As TextBox
+    Friend WithEvents TextBox31 As TextBox
+    Friend WithEvents TextBox32 As TextBox
+    Friend WithEvents TextBox33 As TextBox
+    Friend WithEvents TextBox22 As TextBox
+    Friend WithEvents TextBox21 As TextBox
+    Friend WithEvents TextBox20 As TextBox
+    Friend WithEvents TextBox19 As TextBox
+    Friend WithEvents TextBox18 As TextBox
+    Friend WithEvents TextBox17 As TextBox
+    Friend WithEvents TextBox16 As TextBox
+    Friend WithEvents TextBox15 As TextBox
+    Friend WithEvents TextBox14 As TextBox
+    Friend WithEvents TextBox13 As TextBox
+    Friend WithEvents TextBox12 As TextBox
+    Friend WithEvents Panel20 As Panel
+    Friend WithEvents Panel19 As Panel
+    Friend WithEvents Panel18 As Panel
+    Friend WithEvents Panel17 As Panel
+    Friend WithEvents Panel16 As Panel
+    Friend WithEvents Panel15 As Panel
+    Friend WithEvents Panel14 As Panel
+    Friend WithEvents Panel13 As Panel
+    Friend WithEvents Panel12 As Panel
+    Friend WithEvents Panel11 As Panel
+    Friend WithEvents Panel10 As Panel
+    Friend WithEvents Label22 As Label
+    Friend WithEvents Label21 As Label
+    Friend WithEvents Label20 As Label
+    Friend WithEvents Label19 As Label
+    Friend WithEvents Label18 As Label
+    Friend WithEvents Label17 As Label
+    Friend WithEvents Label16 As Label
+    Friend WithEvents Label15 As Label
+    Friend WithEvents Label14 As Label
+    Friend WithEvents Label13 As Label
+    Friend WithEvents Label12 As Label
+    Friend WithEvents Panel9 As Panel
+    Friend WithEvents Panel8 As Panel
+    Friend WithEvents Panel7 As Panel
+    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Panel5 As Panel
+    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents TextBox11 As TextBox
+    Friend WithEvents Label11 As Label
+    Friend WithEvents TextBox10 As TextBox
+    Friend WithEvents Label10 As Label
+    Friend WithEvents TextBox9 As TextBox
+    Friend WithEvents Label9 As Label
+    Friend WithEvents TextBox8 As TextBox
+    Friend WithEvents Label8 As Label
+    Friend WithEvents TextBox7 As TextBox
+    Friend WithEvents Label7 As Label
+    Friend WithEvents TextBox6 As TextBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents TextBox5 As TextBox
+    Friend WithEvents Label5 As Label
+    Friend WithEvents TextBox4 As TextBox
+    Friend WithEvents Label4 As Label
+    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents Label2 As Label
+    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents TextBox108 As TextBox
+    Friend WithEvents Label37 As Label
+End Class

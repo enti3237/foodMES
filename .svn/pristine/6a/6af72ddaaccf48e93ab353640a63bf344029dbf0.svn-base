@@ -1,0 +1,108 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Public Class Frm_PC_Report1
+    Private Sub Frm_PC_Report1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        'Grid_PC_Load()
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+
+        StrSQL = "SELECT a1,a3,a10,a7,a8
+                    FROM test with(nolock) "
+
+        Re_Count = DB_Select(DBT)
+        DataGridView5.DataSource = DBT
+
+    End Sub
+
+    Private Sub Grid_PC_Load()
+        Dim i As Integer
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT a1,a3,10,a7,a8
+                    FROM test with(nolock) "
+
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
+
+        '   Dim i As Integer
+        '   Dim d1 As Date = DateTimePicker1.Value
+        '   Dim d2 As Date = DateTimePicker2.Value
+        '   Dim DBT As DataTable
+        '       DBT = Nothing
+
+        '   StrSQL = "SELECT PO_JOB,PS_En_Day, PS_Name,PS_PL_Name, PS_PO_Total, PS_Go, PS_Total, PS_Er, PS_Bigo
+        '               FROM PO_Stock_List
+        '                 JOIN PO_Order ON PO_Code = PS_Code
+        'where convert(datetime,'" & d1.ToString("yyyy-MM-dd HH:mm:ss") & "') <= PS_En_Day and convert(datetime,'" & d2.ToString("yyyy-MM-dd HH:mm:ss") & "') >= PS_En_Day"
+
+        '   Re_Count = DB_Select(DBT)
+
+        '       DataGridView5.DataSource = DBT
+        '       DataGridView5.ClearSelection()
+    End Sub
+
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
+        Dim i As Integer
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT PO_JOB,PS_En_Day, PS_Name,PS_PL_Name, PS_PO_Total, PS_Go, PS_Total, PS_Er, PS_Bigo
+                    FROM PO_Stock_List 
+	                     JOIN PO_Order ON PO_Code = PS_Code where PO_JOB Like '%" & TextBox15.Text & "%'"
+
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+        '    Dim i As Integer
+        '    Dim DBT As DataTable
+        '    DBT = Nothing
+
+        '    StrSQL = "SELECT PO_JOB,PS_En_Day, PS_Name,PS_PL_Name, PS_PO_Total, PS_Go, PS_Total, PS_Er, PS_Bigo
+        '                FROM PO_Stock_List 
+        '                  JOIN PO_Order ON PO_Code = PS_Code where PS_PL_Name Like '%" & TextBox16.Text & "%'"
+
+        '    Re_Count = DB_Select(DBT)
+
+        '    DataGridView5.DataSource = DBT
+        '    DataGridView5.ClearSelection()
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        'Dim i As Integer
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT PO_JOB,PS_En_Day, PS_Name,PS_PL_Name, PS_PO_Total, PS_Go, PS_Total, PS_Er, PS_Bigo
+        '            FROM PO_Stock_List 
+        '              JOIN PO_Order ON PO_Code = PS_Code where PS_Name Like '%" & TextBox17.Text & "%'"
+
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView5.DataSource = DBT
+        'DataGridView5.ClearSelection()
+    End Sub
+
+    Private Sub DateTimePicker2_ValueChanged(sender As Object, e As EventArgs) Handles DateTimePicker2.ValueChanged
+
+    End Sub
+
+    Private Sub DateTimePicker1_ValueChanged(sender As Object, e As EventArgs) Handles DateTimePicker1.ValueChanged
+
+    End Sub
+End Class

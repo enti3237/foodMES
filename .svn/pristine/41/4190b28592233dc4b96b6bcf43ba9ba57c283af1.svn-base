@@ -1,0 +1,65 @@
+﻿Public Class Frm_DEL_Report1
+
+
+    Private Sub Frm_DEL_Report1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Grid_DEL_Road()
+
+    End Sub
+
+    Private Sub Grid_DEL_Road()
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+        Dim i As Integer
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = "Select * From CR_Contract_List"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstMain.RowCount = DBT.Rows.Count
+            For i = 0 To DBT.Rows.Count - 1
+                lstMain.Rows(i).Cells("CR_List_Code").Value = DBT.Rows(i)("CR_List_Code").ToString
+                lstMain.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString
+                lstMain.Rows(i).Cells("CR_Rev_No").Value = DBT.Rows(i)("CR_Rev_No").ToString
+                lstMain.Rows(i).Cells("CR_Sun").Value = DBT.Rows(i)("CR_Sun").ToString
+                lstMain.Rows(i).Cells("CR_PL_Name").Value = DBT.Rows(i)("CR_PL_Name").ToString
+                lstMain.Rows(i).Cells("CR_Qty").Value = DBT.Rows(i)("CR_Qty").ToString
+                lstMain.Rows(i).Cells("CR_Total").Value = DBT.Rows(i)("CR_Total").ToString
+                lstMain.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString
+            Next
+
+
+            For i = 0 To DBT.Rows.Count - 1
+
+                StrSQL = "Select * From Deliver where CR_List_Code = '" & lstMain.Rows(i).Cells("CR_List_Code").Value.ToString & "' and CR_Code = '" & lstMain.Rows(i).Cells("CR_Code").Value.ToString & "' and CR_Rev_No = '" & lstMain.Rows(i).Cells("CR_Rev_No").Value.ToString & "' and CR_Sun = '" & lstMain.Rows(i).Cells("CR_Sun").Value.ToString & "'"
+                Re_Count2 = DB_Select(DBT2)
+
+                If Re_Count2 > 0 Then
+                    lstMain.Rows(i).Cells("DL_Code").Value = DBT2.Rows(i)("DL_Code").ToString
+                    lstMain.Rows(i).Cells("DL_Check").Value = DBT2.Rows(i)("DL_Check").ToString
+                    lstMain.Rows(i).Cells("DL_Date").Value = DBT2.Rows(i)("DL_Date").ToString
+                    lstMain.Rows(i).Cells("DL_Bigo").Value = DBT2.Rows(i)("DL_Bigo").ToString
+                    lstMain.Rows(i).Cells("DL_Prepared").Value = DBT2.Rows(i)("DL_Prepared").ToString
+                    lstMain.Rows(i).Cells("DL_Prepare_Date").Value = DBT2.Rows(i)("DL_Prepare_Date").ToString
+                    lstMain.Rows(i).Cells("DL_Updated").Value = DBT2.Rows(i)("DL_Updated").ToString
+                    lstMain.Rows(i).Cells("DL_Update_Date").Value = DBT2.Rows(i)("DL_Update_Date").ToString
+                Else
+                    lstMain.Rows(i).Cells("DL_Code").Value = ""
+                    lstMain.Rows(i).Cells("DL_Check").Value = ""
+                    lstMain.Rows(i).Cells("DL_Date").Value = ""
+                    lstMain.Rows(i).Cells("DL_Bigo").Value = ""
+                    lstMain.Rows(i).Cells("DL_Prepared").Value = ""
+                    lstMain.Rows(i).Cells("DL_Prepare_Date").Value = ""
+                    lstMain.Rows(i).Cells("DL_Updated").Value = ""
+                    lstMain.Rows(i).Cells("DL_Update_Date").Value = ""
+                End If
+            Next
+
+        End If
+    End Sub
+
+End Class

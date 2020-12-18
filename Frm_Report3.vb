@@ -1,0 +1,352 @@
+﻿Imports System.IO
+
+Public Class Frm_Report3
+    Dim Tree_Nodes_Count As Long
+
+    Private Sub Frm_Report3_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Me.BackColor = Color.White
+
+
+        Grid_Code_Setup()
+        Grid_Info_Setup()
+
+        Search_Combo.Items.Add("코드")
+        Search_Combo.Items.Add("품명")
+        Search_Combo.Text = "코드"
+
+
+
+
+        Tree_Panel.Left = 391
+        Tree_Panel.Top = 127
+        Tree_Panel.Visible = False
+
+
+    End Sub
+    Public Function Grid_Code_Setup() As Boolean
+        Grid_Color(Grid_Code)
+
+        Grid_Code.AllowUserToAddRows = False
+
+
+
+        Grid_Code.RowTemplate.Height = 20
+        Grid_Code.ColumnCount = 3
+        Grid_Code.RowCount = 1
+
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Code.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.RowHeadersWidth = 10
+        Grid_Code.Columns(0).Width = 80
+        Grid_Code.Columns(1).Width = 150
+        Grid_Code.Columns(2).Width = 70
+
+        Grid_Code.Columns(0).HeaderText = "코드"
+        Grid_Code.Columns(1).HeaderText = "품명"
+        Grid_Code.Columns(2).HeaderText = "구분"
+
+        Dim i As Integer
+        For i = 0 To Grid_Code.ColumnCount - 1
+            Grid_Code.Columns(i).ReadOnly = True
+        Next i
+
+    End Function
+
+    Public Function Grid_Info_Setup() As Boolean
+        Grid_Color(Grid_Info)
+
+
+        Grid_Info.AllowUserToAddRows = False
+        Grid_Info.RowTemplate.Height = 24
+        Grid_Info.ColumnCount = 2
+        Grid_Info.RowCount = 16
+
+
+
+
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Info.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Grid_Info.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Info.RowHeadersWidth = 10
+        Grid_Info.Columns(0).Width = 100
+        Grid_Info.Columns(1).Width = 240
+        Grid_Info.Columns(0).HeaderText = "구분"
+        Grid_Info.Columns(1).HeaderText = "내용"
+
+        Grid_Info.Item(0, 0).Value = "코드"
+        Grid_Info.Item(0, 1).Value = "품명"
+        Grid_Info.Item(0, 2).Value = "구분"
+        Grid_Info.Item(0, 3).Value = "종류"
+        Grid_Info.Item(0, 4).Value = "규격"
+        Grid_Info.Item(0, 5).Value = "단위"
+        Grid_Info.Item(0, 6).Value = "단가"
+        Grid_Info.Item(0, 7).Value = "이미지"
+        Grid_Info.Rows(7).Height = 110
+        Grid_Info_Picture_Setup()
+
+        Grid_Info.Item(0, 8).Value = "수입검사"
+        Grid_Info.Item(0, 9).Value = "순회검사"
+        Grid_Info.Item(0, 10).Value = "자주검사"
+        Grid_Info.Item(0, 11).Value = "출하검사"
+        Grid_Info.Item(0, 12).Value = "Xbar-R 관리도"
+
+        Grid_Info.Item(0, 13).Value = "부적합보고서"
+        Grid_Info.Item(0, 14).Value = "QC Field"
+        Grid_Info.Item(0, 15).Value = "비고"
+        Grid_Info.Columns(0).ReadOnly = True
+
+
+    End Function
+    Public Function Grid_Info_Picture_Setup() As Boolean
+        Grid_Info_Picture1.Top = Grid_Info.Top + Grid_Info.ColumnHeadersHeight + (7) * 24 + 1
+        Grid_Info_Picture1.Left = Grid_Info.Left + Grid_Info.RowHeadersWidth + Grid_Info.Columns(0).Width + 1
+        Grid_Info_Picture1.Width = Grid_Info.Columns(1).Width - 1
+        Grid_Info_Picture1.Height = Grid_Info.Rows(7).Height - 1
+        Grid_Info_Picture1.BackColor = Grid_Info.RowsDefaultCellStyle.BackColor
+        Grid_Info_Picture1.Visible = True
+        Grid_Info_Picture_Setup = True
+    End Function
+
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs) Handles Search_Com.Click
+        Grid_Code_Display(True)
+    End Sub
+    Public Function Grid_Code_Display(Display_Sel As Boolean) As Boolean
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        Dim Je_Gu As String
+        If Display_Sel Then
+            Grid_Code.RowCount = 1
+            Je_Gu = " And PL_Sel = '제품'"
+            Select Case Search_Combo.Text
+                Case "코드"
+                    StrSQL = "Select PL_Code, PL_Name, PL_Sel FROM SI_PRODUCT with(NOLOCK) Where PL_Code Like '" & Search_Text.Text & "%' " & Je_Gu & " Order  By PL_Code"
+                Case "품명"
+                    StrSQL = "Select PL_Code, PL_Name, PL_Sel FROM SI_PRODUCT With(NOLOCK) Where PL_Name Like '" & Search_Text.Text & "%' Or PL_Name Is Null " & Je_Gu & "Order By PL_Name"
+            End Select
+            Re_Count = DB_Select(DBT)
+            If Re_Count <> 0 Then
+                Grid_Code.RowCount = Re_Count
+                For i = 0 To Re_Count - 1
+                    For j = 0 To Grid_Code.ColumnCount - 1
+                        Grid_Code.Item(j, i).Value = DBT.Rows(i).Item(j)
+                    Next j
+                Next i
+            Else
+                Grid_Code.RowCount = 1
+                For j = 0 To Grid_Code.ColumnCount - 1
+                    Grid_Code.Item(j, 0).Value = ""
+                Next j
+            End If
+        End If
+        Grid_Code_Display = True
+    End Function
+    Private Sub Grid_Code_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Code.CellEnter
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+            Grid_Info_Display(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+            If Len(Grid_Info.Item(1, 0).Value) > 0 Then
+            Else
+                Exit Sub
+            End If
+
+            'Label_Color(Com_BOM, Color_Label, Di_Panel2)
+            ''BOM 입력 페널
+            'Grid_Bom_Display(Grid_Info.Item(1, 0).Value)
+            'Grid_Pro_Display(Grid_Info.Item(1, 0).Value)
+            'Bom_Panel.Visible = True
+            'Customer_Panel.Visible = False
+            'Tree_Panel.Visible = False
+
+        End If
+    End Sub
+    Public Function Grid_Info_Display(PL_Code As String) As Boolean
+        Dim DBT As New DataTable
+        Dim i As Integer
+        StrSQL = "Select * FROM SI_PRODUCT With(NOLOCK) Where PL_Code = '" & PL_Code & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Columns.Count - 1
+                Grid_Info.Item(1, i).Value = DBT.Rows(0).Item(i).ToString
+                '이미지 처리 한다.
+                If i = 7 Then
+                    If Len(Grid_Info.Item(1, i).Value) < 100 Then
+                        Grid_Info_Picture1.Image = Nothing
+                    Else
+                        Dim b() As Byte = HexStr2Array(Grid_Info.Item(1, i).Value)
+                        Grid_Info_Picture1.Image = Image.FromStream(New MemoryStream(b, 0, b.Length))
+                    End If
+                End If
+                If i = 6 Then
+                    Grid_Info.Item(1, i).Value = Format(Val(Grid_Info.Item(1, i).Value), "###,###,###,##0.00")
+                End If
+            Next i
+        Else
+            For i = 0 To DBT.Columns.Count - 1
+                Grid_Info.Item(1, i).Value = ""
+            Next i
+        End If
+
+
+        'Tree
+        If Len(Len(Grid_Info.Item(1, 0).Value)) > 0 Then
+        Else
+            Exit Function
+        End If
+        If Len(Len(Grid_Info.Item(1, 1).Value)) > 0 Then
+        Else
+            MsgBox("제품명을 입력하세요")
+            Exit Function
+        End If
+
+
+        Text1.Text = 0
+        Text2.Text = 0
+        Text3.Text = 0
+        Text4.Text = 0
+
+        Tree_Panel.Visible = True
+
+        Dim PD_Code As String
+        Dim Re_Text As String
+        Dim My_Nod As TreeNode
+        Dim Nod_Count As Long
+
+        PD_Code = Grid_Info.Item(1, 0).Value
+        If Len(PD_Code) < 1 Then
+            Exit Function
+        End If
+
+        Product_Tree.ImageList = Tree_Image
+
+        Product_Tree.Nodes.Clear()
+        Tree_Nodes_Count = 0
+
+        My_Nod = Product_Tree.Nodes.Add(PD_Code & "-" & Tree_Nodes_Count, Grid_Info.Item(1, 0).Value.ToString & " - " & Grid_Info.Item(1, 1).Value.ToString, "로고.ico")
+        '하위 트리를 콜 한다.
+        Nod_Count = 0
+        Re_Text = Product_Tree_Search(My_Nod, PD_Code, Nod_Count, 1)
+        If Re_Text = "Ok" Then
+        Else
+            MsgBox(Re_Text)
+            Exit Function
+        End If
+
+        'Exit Sub
+        '공정을 삽입한다.
+        Re_Text = Product_Tree_Process(My_Nod, PD_Code, Nod_Count, 1)
+        If Re_Text = "Ok" Then
+        Else
+            MsgBox(Re_Text)
+        End If
+
+        '합계를 계산한다.
+        Text1.Text = Val(Text2.Text) + Val(Text3.Text) + Val(Text4.Text)
+        Grid_Info_Display = True
+    End Function
+
+
+
+
+    Public Function Product_Tree_Search(Pr_Nod As TreeNode, PD_Code As String, Nod_Count As Long, QT As Double) As String
+        Dim My_Nod As TreeNode
+        Dim i As Long
+        Dim Re_Text As String
+        Nod_Count = Nod_Count + 1
+        If Nod_Count > 20 Then
+            MsgBox("제품에 무한으로 생성 됩니다. BOM 구조를 확인 부탁 드립니다.")
+            Exit Function
+        End If
+        If Len(PD_Code) < 1 Then
+            Product_Tree_Search = "BOM에 코드가 없는 자료가 있습니다. 확인 부탁 드립니다."
+            Exit Function
+        End If
+        'Data를 가지고 온다.
+        Dim DBT As New DataTable
+        StrSQL = "Select PL_Sun, PL_Sub_Code, SI_Product.PL_Name, PL_Qty,SI_Product.PL_Sel   FROM SI_PRODUCT_RECIPE With(NOLOCK), Product With(NOLOCK) Where Product_BOM.PL_Code = '" & PD_Code & "' And  Product_BOM.PL_Sub_Code = SI_Product.PL_Code Order By PL_Sun"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            For i = 0 To Re_Count - 1
+                Tree_Nodes_Count = Tree_Nodes_Count + 1
+                My_Nod = Pr_Nod.Nodes.Add(DBT.Rows(i).Item(1).ToString & "-" & Tree_Nodes_Count, DBT.Rows(i).Item(1).ToString & " - " & DBT.Rows(i).Item(2).ToString, "단품.png")
+
+
+                Re_Text = Product_Tree_Search(My_Nod, DBT.Rows(i).Item(1).ToString, Nod_Count, QT * Val((DBT.Rows(0)("PL_Qty").ToString)))
+                If Re_Text = "Ok" Then
+                Else
+                    Product_Tree_Search = Re_Text
+                    Exit Function
+                End If
+
+                '공정을 삽입한다.
+                Re_Text = Product_Tree_Process(My_Nod, DBT.Rows(i).Item(1).ToString, Nod_Count, QT * Val((DBT.Rows(0)("PL_Qty").ToString)))
+                If Re_Text = "Ok" Then
+                Else
+                    Product_Tree_Search = Re_Text
+                    Exit Function
+                End If
+            Next i
+        Else
+            '더이상 BOM이 없다
+            '구입 금액을 처리 한다.
+            StrSQL = "Select PL_Unit_Gold FROM SI_PRODUCT_Customer With(NOLOCK) Where PL_Sel = '매입' And  PL_Code = '" & PD_Code & "' "
+            Re_Count = DB_Select(DBT)
+            If Re_Count <> 0 Then
+                If PD_Code = "CI0-000-0002" Then
+                    PD_Code = PD_Code
+                End If
+                Text4.Text = Val(Text4.Text) + (Val(DBT.Rows(0)("PL_Unit_Gold").ToString) * QT)
+            End If
+        End If
+
+        Product_Tree_Search = "Ok"
+
+
+    End Function
+    Public Function Product_Tree_Process(Pr_Nod As TreeNode, PD_Code As String, Nod_Count As Long, QT As Double) As String
+        Dim My_Nod As TreeNode
+        Dim i As Long
+        Dim Re_Text As String
+        'If Tree_Nodes_Count > 10 Then
+        '    Product_Tree_Search = "Error"
+        '    Exit Function
+        'End If
+        If Len(PD_Code) < 1 Then
+            Product_Tree_Process = "BOM에 코드가 없는 자료가 있습니다. 확인 부탁 드립니다."
+            Exit Function
+        End If
+        'Data를 가지고 온다.
+        Dim DBT As New DataTable
+        StrSQL = "Select PP_Sun, PP_PC_Code, Process.PC_Name, pp_amount PP_Gold  FROM SI_Process_List with(NOLOCK), Process With(NOLOCK) Where SI_Process_List.PP_Code = '" & PD_Code & "' And SI_Process_List.PP_PC_Code = Process.PC_Code Order By PP_Sun"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            For i = 0 To Re_Count - 1
+                Tree_Nodes_Count = Tree_Nodes_Count + 1
+                My_Nod = Pr_Nod.Nodes.Add(DBT.Rows(i).Item(1).ToString & "-" & Tree_Nodes_Count, DBT.Rows(i).Item(1).ToString & " - " & DBT.Rows(i).Item(2).ToString & " 수량 : " & DBT.Rows(i)("PP_Amount").ToString, "공정.Png")
+                My_Nod.BackColor = Color.FromArgb(248, 203, 173)
+                Text3.Text = Val(Text3.Text) + (Val(DBT.Rows(i)("PP_Gold").ToString) * QT)
+
+
+                'Re_Text = Product_Tree_Search(My_Nod, DBT.Rows(i).Item(1).ToString, Nod_Count)
+                'If Re_Text = "Ok" Then
+                'Else
+                '    Product_Tree_Process = Re_Text
+                '    Exit Function
+                'End If
+            Next i
+        Else
+        End If
+        Product_Tree_Process = "Ok"
+    End Function
+
+
+    Private Sub Grid_Code_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Code.CellContentClick
+
+    End Sub
+End Class

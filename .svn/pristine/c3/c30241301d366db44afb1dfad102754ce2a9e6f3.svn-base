@@ -1,0 +1,162 @@
+﻿Public Class Frm_Monitoring4
+    Dim De_CC(100) As String
+    Dim De_Su(100) As String
+    Dim DBT As New DataTable
+    Dim count As Integer = 0
+    Dim today As String = ""
+
+    Private Sub Frm_Monitoring_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Dim DBT As New DataTable
+        Dim k As Integer
+        Dim i As Integer
+        Label2.Text = DateTime.Now.ToString("yyyy-MM-dd")
+        Label3.Text = DateTime.Now.ToString("HH:mm:ss")
+
+
+        PIc_Pic(Picture_Logo, Application.StartupPath & "\Picture\Logo2_" & Setup_Data(9) & ".png")
+        'PIc_Pic(Picture_Logo, Application.StartupPath & "\Picture\Logo2.png")
+
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Grid_Main_Setup()
+        Display()
+    End Sub
+
+    Private Sub Display()
+
+        StrSQL = "Select PL_CODE, PL_NAME, PL_STANDARD, PL_UNIT, PL_UNIT_GOLD FROM SI_PRODUCT ORDER BY PL_CODE"
+        Re_Count = DB_Select(DBT)
+        Dim i As Integer
+        If Re_Count <> 0 Then
+            Grid_Main.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                For j = 0 To 1
+                    Grid_Main.Item(0, i).Value = i + 1
+                    Grid_Main.Item(1, i).Value = DBT.Rows(i).Item(0).ToString
+                    Grid_Main.Item(2, i).Value = DBT.Rows(i).Item(1).ToString
+                    Grid_Main.Item(3, i).Value = DBT.Rows(i).Item(2).ToString
+                    Grid_Main.Item(4, i).Value = DBT.Rows(i).Item(3).ToString
+                    Grid_Main.Item(5, i).Value = DBT.Rows(i).Item(4).ToString
+                Next j
+            Next i
+        Else
+            MsgBox("제품이 존재하지 않습니다")
+        End If
+
+
+        StrSQL = "Select PP_AMOUNT FROM SI_PROCESS_LIST ORDER BY PP_CODE "
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count <> 0 Then
+            Grid_Main.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                If IsDBNull(DBT.Rows(i).Item(0)) Or DBT.Rows(i).Item(0) = Nothing Or DBT.Rows(i).Item(0) = "" Then
+                    Grid_Main.Item(6, i).Value = "값 입력되지 않음"
+                    Continue For
+                End If
+
+                Grid_Main.Item(6, i).Value = DBT.Rows(i).Item(0).ToString
+                If DBT.Rows(i).Item(0).ToString < 10 Then
+                    Grid_Main.Rows(i).DefaultCellStyle.BackColor = Color.Red
+                Else
+                    Grid_Main.Rows(i).DefaultCellStyle.BackColor = Color.LightGray
+                End If
+            Next i
+        Else
+            'MsgBox("제품이 존재하지 않습니다")
+        End If
+
+
+
+        Grid_Main.MultiSelect = False
+        Grid_Main.ClearSelection()
+
+    End Sub
+
+    Public Function Grid_Main_Setup() As Boolean
+        Grid_Color(Grid_Main)
+
+        Grid_Main.AllowUserToAddRows = False
+        Grid_Main.RowTemplate.Height = 40
+        Grid_Main.ColumnHeadersHeight = 50
+        Grid_Main.ColumnCount = 7
+        Grid_Main.RowCount = 1
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Main.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Grid_Main.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Grid_Main.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Grid_Main.Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Grid_Main.Columns(6).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+
+
+        Grid_Main.RowHeadersWidth = 10
+
+
+        Grid_Main.Columns(0).HeaderText = "순번"
+        Grid_Main.Columns(1).HeaderText = "제품코드"
+        Grid_Main.Columns(2).HeaderText = "제품명"
+        Grid_Main.Columns(3).HeaderText = "규격"
+        Grid_Main.Columns(4).HeaderText = "단위"
+        Grid_Main.Columns(5).HeaderText = "단가"
+        Grid_Main.Columns(5).Visible = False
+        Grid_Main.Columns(6).HeaderText = "수량"
+
+
+
+
+        Dim i As Integer
+
+        Grid_Main.Columns(0).Width = 60
+        Grid_Main.Columns(1).Width = 80
+        Grid_Main.Columns(2).Width = 250
+
+
+        For i = 3 To Grid_Main.ColumnCount - 1
+
+            Grid_Main.Columns(i).Width = 120
+        Next i
+
+        Grid_Main_Setup = True
+    End Function
+
+    Private Sub Frm_Monitoring_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles Me.MouseDoubleClick
+        Dim dualMonitor() As Screen = Screen.AllScreens
+        If dualMonitor.Length = 2 Then
+            If Me.Bounds = dualMonitor(1).Bounds Then
+                Me.Bounds = dualMonitor(0).WorkingArea
+            Else
+                Me.Bounds = dualMonitor(1).WorkingArea
+            End If
+        End If
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Label3.Text = DateTime.Now.ToString("HH:mm:ss")
+    End Sub
+
+
+    Private Sub Picture_Logo_Click(sender As Object, e As EventArgs) Handles Picture_Logo.Click
+        End
+
+    End Sub
+
+    Private Sub Label21_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+        Display()
+
+    End Sub
+
+    Private Sub Label3_Click(sender As Object, e As EventArgs) Handles Label3.Click
+        End
+    End Sub
+
+    Private Sub Label2_Click(sender As Object, e As EventArgs) Handles Label2.Click
+        End
+    End Sub
+End Class

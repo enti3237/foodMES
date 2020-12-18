@@ -1,0 +1,138 @@
+﻿Public Class Frm_PD_Report5
+    Private Sub Frm_PD_Report5_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        'Grid_CR_Load()
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT a1,a10,a13,a17,a3,a21
+           FROM  test with(NOLOCK) "
+
+        Re_Count = DB_Select(DBT)
+        DataGridView1.DataSource = DBT
+
+
+    End Sub
+
+    Private Sub Grid_CR_Load()
+
+        Dim i As Integer
+
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT * FROM Contract where CR_Code != '' order by CR_Code"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.RowCount = 0
+
+        If Re_Count > 0 Then
+            DataGridView1.RowCount = Re_Count
+            For i = 0 To DataGridView1.RowCount - 1
+
+                DataGridView1.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString 'CR NO
+                DataGridView1.Rows(i).Cells("CR_Name").Value = DBT.Rows(i)("CR_Name").ToString '공정명
+                DataGridView1.Rows(i).Cells("CR_Customer_Name").Value = DBT.Rows(i)("CR_Customer_Name").ToString '발주처
+                DataGridView1.Rows(i).Cells("CR_Manager_PO").Value = DBT.Rows(i)("CR_Manager_PO").ToString '공정관리자
+                DataGridView1.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString '계약일
+                DataGridView1.Rows(i).Cells("CR_Day_Reg_Fsh").Value = DBT.Rows(i)("CR_Day_Reg_Fsh").ToString '계약납기일
+                DataGridView1.Rows(i).Cells("CR_Gold").Value = DBT.Rows(i)("CR_Gold").ToString '계약금액
+                DataGridView1.Rows(i).Cells("CR_bigo").Value = DBT.Rows(i)("CR_bigo").ToString
+
+            Next
+        End If
+        DataGridView1.ClearSelection()
+
+    End Sub
+
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
+        'Dim i As Integer
+
+
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT * FROM Contract where CR_Code Like '%" & TextBox15.Text & "%' order by CR_Code"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView1.RowCount = 0
+
+        'If Re_Count > 0 Then
+        '    DataGridView1.RowCount = Re_Count
+        '    For i = 0 To DataGridView1.RowCount - 1
+
+        '        DataGridView1.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString 'CR NO
+        '        DataGridView1.Rows(i).Cells("CR_Name").Value = DBT.Rows(i)("CR_Name").ToString '공정명
+        '        DataGridView1.Rows(i).Cells("CR_Customer_Name").Value = DBT.Rows(i)("CR_Customer_Name").ToString '발주처
+        '        DataGridView1.Rows(i).Cells("CR_Manager_PO").Value = DBT.Rows(i)("CR_Manager_PO").ToString '공정관리자
+        '        DataGridView1.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString '계약일
+        '        DataGridView1.Rows(i).Cells("CR_Day_Reg_Fsh").Value = DBT.Rows(i)("CR_Day_Reg_Fsh").ToString '계약납기일
+        '        DataGridView1.Rows(i).Cells("CR_Gold").Value = DBT.Rows(i)("CR_Gold").ToString '계약금액
+        '        DataGridView1.Rows(i).Cells("CR_bigo").Value = DBT.Rows(i)("CR_bigo").ToString
+
+        '    Next
+        'End If
+        'DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+        'Dim i As Integer
+
+
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT * FROM Contract where CR_Manager_PO Like '%" & TextBox16.Text & "%' order by CR_Code"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView1.RowCount = 0
+
+        'If Re_Count > 0 Then
+        '    DataGridView1.RowCount = Re_Count
+        '    For i = 0 To DataGridView1.RowCount - 1
+
+        '        DataGridView1.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString 'CR NO
+        '        DataGridView1.Rows(i).Cells("CR_Name").Value = DBT.Rows(i)("CR_Name").ToString '공정명
+        '        DataGridView1.Rows(i).Cells("CR_Customer_Name").Value = DBT.Rows(i)("CR_Customer_Name").ToString '발주처
+        '        DataGridView1.Rows(i).Cells("CR_Manager_PO").Value = DBT.Rows(i)("CR_Manager_PO").ToString '공정관리자
+        '        DataGridView1.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString '계약일
+        '        DataGridView1.Rows(i).Cells("CR_Day_Reg_Fsh").Value = DBT.Rows(i)("CR_Day_Reg_Fsh").ToString '계약납기일
+        '        DataGridView1.Rows(i).Cells("CR_Gold").Value = DBT.Rows(i)("CR_Gold").ToString '계약금액
+        '        DataGridView1.Rows(i).Cells("CR_bigo").Value = DBT.Rows(i)("CR_bigo").ToString
+
+        '    Next
+        'End If
+        'DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        'Dim i As Integer
+
+
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT * FROM Contract where CR_Name Like '%" & TextBox17.Text & "%' order by CR_Code"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView1.RowCount = 0
+
+        'If Re_Count > 0 Then
+        '    DataGridView1.RowCount = Re_Count
+        '    For i = 0 To DataGridView1.RowCount - 1
+
+        '        DataGridView1.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString 'CR NO
+        '        DataGridView1.Rows(i).Cells("CR_Name").Value = DBT.Rows(i)("CR_Name").ToString '공정명
+        '        DataGridView1.Rows(i).Cells("CR_Customer_Name").Value = DBT.Rows(i)("CR_Customer_Name").ToString '발주처
+        '        DataGridView1.Rows(i).Cells("CR_Manager_PO").Value = DBT.Rows(i)("CR_Manager_PO").ToString '공정관리자
+        '        DataGridView1.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString '계약일
+        '        DataGridView1.Rows(i).Cells("CR_Day_Reg_Fsh").Value = DBT.Rows(i)("CR_Day_Reg_Fsh").ToString '계약납기일
+        '        DataGridView1.Rows(i).Cells("CR_Gold").Value = DBT.Rows(i)("CR_Gold").ToString '계약금액
+        '        DataGridView1.Rows(i).Cells("CR_bigo").Value = DBT.Rows(i)("CR_bigo").ToString
+
+
+    End Sub
+End Class

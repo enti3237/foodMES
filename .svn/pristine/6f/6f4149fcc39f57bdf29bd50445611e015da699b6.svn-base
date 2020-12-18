@@ -1,0 +1,211 @@
+﻿Public Class UCFrm1
+    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        ShowFileOpenDialog(1)
+
+
+    End Sub
+
+    Private Sub ShowFileOpenDialog(num As Integer)
+        '전체경로
+        Dim filename As String
+        '파일이름
+        Dim filename2 As String
+        '파일경로
+        Dim filepath As String
+
+        OpenFileDialog1.ShowDialog()
+
+        filename = OpenFileDialog1.FileName
+        filename2 = filename.Substring(filename.LastIndexOf("\") + 1)
+        If filename.Length > 0 Then
+            filepath = filename.Replace(filename2, "")
+        End If
+
+        If num = 1 Then
+            TextBox5.Text = filename2
+            TextBox11.Text = filename
+        End If
+
+        If num = 2 Then
+            TextBox15.Text = filename2
+            TextBox14.Text = filename
+        End If
+
+        If num = 3 Then
+            TextBox21.Text = filename2
+            TextBox18.Text = filename
+        End If
+
+        If num = 4 Then
+            TextBox23.Text = filename2
+            TextBox22.Text = filename
+        End If
+
+        OpenFileDialog1.FileName = ""
+
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        ShowFileOpenDialog(2)
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        ShowFileOpenDialog(3)
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        ShowFileOpenDialog(4)
+    End Sub
+
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+        CheckChang()
+    End Sub
+
+    Private Sub CheckChang()
+        If CheckBox1.Checked = True Then
+            '도면
+            TextBox3.Text = ""
+        End If
+
+        If CheckBox1.Checked = False Then
+            '도면
+            TextBox3.Text = ""
+        End If
+
+        If CheckBox2.Checked = True Then
+            '절단계획서
+            TextBox13.Text = "CP-19-"
+        End If
+
+        If CheckBox2.Checked = False Then
+            '절단계획서
+            TextBox13.Text = ""
+        End If
+
+        If CheckBox3.Checked = True Then
+            '구매요구서
+            TextBox17.Text = "PR-19-R&D-"
+        End If
+
+        If CheckBox3.Checked = False Then
+            '구매요구서
+            TextBox17.Text = ""
+        End If
+
+        If CheckBox4.Checked = True Then
+            '구매시방서
+            TextBox20.Text = "PS-19-R&D-"
+        End If
+
+        If CheckBox4.Checked = False Then
+            '구매시방서
+            TextBox20.Text = ""
+        End If
+    End Sub
+
+    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
+        CheckChang()
+    End Sub
+
+    Private Sub CheckBox3_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox3.CheckedChanged
+        CheckChang()
+    End Sub
+
+    Private Sub CheckBox4_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox4.CheckedChanged
+        CheckChang()
+    End Sub
+
+    Private Sub UCFrm1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        '기본정보
+        Panel1.Top = 30
+        Panel1.Left = 10
+        '도면1
+        Panel8.Top = 40
+        Panel8.Left = 10
+        '도면2
+        Panel30.Top = 40
+        Panel30.Left = 10
+        '절단계획서
+        Panel41.Top = 40
+        Panel41.Left = 10
+        '구매요구서
+        Panel52.Top = 40
+        Panel52.Left = 10
+        '구매시방서
+        Panel58.Top = 40
+        Panel58.Left = 10
+
+        Panel1.Visible = True
+        Panel8.Visible = False
+        Panel30.Visible = False
+        Panel41.Visible = False
+        Panel52.Visible = False
+        Panel58.Visible = False
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles Com_Contract.Click
+        Label_Color(sender, Label25, Di_Panel2)
+        Panel1.Visible = True
+        Panel8.Visible = False
+        Panel30.Visible = False
+        Panel41.Visible = False
+        Panel52.Visible = False
+        Panel58.Visible = False
+    End Sub
+
+    Private Sub Com_DRW1_Click(sender As Object, e As EventArgs) Handles Com_DRW1.Click
+        Label_Color(sender, Label25, Di_Panel2)
+        Panel8.Visible = True
+        Panel1.Visible = False
+        Panel30.Visible = False
+        Panel41.Visible = False
+        Panel52.Visible = False
+        Panel58.Visible = False
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        Label_Color(sender, Label25, Di_Panel2)
+        Panel30.Visible = True
+        Panel1.Visible = False
+        Panel8.Visible = False
+        Panel41.Visible = False
+        Panel52.Visible = False
+        Panel58.Visible = False
+    End Sub
+
+    Private Sub Com_Jaje_Click(sender As Object, e As EventArgs) Handles Com_Jaje.Click
+        Label_Color(sender, Label25, Di_Panel2)
+        Panel41.Visible = True
+        Panel1.Visible = False
+        Panel8.Visible = False
+        Panel30.Visible = False
+        Panel52.Visible = False
+        Panel58.Visible = False
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        Label_Color(sender, Label25, Di_Panel2)
+        Panel52.Visible = True
+        Panel1.Visible = False
+        Panel8.Visible = False
+        Panel30.Visible = False
+        Panel41.Visible = False
+        Panel58.Visible = False
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        Label_Color(sender, Label25, Di_Panel2)
+        Panel58.Visible = True
+        Panel1.Visible = False
+        Panel8.Visible = False
+        Panel30.Visible = False
+        Panel41.Visible = False
+        Panel52.Visible = False
+    End Sub
+End Class

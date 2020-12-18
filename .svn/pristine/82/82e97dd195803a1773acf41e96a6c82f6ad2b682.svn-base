@@ -1,0 +1,469 @@
+﻿Public Class Dia_Stock_barcode_print
+
+
+    Dim barcode_ArrList As New ArrayList()
+    Dim now_page As Integer = 1
+
+
+    Private MAX_PAGE_COUNT As Integer = 3
+
+    Private pageNumber As Integer
+
+
+
+    Public Sub SetBarcode_arr(Barcode_arr As ArrayList)
+        barcode_ArrList = Barcode_arr
+    End Sub
+
+    Private Sub Dia_Storage_barcode_print_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Label1.Text = "폐이지: " & now_page & "/" & barcode_ArrList.Count
+
+        '페이지 수 설정
+        pageNumber = 1
+        MAX_PAGE_COUNT = barcode_ArrList.Count
+
+    End Sub
+
+    Private Sub PictureBox1_Paint(sender As Object, e As PaintEventArgs) Handles PictureBox1.Paint
+        PictureBox1_Paint_update(e)
+    End Sub
+
+    Private Sub PrintDocument1_PrintPage(sender As Object, e As Printing.PrintPageEventArgs) Handles PrintDocument1.PrintPage
+
+        '배열에서 값 가져오기
+        Dim temp As Frm_Stock.Pc_stock_print_data = barcode_ArrList.Item(pageNumber - 1)
+
+        Dim x As Integer = 1
+        Dim y As Integer = 1
+        '제목 칸 크기
+        Dim xwidth As Integer = 350
+        Dim yheight As Integer = 40
+        'BARCOD 칸 크기
+        Dim barocde_width As Integer = 80
+        Dim barcode_height As Integer = 240
+        '품명 
+        Dim name_width As Integer = 100
+        Dim name_height As Integer = 40
+        '규격
+        Dim standard_width As Integer = 100
+        Dim standard_height As Integer = 40
+        '재질
+        Dim material_width As Integer = 100
+        Dim material_height As Integer = 40
+        '수량/중량
+        Dim Quantity_weight_width As Integer = 100
+        Dim Quantity_weight_height As Integer = 40
+
+        '생산일자
+        Dim Production_date_width As Integer = 100
+        Dim Production_date_height As Integer = 40
+
+
+
+        '값표시란 크기
+        Dim print_width As Integer = 250
+        Dim print_height As Integer = 40
+
+
+        '전체 크기
+        Dim width As Integer = 430
+        Dim height As Integer = 300
+
+
+        '내용 초기화 횐색으로 덮음
+        Dim Fill_rect As New Rectangle(x, y, width, height)
+        e.Graphics.FillRectangle(Brushes.White, Fill_rect)
+
+        Dim font As New Font("맑은 고딕", 20, FontStyle.Bold) '제목
+        Dim font1 As New Font("IDAutomationHC39M Free Version", 8) '바코드폰트
+        Dim font2 As New Font("맑은 고딕", 15) '창고명, 비고
+        Dim font3 As New Font("맑은 고딕", 13) '창고명, 비고
+        '제목 칸
+        Dim rect As New Rectangle(x + barocde_width, y, xwidth, yheight)
+        '바코드 칸.
+        Dim rect1 As New Rectangle(-y - 240, -x + 2, barcode_height, barocde_width)
+
+        '창고명 칸
+        Dim rect2 As New Rectangle(x + barocde_width, yheight + y, name_width, name_height)
+        '창고명 출력 칸
+        Dim rect3 As New Rectangle(x + name_width + barocde_width, yheight + y, print_width, print_height)
+        '  규격 칸
+        Dim rect4 As New Rectangle(x + barocde_width, name_height + yheight + y, standard_width, standard_height)
+        ' 규격  출력 칸
+        Dim rect5 As New Rectangle(x + barocde_width + standard_width, name_height + yheight + y, print_width, print_height)
+
+        '  재질 칸
+        Dim rect6 As New Rectangle(x + barocde_width, standard_height + name_height + yheight + y, material_width, material_height)
+        ' 재질 출력 칸
+        Dim rect7 As New Rectangle(x + barocde_width + material_width, standard_height + name_height + yheight + y, print_width, print_height)
+
+        '수량 /중량칸
+        Dim rect8 As New Rectangle(x + barocde_width, material_height + standard_height + name_height + yheight + y, Quantity_weight_width, Quantity_weight_height)
+        '수량/중량 출력칸
+        Dim rect9 As New Rectangle(x + barocde_width + Quantity_weight_width, standard_height + material_height + name_height + yheight + y, print_width, print_height)
+
+        '생산일자
+        Dim rect10 As New Rectangle(x + barocde_width, Quantity_weight_height + material_height + standard_height + name_height + yheight + y, Production_date_width, Production_date_height)
+        '생산일자 출력칸
+        Dim rect11 As New Rectangle(x + barocde_width + Production_date_width, Quantity_weight_height + standard_height + material_height + name_height + yheight + y, print_width, print_height)
+
+
+
+
+
+
+        Dim strings As New StringFormat
+
+        strings.Alignment = StringAlignment.Center
+        strings.LineAlignment = StringAlignment.Center
+
+        e.Graphics.DrawRectangle(Pens.Black, rect)
+        e.Graphics.RotateTransform(-90.0F)
+        e.Graphics.DrawRectangle(Pens.Black, rect1)
+        e.Graphics.RotateTransform(90.0F)
+        e.Graphics.DrawRectangle(Pens.Black, rect2)
+        e.Graphics.DrawRectangle(Pens.Black, rect3)
+        e.Graphics.DrawRectangle(Pens.Black, rect4)
+        e.Graphics.DrawRectangle(Pens.Black, rect5)
+        e.Graphics.DrawRectangle(Pens.Black, rect6)
+        e.Graphics.DrawRectangle(Pens.Black, rect7)
+        e.Graphics.DrawRectangle(Pens.Black, rect8)
+        e.Graphics.DrawRectangle(Pens.Black, rect9)
+        e.Graphics.DrawRectangle(Pens.Black, rect10)
+        e.Graphics.DrawRectangle(Pens.Black, rect11)
+        e.Graphics.DrawString(temp.PS_CM & " 자재 TAG", font, Brushes.Black, rect, strings)
+        e.Graphics.RotateTransform(-90.0F)
+        e.Graphics.DrawString("*" & temp.psCode_sunCode & "*", font1, Brushes.Black, rect1, strings)
+        e.Graphics.RotateTransform(90.0F)
+        e.Graphics.DrawString("품명", font2, Brushes.Black, rect2, strings)
+        e.Graphics.DrawString(temp.PS_PL_Name, font2, Brushes.Black, rect3, strings)
+        e.Graphics.DrawString("규격", font2, Brushes.Black, rect4, strings)
+        e.Graphics.DrawString(temp.PS_Standard, font2, Brushes.Black, rect5, strings)
+        e.Graphics.DrawString("비고(재질)", font3, Brushes.Black, rect6, strings)
+        e.Graphics.DrawString(temp.PS_Bigo, font2, Brushes.Black, rect7, strings)
+        e.Graphics.DrawString("수량/중량", font3, Brushes.Black, rect8, strings)
+        e.Graphics.DrawString(temp.PS_PO_Total, font2, Brushes.Black, rect9, strings)
+        e.Graphics.DrawString("생산일자", font2, Brushes.Black, rect10, strings)
+        e.Graphics.DrawString(temp.PS_DAY, font2, Brushes.Black, rect11, strings)
+
+
+
+        If Me.pageNumber = MAX_PAGE_COUNT Then
+            'We have printed all the pages.
+            e.HasMorePages = False
+
+            'Reset the page number because if this is a preview and the user presses
+            'the Print button the printing routine will be executed a second time.
+            Me.pageNumber = 1
+        Else
+            'There are more pages to print.
+            e.HasMorePages = True
+
+            'Increment the page number.
+            Me.pageNumber += 1
+
+        End If
+
+
+    End Sub
+
+
+
+
+    Private Sub Print_bnt_Click(sender As Object, e As EventArgs) Handles Print_bnt.Click
+        PrintDialog1.Document = PrintDocument1
+        PrintDialog1.PrinterSettings = PrintDocument1.PrinterSettings
+        PrintDialog1.AllowSomePages = True
+        PrintDocument1.DefaultPageSettings.Landscape = True
+        If PrintDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
+            PrintDocument1.PrinterSettings = PrintDialog1.PrinterSettings
+            PrintDocument1.Print()
+
+            'MATERIAL_OUT 출력유무 변경
+            Dim temp As Frm_Stock.Pc_stock_print_data = barcode_ArrList.Item(Me.pageNumber - 1)
+            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+            StrSQL = StrSQL & "UPDATE [MATERIAL_OUT] SET MATERIAL_IN_PRT_NY = 'Y'
+                               WHERE MATERIAL_OUT_CODE = '" & temp.PS_CODE & "'"
+            Re_Count = DB_Execute()
+
+            Me.Close()
+        End If
+
+
+    End Sub
+
+    Private Sub back_page_Click(sender As Object, e As EventArgs) Handles back_page.Click
+        '페이지 변경
+        If now_page = 1 Then
+
+        Else
+            now_page = now_page - 1
+        End If
+        Label1.Text = "폐이지: " & now_page & "/" & barcode_ArrList.Count
+        PictureBox1_Paint_update()
+
+
+
+    End Sub
+
+    Private Sub next_page_Click(sender As Object, e As EventArgs) Handles next_page.Click
+        '페이지 변경
+        If now_page = barcode_ArrList.Count Then
+
+        Else
+            now_page = now_page + 1
+        End If
+        Label1.Text = "폐이지: " & now_page & "/" & barcode_ArrList.Count
+        PictureBox1_Paint_update()
+
+
+
+    End Sub
+
+    '이전페이지, 다음페이지 버튼에서 사용
+    Private Sub PictureBox1_Paint_update()
+
+
+
+        Dim e As Graphics = PictureBox1.CreateGraphics
+
+        '배열에서 값 가져오기
+        Dim temp As Frm_Stock.Pc_stock_print_data = barcode_ArrList.Item(now_page - 1)
+
+        Dim x As Integer = 1
+        Dim y As Integer = 1
+        '제목 칸 크기
+        Dim xwidth As Integer = 350
+        Dim yheight As Integer = 40
+        'BARCOD 칸 크기
+        Dim barocde_width As Integer = 80
+        Dim barcode_height As Integer = 240
+        '품명 
+        Dim name_width As Integer = 100
+        Dim name_height As Integer = 40
+        '규격
+        Dim standard_width As Integer = 100
+        Dim standard_height As Integer = 40
+        '재질
+        Dim material_width As Integer = 100
+        Dim material_height As Integer = 40
+        '수량/중량
+        Dim Quantity_weight_width As Integer = 100
+        Dim Quantity_weight_height As Integer = 40
+
+        '생산일자
+        Dim Production_date_width As Integer = 100
+        Dim Production_date_height As Integer = 40
+
+
+
+        '값표시란 크기
+        Dim print_width As Integer = 250
+        Dim print_height As Integer = 40
+
+
+        '전체 크기
+        Dim width As Integer = 430
+        Dim height As Integer = 300
+
+        '내용 초기화 횐색으로 덮음
+        Dim Fill_rect As New Rectangle(x, y, width, height)
+        e.FillRectangle(Brushes.White, Fill_rect)
+
+        Dim font As New Font("맑은 고딕", 20, FontStyle.Bold) '제목
+        Dim font1 As New Font("IDAutomationHC39M Free Version", 8) '바코드폰트
+        Dim font2 As New Font("맑은 고딕", 15) '창고명, 비고
+        Dim font3 As New Font("맑은 고딕", 12) '창고명, 비고
+        '제목 칸
+        Dim rect As New Rectangle(x + barocde_width, y, xwidth, yheight)
+        '바코드 칸.
+        Dim rect1 As New Rectangle(-y - 240, -x + 2, barcode_height, barocde_width)
+        '창고명 칸
+        Dim rect2 As New Rectangle(x + barocde_width, yheight + y, name_width, name_height)
+        '창고명 출력 칸
+        Dim rect3 As New Rectangle(x + name_width + barocde_width, yheight + y, print_width, print_height)
+        '  규격 칸
+        Dim rect4 As New Rectangle(x + barocde_width, name_height + yheight + y, standard_width, standard_height)
+        ' 규격  출력 칸
+        Dim rect5 As New Rectangle(x + barocde_width + standard_width, name_height + yheight + y, print_width, print_height)
+
+        '  재질 칸
+        Dim rect6 As New Rectangle(x + barocde_width, standard_height + name_height + yheight + y, material_width, material_height)
+        ' 재질 출력 칸
+        Dim rect7 As New Rectangle(x + barocde_width + material_width, standard_height + name_height + yheight + y, print_width, print_height)
+
+        '수량 /중량칸
+        Dim rect8 As New Rectangle(x + barocde_width, material_height + standard_height + name_height + yheight + y, Quantity_weight_width, Quantity_weight_height)
+        '수량/중량 출력칸
+        Dim rect9 As New Rectangle(x + barocde_width + Quantity_weight_width, standard_height + material_height + name_height + yheight + y, print_width, print_height)
+
+        '생산일자
+        Dim rect10 As New Rectangle(x + barocde_width, Quantity_weight_height + material_height + standard_height + name_height + yheight + y, Production_date_width, Production_date_height)
+        '생산일자 출력칸
+        Dim rect11 As New Rectangle(x + barocde_width + Production_date_width, Quantity_weight_height + standard_height + material_height + name_height + yheight + y, print_width, print_height)
+
+
+
+
+
+
+        Dim strings As New StringFormat
+
+        strings.Alignment = StringAlignment.Center
+        strings.LineAlignment = StringAlignment.Center
+
+        e.DrawRectangle(Pens.Black, rect)
+        e.RotateTransform(-90.0F)
+        e.DrawRectangle(Pens.Black, rect1)
+        e.RotateTransform(90.0F)
+        e.DrawRectangle(Pens.Black, rect2)
+        e.DrawRectangle(Pens.Black, rect3)
+        e.DrawRectangle(Pens.Black, rect4)
+        e.DrawRectangle(Pens.Black, rect5)
+        e.DrawRectangle(Pens.Black, rect6)
+        e.DrawRectangle(Pens.Black, rect7)
+        e.DrawRectangle(Pens.Black, rect8)
+        e.DrawRectangle(Pens.Black, rect9)
+        e.DrawRectangle(Pens.Black, rect10)
+        e.DrawRectangle(Pens.Black, rect11)
+        e.DrawString(temp.PS_CM & " 자재 TAG", font, Brushes.Black, rect, strings)
+        e.RotateTransform(-90.0F)
+        e.DrawString("*" & temp.psCode_sunCode & "*", font1, Brushes.Black, rect1, strings)
+        e.RotateTransform(90.0F)
+        e.DrawString("품명", font2, Brushes.Black, rect2, strings)
+        e.DrawString(temp.PS_PL_Name, font2, Brushes.Black, rect3, strings)
+        e.DrawString("규격", font2, Brushes.Black, rect4, strings)
+        e.DrawString(temp.PS_Standard, font2, Brushes.Black, rect5, strings)
+        e.DrawString("재질", font2, Brushes.Black, rect6, strings)
+        e.DrawString(temp.PS_Bigo, font2, Brushes.Black, rect7, strings)
+        e.DrawString("수량/중량", font3, Brushes.Black, rect8, strings)
+        e.DrawString(temp.PS_PO_Total, font2, Brushes.Black, rect9, strings)
+        e.DrawString("생산일자", font2, Brushes.Black, rect10, strings)
+        e.DrawString(temp.PS_DAY, font2, Brushes.Black, rect11, strings)    'STORAGE_
+    End Sub
+
+    'paint 생성시 사용
+    Private Sub PictureBox1_Paint_update(e As PaintEventArgs)
+
+        '배열에서 값 가져오기
+        Dim temp As Frm_Stock.Pc_stock_print_data = barcode_ArrList.Item(now_page - 1)
+
+        Dim x As Integer = 1
+        Dim y As Integer = 1
+        '제목 칸 크기
+        Dim xwidth As Integer = 350
+        Dim yheight As Integer = 40
+        'BARCOD 칸 크기
+        Dim barocde_width As Integer = 80
+        Dim barcode_height As Integer = 240
+        '품명 
+        Dim name_width As Integer = 100
+        Dim name_height As Integer = 40
+        '규격
+        Dim standard_width As Integer = 100
+        Dim standard_height As Integer = 40
+        '재질
+        Dim material_width As Integer = 100
+        Dim material_height As Integer = 40
+        '수량/중량
+        Dim Quantity_weight_width As Integer = 100
+        Dim Quantity_weight_height As Integer = 40
+
+        '생산일자
+        Dim Production_date_width As Integer = 100
+        Dim Production_date_height As Integer = 40
+
+
+
+        '값표시란 크기
+        Dim print_width As Integer = 250
+        Dim print_height As Integer = 40
+
+
+        '전체 크기
+        Dim width As Integer = 430
+        Dim height As Integer = 300
+
+
+        '내용 초기화 횐색으로 덮음
+        Dim Fill_rect As New Rectangle(x, y, width, height)
+        e.Graphics.FillRectangle(Brushes.White, Fill_rect)
+
+        Dim font As New Font("맑은 고딕", 20, FontStyle.Bold) '제목
+        Dim font1 As New Font("IDAutomationHC39M Free Version", 8) '바코드폰트
+        Dim font2 As New Font("맑은 고딕", 15) '창고명, 비고
+        Dim font3 As New Font("맑은 고딕", 13) '창고명, 비고
+        '제목 칸
+        Dim rect As New Rectangle(x + barocde_width, y, xwidth, yheight)
+        '바코드 칸.
+        Dim rect1 As New Rectangle(-y - 240, -x + 2, barcode_height, barocde_width)
+
+        '창고명 칸
+        Dim rect2 As New Rectangle(x + barocde_width, yheight + y, name_width, name_height)
+        '창고명 출력 칸
+        Dim rect3 As New Rectangle(x + name_width + barocde_width, yheight + y, print_width, print_height)
+        '  규격 칸
+        Dim rect4 As New Rectangle(x + barocde_width, name_height + yheight + y, standard_width, standard_height)
+        ' 규격  출력 칸
+        Dim rect5 As New Rectangle(x + barocde_width + standard_width, name_height + yheight + y, print_width, print_height)
+
+        '  재질 칸
+        Dim rect6 As New Rectangle(x + barocde_width, standard_height + name_height + yheight + y, material_width, material_height)
+        ' 재질 출력 칸
+        Dim rect7 As New Rectangle(x + barocde_width + material_width, standard_height + name_height + yheight + y, print_width, print_height)
+
+        '수량 /중량칸
+        Dim rect8 As New Rectangle(x + barocde_width, material_height + standard_height + name_height + yheight + y, Quantity_weight_width, Quantity_weight_height)
+        '수량/중량 출력칸
+        Dim rect9 As New Rectangle(x + barocde_width + Quantity_weight_width, standard_height + material_height + name_height + yheight + y, print_width, print_height)
+
+        '생산일자
+        Dim rect10 As New Rectangle(x + barocde_width, Quantity_weight_height + material_height + standard_height + name_height + yheight + y, Production_date_width, Production_date_height)
+        '생산일자 출력칸
+        Dim rect11 As New Rectangle(x + barocde_width + Production_date_width, Quantity_weight_height + standard_height + material_height + name_height + yheight + y, print_width, print_height)
+
+
+
+
+
+
+        Dim strings As New StringFormat
+
+        strings.Alignment = StringAlignment.Center
+        strings.LineAlignment = StringAlignment.Center
+
+        e.Graphics.DrawRectangle(Pens.Black, rect)
+        e.Graphics.RotateTransform(-90.0F)
+        e.Graphics.DrawRectangle(Pens.Black, rect1)
+        e.Graphics.RotateTransform(90.0F)
+        e.Graphics.DrawRectangle(Pens.Black, rect2)
+        e.Graphics.DrawRectangle(Pens.Black, rect3)
+        e.Graphics.DrawRectangle(Pens.Black, rect4)
+        e.Graphics.DrawRectangle(Pens.Black, rect5)
+        e.Graphics.DrawRectangle(Pens.Black, rect6)
+        e.Graphics.DrawRectangle(Pens.Black, rect7)
+        e.Graphics.DrawRectangle(Pens.Black, rect8)
+        e.Graphics.DrawRectangle(Pens.Black, rect9)
+        e.Graphics.DrawRectangle(Pens.Black, rect10)
+        e.Graphics.DrawRectangle(Pens.Black, rect11)
+        e.Graphics.DrawString(temp.PS_CM & " 자재 TAG", font, Brushes.Black, rect, strings)
+        e.Graphics.RotateTransform(-90.0F)
+        e.Graphics.DrawString("*" & temp.psCode_sunCode & "*", font1, Brushes.Black, rect1, strings)
+        e.Graphics.RotateTransform(90.0F)
+        e.Graphics.DrawString("품명", font2, Brushes.Black, rect2, strings)
+        e.Graphics.DrawString(temp.PS_PL_Name, font2, Brushes.Black, rect3, strings)
+        e.Graphics.DrawString("규격", font2, Brushes.Black, rect4, strings)
+        e.Graphics.DrawString(temp.PS_Standard, font2, Brushes.Black, rect5, strings)
+        e.Graphics.DrawString("비고(재질)", font3, Brushes.Black, rect6, strings)
+        e.Graphics.DrawString(temp.PS_Bigo, font2, Brushes.Black, rect7, strings)
+        e.Graphics.DrawString("수량/중량", font2, Brushes.Black, rect8, strings)
+        e.Graphics.DrawString(temp.PS_PO_Total, font2, Brushes.Black, rect9, strings)
+        e.Graphics.DrawString("생산일자", font2, Brushes.Black, rect10, strings)
+        e.Graphics.DrawString(temp.PS_DAY, font2, Brushes.Black, rect11, strings)
+
+    End Sub
+
+End Class

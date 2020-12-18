@@ -1,0 +1,182 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+
+Public Class Frm_PD_Report2
+
+    Private Sub Frm_Contract_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        me.dock = dockstyle.fill
+        me.bringtofront()
+        panel1.top = 40
+        panel1.left = 10
+        panel_list.top = 45
+        panel_list.left = 10
+
+        panel_list.visible = false
+        panel1.visible = true
+
+
+        dim dbt as datatable
+        dbt = Nothing
+
+        StrSQL = "select a1,a19,a16,a4,a8
+           from  test with(nolock) "
+
+        Re_Count = db_select(dbt)
+        DataGridView2.DataSource = dbt
+
+    End Sub
+    Private Sub Grid_CR_Load()
+
+        'Dim i As Integer
+
+
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT * FROM Contract where CR_Code != ''"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView1.RowCount = 0
+
+        'If Re_Count > 0 Then
+        '    DataGridView1.RowCount = Re_Count
+        '    For i = 0 To DataGridView1.RowCount - 1
+
+        '        DataGridView1.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString 'CR NO
+        '        DataGridView1.Rows(i).Cells("CRS_Code").Value = DBT.Rows(i)("CRS_Code").ToString 'CRS NO
+        '        DataGridView1.Rows(i).Cells("CR_Name").Value = DBT.Rows(i)("CR_Name").ToString '공정명
+        '        DataGridView1.Rows(i).Cells("CR_Customer_Name").Value = DBT.Rows(i)("CR_Customer_Name").ToString '발주처
+        '        DataGridView1.Rows(i).Cells("CR_Condition").Value = DBT.Rows(i)("CR_Condition").ToString '계약형태
+        '        DataGridView1.Rows(i).Cells("CRS_Announcement").Value = DBT.Rows(i)("CRS_Announcement").ToString '공고번호
+        '        DataGridView1.Rows(i).Cells("CR_Manager_CR").Value = DBT.Rows(i)("CR_Manager_CR").ToString '영업팀담당자
+        '        DataGridView1.Rows(i).Cells("CR_Manager_PO").Value = DBT.Rows(i)("CR_Manager_PO").ToString '공정관리자
+        '        DataGridView1.Rows(i).Cells("CR_Date_Order").Value = DBT.Rows(i)("CR_Date_Order").ToString '제조의뢰일
+        '        DataGridView1.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString '계약일
+        '        DataGridView1.Rows(i).Cells("CR_Day_Reg_Fsh").Value = DBT.Rows(i)("CR_Day_Reg_Fsh").ToString '계약납기일
+        '        DataGridView1.Rows(i).Cells("CR_Date_Plan").Value = DBT.Rows(i)("CR_Date_Plan").ToString '목표납기일
+        '        DataGridView1.Rows(i).Cells("CR_Gold").Value = DBT.Rows(i)("CR_Gold").ToString '계약금액
+        '        DataGridView1.Rows(i).Cells("CRS_Grade").Value = DBT.Rows(i)("CRS_Grade1").ToString + " / " + DBT.Rows(i)("CRS_Grade2").ToString + " / " + DBT.Rows(i)("CRS_Grade3").ToString '등급
+
+        '    Next
+        'End If
+        'DataGridView1.ClearSelection()
+
+    End Sub
+
+
+    Private Sub CS_Lode()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT CS_JOB_Code, CS_ID, CS_Spec, CS_Size, CS_Inven_Qty, CS_Bigo
+                  FROM CM_Stock 
+                   order by CS_JOB_Code"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView2.DataSource = DBT
+        DataGridView2.ClearSelection()
+    End Sub
+
+    Private Sub Button18_Click(sender As Object, e As EventArgs) Handles Button18.Click
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT CS_JOB_Code, CS_ID, CS_Spec, CS_Size, CS_Inven_Qty, CS_Bigo
+        '          FROM CM_Stock where CS_JOB_Code Like '%" & TextBox12.Text & "%'
+        '           order by CS_JOB_Code"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView2.DataSource = DBT
+        'DataGridView2.ClearSelection()
+    End Sub
+
+    Private Sub Button17_Click(sender As Object, e As EventArgs) Handles Button17.Click
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT CS_JOB_Code, CS_ID, CS_Spec, CS_Size, CS_Inven_Qty, CS_Bigo
+        '          FROM CM_Stock where CS_ID Like '%" & TextBox13.Text & "%'
+        '           order by CS_JOB_Code"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView2.DataSource = DBT
+        'DataGridView2.ClearSelection()
+    End Sub
+
+    Private Sub Button19_Click(sender As Object, e As EventArgs) Handles Button19.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT CS_JOB_Code, CS_ID, CS_Spec, CS_Size, CS_Inven_Qty, CS_Bigo
+                  FROM CM_Stock where CS_Bigo Like '%" & TextBox14.Text & "%'
+                   order by CS_JOB_Code"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView2.DataSource = DBT
+        DataGridView2.ClearSelection()
+    End Sub
+
+    Private Sub DataGridView2_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellContentClick
+
+    End Sub
+
+    'Private Sub DataGridView2_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellDoubleClick
+    '    Label_Color(Com_Excel, Color_Label, Di_Panel2)
+    '    Panel1.Visible = False
+    '    Panel52.Visible = True
+
+    '    Dim DBT As DataTable
+    '    DBT = Nothing
+
+    '    StrSQL = "SELECT * FROM CM_Stock where CS_ID = '" & DataGridView2.Rows(e.RowIndex).Cells("CS_ID").Value.ToString & "'"
+    '    Re_Count = DB_Select(DBT)
+
+    '    TextBox121.Text = DBT.Rows(0)("CS_JOB_Code").ToString
+    '    DateTimePicker9.Text = DBT.Rows(0)("CS_Date").ToString
+    '    TextBox115.Text = DBT.Rows(0)("CS_ID").ToString
+    '    ComboBox2.Text = DBT.Rows(0)("CS_Spec").ToString
+    '    TextBox2.Text = DBT.Rows(0)("CS_Size").ToString
+    '    TextBox114.Text = DBT.Rows(0)("CS_Qty").ToString
+    '    TextBox5.Text = DBT.Rows(0)("CS_Inven_Qty").ToString
+    '    TextBox3.Text = System.IO.Path.GetFileName(DBT.Rows(0)("CS_File").ToString)
+    '    TextBox1.Text = DBT.Rows(0)("CS_File").ToString
+    '    ComboBox1.Text = DBT.Rows(0)("CS_Bigo").ToString
+    '    CS_List_Lode()
+    'End Sub
+    'Private Sub CS_List_Lode()
+    '    Dim DBT As DataTable
+    '    DBT = Nothing
+
+    '    StrSQL = "SELECT CS_Date, CS_JOB_Code, CS_ID, CS_Spec, CS_Size, CS_Qty,
+    '              CS_Inven_Qty FROM CM_Stock where CS_JOB_Code = '" & DataGridView2.Rows(DataGridView2.CurrentCellAddress.Y).Cells("CS_JOB_Code").Value.ToString & "'"
+    '    Re_Count = DB_Select(DBT)
+
+    '    DataGridView5.DataSource = DBT
+    '    DataGridView5.ClearSelection()
+
+    '    For i = 0 To Re_Count - 1
+    '        DataGridView5.Rows(i).Cells("no2").Value = i + 1
+    '    Next
+    'End Sub
+
+    'Private Sub DataGridView5_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView5.CellClick
+    '    Dim DBT As DataTable
+    '    DBT = Nothing
+
+    '    StrSQL = "SELECT * FROM CM_Stock where CS_JOB_Code = '" & DataGridView5.Rows(DataGridView5.CurrentRow.Index).Cells("CS_List_JOB_Code").Value.ToString & "' AND 
+    '              CS_ID = '" & DataGridView5.Rows(DataGridView5.CurrentRow.Index).Cells("CS_List_ID").Value.ToString & "'"
+    '    Re_Count = DB_Select(DBT)
+
+
+    '    TextBox121.Text = DBT.Rows(0)("CS_JOB_Code").ToString
+    '    DateTimePicker9.Text = DBT.Rows(0)("CS_Date").ToString
+    '    TextBox115.Text = DBT.Rows(0)("CS_ID").ToString
+    '    TextBox2.Text = DBT.Rows(0)("CS_Spec").ToString
+    '    TextBox114.Text = DBT.Rows(0)("CS_Qty").ToString
+    '    TextBox5.Text = DBT.Rows(0)("CS_Inven_Qty").ToString
+    '    TextBox3.Text = System.IO.Path.GetFileName(DBT.Rows(0)("CS_File").ToString)
+    '    TextBox1.Text = DBT.Rows(0)("CS_JOB_Code").ToString
+    '    TextBox120.Text = DBT.Rows(0)("CS_JOB_Code").ToString
+    '    ComboBox1.Text = DBT.Rows(0)("CS_JOB_Code").ToString
+    '    ComboBox2.Text = DBT.Rows(0)("CS_JOB_Code").ToString
+    'End Sub
+End Class

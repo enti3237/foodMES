@@ -1,0 +1,208 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_CC_Report2
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.Panel24 = New System.Windows.Forms.Panel()
+        Me.Grid_Main = New System.Windows.Forms.DataGridView()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.TextBox17 = New System.Windows.Forms.TextBox()
+        Me.Button15 = New System.Windows.Forms.Button()
+        Me.TextBox18 = New System.Windows.Forms.TextBox()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.DL_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DL_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DL_Customer_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DL_Total = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DL_Date1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DL_Gold1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        CType(Me.Grid_Main, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel1.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'Panel24
+        '
+        Me.Panel24.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel24.Location = New System.Drawing.Point(18, 106)
+        Me.Panel24.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel24.Name = "Panel24"
+        Me.Panel24.Size = New System.Drawing.Size(1829, 1)
+        Me.Panel24.TabIndex = 70
+        '
+        'Grid_Main
+        '
+        Me.Grid_Main.AllowUserToAddRows = False
+        Me.Grid_Main.AllowUserToDeleteRows = False
+        Me.Grid_Main.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Grid_Main.BackgroundColor = System.Drawing.Color.White
+        Me.Grid_Main.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.Grid_Main.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DL_Code, Me.DL_Name, Me.DL_Customer_Name, Me.DL_Total, Me.DL_Date1, Me.DL_Gold1})
+        Me.Grid_Main.Location = New System.Drawing.Point(18, 129)
+        Me.Grid_Main.Margin = New System.Windows.Forms.Padding(2)
+        Me.Grid_Main.Name = "Grid_Main"
+        Me.Grid_Main.ReadOnly = True
+        Me.Grid_Main.RowHeadersVisible = False
+        Me.Grid_Main.RowHeadersWidth = 62
+        Me.Grid_Main.RowTemplate.Height = 30
+        Me.Grid_Main.Size = New System.Drawing.Size(1829, 915)
+        Me.Grid_Main.TabIndex = 71
+        '
+        'Button14
+        '
+        Me.Button14.BackColor = System.Drawing.Color.White
+        Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button14.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button14.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button14.Location = New System.Drawing.Point(1674, 56)
+        Me.Button14.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(171, 34)
+        Me.Button14.TabIndex = 298
+        Me.Button14.Text = "공정명 검색"
+        Me.Button14.UseVisualStyleBackColor = False
+        '
+        'TextBox17
+        '
+        Me.TextBox17.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox17.Location = New System.Drawing.Point(1496, 58)
+        Me.TextBox17.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox17.Name = "TextBox17"
+        Me.TextBox17.Size = New System.Drawing.Size(171, 29)
+        Me.TextBox17.TabIndex = 297
+        '
+        'Button15
+        '
+        Me.Button15.BackColor = System.Drawing.Color.White
+        Me.Button15.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button15.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button15.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button15.Location = New System.Drawing.Point(1674, 16)
+        Me.Button15.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Button15.Name = "Button15"
+        Me.Button15.Size = New System.Drawing.Size(171, 34)
+        Me.Button15.TabIndex = 296
+        Me.Button15.Text = "JOB NO 검색"
+        Me.Button15.UseVisualStyleBackColor = False
+        '
+        'TextBox18
+        '
+        Me.TextBox18.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox18.Location = New System.Drawing.Point(1496, 18)
+        Me.TextBox18.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.TextBox18.Name = "TextBox18"
+        Me.TextBox18.Size = New System.Drawing.Size(171, 29)
+        Me.TextBox18.TabIndex = 295
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.TextBox18)
+        Me.Panel1.Controls.Add(Me.Button14)
+        Me.Panel1.Controls.Add(Me.Panel24)
+        Me.Panel1.Controls.Add(Me.TextBox17)
+        Me.Panel1.Controls.Add(Me.Grid_Main)
+        Me.Panel1.Controls.Add(Me.Button15)
+        Me.Panel1.Location = New System.Drawing.Point(11, 50)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1897, 1084)
+        Me.Panel1.TabIndex = 299
+        '
+        'DL_Code
+        '
+        Me.DL_Code.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DL_Code.DataPropertyName = "a1"
+        Me.DL_Code.HeaderText = "JOB DL NO"
+        Me.DL_Code.Name = "DL_Code"
+        Me.DL_Code.ReadOnly = True
+        '
+        'DL_Name
+        '
+        Me.DL_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DL_Name.DataPropertyName = "a13"
+        Me.DL_Name.HeaderText = "공정명"
+        Me.DL_Name.Name = "DL_Name"
+        Me.DL_Name.ReadOnly = True
+        '
+        'DL_Customer_Name
+        '
+        Me.DL_Customer_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DL_Customer_Name.DataPropertyName = "a17"
+        Me.DL_Customer_Name.HeaderText = "업체명"
+        Me.DL_Customer_Name.Name = "DL_Customer_Name"
+        Me.DL_Customer_Name.ReadOnly = True
+        '
+        'DL_Total
+        '
+        Me.DL_Total.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DL_Total.DataPropertyName = "a21"
+        Me.DL_Total.HeaderText = "계약금액"
+        Me.DL_Total.Name = "DL_Total"
+        Me.DL_Total.ReadOnly = True
+        '
+        'DL_Date1
+        '
+        Me.DL_Date1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DL_Date1.DataPropertyName = "a3"
+        Me.DL_Date1.HeaderText = "납기일"
+        Me.DL_Date1.Name = "DL_Date1"
+        Me.DL_Date1.ReadOnly = True
+        '
+        'DL_Gold1
+        '
+        Me.DL_Gold1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.DL_Gold1.DataPropertyName = "a21"
+        Me.DL_Gold1.HeaderText = "금액"
+        Me.DL_Gold1.Name = "DL_Gold1"
+        Me.DL_Gold1.ReadOnly = True
+        '
+        'Frm_CC_Report2
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Panel1)
+        Me.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Name = "Frm_CC_Report2"
+        Me.Size = New System.Drawing.Size(1943, 856)
+        CType(Me.Grid_Main, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Panel24 As Panel
+    Friend WithEvents Grid_Main As DataGridView
+    Friend WithEvents Button14 As Button
+    Friend WithEvents TextBox17 As TextBox
+    Friend WithEvents Button15 As Button
+    Friend WithEvents TextBox18 As TextBox
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents DL_Code As DataGridViewTextBoxColumn
+    Friend WithEvents DL_Name As DataGridViewTextBoxColumn
+    Friend WithEvents DL_Customer_Name As DataGridViewTextBoxColumn
+    Friend WithEvents DL_Total As DataGridViewTextBoxColumn
+    Friend WithEvents DL_Date1 As DataGridViewTextBoxColumn
+    Friend WithEvents DL_Gold1 As DataGridViewTextBoxColumn
+End Class

@@ -1,0 +1,73 @@
+﻿Public Class UCFrm3
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        ShowFileOpenDialog(1)
+    End Sub
+
+    Private Sub ShowFileOpenDialog(num As Integer)
+        '전체경로
+        Dim filename As String
+        '파일이름
+        Dim filename2 As String
+        '파일경로
+        Dim filepath As String
+
+        OpenFileDialog1.ShowDialog()
+
+        filename = OpenFileDialog1.FileName
+        filename2 = filename.Substring(filename.LastIndexOf("\") + 1)
+        If filename.Length > 0 Then
+            filepath = filename.Replace(filename2, "")
+        End If
+
+        If num = 1 Then
+            TextBox6.Text = filename2
+            TextBox5.Text = filename
+        End If
+
+        OpenFileDialog1.FileName = ""
+
+    End Sub
+
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+        CheckChang()
+    End Sub
+
+    Private Sub CheckChang()
+        If CheckBox1.Checked = True Then
+            '인수검사의뢰서
+            TextBox12.Text = "RIR-19-"
+        End If
+
+        If CheckBox1.Checked = False Then
+            '인수검사의뢰서
+            TextBox12.Text = ""
+        End If
+    End Sub
+
+    Private Sub UCFrm3_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        '기본정보
+        Panel1.Top = 30
+        Panel1.Left = 10
+        '인수검사진행사항
+        Panel3.Top = 40
+        Panel3.Left = 10
+
+        Panel1.Visible = True
+        Panel3.Visible = False
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles Com_Contract.Click
+        Label_Color(sender, Label16, Di_Panel2)
+        Panel1.Visible = True
+        Panel3.Visible = False
+    End Sub
+
+    Private Sub Com_DRW1_Click(sender As Object, e As EventArgs) Handles Com_DRW1.Click
+        Label_Color(sender, Label16, Di_Panel2)
+        Panel3.Visible = True
+        Panel1.Visible = False
+    End Sub
+End Class

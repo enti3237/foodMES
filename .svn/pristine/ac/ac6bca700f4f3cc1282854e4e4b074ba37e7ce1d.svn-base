@@ -1,0 +1,136 @@
+﻿Public Class Frm_Insert
+
+    Private Sub Cancel_Com_Click(sender As Object, e As EventArgs) Handles Cancel_Com.Click
+
+        Me.Close()
+
+    End Sub
+
+    Private Sub Insert_Com_Click(sender As Object, e As EventArgs) Handles Insert_Com.Click
+        Dim DBT As New DataTable
+        If Me.Text = "생산라인 코드 추가" Then
+            If Len(Search_Text.Text) = 3 Then
+            Else
+                MsgBox("코드값은 3자리 숫자로 입력하세요.")
+                Exit Sub
+            End If
+            StrSQL = "Select * From Device with(NOLOCK) Where PL_Code = '" & Search_Text.Text & "'"
+            Re_Count = DB_Select(DBT)
+            If Re_Count = 0 Then
+                '추가한다
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "Insert into Device (PL_Code, PL_COUNT)  Values ('" & Search_Text.Text & "', '0')"
+                Re_Count = DB_Execute()
+                '다시 보여 준다
+                Me.Close()
+            Else
+                '생산
+                MsgBox("생산라인 코드 '" & Search_Text.Text & "'는 '" & DBT.Rows(0).Item(1) & "' 로 등록 되어 있습니다.")
+                Exit Sub
+            End If
+        End If
+
+        If Me.Text = "공정 코드 추가" Then
+            If Len(Search_Text.Text) = 2 Then
+            Else
+                MsgBox("코드값은 2자리 숫자로 입력하세요.")
+                Exit Sub
+            End If
+            StrSQL = "Select * From Process with(NOLOCK) Where PC_Code = '" & Search_Text.Text & "'"
+            Re_Count = DB_Select(DBT)
+            If Re_Count = 0 Then
+                '추가한다
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "Insert into Process (PC_Code)  Values ('" & Search_Text.Text & "')"
+                Re_Count = DB_Execute()
+                '다시 보여 준다
+                Me.Close()
+            Else
+                '생산
+                MsgBox("공정 코드 '" & Search_Text.Text & "'는 '" & DBT.Rows(0).Item(1) & "' 로 등록 되어 있습니다.")
+                Exit Sub
+            End If
+        End If
+
+        If Me.Text = "제품 코드 추가" Then
+            'If Len(Search_Text.Text) < 1 Then
+            '    MsgBox("코드값을 입력하세요.")
+            '    Exit Sub
+
+            If Len(Search_Text.Text) <> 5 Then
+                MsgBox("코드값은 5자리 숫자로 입력하세요.")
+                Exit Sub
+            End If
+
+            StrSQL = "Select * From Product with(NOLOCK) Where PL_Code = '" & Search_Text.Text & "'"
+            Re_Count = DB_Select(DBT)
+            If Re_Count = 0 Then
+                '추가한다
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "Insert into Product (PL_Code)  Values ('" & Search_Text.Text & "')"
+                Re_Count = DB_Execute()
+
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "Insert into Temp (Temp)  Values ('" & Search_Text.Text & "')"
+                Re_Count = DB_Execute()
+                Me.Close()
+            Else
+                '생산
+                MsgBox("제품 코드 '" & Search_Text.Text & "'는 '" & DBT.Rows(0).Item(1) & "' 로 등록 되어 있습니다.")
+                Exit Sub
+            End If
+        End If
+
+        If Me.Text = "소모품 코드 추가" Then
+            'If Len(Search_Text.Text) < 1 Then
+            '    MsgBox("코드값을 입력하세요.")
+            '    Exit Sub
+
+            If Len(Search_Text.Text) <> 4 Then
+                MsgBox("코드값은 4자리 숫자로 입력하세요.")
+                Exit Sub
+            End If
+
+            StrSQL = "Select * From Product with(NOLOCK) Where PL_Code = '" & Search_Text.Text & "'"
+            Re_Count = DB_Select(DBT)
+            If Re_Count = 0 Then
+                '추가한다
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "Insert into Product (PL_Code, PL_SEL)  Values ('" & Search_Text.Text & "','소모품')"
+                Re_Count = DB_Execute()
+
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "Insert into Temp (Temp)  Values ('" & Search_Text.Text & "')"
+                Re_Count = DB_Execute()
+                Me.Close()
+            Else
+                '생산
+                MsgBox("소모품 코드 '" & Search_Text.Text & "'는 '" & DBT.Rows(0).Item(1) & "' 로 등록 되어 있습니다.")
+                Exit Sub
+            End If
+        End If
+
+    End Sub
+
+
+    Private Sub Frm_Insert_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Search_Text.Text = ""
+
+    End Sub
+
+    Private Sub Frm_Insert_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Insert into Temp (Temp)  Values ('취소')"
+        Re_Count = DB_Execute()
+
+
+        Frm_Main.Enabled = True
+    End Sub
+
+    Private Sub Search_Text_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Search_Text.KeyPress
+        If Not Char.IsDigit(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+            MsgBox("문자는 입력할 수 없습니다.")
+        End If
+    End Sub
+End Class

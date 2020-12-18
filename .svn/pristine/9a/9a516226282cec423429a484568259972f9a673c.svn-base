@@ -1,0 +1,246 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_MJ_Report1
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.btnSearch = New System.Windows.Forms.Button()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.CR_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CRS_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Customer_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Condition = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CRS_Announcement = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CRS_Grade = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Gold = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.a22 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Manager_CR = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.TextBox16 = New System.Windows.Forms.TextBox()
+        Me.Search_Text = New System.Windows.Forms.TextBox()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel1.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'btnSearch
+        '
+        Me.btnSearch.BackColor = System.Drawing.Color.White
+        Me.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnSearch.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.btnSearch.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.btnSearch.Location = New System.Drawing.Point(1466, 45)
+        Me.btnSearch.Name = "btnSearch"
+        Me.btnSearch.Size = New System.Drawing.Size(150, 27)
+        Me.btnSearch.TabIndex = 302
+        Me.btnSearch.Text = "조회"
+        Me.btnSearch.UseVisualStyleBackColor = False
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.AllowUserToDeleteRows = False
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CR_Code, Me.CRS_Code, Me.CR_Name, Me.CR_Customer_Name, Me.CR_Condition, Me.CRS_Announcement, Me.CRS_Grade, Me.CR_Date, Me.CR_Gold, Me.a22, Me.CR_Manager_CR})
+        Me.DataGridView1.Location = New System.Drawing.Point(15, 99)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.ReadOnly = True
+        Me.DataGridView1.RowTemplate.Height = 23
+        Me.DataGridView1.Size = New System.Drawing.Size(1600, 732)
+        Me.DataGridView1.TabIndex = 303
+        '
+        'CR_Code
+        '
+        Me.CR_Code.DataPropertyName = "a1"
+        Me.CR_Code.HeaderText = "JOB No"
+        Me.CR_Code.Name = "CR_Code"
+        Me.CR_Code.ReadOnly = True
+        '
+        'CRS_Code
+        '
+        Me.CRS_Code.DataPropertyName = "a5"
+        Me.CRS_Code.HeaderText = "CRS No"
+        Me.CRS_Code.Name = "CRS_Code"
+        Me.CRS_Code.ReadOnly = True
+        '
+        'CR_Name
+        '
+        Me.CR_Name.DataPropertyName = "a13"
+        Me.CR_Name.HeaderText = "공정명"
+        Me.CR_Name.Name = "CR_Name"
+        Me.CR_Name.ReadOnly = True
+        Me.CR_Name.Width = 300
+        '
+        'CR_Customer_Name
+        '
+        Me.CR_Customer_Name.DataPropertyName = "a17"
+        Me.CR_Customer_Name.HeaderText = "발주처"
+        Me.CR_Customer_Name.Name = "CR_Customer_Name"
+        Me.CR_Customer_Name.ReadOnly = True
+        Me.CR_Customer_Name.Width = 250
+        '
+        'CR_Condition
+        '
+        Me.CR_Condition.DataPropertyName = "a18"
+        Me.CR_Condition.HeaderText = "계약형태"
+        Me.CR_Condition.Name = "CR_Condition"
+        Me.CR_Condition.ReadOnly = True
+        Me.CR_Condition.Width = 150
+        '
+        'CRS_Announcement
+        '
+        Me.CRS_Announcement.DataPropertyName = "a23"
+        Me.CRS_Announcement.HeaderText = "공고번호"
+        Me.CRS_Announcement.Name = "CRS_Announcement"
+        Me.CRS_Announcement.ReadOnly = True
+        '
+        'CRS_Grade
+        '
+        Me.CRS_Grade.DataPropertyName = "a20"
+        Me.CRS_Grade.HeaderText = "등급"
+        Me.CRS_Grade.Name = "CRS_Grade"
+        Me.CRS_Grade.ReadOnly = True
+        '
+        'CR_Date
+        '
+        Me.CR_Date.DataPropertyName = "a3"
+        Me.CR_Date.HeaderText = "계약일"
+        Me.CR_Date.Name = "CR_Date"
+        Me.CR_Date.ReadOnly = True
+        '
+        'CR_Gold
+        '
+        Me.CR_Gold.DataPropertyName = "a21"
+        Me.CR_Gold.HeaderText = "계약금액"
+        Me.CR_Gold.Name = "CR_Gold"
+        Me.CR_Gold.ReadOnly = True
+        '
+        'a22
+        '
+        Me.a22.DataPropertyName = "a22"
+        Me.a22.HeaderText = "구매여부"
+        Me.a22.Name = "a22"
+        Me.a22.ReadOnly = True
+        '
+        'CR_Manager_CR
+        '
+        Me.CR_Manager_CR.DataPropertyName = "a10"
+        Me.CR_Manager_CR.HeaderText = "영업담당자"
+        Me.CR_Manager_CR.Name = "CR_Manager_CR"
+        Me.CR_Manager_CR.ReadOnly = True
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.Label26)
+        Me.Panel1.Controls.Add(Me.Label22)
+        Me.Panel1.Controls.Add(Me.TextBox16)
+        Me.Panel1.Controls.Add(Me.Search_Text)
+        Me.Panel1.Controls.Add(Me.Panel2)
+        Me.Panel1.Controls.Add(Me.DataGridView1)
+        Me.Panel1.Controls.Add(Me.btnSearch)
+        Me.Panel1.Location = New System.Drawing.Point(10, 40)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1624, 877)
+        Me.Panel1.TabIndex = 304
+        '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel2.Location = New System.Drawing.Point(16, 85)
+        Me.Panel2.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(1600, 1)
+        Me.Panel2.TabIndex = 304
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(17, 54)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(53, 12)
+        Me.Label26.TabIndex = 387
+        Me.Label26.Text = "계약번호"
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(17, 24)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(45, 12)
+        Me.Label22.TabIndex = 386
+        Me.Label22.Text = "Job No"
+        '
+        'TextBox16
+        '
+        Me.TextBox16.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox16.Location = New System.Drawing.Point(73, 48)
+        Me.TextBox16.Name = "TextBox16"
+        Me.TextBox16.Size = New System.Drawing.Size(150, 25)
+        Me.TextBox16.TabIndex = 385
+        '
+        'Search_Text
+        '
+        Me.Search_Text.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Search_Text.Location = New System.Drawing.Point(73, 18)
+        Me.Search_Text.Name = "Search_Text"
+        Me.Search_Text.Size = New System.Drawing.Size(150, 25)
+        Me.Search_Text.TabIndex = 384
+        '
+        'Frm_MJ_Report1
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Panel1)
+        Me.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.Name = "Frm_MJ_Report1"
+        Me.Size = New System.Drawing.Size(1727, 958)
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.ResumeLayout(False)
+
+    End Sub
+    Friend WithEvents btnSearch As Button
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents CR_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CRS_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Customer_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Condition As DataGridViewTextBoxColumn
+    Friend WithEvents CRS_Announcement As DataGridViewTextBoxColumn
+    Friend WithEvents CRS_Grade As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Date As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Gold As DataGridViewTextBoxColumn
+    Friend WithEvents a22 As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Manager_CR As DataGridViewTextBoxColumn
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Label26 As Label
+    Friend WithEvents Label22 As Label
+    Friend WithEvents TextBox16 As TextBox
+    Friend WithEvents Search_Text As TextBox
+End Class

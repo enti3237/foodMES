@@ -1,0 +1,55 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Jun  1 17:56:07 2020
+
+카메라에서 이미지를 받아서 인식처리
+
+@author: USER
+"""
+
+
+
+import cv2
+import image_pro
+import time
+import os
+
+capture = cv2.VideoCapture(0)
+capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
+
+count = 0
+befor_temp = 0.0
+
+while True:
+    ret, frame = capture.read()
+    img = frame
+    try:
+        temp = image_pro.image_pro(img)
+    except:    # 카메라 인식불량
+        print('카메라 상태확인')
+        cv2.imwrite('err_img.png',frame)
+    
+    print(temp)
+    
+    #온도변화 감지시 해당온도 이미지 기록
+    if befor_temp != temp:
+        befor_temp = temp
+        
+        #온도이미지 폴더 생성
+        if not os.path.exists(os.getcwd() + '\img'):
+            os.makedirs(os.getcwd() + '\img')
+        #img폴더이 온도계 사진 저장
+        cv2.imwrite(os.getcwd() + '\img\\' + str(temp) + '.png',frame)
+        
+    time.sleep(1)
+    count = count + 1
+    if cv2.waitKey(1) > 0: break
+
+capture.release()
+cv2.destroyAllWindows()
+
+
+
+
+

@@ -1,0 +1,548 @@
+﻿Public Class Frm_CR_POP1
+
+    Dim fmtStr As New String(String.Format("yyyy-MM-dd")), fmtStr2 As New String(String.Format("yyyy-MM-dd HH:mm:ss"))
+
+    Private Function context_load()
+
+        Dim i As Integer
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = " SELECT " &
+                 " CR.CR_CODE CR_CODE, CR.CR_REV_NO CR_REV_NO, CR.CRS_CODE CRS_CODE " &
+                 " , CR.CR_DATE CR_DATE, CR.CR_DUE_DATE CR_DUE_DATE, CR.CR_ORDER_DATE CR_ORDER_DATE " &
+                 " , CR.CR_CUSTOMER_CODE CR_CUSTOMER_CODE " &
+                 " , (Select CM_NAME FROM COMPANY WHERE CR.CR_CUSTOMER_CODE <> '' AND CM_CODE = CR.CR_CUSTOMER_CODE) CR_CUSTOMER_NAME " &
+                 " , (SELECT CM_NAME FROM COMPANY WHERE CR.CR_ORDER_RECEIVED <> '' AND CM_CODE = CR.CR_ORDER_RECEIVED) CR_ORDER_RECEIVED_NAME " &
+                 " , CR.CR_NAME CR_NAME  ,CR.CR_ORDER_RECEIVED CR_ORDER_RECEIVED  ,CR.CR_ORDER_RECEIVE_DATE CR_ORDER_RECEIVE_DATE " &
+                 " , CR.CR_DATE CR_DATE " &
+                 " , CONCAT(CR.CR_CODE,  '/' , CONVERT(NVARCHAR(3),CR.CR_REV_NO) , '/' , CR.CR_DATE) CR_INFO " &
+                 " , CRL.CR_Sun CR_Sun, CRL.CR_List_Code CR_List_Code, CRL.CR_PL_Code CR_PL_Code, CRL.CR_PL_Name CR_PL_Name " &
+                 " , CASE WHEN DV.DV_CODE = '' THEN ''  ELSE DV.DV_INFO END DV_INFO " &
+                 " , CASE WHEN BOL.BO_CODE = '' THEN '' ELSE BOL.BO_INFO END BO_INFO " &
+                 " , BOL.BO_Itm_Code BO_Itm_Code, BOL.BO_Itm_Name BO_Itm_Name " &
+                 " , CASE WHEN LOL.LO_CODE = '' THEN '' ELSE LOL.LO_INFO END LO_INFO " &
+                 " , LOL.LO_List_Code LO_List_Code " &
+                 " , CASE WHEN CO.CO_CODE = '' THEN ''  ELSE CO.CO_INFO END CO_INFO " &
+                 " , COL.CO_List_Code CO_List_Code " &
+                 " , CASE WHEN CQ.CQ_CODE = '' THEN ''  ELSE CQ.CQ_INFO END CQ_INFO " &
+                 " , CQL.CQ_List_Code CQ_List_Code " &
+                 " , CASE WHEN PC.PC_CODE = '' THEN ''  ELSE PC.PC_INFO END PC_INFO " &
+                 " , PC.PC_CODE PC_CODE " &
+                 " , CASE WHEN PQ.PC_CODE = '' THEN ''  ELSE PQ.PQ_INFO END PQ_INFO " &
+                 " , PQ.QC_Check_Item_Code QC_Check_Item_Code " &
+                 " , DV.DV_CODE DV_CODE, DV.DV_REV_NO DV_REV_NO , BOL.BO_CODE BO_CODE, BOL.BO_REV_NO BO_REV_NO , LOL.LO_CODE LO_CODE, LOL.LO_REV_NO LO_REV_NO  " &
+                 " , CO.CO_CODE CO_CODE, CO.CO_REV_NO CO_REV_NO , CO.CO_DATE, CQ.CQ_CODE CQ_CODE, CQ.CQ_REV_NO CQ_REV_NO, CQ.CQ_WH_Date CQ_WH_Date, CQ.CQ_Date CQ_Date   " &
+                 " , CQ.CQ_Inspection_Receive_Date CQ_Inspection_Receive_Date, CQ.CQ_Inspection_Confirm_Date CQ_Inspection_Confirm_Date " &
+                 " , PC.PC_CODE PC_CODE " &
+                 " , (SELECT LO_ISSUE_DATE FROM LA_ORDER WHERE LO_CODE = LOL.LO_CODE And LO_REV_NO = LOL.LO_REV_NO) LO_ISSUE_DATE " &
+                 " , (SELECT LO_RECEIVE_DATE FROM LA_ORDER WHERE LO_CODE = LOL.LO_CODE And LO_REV_NO = LOL.LO_REV_NO) LO_RECEIVE_DATE " &
+                 " FROM CR_CONTRACT CR " &
+                 " OUTER APPLY ( SELECT CRL.CR_CODE, CRL.CR_REV_NO, CRL.CR_SUN, CRL.CR_List_Code, CRL.CR_PL_Code, CRL.CR_PL_Name FROM CR_CONTRACT_LIST CRL WHERE CR.CR_CODE = CRL.CR_CODE And CR.CR_REV_NO = CRL.CR_REV_NO ) CRL " &
+                 " OUTER APPLY ( SELECT DV.DV_CODE, DV.DV_REV_NO, DV.DV_DATE, CONCAT(DV.DV_CODE,  '/' , CONVERT(NVARCHAR(3),DV.DV_REV_NO) , '/' , DV.DV_DATE) DV_INFO  " &
+                 "               FROM DV_DRAWING DV  " &
+                 "               WHERE DV.DV_CR_CODE = CR.CR_CODE AND DV.DV_REV_NO = (SELECT ISNULL(MAX(DV_REV_NO),1) FROM DV_DRAWING WHERE DV_CODE = DV.DV_CODE)) DV   " &
+                 " OUTER APPLY ( SELECT BOL.BO_LIST_CODE, BOL.BO_CODE, BOL.BO_REV_NO, BOL.BO_SUN, BOL.BO_Itm_Code, BOL.BO_Itm_Name,  " &
+                 "               CONCAT(BOL.BO_CODE,  '/' , CONVERT(NVARCHAR(3),BOL.BO_REV_NO) , '/' , (SELECT BO_PREPARE_DATE FROM BO_BOM WHERE BO_CODE = BOL.BO_CODE AND BO_REV_NO = BOL.BO_REV_NO)) BO_INFO  " &
+                 "               FROM BO_BOM_LIST BOL  " &
+                 "               WHERE DV.DV_CODE = BOL.BO_DV_CODE  " &
+                 "               AND BOL.BO_REV_NO = (SELECT ISNULL(MAX(BO_REV_NO),1) FROM BO_BOM_LIST WHERE BO_CODE = BOL.BO_CODE) ) BOL " &
+                 " OUTER APPLY ( SELECT LOL.LO_CODE, LOL.LO_REV_NO, LOL.LO_SUN, LOL.LO_List_Code, LOL.LO_BO_LIST_CODE,  " &
+                 "               CONCAT(LOL.LO_CODE,  '/' , CONVERT(NVARCHAR(3),LOL.LO_REV_NO) , '/' , (SELECT LO_ISSUE_DATE FROM LA_ORDER WHERE LO_CODE = LOL.LO_CODE AND LO_REV_NO = LOL.LO_REV_NO)) LO_INFO  " &
+                 "               FROM LA_ORDER_LIST LOL  " &
+                 "               WHERE BOL.BO_LIST_CODE = LOL.LO_BO_LIST_CODE  " &
+                 "               AND LOL.LO_REV_NO = (SELECT ISNULL(MAX(LO_REV_NO),1) FROM LA_ORDER_LIST WHERE LO_CODE = LOL.LO_CODE)) LOL   " &
+                 " OUTER APPLY ( SELECT CO.CO_CODE, CO.CO_REV_NO,  CO.CO_DATE, " &
+                 "               CONCAT(CO.CO_CODE,  '/' , CONVERT(NVARCHAR(3),CO.CO_REV_NO) , '/' , (SELECT CO_DATE FROM CM_ORDER WHERE CO_CODE = CO.CO_CODE AND CO_REV_NO = CO.CO_REV_NO)) CO_INFO FROM CM_ORDER CO  " &
+                 "               WHERE LOL.LO_CODE = CO.CO_LO_CODE  " &
+                 "               AND CO.CO_REV_NO = (SELECT ISNULL(MAX(CO_REV_NO),1) FROM CM_ORDER WHERE CO_CODE = CO.CO_CODE)) CO " &
+                 " OUTER APPLY ( SELECT COL.CO_CODE, COL.CO_REV_NO, COL.CO_SUN, COL.CO_List_Code FROM CM_ORDER_LIST COL WHERE CO.CO_CODE = COL.CO_CODE AND CO.CO_REV_NO = COL.CO_REV_NO AND LOL.LO_List_Code = COL.CO_LO_List_Code) COL " &
+                 " OUTER APPLY ( SELECT CQ.CQ_CODE, CQ.CQ_REV_NO, CQ.CQ_WH_Date, CQ.CQ_Date, CQ.CQ_Inspection_Receive_Date, CQ.CQ_Inspection_Confirm_Date,  " &
+                 "               CONCAT(CQ.CQ_CODE,  '/' , CONVERT(NVARCHAR(3),CQ.CQ_REV_NO) , '/' , (SELECT CQ_DATE FROM CM_STOCK_QC WHERE CQ_CODE = CQ.CQ_CODE AND CQ_REV_NO = CQ.CQ_REV_NO)) CQ_INFO " &
+                 "               FROM CM_STOCK_QC CQ  " &
+                 "               WHERE CO.CO_CODE = CQ.CQ_CO_CODE  " &
+                 "               AND CQ.CQ_REV_NO = (SELECT ISNULL(MAX(CQ_REV_NO),1) FROM CM_STOCK_QC WHERE CQ_CODE = CQ.CQ_CODE) ) CQ " &
+                 " OUTER APPLY ( SELECT CQL.CQ_CODE, CQL.CQ_REV_NO, CQL.CQ_SUN, CQL.CQ_List_Code FROM CM_STOCK_QC_List CQL WHERE CQ.CQ_CODE = CQL.CQ_CODE AND CQ.CQ_Rev_No = CQL.CQ_Rev_No AND COL.CO_List_Code = CQL.CQ_CO_List_Code) CQL " &
+                 " OUTER APPLY ( SELECT PC.PC_CODE, PC.CL_CODE, PC.CL_REV_NO, PC.CL_SUN, CONCAT(PC.PC_CODE,  '/' , (SELECT SUBSTRING(MAX(PC_PREPARE_DATE),1,10) FROM PC_PROCESS WHERE CL_CODE = CR.CR_CODE AND CL_REV_NO = CR.CR_REV_NO)) PC_INFO FROM PC_PROCESS PC WHERE CR.CR_CODE = PC.CL_CODE AND CR.CR_REV_NO = PC.CL_REV_NO ) PC   " &
+                 " OUTER APPLY ( SELECT PQ.PC_CODE, PQ.CL_REV_NO, PQ.CL_SUN, PQ.QC_Check_Item_Code, CONCAT(PQ.PC_CODE, '/', (SELECT SUBSTRING(MAX(QC_PREPARE_DATE),1,10) FROM PC_QC_RESULT WHERE PQ.PC_CODE <> '' AND CL_CODE = CR.CR_CODE AND CL_REV_NO = CR.CR_REV_NO)) PQ_INFO FROM PC_QC_RESULT PQ WHERE PC.PC_CODE = PQ.PC_CODE ) PQ " &
+                 " WHERE 1=1 " &
+                 " AND CR.CR_CODE LIKE '%" & txtJobNo.Text & "%' " &
+                 " AND CR.CR_NAME LIKE '%" & txtJobName.Text & "%' " &
+                 " AND CR.CRS_Code LIKE '%" & txtCRSNo.Text & "%' " &
+                 " AND CR.CR_Customer_Code LIKE '%" & txtVendorCode.Text & "%' " &
+                 " AND convert(datetime,'" & dtpCRDateFrom.Value.ToString("yyyy-MM-dd") & "') <= CR.CR_Date and convert(datetime,'" & dtpCRDateTo.Value.ToString("yyyy-MM-dd") & "') >= CR.CR_Date " &
+                 " AND convert(datetime,'" & dtpCRDueDateFrom.Value.ToString("yyyy-MM-dd") & "') <= CR.CR_Due_Date and convert(datetime,'" & dtpCRDueDateTo.Value.ToString("yyyy-MM-dd") & "') >= CR.CR_Due_Date " &
+                 " AND CR.CR_REV_NO = (SELECT ISNULL(MAX(CR_REV_NO),1) FROM CR_CONTRACT WHERE CR_CODE = CR.CR_CODE) " &
+                 " ORDER BY CR.CR_CODE, CRL.CR_Sun, BOL.BO_Sun "
+
+        Console.WriteLine(StrSQL)
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            lstMoojinMain.DataSource = DBT
+            lstMoojinMain.ClearSelection()
+        End If
+
+    End Function
+
+    Private Sub Frm_CR_POP1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            txtJobNo.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Code").Value.ToString
+            txtJobName.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CR_Name").Value.ToString
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnCustomerSearch_Click(sender As Object, e As EventArgs) Handles btnCustomerSearch.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Customer_POP = New Frm_Customer_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) And pop1.DataGridView1.Rows.Count > 0 Then
+            cboDBT.Columns.Add("CM_Code")
+            cboDBT.Columns.Add("CM_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            txtVendorName.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            txtVendorCode.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Code").Value.ToString
+            cboCustomer2.SelectedValue = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Code").Value.ToString
+            cboCustomer2.DataSource = cboDBT
+            cboCustomer2.ValueMember = "CM_Code"
+            cboCustomer2.DisplayMember = "CM_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        context_load()
+    End Sub
+
+
+    Private Sub pnlUpdate()
+
+        '#1. 계약
+        btnSalesInd.Font = New Font(btnCRInd.Font.FontFamily, 9.75, FontStyle.Bold)
+        If btnCRInd.Text <> "" Then
+            btnSalesInd.BackColor = Color.White
+            btnSalesInd.ForeColor = Color.Blue
+            btnSalesInd.Text = "완료"
+        Else
+            btnSalesInd.BackColor = Color.Red
+            btnSalesInd.ForeColor = Color.White
+            btnSalesInd.Text = "진행"
+        End If
+
+        '#2. 구매
+        btnPrchsInd.Font = New Font(btnPrchsInd.Font.FontFamily, 9.75, FontStyle.Bold)
+        If btnCOInd.Text <> "" Then
+            btnPrchsInd.BackColor = Color.White
+            btnPrchsInd.ForeColor = Color.Blue
+            btnPrchsInd.Text = "완료"
+        Else
+            btnPrchsInd.BackColor = Color.Red
+            btnPrchsInd.ForeColor = Color.White
+            btnPrchsInd.Text = "진행"
+        End If
+
+        '#3. QA
+        btnQAInd.Font = New Font(btnQAInd.Font.FontFamily, 9.75, FontStyle.Bold)
+        If btnRecvInsp.Text <> "" And btnMTItmInspInd.Text <> "" Then
+            btnQAInd.BackColor = Color.White
+            btnQAInd.ForeColor = Color.Blue
+            btnQAInd.Text = "완료"
+        Else
+            btnQAInd.BackColor = Color.Red
+            btnQAInd.ForeColor = Color.White
+            btnQAInd.Text = "진행"
+        End If
+
+        '#4. 자재
+        btnMTInd.Font = New Font(btnMTInd.Font.FontFamily, 9.75, FontStyle.Bold)
+        If btnMCLInd.Text <> "" Then
+            btnMTInd.BackColor = Color.White
+            btnMTInd.ForeColor = Color.Blue
+            btnMTInd.Text = "완료"
+        Else
+            btnMTInd.BackColor = Color.Red
+            btnMTInd.ForeColor = Color.White
+            btnMTInd.Text = "진행"
+        End If
+
+        '#5. 생산
+        btnManufactureInd.Font = New Font(btnManufactureInd.Font.FontFamily, 9.75, FontStyle.Bold)
+        If btnMEInd.Text <> "" And btnMCompInd.Text = "100.0" Then
+            btnManufactureInd.BackColor = Color.White
+            btnManufactureInd.ForeColor = Color.Blue
+            btnManufactureInd.Text = "완료"
+        Else
+            btnManufactureInd.BackColor = Color.Red
+            btnManufactureInd.ForeColor = Color.White
+            btnManufactureInd.Text = "진행"
+        End If
+
+        '#6. 출하관리
+        btnShippingInd.Font = New Font(btnShippingInd.Font.FontFamily, 9.75, FontStyle.Bold)
+        If btnShippingRegInd.Text <> "" Then
+            btnShippingInd.BackColor = Color.White
+            btnShippingInd.ForeColor = Color.Blue
+            btnShippingInd.Text = "완료"
+        Else
+            btnShippingInd.BackColor = Color.Red
+            btnShippingInd.ForeColor = Color.White
+            btnShippingInd.Text = "진행"
+        End If
+
+    End Sub
+
+    Private Sub additionalPnlItmUpdate()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        '#4. MCL(재료관리대장)접수
+        StrSQL = " select mcl.MCL_Wearing_Date MCL_Wearing_Date from MT_MCL_List mcl " &
+                 " where 1=1 " &
+                 " and mcl.MCL_MT_ID_No = ( select cr_list_code from CR_Contract_List  " &
+                 "                          where 1=1  " &
+                 "                          and CR_CODE = '" & txtJobNoF.Text & "' " &
+                 "                          and cr_list_code = mcl.MCL_MT_ID_No ) "
+        Console.WriteLine("MCL 등록정보 SQL : " & StrSQL)
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            btnMCLInd.Text = DBT.Rows(0).Item("MCL_Wearing_Date")
+        End If
+        btnMCLInd.Font = New Font(btnMCLInd.Font.FontFamily, 9.75, FontStyle.Bold)
+        If btnMCLInd.Text <> "" Then
+            btnMCLInd.BackColor = Color.White
+            btnMCLInd.ForeColor = Color.Blue
+        Else
+            btnMCLInd.BackColor = Color.Red
+            btnMCLInd.ForeColor = Color.White
+        End If
+
+        '#6. 자재 입고 접수(재로관리자)
+        StrSQL = " select mt.MT_Inspection_Receive_Date MT_Inspection_Receive_Date " &
+                 " from mt_material mt, mt_material_list mtl " &
+                 " where 1=1 " &
+                 " And mt.mt_rev_no = ( select isnull(max(mt_rev_no),1) from mt_material where mt_code = mt.mt_code ) " &
+                 " And mtl.MT_CR_List_Code = ( select cr_list_code from CR_Contract_List " &
+                 "                             where 1=1 " &
+                 "                             And CR_CODE = '" & txtJobNoF.Text & "' " &
+                 "                             and cr_list_code = mtl.MT_CR_List_Code ) " &
+                 " and mt.mt_code = mtl.mt_code " &
+                 " and mt.mt_rev_no = mtl.MT_Rev_No "
+        Console.WriteLine("자재 입고정보 SQL : " & StrSQL)
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            btnMTInd.Text = DBT.Rows(0).Item("MT_Inspection_Receive_Date")
+        End If
+        btnMTInd.Font = New Font(btnMTInd.Font.FontFamily, 9.75, FontStyle.Bold)
+        If btnMTInd.Text <> "" Then
+            btnMTInd.BackColor = Color.White
+            btnMTInd.ForeColor = Color.Blue
+        Else
+            btnMTInd.BackColor = Color.Red
+            btnMTInd.ForeColor = Color.White
+        End If
+
+        '#7. 생산 완료
+        StrSQL = " select  case when sum(a.QC_Check_Item_Cnt) = 0 then 0 " &
+         "         else  CONVERT(DECIMAL(10,1),(CONVERT(FLOAT,sum(a.QC_Check_Item_Complete_Cnt))/CONVERT(FLOAT,sum(a.QC_Check_Item_Cnt))* 100)) " &
+         "         end QC_Cmpl_Ratio " &
+         " from " &
+         " ( " &
+         "   select isnull(count(pq.QC_Check_Item_Code),0) QC_Check_Item_Cnt, " &
+         "          case when pq.QC_Check_Complete_YN = 'Y' then 1  " &
+         "          else 0 end QC_Check_Item_Complete_Cnt " &
+         "   from PC_QC_Result pq   " &
+         "   where 1=1   " &
+         "   And pq.cl_rev_no = ( select isnull(max(cl_rev_no),1)  " &
+         "                        from PC_QC_Result where cl_code = pq.cl_code )   " &
+         "   And pq.CL_Code = ( select cr_code from CR_Contract cr  " &
+         "                      Where 1=1  " &
+                 " 						And cr.CR_CODE = '" & txtJobNoF.Text & "' " &
+         "                      AND cr.CR_REV_NO = (SELECT ISNULL(MAX(CR_REV_NO),1) FROM CR_CONTRACT WHERE CR_CODE = cr.CR_CODE))  " &
+         " group by pq.QC_Check_Complete_YN " &
+         " ) a "
+        Console.WriteLine("생산완료 정보 SQL : " & StrSQL)
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 And Not (IsDBNull(DBT.Rows(0).Item("QC_Cmpl_Ratio"))) Then
+            btnMCompInd.Text = DBT.Rows(0).Item("QC_Cmpl_Ratio")
+        End If
+        btnMCompInd.Font = New Font(btnMCompInd.Font.FontFamily, 9.75, FontStyle.Bold)
+        If btnMCompInd.Text = "100" Then
+            btnMCompInd.BackColor = Color.White
+            btnMCompInd.ForeColor = Color.Blue
+        Else
+            btnMCompInd.BackColor = Color.Red
+            btnMCompInd.ForeColor = Color.White
+        End If
+
+        '#8. 출하
+        StrSQL = " select dl.DL_Date DL_Date " &
+                 " from Deliver dl " &
+                 " where 1=1 " &
+                 " And dl.CR_List_Code = ( select cr_list_code from CR_Contract_List " &
+                 "                         where 1=1 " &
+                 "                         And CR_CODE = '" & txtJobNoF.Text & "' " &
+                 "                         and cr_list_code = dl.CR_List_Code ) "
+        Console.WriteLine("출하정보 SQL : " & StrSQL)
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            btnShippingRegInd.Text = DBT.Rows(0).Item("DL_Date")
+        End If
+        btnShippingRegInd.Font = New Font(btnShippingRegInd.Font.FontFamily, 9.75, FontStyle.Bold)
+        If btnShippingRegInd.Text <> "" Then
+            btnShippingRegInd.BackColor = Color.White
+            btnShippingRegInd.ForeColor = Color.Blue
+        Else
+            btnShippingRegInd.BackColor = Color.Red
+            btnShippingRegInd.ForeColor = Color.White
+        End If
+
+    End Sub
+
+    Private Sub perfIndUpdate()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        '#1. 계약공정율
+        StrSQL = " select a.cr_date, a.cr_due_date, " &
+         "        a.contract_period, a.elapsed_period, " &
+         "        case when a.contract_period = 0 then 0 " &
+         "        else CONVERT(decimal(10,1),convert(float,elapsed_period) / convert(float,contract_period) * 100) " &
+         "        end nominalPerfRatio " &
+         " from " &
+         " ( " &
+         " select cr_date, cr_due_date,  " &
+         "        DATEDIFF(dd, convert(varchar(10), cr_date, 120), convert(varchar(10), cr_due_date, 120)) + 1 contract_period,  " &
+         "        DATEDIFF(dd, convert(varchar(10), cr_date, 120), convert(varchar(10), getdate(), 120)) + 1 elapsed_period " &
+         " from cr_contract " &
+         " where CR_CODE = '" & txtJobNoF.Text & "' " &
+         " and CR_REV_NO = " & txtJobRevNoF.Text & " " &
+         " ) a "
+        Console.WriteLine("계약공정율 정보 SQL : " & StrSQL)
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            btnNominalPerfRatio.Text = DBT.Rows(0).Item("nominalPerfRatio")
+        End If
+        btnNominalPerfRatio.Font = New Font(btnNominalPerfRatio.Font.FontFamily, 54.75, FontStyle.Bold)
+        If btnNominalPerfRatio.Text <> "" And btnNominalPerfRatio.Text < "70.0" Then
+            btnNominalPerfRatio.BackColor = Color.White
+            btnNominalPerfRatio.ForeColor = Color.Olive
+        Else
+            btnNominalPerfRatio.BackColor = Color.Red
+            btnNominalPerfRatio.ForeColor = Color.White
+        End If
+
+        '#2. 생산공정율
+        btnPDRatio.Text = btnMCompInd.Text
+        btnPDRatio.Font = New Font(btnPDRatio.Font.FontFamily, 54.75, FontStyle.Bold)
+        If btnPDRatio.Text <> "" Then
+            btnPDRatio.BackColor = Color.White
+            btnPDRatio.ForeColor = Color.Olive
+        Else
+            btnPDRatio.BackColor = Color.Red
+            btnPDRatio.ForeColor = Color.White
+        End If
+
+        '#3. 생산시작 대비 자재입고일 차
+        StrSQL = " select a.cr_date, a.cr_due_date, " &
+         "        a.contract_period, a.elapsed_period, " &
+         "        case when a.contract_period = 0 then 0 " &
+         "        else CONVERT(decimal(10,1),convert(float,elapsed_period) / convert(float,contract_period) * 100) " &
+         "        end nominalPerfRatio " &
+         " from " &
+         " ( " &
+         " select cr_date, cr_due_date,  " &
+         "        DATEDIFF(dd, convert(varchar(10), cr_date, 120), convert(varchar(10), cr_due_date, 120)) + 1 contract_period,  " &
+         "        DATEDIFF(dd, convert(varchar(10), cr_date, 120), convert(varchar(10), getdate(), 120)) + 1 elapsed_period " &
+         " from cr_contract " &
+         " where CR_CODE = '" & txtJobNoF.Text & "' " &
+         " and CR_REV_NO = " & txtJobRevNoF.Text & " " &
+         " ) a "
+        Console.WriteLine("생산시작 대비 자재입고일 차 정보 SQL : " & StrSQL)
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            'btnPSRecv.Text = DBT.Rows(0).Item("nominalPerfRatio")
+        End If
+        'btnPSRecv.Font = New Font(btnPSRecv.Font.FontFamily, 54.75, FontStyle.Bold)
+        'If btnPSRecv.Text <> "" Then
+        '    btnPSRecv.BackColor = Color.White
+        '    btnPSRecv.ForeColor = Color.Olive
+        'Else
+        '    btnPSRecv.BackColor = Color.Red
+        '    btnPSRecv.ForeColor = Color.White
+        'End If
+
+        '#4. QC검사 진척율
+        btnQCRatio.Text = btnMCompInd.Text
+        btnQCRatio.Font = New Font(btnQCRatio.Font.FontFamily, 54.75, FontStyle.Bold)
+        If btnQCRatio.Text <> "" Then
+            btnQCRatio.BackColor = Color.White
+            btnQCRatio.ForeColor = Color.Olive
+        Else
+            btnQCRatio.BackColor = Color.Red
+            btnQCRatio.ForeColor = Color.White
+        End If
+
+    End Sub
+
+    Private Sub lstMoojinMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMoojinMain.CellClick
+
+        If e.RowIndex >= 0 Then
+            '상단 패널
+            txtJobNoF.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CR_Code").Value.ToString
+            txtJobRevNoF.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CR_Rev_No").Value.ToString()
+            txtJobSunF.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CR_Sun").Value.ToString()
+            txtJobNameF.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CR_Name").Value.ToString
+            txtCRSNoF.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CRS_Code").Value.ToString
+            txtCRDateF.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CR_Date").Value.ToString
+            txtCRDueDateF.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CR_Due_Date").Value.ToString
+            txtVendorNameF.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CR_Customer_Name").Value.ToString
+
+            '하단 진행상황
+            btnCRInd.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CR_Info").Value.ToString
+            btnCRInd.Font = New Font(btnCRInd.Font.FontFamily, 9.75, FontStyle.Bold)
+            If btnCRInd.Text <> "" Then
+                btnCRInd.BackColor = Color.White
+                btnCRInd.ForeColor = Color.Blue
+            Else
+                btnCRInd.BackColor = Color.Red
+                btnCRInd.ForeColor = Color.White
+            End If
+            'btnCRItmRegInd.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CR_List_Code").Value.ToString
+            'btnCRItmRegInd.Font = New Font(btnCRItmRegInd.Font.FontFamily, 9.75, FontStyle.Bold)
+            'If btnCRItmRegInd.Text <> "" Then
+            '    btnCRItmRegInd.BackColor = Color.White
+            '    btnCRItmRegInd.ForeColor = Color.Blue
+            'Else
+            '    btnCRItmRegInd.BackColor = Color.Red
+            '    btnCRItmRegInd.ForeColor = Color.White
+            'End If
+            'btnPRInd.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CR_Order_Date").Value.ToString
+            'btnPRInd.Font = New Font(btnPRInd.Font.FontFamily, 9.75, FontStyle.Bold)
+            'If btnPRInd.Text <> "" Then
+            '    btnPRInd.BackColor = Color.White
+            '    btnPRInd.ForeColor = Color.Blue
+            'Else
+            '    btnPRInd.BackColor = Color.Red
+            '    btnPRInd.ForeColor = Color.White
+            'End If
+            'btnPRRecvInd.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CR_Order_Receive_Date").Value.ToString
+            'btnPRRecvInd.Font = New Font(btnPRRecvInd.Font.FontFamily, 9.75, FontStyle.Bold)
+            'If btnPRRecvInd.Text <> "" Then
+            '    btnPRRecvInd.BackColor = Color.White
+            '    btnPRRecvInd.ForeColor = Color.Blue
+            'Else
+            '    btnPRRecvInd.BackColor = Color.Red
+            '    btnPRRecvInd.ForeColor = Color.White
+            'End If
+            'btnDVInd.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("DV_INFO").Value.ToString
+            'btnDVInd.Font = New Font(btnDVInd.Font.FontFamily, 9.75, FontStyle.Bold)
+            'If btnDVInd.Text <> "" Then
+            '    btnDVInd.BackColor = Color.White
+            '    btnDVInd.ForeColor = Color.Blue
+            'Else
+            '    btnDVInd.BackColor = Color.Red
+            '    btnDVInd.ForeColor = Color.White
+            'End If
+            'btnCPInd.Text = ""
+
+            'btnLOInd.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("LO_INFO").Value.ToString
+            'btnLOInd.Font = New Font(btnLOInd.Font.FontFamily, 9.75, FontStyle.Bold)
+            'If btnLOInd.Text <> "" Then
+            '    btnLOInd.BackColor = Color.White
+            '    btnLOInd.ForeColor = Color.Blue
+            'Else
+            '    btnLOInd.BackColor = Color.Red
+            '    btnLOInd.ForeColor = Color.White
+            'End If
+            'btnPSInd1.Text = ""
+
+            'btnLORecv.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("LO_RECEIVE_DATE").Value.ToString
+            'btnLORecv.Font = New Font(btnLORecv.Font.FontFamily, 9.75, FontStyle.Bold)
+            'If btnLORecv.Text <> "" Then
+            '    btnLORecv.BackColor = Color.White
+            '    btnLORecv.ForeColor = Color.Blue
+            'Else
+            '    btnLORecv.BackColor = Color.Red
+            '    btnLORecv.ForeColor = Color.White
+            'End If
+            'btnPSRecv.Text = ""
+            btnCOInd.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CO_Date").Value.ToString
+            btnCOInd.Font = New Font(btnCOInd.Font.FontFamily, 9.75, FontStyle.Bold)
+            If btnCOInd.Text <> "" Then
+                btnCOInd.BackColor = Color.White
+                btnCOInd.ForeColor = Color.Blue
+            Else
+                btnCOInd.BackColor = Color.Red
+                btnCOInd.ForeColor = Color.White
+            End If
+            'btnMTRecv.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CQ_WH_Date").Value.ToString
+            'btnMTRecv.Font = New Font(btnMTRecv.Font.FontFamily, 9.75, FontStyle.Bold)
+            'If btnMTRecv.Text <> "" Then
+            '    btnMTRecv.BackColor = Color.White
+            '    btnMTRecv.ForeColor = Color.Blue
+            'Else
+            '    btnMTRecv.BackColor = Color.Red
+            '    btnMTRecv.ForeColor = Color.White
+            'End If
+            'btnRIRInd.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CQ_Date").Value.ToString
+            'btnRIRInd.Font = New Font(btnRIRInd.Font.FontFamily, 9.75, FontStyle.Bold)
+            'If btnRIRInd.Text <> "" Then
+            '    btnRIRInd.BackColor = Color.White
+            '    btnRIRInd.ForeColor = Color.Blue
+            'Else
+            '    btnRIRInd.BackColor = Color.Red
+            '    btnRIRInd.ForeColor = Color.White
+            'End If
+            btnRecvInsp.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CQ_Inspection_Receive_Date").Value.ToString
+            btnRecvInsp.Font = New Font(btnRecvInsp.Font.FontFamily, 9.75, FontStyle.Bold)
+            If btnRecvInsp.Text <> "" Then
+                btnRecvInsp.BackColor = Color.White
+                btnRecvInsp.ForeColor = Color.Blue
+            Else
+                btnRecvInsp.BackColor = Color.Red
+                btnRecvInsp.ForeColor = Color.White
+            End If
+            btnMTItmInspInd.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("CQ_Inspection_Confirm_Date").Value.ToString
+            btnMTItmInspInd.Font = New Font(btnMTItmInspInd.Font.FontFamily, 9.75, FontStyle.Bold)
+            If btnMTItmInspInd.Text <> "" Then
+                btnMTItmInspInd.BackColor = Color.White
+                btnMTItmInspInd.ForeColor = Color.Blue
+            Else
+                btnMTItmInspInd.BackColor = Color.Red
+                btnMTItmInspInd.ForeColor = Color.White
+            End If
+            'btnMCLInd.Text = ""
+            'btnWithdrawReqInd.Text = ""
+            'btnMTInd.Text = ""
+            btnMEInd.Text = lstMoojinMain.Rows(lstMoojinMain.CurrentRow.Index).Cells("PC_CODE").Value.ToString
+            btnMEInd.Font = New Font(btnMEInd.Font.FontFamily, 9.75, FontStyle.Bold)
+            If btnMEInd.Text <> "" Then
+                btnMEInd.BackColor = Color.White
+                btnMEInd.ForeColor = Color.Blue
+            Else
+                btnMEInd.BackColor = Color.Red
+                btnMEInd.ForeColor = Color.White
+            End If
+
+            'btnShippingRegInd.Text = ""
+
+            additionalPnlItmUpdate() '기타 정보 업데이트
+            pnlUpdate() '단계별 현 상황 업데이트(하단 부분 전체 update)
+            perfIndUpdate() '성과지표항목 업데이트
+
+        End If
+
+    End Sub
+
+End Class

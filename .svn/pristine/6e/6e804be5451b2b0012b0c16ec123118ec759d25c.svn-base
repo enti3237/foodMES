@@ -1,0 +1,244 @@
+﻿Public Class Frm_Customer
+    Dim Grid_Display_Ch As Boolean
+    Private Sub Frm_Customer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        'Search_Combo.Items.Add("코드")
+        'Search_Combo.Items.Add("업체명")
+        'Search_Combo.Text = "코드"
+
+        Grid_Display_Ch = False
+        'Grid_Setup()
+        Grid_Display()
+        Grid_Display_Ch = False
+
+    End Sub
+    Public Function Grid_Setup() As Boolean
+        Dim i As Integer
+        Grid_Color(lstMain)
+        lstMain.EnableHeadersVisualStyles = False
+        lstMain.AllowUserToAddRows = False
+        lstMain.RowTemplate.Height = 20
+        lstMain.ColumnCount = 30
+        lstMain.RowCount = 1
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        lstMain.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.BottomRight
+        lstMain.RowHeadersWidth = 45
+        lstMain.Columns(0).Width = 55
+        For i = 1 To lstMain.ColumnCount - 1
+            lstMain.Columns(i).Width = 100
+            lstMain.Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Next i
+
+        lstMain.Columns(0).HeaderText = "거래처구분"
+        lstMain.Columns(1).HeaderText = "거래처코드"
+        lstMain.Columns(2).HeaderText = "업체명"
+        lstMain.Columns(3).HeaderText = "업체명(영문)"
+        lstMain.Columns(4).HeaderText = "사업자번호"
+        lstMain.Columns(5).HeaderText = "법인번호"
+        lstMain.Columns(6).HeaderText = "대표자"
+        lstMain.Columns(7).HeaderText = "대표자(영문)"
+        lstMain.Columns(8).HeaderText = "업태"
+        lstMain.Columns(9).HeaderText = "종목"
+        lstMain.Columns(10).HeaderText = "우편번호"
+        lstMain.Columns(11).HeaderText = "주소1"
+        lstMain.Columns(12).HeaderText = "주소2"
+        lstMain.Columns(13).HeaderText = "주소1(영문)"
+        lstMain.Columns(14).HeaderText = "주소2(영문)"
+        lstMain.Columns(15).HeaderText = "전화번호"
+        lstMain.Columns(16).HeaderText = "팩스번호"
+        lstMain.Columns(17).HeaderText = "거래시작일"
+        lstMain.Columns(18).HeaderText = "거래종료일"
+        lstMain.Columns(19).HeaderText = "담당자"
+        lstMain.Columns(20).HeaderText = "담담자전화"
+        lstMain.Columns(21).HeaderText = "담당자메일"
+        lstMain.Columns(22).HeaderText = "은행명"
+        lstMain.Columns(23).HeaderText = "계좌번호"
+        lstMain.Columns(24).HeaderText = "비고"
+        lstMain.Columns(25).HeaderText = "회사URL"
+        lstMain.Columns(26).HeaderText = "생성담당"
+        lstMain.Columns(27).HeaderText = "생성일자"
+        lstMain.Columns(28).HeaderText = "수정담당"
+        lstMain.Columns(29).HeaderText = "수정일자"
+
+        lstMain.Columns(1).ReadOnly = True
+        lstMain.Columns(0).ReadOnly = True
+        Grid_Setup = True
+        lstMain.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells
+    End Function
+    Public Function Grid_Display() As Boolean
+        Grid_Display_Ch = False
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+
+        'lstMain.RowCount = 1
+        'Select Case Search_Combo.Text
+        '    Case "코드"
+        '        StrSQL = "Select * From Company with(NOLOCK) Where CM_Code Like '" & Search_Text.Text & "%'  Order  By CM_Code"
+        '    Case "업체명"
+        '        StrSQL = "Select * From Company with(NOLOCK) Where CM_Name Like '" & Search_Text.Text & "%'  Or CM_Name is Null Order  By CM_Name"
+        'End Select
+        Re_Count = DB_Select(DBT)
+        lstMain.DataSource = DBT
+        lstMain.ClearSelection()
+        Grid_Display = True
+        Grid_Display_Ch = True
+
+    End Function
+
+    Private Sub Insert_Com_Click(sender As Object, e As EventArgs)
+
+        Dim DBT As New DataTable
+        Dim Db_Sun As String
+
+        'If Search_Combo.Text = "코드" Then
+        '    MsgBox("업체명을 입력후 추가버튼을 선택하세요.")
+        '    Return
+        'End If
+
+        StrSQL = "Select CM_Code From Company with(NOLOCK)  Order By CM_Code Desc "
+        Re_Count = DB_Select(DBT)
+        If Re_Count = 0 Then
+            Db_Sun = "00001"
+        Else
+            Db_Sun = Format(DBT.Rows(0).Item(0) + 1, "0000#")
+        End If
+
+        '추가한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        'StrSQL = StrSQL & "Insert into Company (CM_Group, CM_Code, CM_Name, CM_Created, CM_Create_Date)  Values ('0001', '" & Db_Sun & "','" & Search_Text.Text & "','" & loginID & "',  CONVERT(CHAR(19), getdate(), 120))"
+        Re_Count = DB_Execute()
+
+        'Search_Combo.Text = "" '초기화
+        Grid_Display()
+
+    End Sub
+
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs)
+        Grid_Display()
+
+    End Sub
+
+
+    Private Sub lstMain_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs)
+        If Grid_Display_Ch = True Then
+            sender.CurrentRow.HeaderCell.Value = "*"
+        End If
+
+    End Sub
+
+    Private Sub Save_Com_Click(sender As Object, e As EventArgs)
+        Grid_Display_Ch = False
+
+        Dim Table_Name As String
+        Dim i As Integer
+        Dim j As Long
+        Dim k As Integer
+        Dim Field_Name(500) As String
+        Dim DBT As DataTable = Nothing
+
+        Table_Name = "Company"
+        j = 0
+        StrSQL = "Select sys.Columns.Name From sys.Tables with(NOLOCK) , sys.Columns with(NOLOCK) Where sys.Tables.name = '" & Table_Name & "' And sys.Tables.Object_id = sys.Columns.Object_id Order By sys.Columns.column_id"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                Field_Name(j) = DBT.Rows(i)("Name").ToString
+                j = j + 1
+            Next i
+        End If
+        j = j - 1
+        Dim RRR As String
+
+        For i = 0 To lstMain.Rows.Count - 1
+            If lstMain.Rows(i).HeaderCell.Value = "*" Then
+                'Update
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "UPDATE " & Table_Name & " SET "
+                For k = 1 To j
+                    'hsim 업데이트 사용자 및 업데이트일자 적용
+                    lstMain.Item(28, i).Value = loginID
+                    lstMain.Item(29, i).Value = DateTime.Now
+                    RRR = IIf(IsDBNull(lstMain.Item(k, i).Value), "", lstMain.Item(k, i).Value)
+                    StrSQL = StrSQL & " " & Table_Name & "." & Field_Name(k) & " = '" & Replace(RRR, "'", "''") & "'"
+                    If k <> j Then
+                        StrSQL = StrSQL & ","
+                    End If
+                Next k
+                StrSQL = StrSQL & " WHERE " & Table_Name & "." & Field_Name(1) & " = '" & lstMain.Item(1, i).Value.ToString & "'"
+                Re_Count = DB_Execute()
+                lstMain.Rows(i).HeaderCell.Value = ""
+            End If
+        Next i
+
+        Grid_Display()
+        Grid_Display_Ch = True
+
+    End Sub
+
+    Private Sub Delete_Com_Click(sender As Object, e As EventArgs)
+        '활성화
+        '해당 칼럼 삭제
+        If Len(lstMain.Item(0, lstMain.CurrentCell.RowIndex).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Grid_Display_Ch = False
+        '삭제한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Delete Company Where CM_Code = '" & lstMain.Item(1, lstMain.CurrentCell.RowIndex).Value & "' "
+        Re_Count = DB_Execute()
+
+        '선택된 갈럼값을 가지고 온다
+        Grid_Display()
+        Grid_Display_Ch = True
+
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
+        '필요하면 사용
+        '영업에서 요구하는 고객연락처 양식과 스마트팩토리용 다름
+        Exit Sub
+
+        Dim Li_Data As String
+        Dim D_Col As Integer
+        Dim NullStr(1000) As String
+        Dim AD1 As String
+        Dim AD2 As String
+        Dim i As Integer
+        Dim j As Integer
+
+        AD1 = ""
+        AD2 = ""
+
+        FileOpen(1, Application.StartupPath + "\거래처등록.csv", OpenMode.Input)
+        For i = 1 To 40
+            Li_Data = LineInput(1)
+            D_Col = Data_Col_Count_Str(Li_Data, NullStr)
+            For j = 20 To Len(NullStr(4))
+                If Mid(NullStr(4), j, 1) = " " Or Mid(NullStr(4), j, 1) = "(" Then
+                    AD1 = Mid(NullStr(4), 1, j - 1)
+                    AD2 = Mid(NullStr(4), j, 250)
+                    Exit For
+
+                End If
+            Next j
+            If Len(AD1) < 1 Then
+                AD1 = NullStr(4)
+                AD2 = ""
+            End If
+            '추가한다.
+            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+            StrSQL = StrSQL & "Insert into Company (CM_Code, CM_Op_Number, CM_Name, CM_Leader, CM_Add1, CM_Add2, CM_Conditions, CM_Item,CM_Man_Name,CM_Tel,CM_Man_Tel,CM_Fax,CM_Man_Email )  Values ('" & 10000 + i & "','" & NullStr(1) & "','" & NullStr(2) & "','" & NullStr(3) & "','" & AD1 & "','" & AD2 & "','" & NullStr(5) & "','" & NullStr(6) & "','" & NullStr(8) & "','" & NullStr(9) & "','" & NullStr(10) & "' ,'" & NullStr(11) & "' ,'" & NullStr(12) & "' )"
+            Re_Count = DB_Execute()
+        Next i
+
+
+        FileClose(1)
+    End Sub
+End Class

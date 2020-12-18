@@ -1,0 +1,54 @@
+﻿Public Class UCFrm7
+    Private Sub UCFrm7_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        CRS_Combo_Setup()
+
+
+        DataGridView1.RowHeadersWidth = 10
+        Me.DataGridView1.Columns(3).Frozen = True
+
+
+
+    End Sub
+
+    Private Sub Label2_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub CRS_Combo_Setup()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        'CRS_NO, 공정명 콤보박스 부여
+        StrSQL = "SELECT CRS_Code,CRS_NAME FROM CONTRACT_CRS"
+        Re_Count = DB_Select(DBT)
+
+        Dim i As Integer
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+
+                cboCRSName.Items.Add(DBT.Rows(i)("CRS_Code").ToString)
+
+            Next
+
+        End If
+    End Sub
+
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        DataGridView1.FirstDisplayedCell = DataGridView1.Rows(0).Cells(4)
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        DataGridView1.FirstDisplayedCell = DataGridView1.Rows(0).Cells(15)
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        DataGridView1.FirstDisplayedCell = DataGridView1.Rows(0).Cells(30)
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        DataGridView1.FirstDisplayedCell = DataGridView1.Rows(0).Cells(36)
+    End Sub
+End Class

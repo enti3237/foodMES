@@ -1,0 +1,255 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class UCFrm6
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.Man_Bu = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Man_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.Panel_Menu = New System.Windows.Forms.Panel()
+        Me.Search_Com = New System.Windows.Forms.Button()
+        Me.Search_Text = New System.Windows.Forms.TextBox()
+        Me.Search_Combo = New System.Windows.Forms.ComboBox()
+        Me.Panel1.SuspendLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel_Menu.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.Controls.Add(Me.Panel_Menu)
+        Me.Panel1.Controls.Add(Me.DataGridView2)
+        Me.Panel1.Controls.Add(Me.DataGridView1)
+        Me.Panel1.Location = New System.Drawing.Point(0, 0)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1305, 861)
+        Me.Panel1.TabIndex = 0
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.AllowUserToDeleteRows = False
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.MenuHighlight
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("굴림", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.DimGray
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle8
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Man_Bu, Me.Man_Code, Me.Man_Name})
+        Me.DataGridView1.Location = New System.Drawing.Point(12, 95)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.ReadOnly = True
+        Me.DataGridView1.RowTemplate.Height = 23
+        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DataGridView1.Size = New System.Drawing.Size(360, 562)
+        Me.DataGridView1.TabIndex = 0
+        '
+        'DataGridView2
+        '
+        Me.DataGridView2.AllowUserToAddRows = False
+        Me.DataGridView2.AllowUserToDeleteRows = False
+        Me.DataGridView2.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView2.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column4, Me.Column5, Me.Column6, Me.Column7, Me.Column8, Me.Column9})
+        Me.DataGridView2.Location = New System.Drawing.Point(400, 95)
+        Me.DataGridView2.Name = "DataGridView2"
+        Me.DataGridView2.ReadOnly = True
+        Me.DataGridView2.RowTemplate.Height = 23
+        Me.DataGridView2.Size = New System.Drawing.Size(769, 562)
+        Me.DataGridView2.TabIndex = 1
+        '
+        'Man_Bu
+        '
+        Me.Man_Bu.DataPropertyName = "Man_Bu"
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        Me.Man_Bu.DefaultCellStyle = DataGridViewCellStyle9
+        Me.Man_Bu.HeaderText = "부서명"
+        Me.Man_Bu.Name = "Man_Bu"
+        Me.Man_Bu.ReadOnly = True
+        '
+        'Man_Code
+        '
+        Me.Man_Code.DataPropertyName = "Man_Code"
+        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
+        Me.Man_Code.DefaultCellStyle = DataGridViewCellStyle10
+        Me.Man_Code.HeaderText = "사원번호"
+        Me.Man_Code.Name = "Man_Code"
+        Me.Man_Code.ReadOnly = True
+        '
+        'Man_Name
+        '
+        Me.Man_Name.DataPropertyName = "Man_Name"
+        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
+        Me.Man_Name.DefaultCellStyle = DataGridViewCellStyle11
+        Me.Man_Name.HeaderText = "사원명"
+        Me.Man_Name.Name = "Man_Name"
+        Me.Man_Name.ReadOnly = True
+        '
+        'Column4
+        '
+        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle12
+        Me.Column4.HeaderText = "화면코드"
+        Me.Column4.Name = "Column4"
+        Me.Column4.ReadOnly = True
+        '
+        'Column5
+        '
+        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle13
+        Me.Column5.HeaderText = "화면명"
+        Me.Column5.Name = "Column5"
+        Me.Column5.ReadOnly = True
+        Me.Column5.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        '
+        'Column6
+        '
+        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black
+        Me.Column6.DefaultCellStyle = DataGridViewCellStyle14
+        Me.Column6.HeaderText = "권한"
+        Me.Column6.Name = "Column6"
+        Me.Column6.ReadOnly = True
+        '
+        'Column7
+        '
+        Me.Column7.HeaderText = "읽기"
+        Me.Column7.Name = "Column7"
+        Me.Column7.ReadOnly = True
+        Me.Column7.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Column7.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.Column7.Text = "✔"
+        '
+        'Column8
+        '
+        Me.Column8.HeaderText = "읽기쓰기"
+        Me.Column8.Name = "Column8"
+        Me.Column8.ReadOnly = True
+        Me.Column8.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Column8.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.Column8.Text = "✔"
+        '
+        'Column9
+        '
+        Me.Column9.HeaderText = "사용불가"
+        Me.Column9.Name = "Column9"
+        Me.Column9.ReadOnly = True
+        Me.Column9.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Column9.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.Column9.Text = "✔"
+        '
+        'Panel_Menu
+        '
+        Me.Panel_Menu.Controls.Add(Me.Search_Com)
+        Me.Panel_Menu.Controls.Add(Me.Search_Text)
+        Me.Panel_Menu.Controls.Add(Me.Search_Combo)
+        Me.Panel_Menu.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel_Menu.Location = New System.Drawing.Point(0, 0)
+        Me.Panel_Menu.Name = "Panel_Menu"
+        Me.Panel_Menu.Size = New System.Drawing.Size(1305, 80)
+        Me.Panel_Menu.TabIndex = 56
+        '
+        'Search_Com
+        '
+        Me.Search_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Search_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Search_Com.ForeColor = System.Drawing.Color.Black
+        Me.Search_Com.Location = New System.Drawing.Point(148, 14)
+        Me.Search_Com.Name = "Search_Com"
+        Me.Search_Com.Size = New System.Drawing.Size(108, 54)
+        Me.Search_Com.TabIndex = 11
+        Me.Search_Com.Text = "검색"
+        Me.Search_Com.UseVisualStyleBackColor = False
+        '
+        'Search_Text
+        '
+        Me.Search_Text.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Search_Text.Location = New System.Drawing.Point(12, 43)
+        Me.Search_Text.Name = "Search_Text"
+        Me.Search_Text.Size = New System.Drawing.Size(131, 25)
+        Me.Search_Text.TabIndex = 10
+        '
+        'Search_Combo
+        '
+        Me.Search_Combo.Font = New System.Drawing.Font("맑은 고딕", 10.0!)
+        Me.Search_Combo.FormattingEnabled = True
+        Me.Search_Combo.Location = New System.Drawing.Point(11, 14)
+        Me.Search_Combo.Margin = New System.Windows.Forms.Padding(2)
+        Me.Search_Combo.Name = "Search_Combo"
+        Me.Search_Combo.Size = New System.Drawing.Size(132, 25)
+        Me.Search_Combo.TabIndex = 8
+        '
+        'UCFrm6
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Panel1)
+        Me.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Name = "UCFrm6"
+        Me.Size = New System.Drawing.Size(1325, 715)
+        Me.Panel1.ResumeLayout(False)
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel_Menu.ResumeLayout(False)
+        Me.Panel_Menu.PerformLayout()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents DataGridView2 As DataGridView
+    Friend WithEvents Man_Bu As DataGridViewTextBoxColumn
+    Friend WithEvents Man_Code As DataGridViewTextBoxColumn
+    Friend WithEvents Man_Name As DataGridViewTextBoxColumn
+    Friend WithEvents Column4 As DataGridViewTextBoxColumn
+    Friend WithEvents Column5 As DataGridViewTextBoxColumn
+    Friend WithEvents Column6 As DataGridViewTextBoxColumn
+    Friend WithEvents Column7 As DataGridViewButtonColumn
+    Friend WithEvents Column8 As DataGridViewButtonColumn
+    Friend WithEvents Column9 As DataGridViewButtonColumn
+    Friend WithEvents Panel_Menu As Panel
+    Friend WithEvents Search_Com As Button
+    Friend WithEvents Search_Text As TextBox
+    Friend WithEvents Search_Combo As ComboBox
+End Class

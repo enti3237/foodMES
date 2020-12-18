@@ -1,0 +1,149 @@
+﻿Public Class Frm_Man_Level
+    Private Sub Frm_Man_Level_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Panel1.Top = 45
+        Panel1.Left = 10
+        Panel41.Top = 45
+        Panel41.Left = 10
+
+        Panel1.Visible = True
+        Panel41.Visible = False
+        'ML_Lode()
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles Com_Contract.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles Com_Excel.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+    End Sub
+    Private Sub ML_Lode()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT Le_Code, Le_Level1, Le_Level2, Le_Level3, Le_Level4, Le_Level5, 
+                         Le_Level6, Le_Level7, Le_Level8, Le_Level9, Le_Level10, Le_Level11, Le_Level12
+                  FROM Man_Level
+                  ORDER BY Le_Code"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView5.DataSource = DBT
+        DataGridView5.ClearSelection()
+    End Sub
+
+    Private Sub DataGridView5_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView5.CellDoubleClick
+        Label_Color(Com_Excel, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT * FROM Man_Level where Le_Code = '" & DataGridView5.Rows(DataGridView5.CurrentCell.RowIndex).Cells("Le_Code").Value.ToString & "'"
+        Re_Count = DB_Select(DBT)
+
+        TextBox104.Text = DBT.Rows(0)("Le_Code").ToString
+        TextBox98.Text = DBT.Rows(0)("Le_Level1").ToString
+        TextBox97.Text = DBT.Rows(0)("Le_Level2").ToString
+        TextBox89.Text = DBT.Rows(0)("Le_Level3").ToString
+        TextBox96.Text = DBT.Rows(0)("Le_Level4").ToString
+        TextBox8.Text = DBT.Rows(0)("Le_Level5").ToString
+        TextBox88.Text = DBT.Rows(0)("Le_Level6").ToString
+        TextBox3.Text = DBT.Rows(0)("Le_Level7").ToString
+        TextBox1.Text = DBT.Rows(0)("Le_Level8").ToString
+        TextBox4.Text = DBT.Rows(0)("Le_Level9").ToString
+        TextBox5.Text = DBT.Rows(0)("Le_Level10").ToString
+        TextBox6.Text = DBT.Rows(0)("Le_Level11").ToString
+        TextBox7.Text = DBT.Rows(0)("Le_Level12").ToString
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Label_Color(Com_Excel, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+        text_clear()
+    End Sub
+
+    Private Sub text_clear()
+        TextBox104.Text = ""
+        TextBox98.Text = ""
+        TextBox97.Text = ""
+        TextBox89.Text = ""
+        TextBox96.Text = ""
+        TextBox8.Text = ""
+        TextBox88.Text = ""
+        TextBox3.Text = ""
+        TextBox1.Text = ""
+        TextBox4.Text = ""
+        TextBox5.Text = ""
+        TextBox6.Text = ""
+        TextBox7.Text = ""
+    End Sub
+
+    Private Sub Com_Can_Click(sender As Object, e As EventArgs) Handles Com_Can.Click
+        Label_Color(Com_Contract, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+        text_clear()
+    End Sub
+
+    Private Sub Com_OK_Click(sender As Object, e As EventArgs) Handles Com_OK.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT * FROM Man_Level where Le_Code = '" & TextBox104.Text & "'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            StrSQL = "Update Man_Level Set Le_Level1 ='" & TextBox98.Text & "',
+                                         Le_Level2 = '" & TextBox97.Text & "',
+                                         Le_Level3 = '" & TextBox89.Text & "',
+                                         Le_Level4 = '" & TextBox96.Text & "',
+                                         Le_Level5 = '" & TextBox8.Text & "',
+                                         Le_Level6 = '" & TextBox88.Text & "',
+                                         Le_Level7 = '" & TextBox3.Text & "',
+                                         Le_Level8 = '" & TextBox1.Text & "',
+                                         Le_Level9 = '" & TextBox4.Text & "',
+                                         Le_Level10 = '" & TextBox5.Text & "',
+                                         Le_Level11 = '" & TextBox6.Text & "',
+                                         Le_Level12 = '" & TextBox7.Text & "'
+                                         WHERE Le_Code = '" & TextBox104.Text & "'"
+            Re_Count2 = DB_Execute()
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+        Else
+
+            StrSQL = "Insert into Man_Level (Le_Code, Le_Level1, Le_Level2, Le_Level3, Le_Level4,
+                                           Le_Level5, Le_Level6, Le_Level7, Le_Level8, Le_Level9,
+                                           Le_Level10, Le_Level11, Le_Level12) 
+                                   Values ('" & TextBox104.Text & "', '" & TextBox98.Text & "', '" & TextBox97.Text & "', '" & TextBox89.Text & "', '" & TextBox96.Text & "',
+                                           '" & TextBox8.Text & "', '" & TextBox88.Text & "', '" & TextBox3.Text & "', '" & TextBox1.Text & "', '" & TextBox4.Text & "',
+                                           '" & TextBox5.Text & "', '" & TextBox6.Text & "', '" & TextBox7.Text & "')"
+            Re_Count2 = DB_Execute()
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        End If
+
+        ML_Lode()
+        text_clear()
+        Label_Color(Com_Contract, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+    End Sub
+End Class

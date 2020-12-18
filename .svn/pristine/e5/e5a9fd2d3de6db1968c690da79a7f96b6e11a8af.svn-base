@@ -1,0 +1,266 @@
+﻿
+Imports Excel = Microsoft.Office.Interop.Excel
+
+Public Class Frm_Deliver_Ing
+    Dim tblDeliver As New DataTable
+
+    Private Sub fnFrmTblLoad()
+        tblDeliver = fnGetTableStructure("dbo.Deliver")
+    End Sub
+
+    Private Sub Frm_Deliver_Ing_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        palMain.Top = 40
+        palMain.Left = 10
+
+        comboSetUp1(cboCheck2, "1110")
+        fnFrmTblLoad()
+        btnSearch.PerformClick()
+        showRevLog("Frm_Deliver_Ing", DBT, lstRev)
+    End Sub
+
+
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+        Dim i As Integer
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = "Select * From CR_Contract_List where CR_Code Like '%" & txtJobNo.Text & "%'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstMain.RowCount = DBT.Rows.Count
+            For i = 0 To DBT.Rows.Count - 1
+                lstMain.Rows(i).Cells("CR_List_Code").Value = DBT.Rows(i)("CR_List_Code").ToString
+                lstMain.Rows(i).Cells("CR_Code").Value = DBT.Rows(i)("CR_Code").ToString
+                lstMain.Rows(i).Cells("CR_Rev_No").Value = DBT.Rows(i)("CR_Rev_No").ToString
+                lstMain.Rows(i).Cells("CR_Sun").Value = DBT.Rows(i)("CR_Sun").ToString
+                lstMain.Rows(i).Cells("CR_PL_Name").Value = DBT.Rows(i)("CR_PL_Name").ToString
+                lstMain.Rows(i).Cells("CR_Qty").Value = DBT.Rows(i)("CR_Qty").ToString
+                lstMain.Rows(i).Cells("CR_Total").Value = DBT.Rows(i)("CR_Total").ToString
+                lstMain.Rows(i).Cells("CR_Date").Value = DBT.Rows(i)("CR_Date").ToString
+            Next
+
+
+            For i = 0 To DBT.Rows.Count - 1
+
+                StrSQL = "Select * From Deliver where CR_List_Code = '" & lstMain.Rows(i).Cells("CR_List_Code").Value.ToString & "' and CR_Code = '" & lstMain.Rows(i).Cells("CR_Code").Value.ToString & "' and CR_Rev_No = '" & lstMain.Rows(i).Cells("CR_Rev_No").Value.ToString & "' and CR_Sun = '" & lstMain.Rows(i).Cells("CR_Sun").Value.ToString & "'"
+                Re_Count2 = DB_Select(DBT2)
+
+                If Re_Count2 > 0 Then
+                    lstMain.Rows(i).Cells("DL_Code").Value = DBT2.Rows(0)("DL_Code").ToString
+                    lstMain.Rows(i).Cells("DL_Check").Value = DBT2.Rows(0)("DL_Check").ToString
+                    lstMain.Rows(i).Cells("DL_Date").Value = DBT2.Rows(0)("DL_Date").ToString
+                    lstMain.Rows(i).Cells("DL_Bigo").Value = DBT2.Rows(0)("DL_Bigo").ToString
+                    lstMain.Rows(i).Cells("DL_Prepared").Value = DBT2.Rows(0)("DL_Prepared").ToString
+                    lstMain.Rows(i).Cells("DL_Prepare_Date").Value = DBT2.Rows(0)("DL_Prepare_Date").ToString
+                    lstMain.Rows(i).Cells("DL_Updated").Value = DBT2.Rows(0)("DL_Updated").ToString
+                    lstMain.Rows(i).Cells("DL_Update_Date").Value = DBT2.Rows(0)("DL_Update_Date").ToString
+                Else
+                    lstMain.Rows(i).Cells("DL_Code").Value = ""
+                    lstMain.Rows(i).Cells("DL_Check").Value = ""
+                    lstMain.Rows(i).Cells("DL_Date").Value = ""
+                    lstMain.Rows(i).Cells("DL_Bigo").Value = ""
+                    lstMain.Rows(i).Cells("DL_Prepared").Value = ""
+                    lstMain.Rows(i).Cells("DL_Prepare_Date").Value = ""
+                    lstMain.Rows(i).Cells("DL_Updated").Value = ""
+                    lstMain.Rows(i).Cells("DL_Update_Date").Value = ""
+                End If
+            Next
+
+        End If
+
+    End Sub
+
+    Private Sub lstMain_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        If e.RowIndex >= 0 Then
+            txtJobNo2.Text = lstMain.Rows(e.RowIndex).Cells("CR_Code").Value.ToString
+            txtRev2.Text = lstMain.Rows(e.RowIndex).Cells("CR_Rev_No").Value.ToString
+            txtSun2.Text = lstMain.Rows(e.RowIndex).Cells("CR_Sun").Value.ToString
+            txtJobListCode2.Text = lstMain.Rows(e.RowIndex).Cells("CR_List_Code").Value.ToString
+            txtDLCode2.Text = lstMain.Rows(e.RowIndex).Cells("DL_Code").Value.ToString
+            txtPLName2.Text = lstMain.Rows(e.RowIndex).Cells("CR_PL_Name").Value.ToString
+            cboCheck2.Text = lstMain.Rows(e.RowIndex).Cells("DL_Check").Value.ToString
+            dtpDate.Text = lstMain.Rows(e.RowIndex).Cells("DL_Date").Value.ToString
+            txtBigo2.Text = lstMain.Rows(e.RowIndex).Cells("DL_Bigo").Value.ToString
+        End If
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        txtJobNo2.Text = ""
+        txtRev2.Text = ""
+        txtSun2.Text = ""
+        txtJobListCode2.Text = ""
+        txtDLCode2.Text = ""
+        txtPLName2.Text = ""
+        cboCheck2.Text = ""
+        dtpDate.Text = ""
+        txtBigo2.Text = ""
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        Dim DBT As DataTable
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+
+        DBT = Nothing
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        If MessageBox.Show(txtPLName2.Text + " 를 삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If txtJobNo2.Text <> "" Then
+                StrSQL = "Delete Deliver 
+where 1=1
+and DL_Code = '" & txtDLCode2.Text & "'
+and CR_List_Code = '" & txtJobListCode2.Text & "'
+and CR_Code = '" & txtJobNo2.Text & "'
+and CR_Rev_No = '" & txtRev2.Text & "'
+and CR_Sun = '" & txtSun2.Text & "'
+"
+                Re_Count = DB_Execute()
+
+                If Re_Count > 0 Then
+                    MsgBox("삭제 완료")
+                End If
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 정보 삭제 : " & txtPLName2.Text
+                Man_Log("Frm_Deliver_Ing", "정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+            Else
+                MsgBox("선택된 물품이 없습니다")
+            End If
+            showRevLog("Frm_Deliver_Ing", DBT, lstRev)
+            btnSearch.PerformClick()
+        End If
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = "SELECT * from Deliver 
+where 1=1 
+and DL_Code = '" & txtDLCode2.Text & "'
+and CR_List_Code = '" & txtJobListCode2.Text & "'
+and CR_Code = '" & txtJobNo2.Text & "'
+and CR_Rev_No = '" & txtRev2.Text & "'
+and CR_Sun = '" & txtSun2.Text & "'
+"
+        Re_Count = DB_Select(DBT)
+
+
+        '#1. 기존 입력 값 초기화
+        clearTblRowValues(tblDeliver)
+        '#2. 입력자료 입력
+        For i = 0 To tblDeliver.Rows.Count - 1
+
+            Select Case tblDeliver.Rows(i).Item(0).ToString
+
+                Case "DL_Code"
+                    If txtDLCode2.Text = "" Then
+                        tblDeliver.Rows(i).Item(11) = PK_Make("Deliver")
+                    Else
+                        tblDeliver.Rows(i).Item(11) = txtDLCode2.Text
+                    End If
+
+                Case "CR_List_Code"
+                    tblDeliver.Rows(i).Item(11) = txtJobListCode2.Text
+                Case "CR_Code"
+                    tblDeliver.Rows(i).Item(11) = txtJobNo2.Text
+                Case "CR_Rev_No"
+                    tblDeliver.Rows(i).Item(11) = txtRev2.Text
+                Case "CR_Sun"
+                    tblDeliver.Rows(i).Item(11) = txtSun2.Text
+                Case "DL_Check"
+                    tblDeliver.Rows(i).Item(11) = cboCheck2.Text
+                Case "DL_Date"
+                    tblDeliver.Rows(i).Item(11) = dtpDate.Value.ToString(fmtStr)
+                Case "DL_Bigo"
+                    tblDeliver.Rows(i).Item(11) = txtBigo2.Text
+
+                Case "DL_Prepared"
+                    If Re_Count > 0 Then
+                        tblDeliver.Rows(i).Item(11) = DBT.Rows(0)("DL_Prepared").ToString
+                    Else
+                        tblDeliver.Rows(i).Item(11) = logInUserName
+                    End If
+                Case "DL_Prepare_Date"
+                    If Re_Count > 0 Then
+                        tblDeliver.Rows(i).Item(11) = DBT.Rows(0)("DL_Prepare_Date").ToString
+                    Else
+                        tblDeliver.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                    End If
+                Case "DL_Updated"
+                    If Re_Count > 0 Then
+                        tblDeliver.Rows(i).Item(11) = logInUserName
+
+                    End If
+                Case "DL_Update_Date"
+                    If Re_Count > 0 Then
+                        tblDeliver.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+
+                    End If
+            End Select
+        Next
+
+        If Re_Count > 0 Then
+
+            Re_Count2 = fnTableUpdate("dbo.Deliver", tblDeliver)
+
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        Else
+
+            Re_Count2 = fnTableInsert("dbo.Deliver", tblDeliver)
+
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        End If
+
+        If Re_Count > 0 Then
+            prcType = "수정" '수정
+        Else
+            prcType = "신규입력" '입력
+        End If
+
+        If prcType = "수정" Then
+            'hsim 20200515 처리 이력
+            histLogStr = "사용자 " & logInUserName & " 출하 정보 수정 : " & txtJobNo2.Text & "-" & txtPLName2.Text
+        Else
+            'hsim 20200515 처리 이력
+            histLogStr = "사용자 " & logInUserName & " 출하 정보 신규 입력 : " & txtJobNo2.Text & "-" & txtPLName2.Text
+        End If
+        Man_Log("Frm_Deliver_Ing", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        'hsim 20200515 개정이력 조회 갱신
+        showRevLog("Frm_Deliver_Ing", DBT2, lstRev)
+        btnSearch.PerformClick()
+    End Sub
+End Class

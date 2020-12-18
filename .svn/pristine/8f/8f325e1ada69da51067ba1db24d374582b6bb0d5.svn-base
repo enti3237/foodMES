@@ -1,0 +1,34 @@
+﻿Public Class Frm_MJ_Report1
+    Private Sub Frm_MJ_Report1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT a1,a5,a13,a17,a18,a23,a20,a3,a21,a10,a22
+           FROM  test with(NOLOCK)"
+
+
+
+
+        Re_Count = DB_Select(DBT)
+        DataGridView1.DataSource = DBT
+
+
+
+
+
+        'DateTimePicker1.Value = DateTime.Now.AddYears(-1).ToString("yyyy") + "-" + "01-01"
+        'DateTimePicker2.Value = DateTime.Now.ToString("yyyy-MM-dd")
+        'Grid_CR_Load()
+        'GanttChart_Load()
+
+
+
+    End Sub
+
+
+End Class

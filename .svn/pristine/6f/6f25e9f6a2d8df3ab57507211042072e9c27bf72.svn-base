@@ -1,0 +1,587 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class Frm_Storage_CODE
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()>
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()>
+    Private Sub InitializeComponent()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Location1_Put_Com = New System.Windows.Forms.Button()
+        Me.Location1_Delete_Com = New System.Windows.Forms.Button()
+        Me.Location1_Save_Com = New System.Windows.Forms.Button()
+        Me.Location1_Insert_Com = New System.Windows.Forms.Button()
+        Me.Di_Button2 = New System.Windows.Forms.Button()
+        Me.Location1_Grid = New System.Windows.Forms.DataGridView()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Location2_Put_Com = New System.Windows.Forms.Button()
+        Me.Location2_Delete_Com = New System.Windows.Forms.Button()
+        Me.Location2_Save_Com = New System.Windows.Forms.Button()
+        Me.Location2_Insert_Com = New System.Windows.Forms.Button()
+        Me.Button6 = New System.Windows.Forms.Button()
+        Me.Location2_Grid = New System.Windows.Forms.DataGridView()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Location3_Put_Com = New System.Windows.Forms.Button()
+        Me.Location3_Delete_Com = New System.Windows.Forms.Button()
+        Me.Location3_Save_Com = New System.Windows.Forms.Button()
+        Me.Location3_Insert_Com = New System.Windows.Forms.Button()
+        Me.Di_Button3 = New System.Windows.Forms.Button()
+        Me.Location3_Grid = New System.Windows.Forms.DataGridView()
+        Me.Panel6 = New System.Windows.Forms.Panel()
+        Me.Location4_Put_Com = New System.Windows.Forms.Button()
+        Me.Location4_Delete_Com = New System.Windows.Forms.Button()
+        Me.Location4_Save_Com = New System.Windows.Forms.Button()
+        Me.Location4_Insert_Com = New System.Windows.Forms.Button()
+        Me.Button7 = New System.Windows.Forms.Button()
+        Me.Location4_Grid = New System.Windows.Forms.DataGridView()
+        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.Tag_Print_com = New System.Windows.Forms.Button()
+        Me.Storage_Grid_Combo = New System.Windows.Forms.ComboBox()
+        Me.Storage_Delete_Com = New System.Windows.Forms.Button()
+        Me.Storage_Save_Com = New System.Windows.Forms.Button()
+        Me.Storage_Insert_Com = New System.Windows.Forms.Button()
+        Me.Di_Button4 = New System.Windows.Forms.Button()
+        Me.Storage_Grid = New System.Windows.Forms.DataGridView()
+        Me.Panel2.SuspendLayout()
+        CType(Me.Location1_Grid, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel1.SuspendLayout()
+        CType(Me.Location2_Grid, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel3.SuspendLayout()
+        CType(Me.Location3_Grid, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel6.SuspendLayout()
+        CType(Me.Location4_Grid, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel4.SuspendLayout()
+        CType(Me.Storage_Grid, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Panel2
+        '
+        Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel2.Controls.Add(Me.Location1_Put_Com)
+        Me.Panel2.Controls.Add(Me.Location1_Delete_Com)
+        Me.Panel2.Controls.Add(Me.Location1_Save_Com)
+        Me.Panel2.Controls.Add(Me.Location1_Insert_Com)
+        Me.Panel2.Controls.Add(Me.Di_Button2)
+        Me.Panel2.Controls.Add(Me.Location1_Grid)
+        Me.Panel2.Location = New System.Drawing.Point(14, 18)
+        Me.Panel2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(416, 371)
+        Me.Panel2.TabIndex = 2
+        '
+        'Location1_Put_Com
+        '
+        Me.Location1_Put_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location1_Put_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location1_Put_Com.Location = New System.Drawing.Point(211, 322)
+        Me.Location1_Put_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location1_Put_Com.Name = "Location1_Put_Com"
+        Me.Location1_Put_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location1_Put_Com.TabIndex = 31
+        Me.Location1_Put_Com.Text = "삽입"
+        Me.Location1_Put_Com.UseVisualStyleBackColor = False
+        '
+        'Location1_Delete_Com
+        '
+        Me.Location1_Delete_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location1_Delete_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location1_Delete_Com.Location = New System.Drawing.Point(312, 322)
+        Me.Location1_Delete_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location1_Delete_Com.Name = "Location1_Delete_Com"
+        Me.Location1_Delete_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location1_Delete_Com.TabIndex = 30
+        Me.Location1_Delete_Com.Text = "삭제"
+        Me.Location1_Delete_Com.UseVisualStyleBackColor = False
+        '
+        'Location1_Save_Com
+        '
+        Me.Location1_Save_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location1_Save_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location1_Save_Com.Location = New System.Drawing.Point(3, 322)
+        Me.Location1_Save_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location1_Save_Com.Name = "Location1_Save_Com"
+        Me.Location1_Save_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location1_Save_Com.TabIndex = 29
+        Me.Location1_Save_Com.Text = "저장"
+        Me.Location1_Save_Com.UseVisualStyleBackColor = False
+        '
+        'Location1_Insert_Com
+        '
+        Me.Location1_Insert_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location1_Insert_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location1_Insert_Com.Location = New System.Drawing.Point(107, 322)
+        Me.Location1_Insert_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location1_Insert_Com.Name = "Location1_Insert_Com"
+        Me.Location1_Insert_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location1_Insert_Com.TabIndex = 28
+        Me.Location1_Insert_Com.Text = "추가"
+        Me.Location1_Insert_Com.UseVisualStyleBackColor = False
+        '
+        'Di_Button2
+        '
+        Me.Di_Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Di_Button2.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Di_Button2.ForeColor = System.Drawing.Color.Black
+        Me.Di_Button2.Location = New System.Drawing.Point(3, 4)
+        Me.Di_Button2.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Di_Button2.Name = "Di_Button2"
+        Me.Di_Button2.Size = New System.Drawing.Size(406, 32)
+        Me.Di_Button2.TabIndex = 26
+        Me.Di_Button2.Text = "공장 구분"
+        Me.Di_Button2.UseVisualStyleBackColor = False
+        '
+        'Location1_Grid
+        '
+        Me.Location1_Grid.AllowUserToAddRows = False
+        Me.Location1_Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.Location1_Grid.Location = New System.Drawing.Point(3, 42)
+        Me.Location1_Grid.Margin = New System.Windows.Forms.Padding(2)
+        Me.Location1_Grid.Name = "Location1_Grid"
+        Me.Location1_Grid.RowHeadersWidth = 51
+        Me.Location1_Grid.RowTemplate.Height = 30
+        Me.Location1_Grid.Size = New System.Drawing.Size(406, 274)
+        Me.Location1_Grid.TabIndex = 25
+        '
+        'Panel1
+        '
+        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.Location2_Put_Com)
+        Me.Panel1.Controls.Add(Me.Location2_Delete_Com)
+        Me.Panel1.Controls.Add(Me.Location2_Save_Com)
+        Me.Panel1.Controls.Add(Me.Location2_Insert_Com)
+        Me.Panel1.Controls.Add(Me.Button6)
+        Me.Panel1.Controls.Add(Me.Location2_Grid)
+        Me.Panel1.Location = New System.Drawing.Point(438, 18)
+        Me.Panel1.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(416, 371)
+        Me.Panel1.TabIndex = 7
+        '
+        'Location2_Put_Com
+        '
+        Me.Location2_Put_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location2_Put_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location2_Put_Com.Location = New System.Drawing.Point(211, 322)
+        Me.Location2_Put_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location2_Put_Com.Name = "Location2_Put_Com"
+        Me.Location2_Put_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location2_Put_Com.TabIndex = 31
+        Me.Location2_Put_Com.Text = "삽입"
+        Me.Location2_Put_Com.UseVisualStyleBackColor = False
+        '
+        'Location2_Delete_Com
+        '
+        Me.Location2_Delete_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location2_Delete_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location2_Delete_Com.Location = New System.Drawing.Point(312, 322)
+        Me.Location2_Delete_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location2_Delete_Com.Name = "Location2_Delete_Com"
+        Me.Location2_Delete_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location2_Delete_Com.TabIndex = 30
+        Me.Location2_Delete_Com.Text = "삭제"
+        Me.Location2_Delete_Com.UseVisualStyleBackColor = False
+        '
+        'Location2_Save_Com
+        '
+        Me.Location2_Save_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location2_Save_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location2_Save_Com.Location = New System.Drawing.Point(3, 322)
+        Me.Location2_Save_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location2_Save_Com.Name = "Location2_Save_Com"
+        Me.Location2_Save_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location2_Save_Com.TabIndex = 29
+        Me.Location2_Save_Com.Text = "저장"
+        Me.Location2_Save_Com.UseVisualStyleBackColor = False
+        '
+        'Location2_Insert_Com
+        '
+        Me.Location2_Insert_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location2_Insert_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location2_Insert_Com.Location = New System.Drawing.Point(107, 322)
+        Me.Location2_Insert_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location2_Insert_Com.Name = "Location2_Insert_Com"
+        Me.Location2_Insert_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location2_Insert_Com.TabIndex = 28
+        Me.Location2_Insert_Com.Text = "추가"
+        Me.Location2_Insert_Com.UseVisualStyleBackColor = False
+        '
+        'Button6
+        '
+        Me.Button6.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Button6.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button6.ForeColor = System.Drawing.Color.Black
+        Me.Button6.Location = New System.Drawing.Point(3, 4)
+        Me.Button6.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(406, 32)
+        Me.Button6.TabIndex = 26
+        Me.Button6.Text = "블럭 구분"
+        Me.Button6.UseVisualStyleBackColor = False
+        '
+        'Location2_Grid
+        '
+        Me.Location2_Grid.AllowUserToAddRows = False
+        Me.Location2_Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.Location2_Grid.Location = New System.Drawing.Point(3, 42)
+        Me.Location2_Grid.Margin = New System.Windows.Forms.Padding(2)
+        Me.Location2_Grid.Name = "Location2_Grid"
+        Me.Location2_Grid.RowHeadersWidth = 51
+        Me.Location2_Grid.RowTemplate.Height = 30
+        Me.Location2_Grid.Size = New System.Drawing.Size(406, 274)
+        Me.Location2_Grid.TabIndex = 25
+        '
+        'Panel3
+        '
+        Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel3.Controls.Add(Me.Location3_Put_Com)
+        Me.Panel3.Controls.Add(Me.Location3_Delete_Com)
+        Me.Panel3.Controls.Add(Me.Location3_Save_Com)
+        Me.Panel3.Controls.Add(Me.Location3_Insert_Com)
+        Me.Panel3.Controls.Add(Me.Di_Button3)
+        Me.Panel3.Controls.Add(Me.Location3_Grid)
+        Me.Panel3.Location = New System.Drawing.Point(861, 18)
+        Me.Panel3.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(416, 371)
+        Me.Panel3.TabIndex = 8
+        '
+        'Location3_Put_Com
+        '
+        Me.Location3_Put_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location3_Put_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location3_Put_Com.Location = New System.Drawing.Point(211, 322)
+        Me.Location3_Put_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location3_Put_Com.Name = "Location3_Put_Com"
+        Me.Location3_Put_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location3_Put_Com.TabIndex = 31
+        Me.Location3_Put_Com.Text = "삽입"
+        Me.Location3_Put_Com.UseVisualStyleBackColor = False
+        '
+        'Location3_Delete_Com
+        '
+        Me.Location3_Delete_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location3_Delete_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location3_Delete_Com.Location = New System.Drawing.Point(312, 322)
+        Me.Location3_Delete_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location3_Delete_Com.Name = "Location3_Delete_Com"
+        Me.Location3_Delete_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location3_Delete_Com.TabIndex = 30
+        Me.Location3_Delete_Com.Text = "삭제"
+        Me.Location3_Delete_Com.UseVisualStyleBackColor = False
+        '
+        'Location3_Save_Com
+        '
+        Me.Location3_Save_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location3_Save_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location3_Save_Com.Location = New System.Drawing.Point(3, 322)
+        Me.Location3_Save_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location3_Save_Com.Name = "Location3_Save_Com"
+        Me.Location3_Save_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location3_Save_Com.TabIndex = 29
+        Me.Location3_Save_Com.Text = "저장"
+        Me.Location3_Save_Com.UseVisualStyleBackColor = False
+        '
+        'Location3_Insert_Com
+        '
+        Me.Location3_Insert_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location3_Insert_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location3_Insert_Com.Location = New System.Drawing.Point(107, 322)
+        Me.Location3_Insert_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location3_Insert_Com.Name = "Location3_Insert_Com"
+        Me.Location3_Insert_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location3_Insert_Com.TabIndex = 28
+        Me.Location3_Insert_Com.Text = "추가"
+        Me.Location3_Insert_Com.UseVisualStyleBackColor = False
+        '
+        'Di_Button3
+        '
+        Me.Di_Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Di_Button3.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Di_Button3.ForeColor = System.Drawing.Color.Black
+        Me.Di_Button3.Location = New System.Drawing.Point(3, 4)
+        Me.Di_Button3.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Di_Button3.Name = "Di_Button3"
+        Me.Di_Button3.Size = New System.Drawing.Size(406, 32)
+        Me.Di_Button3.TabIndex = 26
+        Me.Di_Button3.Text = "위치 구분"
+        Me.Di_Button3.UseVisualStyleBackColor = False
+        '
+        'Location3_Grid
+        '
+        Me.Location3_Grid.AllowUserToAddRows = False
+        Me.Location3_Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.Location3_Grid.Location = New System.Drawing.Point(3, 42)
+        Me.Location3_Grid.Margin = New System.Windows.Forms.Padding(2)
+        Me.Location3_Grid.Name = "Location3_Grid"
+        Me.Location3_Grid.RowHeadersWidth = 51
+        Me.Location3_Grid.RowTemplate.Height = 30
+        Me.Location3_Grid.Size = New System.Drawing.Size(406, 274)
+        Me.Location3_Grid.TabIndex = 25
+        '
+        'Panel6
+        '
+        Me.Panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel6.Controls.Add(Me.Location4_Put_Com)
+        Me.Panel6.Controls.Add(Me.Location4_Delete_Com)
+        Me.Panel6.Controls.Add(Me.Location4_Save_Com)
+        Me.Panel6.Controls.Add(Me.Location4_Insert_Com)
+        Me.Panel6.Controls.Add(Me.Button7)
+        Me.Panel6.Controls.Add(Me.Location4_Grid)
+        Me.Panel6.Location = New System.Drawing.Point(1283, 18)
+        Me.Panel6.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel6.Name = "Panel6"
+        Me.Panel6.Size = New System.Drawing.Size(416, 371)
+        Me.Panel6.TabIndex = 9
+        '
+        'Location4_Put_Com
+        '
+        Me.Location4_Put_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location4_Put_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location4_Put_Com.Location = New System.Drawing.Point(211, 322)
+        Me.Location4_Put_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location4_Put_Com.Name = "Location4_Put_Com"
+        Me.Location4_Put_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location4_Put_Com.TabIndex = 31
+        Me.Location4_Put_Com.Text = "삽입"
+        Me.Location4_Put_Com.UseVisualStyleBackColor = False
+        '
+        'Location4_Delete_Com
+        '
+        Me.Location4_Delete_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location4_Delete_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location4_Delete_Com.Location = New System.Drawing.Point(312, 322)
+        Me.Location4_Delete_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location4_Delete_Com.Name = "Location4_Delete_Com"
+        Me.Location4_Delete_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location4_Delete_Com.TabIndex = 30
+        Me.Location4_Delete_Com.Text = "삭제"
+        Me.Location4_Delete_Com.UseVisualStyleBackColor = False
+        '
+        'Location4_Save_Com
+        '
+        Me.Location4_Save_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location4_Save_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location4_Save_Com.Location = New System.Drawing.Point(3, 322)
+        Me.Location4_Save_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location4_Save_Com.Name = "Location4_Save_Com"
+        Me.Location4_Save_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location4_Save_Com.TabIndex = 29
+        Me.Location4_Save_Com.Text = "저장"
+        Me.Location4_Save_Com.UseVisualStyleBackColor = False
+        '
+        'Location4_Insert_Com
+        '
+        Me.Location4_Insert_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Location4_Insert_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Location4_Insert_Com.Location = New System.Drawing.Point(107, 322)
+        Me.Location4_Insert_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Location4_Insert_Com.Name = "Location4_Insert_Com"
+        Me.Location4_Insert_Com.Size = New System.Drawing.Size(97, 41)
+        Me.Location4_Insert_Com.TabIndex = 28
+        Me.Location4_Insert_Com.Text = "추가"
+        Me.Location4_Insert_Com.UseVisualStyleBackColor = False
+        '
+        'Button7
+        '
+        Me.Button7.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Button7.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button7.ForeColor = System.Drawing.Color.Black
+        Me.Button7.Location = New System.Drawing.Point(3, 4)
+        Me.Button7.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(406, 32)
+        Me.Button7.TabIndex = 26
+        Me.Button7.Text = "단 구분"
+        Me.Button7.UseVisualStyleBackColor = False
+        '
+        'Location4_Grid
+        '
+        Me.Location4_Grid.AllowUserToAddRows = False
+        Me.Location4_Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.Location4_Grid.Location = New System.Drawing.Point(3, 42)
+        Me.Location4_Grid.Margin = New System.Windows.Forms.Padding(2)
+        Me.Location4_Grid.Name = "Location4_Grid"
+        Me.Location4_Grid.RowHeadersWidth = 51
+        Me.Location4_Grid.RowTemplate.Height = 30
+        Me.Location4_Grid.Size = New System.Drawing.Size(406, 274)
+        Me.Location4_Grid.TabIndex = 25
+        '
+        'Panel4
+        '
+        Me.Panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel4.Controls.Add(Me.Tag_Print_com)
+        Me.Panel4.Controls.Add(Me.Storage_Grid_Combo)
+        Me.Panel4.Controls.Add(Me.Storage_Delete_Com)
+        Me.Panel4.Controls.Add(Me.Storage_Save_Com)
+        Me.Panel4.Controls.Add(Me.Storage_Insert_Com)
+        Me.Panel4.Controls.Add(Me.Di_Button4)
+        Me.Panel4.Controls.Add(Me.Storage_Grid)
+        Me.Panel4.Location = New System.Drawing.Point(13, 424)
+        Me.Panel4.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Size = New System.Drawing.Size(978, 371)
+        Me.Panel4.TabIndex = 10
+        '
+        'Tag_Print_com
+        '
+        Me.Tag_Print_com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Tag_Print_com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Tag_Print_com.Location = New System.Drawing.Point(837, 4)
+        Me.Tag_Print_com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Tag_Print_com.Name = "Tag_Print_com"
+        Me.Tag_Print_com.Size = New System.Drawing.Size(123, 32)
+        Me.Tag_Print_com.TabIndex = 32
+        Me.Tag_Print_com.Text = "TAG 인쇄"
+        Me.Tag_Print_com.UseVisualStyleBackColor = False
+        '
+        'Storage_Grid_Combo
+        '
+        Me.Storage_Grid_Combo.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Storage_Grid_Combo.FormattingEnabled = True
+        Me.Storage_Grid_Combo.Location = New System.Drawing.Point(570, 169)
+        Me.Storage_Grid_Combo.Margin = New System.Windows.Forms.Padding(2)
+        Me.Storage_Grid_Combo.Name = "Storage_Grid_Combo"
+        Me.Storage_Grid_Combo.Size = New System.Drawing.Size(142, 25)
+        Me.Storage_Grid_Combo.TabIndex = 32
+        Me.Storage_Grid_Combo.Visible = False
+        '
+        'Storage_Delete_Com
+        '
+        Me.Storage_Delete_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Storage_Delete_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Storage_Delete_Com.Location = New System.Drawing.Point(734, 4)
+        Me.Storage_Delete_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Storage_Delete_Com.Name = "Storage_Delete_Com"
+        Me.Storage_Delete_Com.Size = New System.Drawing.Size(97, 32)
+        Me.Storage_Delete_Com.TabIndex = 31
+        Me.Storage_Delete_Com.Text = "삭제"
+        Me.Storage_Delete_Com.UseVisualStyleBackColor = False
+        '
+        'Storage_Save_Com
+        '
+        Me.Storage_Save_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Storage_Save_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Storage_Save_Com.Location = New System.Drawing.Point(526, 4)
+        Me.Storage_Save_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Storage_Save_Com.Name = "Storage_Save_Com"
+        Me.Storage_Save_Com.Size = New System.Drawing.Size(97, 32)
+        Me.Storage_Save_Com.TabIndex = 29
+        Me.Storage_Save_Com.Text = "저장"
+        Me.Storage_Save_Com.UseVisualStyleBackColor = False
+        '
+        'Storage_Insert_Com
+        '
+        Me.Storage_Insert_Com.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Storage_Insert_Com.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Storage_Insert_Com.Location = New System.Drawing.Point(630, 4)
+        Me.Storage_Insert_Com.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Storage_Insert_Com.Name = "Storage_Insert_Com"
+        Me.Storage_Insert_Com.Size = New System.Drawing.Size(97, 32)
+        Me.Storage_Insert_Com.TabIndex = 28
+        Me.Storage_Insert_Com.Text = "추가"
+        Me.Storage_Insert_Com.UseVisualStyleBackColor = False
+        '
+        'Di_Button4
+        '
+        Me.Di_Button4.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Di_Button4.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Di_Button4.ForeColor = System.Drawing.Color.Black
+        Me.Di_Button4.Location = New System.Drawing.Point(3, 4)
+        Me.Di_Button4.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Di_Button4.Name = "Di_Button4"
+        Me.Di_Button4.Size = New System.Drawing.Size(515, 32)
+        Me.Di_Button4.TabIndex = 26
+        Me.Di_Button4.Text = "저장위치 관리"
+        Me.Di_Button4.UseVisualStyleBackColor = False
+        '
+        'Storage_Grid
+        '
+        Me.Storage_Grid.AllowUserToAddRows = False
+        Me.Storage_Grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.Storage_Grid.Location = New System.Drawing.Point(3, 42)
+        Me.Storage_Grid.Margin = New System.Windows.Forms.Padding(2)
+        Me.Storage_Grid.Name = "Storage_Grid"
+        Me.Storage_Grid.RowHeadersWidth = 51
+        Me.Storage_Grid.RowTemplate.Height = 30
+        Me.Storage_Grid.Size = New System.Drawing.Size(970, 324)
+        Me.Storage_Grid.TabIndex = 25
+        '
+        'Frm_Storage_CODE
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Panel4)
+        Me.Controls.Add(Me.Panel6)
+        Me.Controls.Add(Me.Panel3)
+        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.Panel2)
+        Me.Margin = New System.Windows.Forms.Padding(3, 4, 3, 4)
+        Me.Name = "Frm_Storage_CODE"
+        Me.Size = New System.Drawing.Size(1722, 1238)
+        Me.Panel2.ResumeLayout(False)
+        CType(Me.Location1_Grid, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel1.ResumeLayout(False)
+        CType(Me.Location2_Grid, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel3.ResumeLayout(False)
+        CType(Me.Location3_Grid, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel6.ResumeLayout(False)
+        CType(Me.Location4_Grid, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel4.ResumeLayout(False)
+        CType(Me.Storage_Grid, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Location1_Put_Com As Button
+    Friend WithEvents Location1_Delete_Com As Button
+    Friend WithEvents Location1_Save_Com As Button
+    Friend WithEvents Location1_Insert_Com As Button
+    Friend WithEvents Di_Button2 As Button
+    Friend WithEvents Location1_Grid As DataGridView
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Location2_Put_Com As Button
+    Friend WithEvents Location2_Delete_Com As Button
+    Friend WithEvents Location2_Save_Com As Button
+    Friend WithEvents Location2_Insert_Com As Button
+    Friend WithEvents Location2_Grid As DataGridView
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Location3_Put_Com As Button
+    Friend WithEvents Location3_Delete_Com As Button
+    Friend WithEvents Location3_Save_Com As Button
+    Friend WithEvents Location3_Insert_Com As Button
+    Friend WithEvents Di_Button3 As Button
+    Friend WithEvents Location3_Grid As DataGridView
+    Friend WithEvents Panel6 As Panel
+    Friend WithEvents Location4_Put_Com As Button
+    Friend WithEvents Location4_Delete_Com As Button
+    Friend WithEvents Location4_Save_Com As Button
+    Friend WithEvents Location4_Insert_Com As Button
+    Friend WithEvents Button7 As Button
+    Friend WithEvents Location4_Grid As DataGridView
+    Friend WithEvents Button6 As Button
+    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Storage_Grid_Combo As ComboBox
+    Friend WithEvents Storage_Delete_Com As Button
+    Friend WithEvents Storage_Save_Com As Button
+    Friend WithEvents Storage_Insert_Com As Button
+    Friend WithEvents Di_Button4 As Button
+    Friend WithEvents Storage_Grid As DataGridView
+    Friend WithEvents Tag_Print_com As Button
+End Class

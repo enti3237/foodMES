@@ -1,0 +1,15 @@
+<<<<<<< HEAD
+obj/Debug/SmartFactory.FrmCT_POP.resources
+=======
+*.ide-shm
+*.ide-wal
+*.exe
+*.exe~8a840f706dfe7fee9029e319ec6806dea39faf79
+*.pdb
+*.pdb~8a840f706dfe7fee9029e319ec6806dea39faf79
+*.cache
+*.cache~8a840f706dfe7fee9029e319ec6806dea39faf79
+*.resources
+*.txt
+*.txt~8a840f706dfe7fee9029e319ec6806dea39faf79
+>>>>>>> 87949328179ce4be47ac5545f1919f97abcd6d51

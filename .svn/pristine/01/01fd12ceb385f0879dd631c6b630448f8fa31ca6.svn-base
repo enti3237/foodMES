@@ -1,0 +1,57 @@
+﻿
+Public Class Frm_Man_Pass_POP
+
+    Private Sub Frm_Man_Pass_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        'Me.Dock = DockStyle.Fill
+        'Me.BringToFront()
+
+        'Panel1.Top = 45
+        'Panel1.Left = 10
+        'Panel1.Visible = True
+
+    End Sub
+
+    Private Sub Com_Can_Click(sender As Object, e As EventArgs)
+        Me.Hide()
+    End Sub
+
+    Private Sub Com_OK_Click(sender As Object, e As EventArgs)
+        Dim DBT As DataTable
+        DBT = Nothing
+        Dim hashedPwd As String
+
+        '#1. 패스워드 검증
+        If txtPasswd.Text <> txtPasswd2.Text Then
+            MsgBox("패스워드가 서로 일치하지 않습니다.")
+            Exit Sub
+        End If
+        If txtPasswd.Text.Length < 8 Then
+            MsgBox("최소 8자리 이상 입력바랍니다.")
+            Exit Sub
+        End If
+
+        hashedPwd = GenerateSHA256String(txtPasswd.Text)
+
+        StrSQL = "SELECT * FROM Man where Man_Code = '" & loginID & "'"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            StrSQL = "Update Man Set Man_Pass = '" & hashedPwd & "' WHERE Man_Code = '" & loginID & "'"
+            Re_Count2 = DB_Execute()
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+            Else
+                MsgBox("저장 실패")
+            End If
+        End If
+        Me.Hide()
+    End Sub
+
+    Private Sub Com_Can_Click_1(sender As Object, e As EventArgs) Handles Com_Can.Click
+
+    End Sub
+
+    Private Sub Com_OK_Click_1(sender As Object, e As EventArgs) Handles Com_OK.Click
+
+    End Sub
+End Class

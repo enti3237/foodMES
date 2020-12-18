@@ -1,0 +1,46 @@
+﻿Public Class Frm_MT_Itm_POP
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = " SELECT MTL.MT_List_Code MT_List_Code, MTL.MT_Code MT_Code, MTL.MT_Rev_No MT_Rev_No, MTL.MT_Sun MT_Sun, " &
+                 " MTL.MT_CR_list_Code MT_CR_list_Code, (SELECT CR_PL_NAME FROM CR_Contract_List where CR_List_Code = MTL.MT_CR_List_Code) MT_CR_list_Name, " &
+                 " MTL.MT_DV_Code MT_DV_Code, (SELECT DV_NAME FROM DV_Drawing where MTL.MT_DV_Code <> '' And DV_Code = MTL.MT_DV_Code) MT_DV_Name, " &
+                 " MTL.MT_List_Code MT_List_Code, MTL.MT_Item MT_Item,  " &
+                 " MTL.MT_Spec MT_Spec, MTL.MT_Size MT_Size,  " &
+                 " MTL.MT_Unit MT_Unit, MTL.MT_Qty MT_Qty, MTL.MT_Item_Bigo MT_Item_Bigo " &
+                 " FROM MT_Material MT RIGHT OUTER JOIN MT_Material_List MTL ON MT.MT_Code = MTL.MT_Code And MT.MT_Rev_No = MTL.MT_Rev_No " &
+                 " where 1=1 " &
+                 " And MT.MT_Code Like '%" & txtMTCode.Text & "%' " &
+                 " And MT.MT_Rev_No = (select isnull(max(MT_Rev_No),1) from MT_Material where MT_Code = MT.MT_Code) " &
+                 " order by MTL.MT_List_Code, MTL.MT_Code, MTL.MT_Rev_No, MTL.MT_Sun "
+
+        Console.WriteLine("SQL문:" + StrSQL)
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+        DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.DialogResult = DialogResult.OK
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Me.Close()
+    End Sub
+
+    Private Sub btnBOMSearch_Click(sender As Object, e As EventArgs) Handles btnBOMSearch.Click
+        Dim pop2 As Frm_MT_POP = New Frm_MT_POP
+        pop2.StartPosition = FormStartPosition.CenterScreen
+        If (pop2.ShowDialog(Me) = DialogResult.OK) Then
+            If pop2.DataGridView1.Rows.Count > 0 Then
+                txtMTCode.Text = pop2.DataGridView1.Rows(pop2.DataGridView1.CurrentCell.RowIndex).Cells("MT_Code").Value.ToString
+                txtMTName.Text = pop2.DataGridView1.Rows(pop2.DataGridView1.CurrentCell.RowIndex).Cells("MT_Name").Value.ToString
+            End If
+            pop2.Dispose()
+        End If
+    End Sub
+End Class

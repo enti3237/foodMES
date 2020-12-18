@@ -1,0 +1,264 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_LA_Report1
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Button12 = New System.Windows.Forms.Button()
+        Me.TextBox16 = New System.Windows.Forms.TextBox()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.TextBox17 = New System.Windows.Forms.TextBox()
+        Me.Panel24 = New System.Windows.Forms.Panel()
+        Me.LO_JOB = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.계약형태 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_Sun = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_PR_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_DV_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_PL_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_PL_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_Standard = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_Unit = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_Qty = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_PS_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LO_Delivery = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.buy = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Panel1.SuspendLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.DataGridView1)
+        Me.Panel1.Controls.Add(Me.Button12)
+        Me.Panel1.Controls.Add(Me.TextBox16)
+        Me.Panel1.Controls.Add(Me.Button14)
+        Me.Panel1.Controls.Add(Me.TextBox17)
+        Me.Panel1.Controls.Add(Me.Panel24)
+        Me.Panel1.Location = New System.Drawing.Point(10, 40)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1660, 867)
+        Me.Panel1.TabIndex = 155
+        '
+        'DataGridView1
+        '
+        Me.DataGridView1.AllowUserToAddRows = False
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.LO_JOB, Me.계약형태, Me.LO_Sun, Me.LO_PR_Name, Me.LO_Code, Me.LO_DV_Code, Me.LO_PL_Code, Me.LO_PL_Name, Me.LO_Standard, Me.LO_Unit, Me.LO_Qty, Me.LO_PS_Code, Me.LO_Delivery, Me.buy})
+        Me.DataGridView1.Location = New System.Drawing.Point(16, 103)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.ReadOnly = True
+        Me.DataGridView1.RowHeadersVisible = False
+        Me.DataGridView1.RowTemplate.Height = 23
+        Me.DataGridView1.Size = New System.Drawing.Size(1600, 732)
+        Me.DataGridView1.TabIndex = 306
+        '
+        'Button12
+        '
+        Me.Button12.BackColor = System.Drawing.Color.White
+        Me.Button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button12.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button12.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button12.Location = New System.Drawing.Point(1153, 45)
+        Me.Button12.Name = "Button12"
+        Me.Button12.Size = New System.Drawing.Size(150, 27)
+        Me.Button12.TabIndex = 305
+        Me.Button12.Text = "JOB_No"
+        Me.Button12.UseVisualStyleBackColor = False
+        '
+        'TextBox16
+        '
+        Me.TextBox16.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox16.Location = New System.Drawing.Point(997, 46)
+        Me.TextBox16.Name = "TextBox16"
+        Me.TextBox16.Size = New System.Drawing.Size(150, 25)
+        Me.TextBox16.TabIndex = 302
+        '
+        'Button14
+        '
+        Me.Button14.BackColor = System.Drawing.Color.White
+        Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button14.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button14.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button14.Location = New System.Drawing.Point(1465, 45)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(150, 27)
+        Me.Button14.TabIndex = 301
+        Me.Button14.Text = "품명 검색"
+        Me.Button14.UseVisualStyleBackColor = False
+        '
+        'TextBox17
+        '
+        Me.TextBox17.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox17.Location = New System.Drawing.Point(1309, 46)
+        Me.TextBox17.Name = "TextBox17"
+        Me.TextBox17.Size = New System.Drawing.Size(150, 25)
+        Me.TextBox17.TabIndex = 300
+        '
+        'Panel24
+        '
+        Me.Panel24.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel24.Location = New System.Drawing.Point(16, 85)
+        Me.Panel24.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel24.Name = "Panel24"
+        Me.Panel24.Size = New System.Drawing.Size(1600, 1)
+        Me.Panel24.TabIndex = 299
+        '
+        'LO_JOB
+        '
+        Me.LO_JOB.DataPropertyName = "a1"
+        Me.LO_JOB.HeaderText = "JOB No"
+        Me.LO_JOB.Name = "LO_JOB"
+        Me.LO_JOB.ReadOnly = True
+        '
+        '계약형태
+        '
+        Me.계약형태.DataPropertyName = "a18"
+        Me.계약형태.HeaderText = "계약형태"
+        Me.계약형태.Name = "계약형태"
+        Me.계약형태.ReadOnly = True
+        Me.계약형태.Visible = False
+        '
+        'LO_Sun
+        '
+        Me.LO_Sun.DataPropertyName = "a19"
+        Me.LO_Sun.HeaderText = "No"
+        Me.LO_Sun.Name = "LO_Sun"
+        Me.LO_Sun.ReadOnly = True
+        '
+        'LO_PR_Name
+        '
+        Me.LO_PR_Name.DataPropertyName = "a7"
+        Me.LO_PR_Name.HeaderText = "품명"
+        Me.LO_PR_Name.Name = "LO_PR_Name"
+        Me.LO_PR_Name.ReadOnly = True
+        Me.LO_PR_Name.Width = 250
+        '
+        'LO_Code
+        '
+        Me.LO_Code.DataPropertyName = "a11"
+        Me.LO_Code.HeaderText = "구매요구서"
+        Me.LO_Code.Name = "LO_Code"
+        Me.LO_Code.ReadOnly = True
+        '
+        'LO_DV_Code
+        '
+        Me.LO_DV_Code.DataPropertyName = "a15"
+        Me.LO_DV_Code.HeaderText = "도면번호"
+        Me.LO_DV_Code.Name = "LO_DV_Code"
+        Me.LO_DV_Code.ReadOnly = True
+        '
+        'LO_PL_Code
+        '
+        Me.LO_PL_Code.DataPropertyName = "a16"
+        Me.LO_PL_Code.HeaderText = "부품번호"
+        Me.LO_PL_Code.Name = "LO_PL_Code"
+        Me.LO_PL_Code.ReadOnly = True
+        '
+        'LO_PL_Name
+        '
+        Me.LO_PL_Name.DataPropertyName = "a24"
+        Me.LO_PL_Name.HeaderText = "부품명"
+        Me.LO_PL_Name.Name = "LO_PL_Name"
+        Me.LO_PL_Name.ReadOnly = True
+        '
+        'LO_Standard
+        '
+        Me.LO_Standard.DataPropertyName = "a4"
+        Me.LO_Standard.HeaderText = "규격"
+        Me.LO_Standard.Name = "LO_Standard"
+        Me.LO_Standard.ReadOnly = True
+        '
+        'LO_Unit
+        '
+        Me.LO_Unit.DataPropertyName = "a9"
+        Me.LO_Unit.HeaderText = "단위"
+        Me.LO_Unit.Name = "LO_Unit"
+        Me.LO_Unit.ReadOnly = True
+        '
+        'LO_Qty
+        '
+        Me.LO_Qty.DataPropertyName = "a8"
+        Me.LO_Qty.HeaderText = "수량"
+        Me.LO_Qty.Name = "LO_Qty"
+        Me.LO_Qty.ReadOnly = True
+        '
+        'LO_PS_Code
+        '
+        Me.LO_PS_Code.DataPropertyName = "a12"
+        Me.LO_PS_Code.HeaderText = "구매시방서"
+        Me.LO_PS_Code.Name = "LO_PS_Code"
+        Me.LO_PS_Code.ReadOnly = True
+        '
+        'LO_Delivery
+        '
+        Me.LO_Delivery.DataPropertyName = "a3"
+        Me.LO_Delivery.HeaderText = "납기"
+        Me.LO_Delivery.Name = "LO_Delivery"
+        Me.LO_Delivery.ReadOnly = True
+        '
+        'buy
+        '
+        Me.buy.DataPropertyName = "a22"
+        Me.buy.HeaderText = "구매여부"
+        Me.buy.Name = "buy"
+        Me.buy.ReadOnly = True
+        '
+        'Frm_LA_Report1
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Panel1)
+        Me.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Name = "Frm_LA_Report1"
+        Me.Size = New System.Drawing.Size(1627, 666)
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents Button12 As Button
+    Friend WithEvents TextBox16 As TextBox
+    Friend WithEvents Button14 As Button
+    Friend WithEvents TextBox17 As TextBox
+    Friend WithEvents Panel24 As Panel
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents LO_JOB As DataGridViewTextBoxColumn
+    Friend WithEvents 계약형태 As DataGridViewTextBoxColumn
+    Friend WithEvents LO_Sun As DataGridViewTextBoxColumn
+    Friend WithEvents LO_PR_Name As DataGridViewTextBoxColumn
+    Friend WithEvents LO_Code As DataGridViewTextBoxColumn
+    Friend WithEvents LO_DV_Code As DataGridViewTextBoxColumn
+    Friend WithEvents LO_PL_Code As DataGridViewTextBoxColumn
+    Friend WithEvents LO_PL_Name As DataGridViewTextBoxColumn
+    Friend WithEvents LO_Standard As DataGridViewTextBoxColumn
+    Friend WithEvents LO_Unit As DataGridViewTextBoxColumn
+    Friend WithEvents LO_Qty As DataGridViewTextBoxColumn
+    Friend WithEvents LO_PS_Code As DataGridViewTextBoxColumn
+    Friend WithEvents LO_Delivery As DataGridViewTextBoxColumn
+    Friend WithEvents buy As DataGridViewTextBoxColumn
+End Class

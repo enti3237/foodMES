@@ -1,0 +1,778 @@
+﻿Imports System.IO
+
+Public Class Frm_Merchandise
+    Dim Grid_Display_Ch As Boolean
+
+    Dim Grid_Cus_In_Row As Integer
+    Dim Grid_Cus_In_Col As Integer
+    Dim Grid_Cus_Out_Row As Integer
+    Dim Grid_Cus_Out_Col As Integer
+
+
+    Private Sub Frm_Merchandise_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        Me.BackColor = Color.White
+
+
+
+        Grid_Code_Setup()
+        Grid_Info_Setup()
+
+
+        Search_Combo.Items.Add("코드")
+        Search_Combo.Items.Add("품명")
+        Search_Combo.Text = "코드"
+
+        Dim DBT As New DataTable
+        Search_Sel_Combo.Items.Clear()
+        Search_Sel_Combo.Items.Add("전체")
+        StrSQL = "Select Base_Name  FROM SI_BASE_CODE with(NOLOCK) Where Base_Sel = '제품구분' Order By Base_Name"
+        Re_Count = DB_Select(DBT)
+        'Grid_Info_Combo.Items.Clear()
+        If Re_Count <> 0 Then
+            For i = 0 To Re_Count - 1
+                Search_Sel_Combo.Items.Add(DBT.Rows(i)("Base_Name"))
+            Next i
+        End If
+        Search_Sel_Combo.Text = "전체"
+
+
+        Grid_Cus_In_Setup()
+        Grid_Cus_Out_Setup()
+
+
+
+
+        Customer_Panel.Left = 391
+        Customer_Panel.Top = 127
+        Customer_Panel.Visible = True
+
+    End Sub
+    Public Function Grid_Code_Setup() As Boolean
+        Grid_Color(Grid_Code)
+        Grid_Code.EnableHeadersVisualStyles = False
+        Grid_Code.AllowUserToAddRows = False
+        Grid_Info.ColumnHeadersHeight = 24
+
+        Grid_Code.RowTemplate.Height = 24
+        Grid_Code.ColumnCount = 3
+        Grid_Code.RowCount = 1
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Code.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Code.RowHeadersWidth = 10
+        Grid_Code.Columns(0).Width = 100
+        Grid_Code.Columns(1).Width = 150
+        Grid_Code.Columns(2).Width = 70
+        Grid_Code.Columns(0).HeaderText = "코드"
+        Grid_Code.Columns(1).HeaderText = "품명"
+        Grid_Code.Columns(2).HeaderText = "구분"
+        Dim i As Integer
+        For i = 0 To Grid_Code.ColumnCount - 1
+            Grid_Code.Columns(i).ReadOnly = True
+        Next i
+    End Function
+
+    Public Function Grid_Info_Setup() As Boolean
+        Grid_Color(Grid_Info)
+
+        '제목 폭
+        Grid_Info.RowHeadersWidth = 10
+        Grid_Info.ColumnHeadersHeight = 24
+
+        'Data 부분 높이
+        Grid_Info.RowTemplate.Height = 24
+        Grid_Info.ColumnCount = 2
+        Grid_Info.RowCount = 15
+
+
+
+
+
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Info.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        Grid_Info.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Info.Columns(0).Width = 100
+        Grid_Info.Columns(1).Width = 240
+        Grid_Info.Columns(0).HeaderText = "구분"
+        Grid_Info.Columns(1).HeaderText = "내용"
+
+        Grid_Info.Item(0, 0).Value = "코드"
+        Grid_Info.Item(0, 1).Value = "품명"
+        Grid_Info.Item(0, 2).Value = "구분"
+        Grid_Info.Item(0, 3).Value = "종류"
+        Grid_Info.Item(0, 4).Value = "규격"
+        Grid_Info.Item(0, 5).Value = "단위"
+        Grid_Info.Item(0, 6).Value = "단가"
+        Grid_Info.Item(0, 7).Value = "이미지"
+        Grid_Info.Rows(7).Height = 110
+        Grid_Info_Picture_Setup()
+
+        Grid_Info.Item(0, 8).Value = "수입검사"
+        Grid_Info.Item(0, 9).Value = "순회검사"
+        Grid_Info.Item(0, 10).Value = "자주검사"
+        Grid_Info.Item(0, 11).Value = "출하검사"
+
+        Grid_Info.Item(0, 12).Value = "부적합보고서"
+        Grid_Info.Item(0, 13).Value = "QC Field"
+        Grid_Info.Item(0, 14).Value = "비고"
+        Grid_Info.Columns(0).ReadOnly = True
+
+
+
+    End Function
+    Public Function Grid_Info_Picture_Setup() As Boolean
+        Grid_Info_Picture1.Top = Grid_Info.Top + Grid_Info.ColumnHeadersHeight + (7) * 24 + 1
+        Grid_Info_Picture1.Left = Grid_Info.Left + Grid_Info.RowHeadersWidth + Grid_Info.Columns(0).Width + 1
+        Grid_Info_Picture1.Width = Grid_Info.Columns(1).Width - 1
+        Grid_Info_Picture1.Height = Grid_Info.Rows(7).Height - 1
+        Grid_Info_Picture1.BackColor = Grid_Info.RowsDefaultCellStyle.BackColor
+        Grid_Info_Picture1.Visible = True
+        Grid_Info_Picture_Setup = True
+    End Function
+    Public Function Grid_Cus_In_Setup() As Boolean
+
+
+        Grid_Color(Grid_Cus_In)
+
+        Grid_Cus_In.EnableHeadersVisualStyles = False
+
+        Grid_Cus_In.AllowUserToAddRows = False
+
+
+
+
+        'Grid_Cus_In.RowTemplate.Height = 20
+        Grid_Cus_In.RowTemplate.Height = 24
+        '순번, 거래처코드, 거래처명,  단위, 단가, 기초수량, 비고
+        Grid_Cus_In.ColumnCount = 7
+        Grid_Cus_In.RowCount = 1
+
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Cus_In.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Cus_In.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Cus_In.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Cus_In.RowHeadersWidth = 10
+        Grid_Cus_In.Columns(0).Width = 55
+        Grid_Cus_In.Columns(1).Width = 55
+        Grid_Cus_In.Columns(2).Width = 110
+        Grid_Cus_In.Columns(3).Width = 60
+        Grid_Cus_In.Columns(4).Width = 60
+        Grid_Cus_In.Columns(5).Width = 60
+        Grid_Cus_In.Columns(6).Width = 100
+
+        Grid_Cus_In.Columns(0).HeaderText = "순번"
+        Grid_Cus_In.Columns(1).HeaderText = "코드"
+        Grid_Cus_In.Columns(2).HeaderText = "거래처상호"
+        Grid_Cus_In.Columns(3).HeaderText = "단위"
+        Grid_Cus_In.Columns(4).HeaderText = "단가"
+        Grid_Cus_In.Columns(5).HeaderText = "기초수량"
+        Grid_Cus_In.Columns(6).HeaderText = "비고"
+
+    End Function
+    Public Function Grid_Cus_Out_Setup() As Boolean
+        Grid_Color(Grid_Cus_Out)
+        Grid_Cus_Out.EnableHeadersVisualStyles = False
+
+        Grid_Cus_Out.AllowUserToAddRows = False
+
+
+
+
+        'Grid_Cus_Out.RowTemplate.Height = 20
+        Grid_Cus_Out.RowTemplate.Height = 24
+        '순번, 거래처코드, 거래처명,  단위, 단가, 기초수량, 비고
+        Grid_Cus_Out.ColumnCount = 8
+        Grid_Cus_Out.RowCount = 1
+
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        Grid_Cus_Out.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Cus_Out.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Cus_Out.Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        Grid_Cus_Out.RowHeadersWidth = 10
+        Grid_Cus_Out.Columns(0).Width = 55
+        Grid_Cus_Out.Columns(1).Width = 55
+        Grid_Cus_Out.Columns(2).Width = 110
+        Grid_Cus_Out.Columns(3).Width = 60
+        Grid_Cus_Out.Columns(4).Width = 60
+        Grid_Cus_Out.Columns(5).Width = 60
+        Grid_Cus_Out.Columns(6).Width = 100
+
+        Grid_Cus_Out.Columns(0).HeaderText = "순번"
+        Grid_Cus_Out.Columns(1).HeaderText = "코드"
+        Grid_Cus_Out.Columns(2).HeaderText = "거래처상호"
+        Grid_Cus_Out.Columns(3).HeaderText = "단위"
+        Grid_Cus_Out.Columns(4).HeaderText = "단가"
+        Grid_Cus_Out.Columns(5).HeaderText = "기초수량"
+        Grid_Cus_Out.Columns(6).HeaderText = "비고"
+        Grid_Cus_Out_Setup = True
+
+    End Function
+
+    Private Sub Search_Com_Click(sender As Object, e As EventArgs) Handles Search_Com.Click
+        Grid_Code_Display(True)
+    End Sub
+    Public Function Grid_Code_Display(Display_Sel As Boolean) As Boolean
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        Dim Je_Gu As String
+        If Display_Sel Then
+            Grid_Code.RowCount = 1
+            If Search_Sel_Combo.Text = "전체" Then
+                Je_Gu = ""
+            Else
+                Je_Gu = " And PL_Sel = '" & Search_Sel_Combo.Text & "'"
+            End If
+            Select Case Search_Combo.Text
+                Case "코드"
+                    StrSQL = "Select PL_Code, PL_Name, PL_Sel FROM SI_PRODUCT with(NOLOCK) Where PL_Code Like '" & Search_Text.Text & "%' " & Je_Gu & " Order  By PL_Code"
+                Case "품명"
+                    StrSQL = "Select PL_Code, PL_Name, PL_Sel FROM SI_PRODUCT With(NOLOCK) Where PL_Name Like '" & Search_Text.Text & "%' Or PL_Name Is Null " & Je_Gu & "Order By PL_Name"
+            End Select
+            Re_Count = DB_Select(DBT)
+            If Re_Count <> 0 Then
+                Grid_Code.RowCount = Re_Count
+                For i = 0 To Re_Count - 1
+                    For j = 0 To Grid_Code.ColumnCount - 1
+                        Grid_Code.Item(j, i).Value = DBT.Rows(i).Item(j)
+                    Next j
+                Next i
+            Else
+                Grid_Code.RowCount = 1
+                For j = 0 To Grid_Code.ColumnCount - 1
+                    Grid_Code.Item(j, 0).Value = ""
+                Next j
+            End If
+        End If
+        Grid_Code_Display = True
+    End Function
+    Private Sub Grid_Code_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Code.CellEnter
+        If Len(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value) > 0 Then
+            Grid_Info_Display_Pro(Grid_Code.Item(0, Grid_Code.CurrentCell.RowIndex).Value)
+            If Len(Grid_Info.Item(1, 0).Value) > 0 Then
+            Else
+                Exit Sub
+            End If
+
+            Grid_Cus_In_Display(Grid_Info.Item(1, 0).Value)
+            Grid_Cus_Out_Display(Grid_Info.Item(1, 0).Value)
+
+            Customer_Panel.Visible = True
+        End If
+    End Sub
+    Public Function Grid_Info_Display_Pro(PL_Code As String) As Boolean
+        Grid_Display_Ch = False
+        'Try
+        Dim DBT As New DataTable
+        Dim i As Integer
+        StrSQL = "Select * FROM SI_PRODUCT With(NOLOCK) Where PL_Code = '" & PL_Code & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Columns.Count - 1
+                Grid_Info.Item(1, i).Value = DBT.Rows(0).Item(i).ToString
+                '이미지 처리 한다.
+                If i = 7 Then
+                    If Len(Grid_Info.Item(1, i).Value) < 100 Then
+                        Grid_Info_Picture1.Image = Nothing
+                    Else
+                        Dim b() As Byte = HexStr2Array(Grid_Info.Item(1, i).Value)
+                        Grid_Info_Picture1.Image = Image.FromStream(New MemoryStream(b, 0, b.Length))
+                    End If
+                End If
+                If i = 6 Then
+                    Grid_Info.Item(1, i).Value = Format(Val(Grid_Info.Item(1, i).Value), "###,###,###,##0.00")
+                End If
+            Next i
+        Else
+            For i = 0 To DBT.Columns.Count - 1
+                Grid_Info.Item(1, i).Value = ""
+            Next i
+        End If
+        Grid_Display_Ch = True
+        Grid_Info_Display_Pro = True
+    End Function
+    Public Function Grid_Cus_In_Display(PL_Code As String) As Boolean
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        Grid_Display_Ch = False
+        Grid_Cus_In.RowCount = 1
+        StrSQL = "Select PL_Sun, PL_CM_Code, PL_CM_Name, PL_Unit, PL_Unit_Gold, PL_Base_Amount, PL_Bigo   FROM SI_PRODUCT_Customer with(NOLOCK)  Where PL_Code = '" & PL_Code & "' And PL_Sel = '매입'  Order By Convert(Decimal,PL_Sun)"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Grid_Cus_In.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                Grid_Cus_In.Item(0, i).Value = DBT.Rows(i).Item(0).ToString
+                Grid_Cus_In.Item(1, i).Value = DBT.Rows(i).Item(1).ToString
+                Grid_Cus_In.Item(2, i).Value = DBT.Rows(i).Item(2).ToString
+                Grid_Cus_In.Item(3, i).Value = DBT.Rows(i).Item(3).ToString
+                Grid_Cus_In.Item(4, i).Value = DBT.Rows(i).Item(4).ToString
+                Grid_Cus_In.Item(5, i).Value = DBT.Rows(i).Item(5).ToString
+                Grid_Cus_In.Item(6, i).Value = DBT.Rows(i).Item(6).ToString
+            Next i
+        Else
+            Grid_Cus_In.RowCount = 1
+            For j = 0 To Grid_Cus_In.ColumnCount - 1
+                Grid_Cus_In.Item(j, 0).Value = ""
+            Next j
+
+        End If
+
+        Grid_Display_Ch = True
+        Grid_Cus_In_Display = True
+    End Function
+
+    Private Sub Insert__Cus_In_Click(sender As Object, e As EventArgs) Handles Insert__Cus_In.Click
+        If Len(Grid_Info.Item(1, 0).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Grid_Display_Ch = False
+
+        Dim DBT As New DataTable
+        Dim Db_Sun As Long
+        StrSQL = "Select PL_Sun FROM SI_PRODUCT_Customer with(NOLOCK) Where PL_Code = '" & Grid_Info.Item(1, 0).Value & "' And PL_Sel = '매입' Order By Convert(Decimal,PL_Sun) Desc "
+        Re_Count = DB_Select(DBT)
+        If Re_Count = 0 Then
+            Db_Sun = 1
+        Else
+            Db_Sun = DBT.Rows(0).Item(0) + 1
+        End If
+
+        '추가한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Insert INTO SI_PRODUCT_Customer (PL_Sel, PL_Code, PL_Sun)  Values ('매입','" & Grid_Info.Item(1, 0).Value & "', '" & Db_Sun & "')"
+        Re_Count = DB_Execute()
+        Grid_Cus_In_Display(Grid_Info.Item(1, 0).Value)
+        Grid_Display_Ch = True
+
+    End Sub
+
+
+
+    Private Sub Grid_Cus_In_MouseClick(sender As Object, e As MouseEventArgs) Handles Grid_Cus_In.MouseClick
+
+
+        Grid_Cus_In_Row = Grid_Cus_In.CurrentCell.RowIndex
+        Grid_Cus_In_Col = Grid_Cus_In.CurrentCell.ColumnIndex
+        Grid_Cus_In_Combo.Visible = False
+        If Grid_Cus_In_Row < 0 Then
+            Exit Sub
+        End If
+        If Grid_Cus_In_Col < 0 Then
+            Exit Sub
+        End If
+        Dim DBT As New DataTable
+
+        Select Case Grid_Cus_In_Col
+            Case 1
+                StrSQL = "Select CM_Code, CM_Name  FROM SI_CUSTOMER with(NOLOCK)  Order By CM_Code"
+                Re_Count = DB_Select(DBT)
+                Grid_Cus_In_Combo.Items.Clear()
+                If Re_Count <> 0 Then
+                    For i = 0 To Re_Count - 1
+                        Grid_Cus_In_Combo.Items.Add(DBT.Rows(i).Item(0))
+                    Next i
+                End If
+
+                Grid_Cus_In_Combo.Top = Grid_Cus_In.Top + Grid_Cus_In.ColumnHeadersHeight + (Grid_Cus_In_Row) * 24
+                Grid_Cus_In_Combo.Left = Grid_Cus_In.Left + Grid_Cus_In.RowHeadersWidth + Grid_Cus_In.Columns(0).Width
+                Grid_Cus_In_Combo.Width = Grid_Cus_In.Columns(Grid_Cus_In_Col).Width
+                If Len(Grid_Cus_In.CurrentCell.Value) < 1 Then
+                    Grid_Cus_In_Combo.Text = ""
+                Else
+                    Grid_Cus_In_Combo.Text = Grid_Cus_In.CurrentCell.Value.ToString
+
+                End If
+                Grid_Cus_In_Combo.BackColor = Grid_Cus_In.RowsDefaultCellStyle.BackColor
+                Grid_Cus_In_Combo.Visible = True
+                Grid_Cus_In_Combo.Focus.ToString()
+            Case 2
+                StrSQL = "Select CM_Code, CM_Name  FROM SI_CUSTOMER with(NOLOCK)  Order By CM_Name"
+
+                Re_Count = DB_Select(DBT)
+                Grid_Cus_In_Combo.Items.Clear()
+                If Re_Count <> 0 Then
+                    For i = 0 To Re_Count - 1
+                        Grid_Cus_In_Combo.Items.Add(DBT.Rows(i).Item(1))
+                    Next i
+                End If
+                Grid_Cus_In_Combo.Top = Grid_Cus_In.Top + Grid_Cus_In.ColumnHeadersHeight + (Grid_Cus_In_Row) * 24
+                Grid_Cus_In_Combo.Left = Grid_Cus_In.Left + Grid_Cus_In.RowHeadersWidth + Grid_Cus_In.Columns(0).Width + Grid_Cus_In.Columns(1).Width
+                Grid_Cus_In_Combo.Width = Grid_Cus_In.Columns(Grid_Cus_In_Col).Width
+                Grid_Cus_In_Combo.Text = Grid_Cus_In.CurrentCell.Value
+                Grid_Cus_In_Combo.BackColor = Grid_Cus_In.RowsDefaultCellStyle.BackColor
+                Grid_Cus_In_Combo.Visible = True
+                Grid_Cus_In_Combo.Focus.ToString()
+            Case 3
+                StrSQL = "Select Base_Name  FROM SI_BASE_CODE with(NOLOCK) Where Base_Sel = '단위'  Order By Base_Name"
+                Re_Count = DB_Select(DBT)
+                Grid_Cus_In_Combo.Items.Clear()
+                If Re_Count <> 0 Then
+                    For i = 0 To Re_Count - 1
+                        Grid_Cus_In_Combo.Items.Add(DBT.Rows(i).Item(0))
+                    Next i
+                End If
+                Grid_Cus_In_Combo.Top = Grid_Cus_In.Top + Grid_Cus_In.ColumnHeadersHeight + (Grid_Cus_In_Row) * 24
+                Grid_Cus_In_Combo.Left = Grid_Cus_In.Left + Grid_Cus_In.RowHeadersWidth + Grid_Cus_In.Columns(0).Width + Grid_Cus_In.Columns(1).Width + Grid_Cus_In.Columns(2).Width
+                Grid_Cus_In_Combo.Width = Grid_Cus_In.Columns(Grid_Cus_In_Col).Width
+                Grid_Cus_In_Combo.Text = Grid_Cus_In.CurrentCell.Value
+                Grid_Cus_In_Combo.BackColor = Grid_Cus_In.RowsDefaultCellStyle.BackColor
+                Grid_Cus_In_Combo.Visible = True
+                Grid_Cus_In_Combo.Focus.ToString()
+        End Select
+
+    End Sub
+
+    Private Sub Grid_Cus_In_Combo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Grid_Cus_In_Combo.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Grid_Cus_In_Combo_LostFocus(sender As Object, e As EventArgs) Handles Grid_Cus_In_Combo.LostFocus
+        Grid_Cus_In_Combo.Visible = False
+
+    End Sub
+
+    Private Sub Grid_Cus_In_Combo_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles Grid_Cus_In_Combo.SelectionChangeCommitted
+        Dim DBT As New DataTable
+        Grid_Cus_In.Item(Grid_Cus_In_Col, Grid_Cus_In_Row).Value = Grid_Cus_In_Combo.SelectedItem.ToString()
+        Select Case Grid_Cus_In_Col
+            Case 1
+                StrSQL = "Select CM_Code, CM_Name  FROM SI_CUSTOMER with(NOLOCK) Where CM_Code = '" & Grid_Cus_In_Combo.SelectedItem.ToString() & "'"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Grid_Cus_In.Item(2, Grid_Cus_In_Row).Value = DBT.Rows(0).Item(1)
+                End If
+            Case 2
+                StrSQL = "Select CM_Code, CM_Name  FROM SI_CUSTOMER with(NOLOCK) Where CM_Name = '" & Grid_Cus_In_Combo.SelectedItem.ToString() & "'"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Grid_Cus_In.Item(1, Grid_Cus_In_Row).Value = DBT.Rows(0).Item(0)
+                End If
+        End Select
+
+    End Sub
+
+
+
+    Private Sub Grid_Cus_In_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Cus_In.CellValueChanged
+        If Grid_Display_Ch = True Then
+            Grid_Cus_In.CurrentRow.HeaderCell.Value = "*"
+        End If
+
+    End Sub
+
+
+    Private Sub Save_Cus_In_Click(sender As Object, e As EventArgs) Handles Save_Cus_In.Click
+        If Len(Grid_Info.Item(1, 0).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Dim i As Integer
+        Grid_Display_Ch = False
+        For i = 0 To Grid_Cus_In.Rows.Count - 1
+            If Grid_Cus_In.Rows(i).HeaderCell.Value = "*" Then
+                'Update
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "UPDATE SI_PRODUCT_Customer Set PL_Cm_Code = '" & Grid_Cus_In.Item(1, i).Value & "', PL_CM_Name = '" & Grid_Cus_In.Item(2, i).Value & "', PL_Unit = '" & Grid_Cus_In.Item(3, i).Value & "', PL_Unit_Gold = '" & Grid_Cus_In.Item(4, i).Value & "', PL_Base_Amount = '" & Grid_Cus_In.Item(5, i).Value & "', PL_Bigo = '" & Grid_Cus_In.Item(6, i).Value & "' where PL_Code = '" & Grid_Info.Item(1, 0).Value & "' And PL_Sun = '" & Grid_Cus_In.Item(0, i).Value & "' And PL_Sel = '매입'"
+                Re_Count = DB_Execute()
+                Grid_Cus_In.Rows(i).HeaderCell.Value = ""
+            End If
+        Next i
+        Grid_Display_Ch = True
+
+    End Sub
+
+    Private Sub Put__Cus_In_Click(sender As Object, e As EventArgs) Handles Put__Cus_In.Click
+        If Len(Grid_Info.Item(1, 0).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Grid_Display_Ch = False
+        Dim i As Integer
+        For i = Grid_Cus_In.RowCount - 1 To Grid_Cus_In.CurrentCell.RowIndex Step -1
+            '수정한다
+            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+            StrSQL = StrSQL & "UPDATE SI_PRODUCT_Customer Set PL_Sun = '" & i + 2 & "' Where PL_Sun = '" & i + 1 & "' And PL_Code = '" & Grid_Info.Item(1, 0).Value & "' And PL_Sel = '매입'"
+            Re_Count = DB_Execute()
+        Next i
+        '선택된 갈럼값을 가지고 온다
+        '추가한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Insert INTO SI_PRODUCT_Customer (PL_Sel, PL_Code, PL_Sun)  Values ('매입', '" & Grid_Info.Item(1, 0).Value & "', '" & Grid_Cus_In.CurrentCell.RowIndex + 1 & "')"
+        Re_Count = DB_Execute()
+        Grid_Cus_In_Display(Grid_Info.Item(1, 0).Value)
+        Grid_Display_Ch = True
+
+    End Sub
+
+    Private Sub Delete__Cus_In_Click(sender As Object, e As EventArgs) Handles Delete__Cus_In.Click
+        '해당 칼럼 삭제
+        If Len(Grid_Info.Item(1, 0).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Grid_Display_Ch = False
+        Dim i As Integer
+        '삭제한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "DELETE SI_PRODUCT_Customer Where PL_Sel = '매입' And PL_Code = '" & Grid_Info.Item(1, 0).Value & "' And   PL_Sun = '" & Grid_Cus_In.Item(0, Grid_Cus_In.CurrentCell.RowIndex).Value & "'"
+        Re_Count = DB_Execute()
+
+        For i = Grid_Cus_In.CurrentCell.RowIndex + 1 To Grid_Cus_In.RowCount - 1
+            '수정한다
+            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+            StrSQL = StrSQL & "UPDATE SI_PRODUCT_Customer Set PL_Sun = '" & i & "' Where  PL_Sel = '매입' And PL_Code = '" & Grid_Info.Item(1, 0).Value & "' And  PL_Sun = '" & i + 1 & "'"
+            Re_Count = DB_Execute()
+        Next i
+        '선택된 갈럼값을 가지고 온다
+        Grid_Cus_In_Display(Grid_Info.Item(1, 0).Value)
+        Grid_Display_Ch = True
+
+    End Sub
+
+    Private Sub Grid_Cus_Out_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Cus_Out.CellContentClick
+
+    End Sub
+
+    Private Sub Grid_Cus_Out_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles Grid_Cus_Out.CellValueChanged
+        If Grid_Display_Ch = True Then
+            Grid_Cus_Out.CurrentRow.HeaderCell.Value = "*"
+        End If
+
+    End Sub
+
+    Private Sub Grid_Cus_Out_MouseClick(sender As Object, e As MouseEventArgs) Handles Grid_Cus_Out.MouseClick
+        Grid_Cus_Out_Row = Grid_Cus_Out.CurrentCell.RowIndex
+        Grid_Cus_Out_Col = Grid_Cus_Out.CurrentCell.ColumnIndex
+        Grid_Cus_Out_Combo.Visible = False
+        If Grid_Cus_Out_Row < 0 Then
+            Exit Sub
+        End If
+        If Grid_Cus_Out_Col < 0 Then
+            Exit Sub
+        End If
+        Dim DBT As New DataTable
+
+        Select Case Grid_Cus_Out_Col
+            Case 1
+                StrSQL = "Select CM_Code, CM_Name  FROM SI_CUSTOMER with(NOLOCK)  Order By CM_Code"
+                Re_Count = DB_Select(DBT)
+                Grid_Cus_Out_Combo.Items.Clear()
+                If Re_Count <> 0 Then
+                    For i = 0 To Re_Count - 1
+                        Grid_Cus_Out_Combo.Items.Add(DBT.Rows(i).Item(0))
+                    Next i
+                End If
+
+                Grid_Cus_Out_Combo.Top = Grid_Cus_Out.Top + Grid_Cus_Out.ColumnHeadersHeight + (Grid_Cus_Out_Row) * 24
+                Grid_Cus_Out_Combo.Left = Grid_Cus_Out.Left + Grid_Cus_Out.RowHeadersWidth + Grid_Cus_Out.Columns(0).Width
+                Grid_Cus_Out_Combo.Width = Grid_Cus_Out.Columns(Grid_Cus_Out_Col).Width
+                Grid_Cus_Out_Combo.Text = Grid_Cus_Out.CurrentCell.Value
+                Grid_Cus_Out_Combo.BackColor = Grid_Cus_Out.RowsDefaultCellStyle.BackColor
+                Grid_Cus_Out_Combo.Visible = True
+                Grid_Cus_Out_Combo.Focus.ToString()
+            Case 2
+                StrSQL = "Select CM_Code, CM_Name  FROM SI_CUSTOMER with(NOLOCK)  Order By CM_Name"
+
+                Re_Count = DB_Select(DBT)
+                Grid_Cus_Out_Combo.Items.Clear()
+                If Re_Count <> 0 Then
+                    For i = 0 To Re_Count - 1
+                        Grid_Cus_Out_Combo.Items.Add(DBT.Rows(i).Item(1))
+                    Next i
+                End If
+                Grid_Cus_Out_Combo.Top = Grid_Cus_Out.Top + Grid_Cus_Out.ColumnHeadersHeight + (Grid_Cus_Out_Row) * 24
+                Grid_Cus_Out_Combo.Left = Grid_Cus_Out.Left + Grid_Cus_Out.RowHeadersWidth + Grid_Cus_Out.Columns(0).Width + Grid_Cus_Out.Columns(1).Width
+                Grid_Cus_Out_Combo.Width = Grid_Cus_Out.Columns(Grid_Cus_Out_Col).Width
+                Grid_Cus_Out_Combo.Text = Grid_Cus_Out.CurrentCell.Value
+                Grid_Cus_Out_Combo.BackColor = Grid_Cus_Out.RowsDefaultCellStyle.BackColor
+                Grid_Cus_Out_Combo.Visible = True
+                Grid_Cus_Out_Combo.Focus.ToString()
+            Case 3
+                StrSQL = "Select Base_Name  FROM SI_BASE_CODE with(NOLOCK) Where Base_Sel = '단위'  Order By Base_Name"
+                Re_Count = DB_Select(DBT)
+                Grid_Cus_Out_Combo.Items.Clear()
+                If Re_Count <> 0 Then
+                    For i = 0 To Re_Count - 1
+                        Grid_Cus_Out_Combo.Items.Add(DBT.Rows(i).Item(0))
+                    Next i
+                End If
+                Grid_Cus_Out_Combo.Top = Grid_Cus_Out.Top + Grid_Cus_Out.ColumnHeadersHeight + (Grid_Cus_Out_Row) * 24
+                Grid_Cus_Out_Combo.Left = Grid_Cus_Out.Left + Grid_Cus_Out.RowHeadersWidth + Grid_Cus_Out.Columns(0).Width + Grid_Cus_Out.Columns(1).Width + Grid_Cus_Out.Columns(2).Width
+                Grid_Cus_Out_Combo.Width = Grid_Cus_Out.Columns(Grid_Cus_Out_Col).Width
+                Grid_Cus_Out_Combo.Text = Grid_Cus_Out.CurrentCell.Value
+                Grid_Cus_Out_Combo.BackColor = Grid_Cus_Out.RowsDefaultCellStyle.BackColor
+                Grid_Cus_Out_Combo.Visible = True
+                Grid_Cus_Out_Combo.Focus.ToString()
+        End Select
+
+    End Sub
+
+    Private Sub Grid_Cus_Out_Combo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Grid_Cus_Out_Combo.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Grid_Cus_Out_Combo_LostFocus(sender As Object, e As EventArgs) Handles Grid_Cus_Out_Combo.LostFocus
+        Grid_Cus_Out_Combo.Visible = False
+
+    End Sub
+
+    Private Sub Grid_Cus_Out_Combo_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles Grid_Cus_Out_Combo.SelectionChangeCommitted
+        Dim DBT As New DataTable
+        Grid_Cus_Out.Item(Grid_Cus_Out_Col, Grid_Cus_Out_Row).Value = Grid_Cus_Out_Combo.SelectedItem.ToString()
+        Select Case Grid_Cus_Out_Col
+            Case 1
+                StrSQL = "Select CM_Code, CM_Name  FROM SI_CUSTOMER with(NOLOCK) Where CM_Code = '" & Grid_Cus_Out_Combo.SelectedItem.ToString() & "'"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Grid_Cus_Out.Item(2, Grid_Cus_Out_Row).Value = DBT.Rows(0).Item(1)
+                End If
+            Case 2
+                StrSQL = "Select CM_Code, CM_Name  FROM SI_CUSTOMER with(NOLOCK) Where CM_Name = '" & Grid_Cus_Out_Combo.SelectedItem.ToString() & "'"
+                Re_Count = DB_Select(DBT)
+                If Re_Count <> 0 Then
+                    Grid_Cus_Out.Item(1, Grid_Cus_Out_Row).Value = DBT.Rows(0).Item(0)
+                End If
+        End Select
+
+    End Sub
+
+    Private Sub Save_Cus_Out_Click(sender As Object, e As EventArgs) Handles Save_Cus_Out.Click
+        If Len(Grid_Info.Item(1, 0).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Dim i As Integer
+        Grid_Display_Ch = False
+        For i = 0 To Grid_Cus_Out.Rows.Count - 1
+            If Grid_Cus_Out.Rows(i).HeaderCell.Value = "*" Then
+                'Update
+                StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+                StrSQL = StrSQL & "UPDATE SI_PRODUCT_Customer Set PL_Cm_Code = '" & Grid_Cus_Out.Item(1, i).Value & "', PL_CM_Name = '" & Grid_Cus_Out.Item(2, i).Value & "', PL_Unit = '" & Grid_Cus_Out.Item(3, i).Value & "', PL_Unit_Gold = '" & Grid_Cus_Out.Item(4, i).Value & "', PL_Base_Amount = '" & Grid_Cus_Out.Item(5, i).Value & "', PL_Bigo = '" & Grid_Cus_Out.Item(6, i).Value & "' where PL_Code = '" & Grid_Info.Item(1, 0).Value & "' And PL_Sun = '" & Grid_Cus_Out.Item(0, i).Value & "' And PL_Sel = '매출'"
+                Re_Count = DB_Execute()
+                Grid_Cus_Out.Rows(i).HeaderCell.Value = ""
+            End If
+        Next i
+        Grid_Display_Ch = True
+
+    End Sub
+
+    Private Sub Insert__Cus_Out_Click(sender As Object, e As EventArgs) Handles Insert__Cus_Out.Click
+        If Len(Grid_Info.Item(1, 0).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Grid_Display_Ch = False
+
+        Dim DBT As New DataTable
+        Dim Db_Sun As Long
+        StrSQL = "Select PL_Sun FROM SI_PRODUCT_Customer with(NOLOCK) Where PL_Code = '" & Grid_Info.Item(1, 0).Value & "' And PL_Sel = '매출' Order By Convert(Decimal,PL_Sun) Desc "
+        Re_Count = DB_Select(DBT)
+        If Re_Count = 0 Then
+            Db_Sun = 1
+        Else
+            Db_Sun = DBT.Rows(0).Item(0) + 1
+        End If
+
+        '추가한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Insert INTO SI_PRODUCT_Customer (PL_Sel, PL_Code, PL_Sun)  Values ('매출','" & Grid_Info.Item(1, 0).Value & "', '" & Db_Sun & "')"
+        Re_Count = DB_Execute()
+        Grid_Cus_Out_Display(Grid_Info.Item(1, 0).Value)
+        Grid_Display_Ch = True
+
+    End Sub
+
+    Private Sub Put__Cus_Out_Click(sender As Object, e As EventArgs) Handles Put__Cus_Out.Click
+        If Len(Grid_Info.Item(1, 0).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Grid_Display_Ch = False
+        Dim i As Integer
+        For i = Grid_Cus_Out.RowCount - 1 To Grid_Cus_Out.CurrentCell.RowIndex Step -1
+            '수정한다
+            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+            StrSQL = StrSQL & "UPDATE SI_PRODUCT_Customer Set PL_Sun = '" & i + 2 & "' Where PL_Sun = '" & i + 1 & "' And PL_Code = '" & Grid_Info.Item(1, 0).Value & "' And PL_Sel = '매출'"
+            Re_Count = DB_Execute()
+        Next i
+        '선택된 갈럼값을 가지고 온다
+        '추가한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "Insert INTO SI_PRODUCT_Customer (PL_Sel, PL_Code, PL_Sun)  Values ('매출', '" & Grid_Info.Item(1, 0).Value & "', '" & Grid_Cus_Out.CurrentCell.RowIndex + 1 & "')"
+        Re_Count = DB_Execute()
+        Grid_Cus_Out_Display(Grid_Info.Item(1, 0).Value)
+        Grid_Display_Ch = True
+
+    End Sub
+
+    Private Sub Delete__Cus_Out_Click(sender As Object, e As EventArgs) Handles Delete__Cus_Out.Click
+        '해당 칼럼 삭제
+        If Len(Grid_Info.Item(1, 0).Value) > 0 Then
+        Else
+            Exit Sub
+        End If
+
+        Grid_Display_Ch = False
+        Dim i As Integer
+        '삭제한다
+        StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+        StrSQL = StrSQL & "DELETE SI_PRODUCT_Customer Where PL_Sel = '매출' And PL_Code = '" & Grid_Info.Item(1, 0).Value & "' And   PL_Sun = '" & Grid_Cus_Out.Item(0, Grid_Cus_Out.CurrentCell.RowIndex).Value & "'"
+        Re_Count = DB_Execute()
+
+        For i = Grid_Cus_Out.CurrentCell.RowIndex + 1 To Grid_Cus_Out.RowCount - 1
+            '수정한다
+            StrSQL = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED "
+            StrSQL = StrSQL & "UPDATE SI_PRODUCT_Customer Set PL_Sun = '" & i & "' Where  PL_Sel = '매출' And PL_Code = '" & Grid_Info.Item(1, 0).Value & "' And  PL_Sun = '" & i + 1 & "'"
+            Re_Count = DB_Execute()
+        Next i
+        '선택된 갈럼값을 가지고 온다
+        Grid_Cus_Out_Display(Grid_Info.Item(1, 0).Value)
+        Grid_Display_Ch = True
+
+    End Sub
+    Public Function Grid_Cus_Out_Display(PL_Code As String) As Boolean
+        Dim DBT As New DataTable
+        Dim i As Integer
+        Dim j As Integer
+        Grid_Display_Ch = False
+        Grid_Cus_Out.RowCount = 1
+        StrSQL = "Select PL_Sun, PL_CM_Code, PL_CM_Name, PL_Unit, PL_Unit_Gold, PL_Base_Amount, PL_Bigo   FROM SI_PRODUCT_Customer with(NOLOCK)  Where PL_Code = '" & PL_Code & "' And PL_Sel = '매출'  Order By Convert(Decimal,PL_Sun)"
+        Re_Count = DB_Select(DBT)
+        If Re_Count <> 0 Then
+            Grid_Cus_Out.RowCount = Re_Count
+            For i = 0 To Re_Count - 1
+                Grid_Cus_Out.Item(0, i).Value = DBT.Rows(i).Item(0).ToString
+                Grid_Cus_Out.Item(1, i).Value = DBT.Rows(i).Item(1).ToString
+                Grid_Cus_Out.Item(2, i).Value = DBT.Rows(i).Item(2).ToString
+                Grid_Cus_Out.Item(3, i).Value = DBT.Rows(i).Item(3).ToString
+                Grid_Cus_Out.Item(4, i).Value = DBT.Rows(i).Item(4).ToString
+                Grid_Cus_Out.Item(5, i).Value = DBT.Rows(i).Item(5).ToString
+                Grid_Cus_Out.Item(6, i).Value = DBT.Rows(i).Item(6).ToString
+            Next i
+        Else
+            Grid_Cus_Out.RowCount = 1
+            For j = 0 To Grid_Cus_Out.ColumnCount - 1
+                Grid_Cus_Out.Item(j, 0).Value = ""
+            Next j
+        End If
+
+        Grid_Display_Ch = True
+        Grid_Cus_Out_Display = True
+    End Function
+End Class

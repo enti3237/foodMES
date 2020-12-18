@@ -1,0 +1,34 @@
+﻿Public Class Frm_RIR_POP
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = " SELECT CQ.CQ_Code CQ_Code, CQ.CQ_Rev_No CQ_Rev_No, CQ.CQ_Name CQ_Name, CR.CR_Code CR_Code, CR.CR_Name CR_Name, " &
+                 " ( select Man_Name from Man where Man_Code = CQ.CQ_Manager ) CQ_Manager, CQ.CQ_Prepare_Date CQ_Prepare_Date " &
+                 " FROM CR_Contract CR , CM_Stock_QC CQ " &
+                 " where 1=1 " &
+                 " And CR_Rev_No = (select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code) " &
+                 " And CQ.CQ_Rev_No = (select isnull(max(CQ_Rev_No),1) from CM_Stock_QC where CQ_Code = CQ.CQ_Code) " &
+                 " And CR.CR_Code = CQ.CQ_Job_No " &
+                 " And CR.CR_Code Like '%" & TextBox15.Text & "%' " &
+                 " And CR.CR_Name Like '%" & txtJobName.Text & "%' " &
+                 " And CQ.CQ_Code Like '%" & txtJobName.Text & "%' " &
+                 " order by CQ.CQ_Code, CQ.CQ_Name, CQ.Prepare_Date "
+
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+        DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.DialogResult = DialogResult.OK
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Me.Close()
+    End Sub
+
+End Class

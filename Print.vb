@@ -1,0 +1,216 @@
+﻿Public Class Print
+    Private Sub Print_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.TopMost = True
+        Panel1.Visible = False
+        setup()
+
+        TextBox1.ReadOnly = True
+        TextBox2.ReadOnly = True
+        TextBox3.ReadOnly = True
+        TextBox4.ReadOnly = True
+        TextBox5.ReadOnly = True
+
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        '검색
+        Panel1.Visible = True
+        display()
+
+    End Sub
+
+    Public Sub display()
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        StrSQL = "Select PL_CODE, PL_NAME From SI_PRODUCT With(NOLOCK) ORDER BY PL_CODE"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            DataGridView1.RowCount = Re_Count
+            For i = 0 To DBT.Rows.Count - 1
+                DataGridView1.Item(0, i).Value = DBT.Rows(i).Item(0).ToString
+                DataGridView1.Item(1, i).Value = DBT.Rows(i).Item(1).ToString
+            Next i
+        Else
+            DataGridView1.RowCount = 1
+        End If
+    End Sub
+
+
+    Public Sub setup()
+        Grid_Color(DataGridView1)
+
+        DataGridView1.AllowUserToAddRows = False
+        DataGridView1.RowTemplate.Height = 50
+        DataGridView1.ColumnCount = 2
+        DataGridView1.RowCount = 5
+
+        '만약 헤더의 스타일을 조정하려면 아래 코드에 헤더를 추가한다.
+        DataGridView1.Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+        DataGridView1.Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+        DataGridView1.RowHeadersWidth = 10
+        DataGridView1.Columns(0).Width = 100
+        DataGridView1.Columns(1).Width = 240
+        DataGridView1.Columns(0).HeaderText = "제품코드"
+        DataGridView1.Columns(1).HeaderText = "제품명"
+        DataGridView1.ColumnHeadersHeight = 40
+
+
+        'Datagridview1.Columns(0).ReadOnly = True
+        'Datagridview1.Columns(1).ReadOnly = True
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        '라벨출력
+        If TextBox1.Text = "" Then
+            MsgBox("공백은 출력할 수 없습니다")
+            Exit Sub
+        End If
+
+        If TextBox6.Text = Nothing Or TextBox7.Text = Nothing Then
+            MsgBox("수량은 공백이거나 0일 수 없습니다")
+            Exit Sub
+        End If
+
+        Dim DBT As New DataTable
+        Dim My_Date As String
+        Dim My_Time As String
+        Dim code As String
+        Dim su As Integer
+        Dim box As Integer
+        Dim count As Integer = 0
+
+
+        code = TextBox1.Text
+        su = TextBox6.Text
+        box = TextBox7.Text
+        If su = box Then
+            count = 1
+        ElseIf su > box Then
+            If (su Mod box) = 0 Then
+                count = su / box
+            Else
+                count = Math.Truncate(su / box) + 1
+            End If
+        End If
+
+
+
+        StrSQL = "Select GETDATE()"
+        Re_Count = DB_Select(DBT)
+
+
+        If Re_Count = 0 Then
+            Exit Sub
+        Else
+            My_Date = DBT.Rows(0).Item(0)
+            My_Time = DateTime.Now.ToString("HH:mm")
+            My_Time = Replace(My_Time, ":", "-")
+            My_Date = Mid(My_Date, 1, 2) & "-" & Mid(My_Date, 6, 2) & "-" & Mid(My_Date, 9, 2)
+        End If
+
+        Dim pc_stock_print_data As Pc_stock_print_data '출력할 자료를 저장할 구조체 배열
+        Dim barcode_ArrList As New ArrayList()
+
+        ' MsgBox(Grid_Info.Item(1, 12).Value)
+
+        '  Grid_Code_Display()
+        '체크된 그리드내용 ArrList에 저장하기
+        Dim i As Integer
+        '  MsgBox(D.Item(12, i).Value)
+
+        For i = 0 To count - 1
+            pc_stock_print_data.psCode_sunCode = My_Date & "-" & My_Time & "-" & i + 1
+            pc_stock_print_data.PS_PL_Name = TextBox2.Text
+            If su > box Then
+                pc_stock_print_data.PS_PO_Total = box
+            Else
+                pc_stock_print_data.PS_PO_Total = su
+            End If
+
+            '    pc_stock_print_data.PS_Unit = D.Item(6, i).Value '4
+            '    pc_stock_print_data.PS_PO_Total = D.Item(8, i).Value '6
+            '    pc_stock_print_data.PS_DAY = D.Item(2, i).Value '1 2
+            '    pc_stock_print_data.PS_Bigo = D.Item(8, i).Value '8
+            '    '    pc_stock_print_data.PS_CM = D.Item(1, 5).Value '1 5
+            '    pc_stock_print_data.PS_CODE = D.Item(1, 0).Value '1 0
+            barcode_ArrList.Add(pc_stock_print_data)
+            su = su - box
+        Next
+
+        If barcode_ArrList.Count = 0 Then
+            MsgBox("출력할 값이 없습니다.", 0, "안내메세지")
+        Else
+            '출력할 바코드 list형태로 전달
+            Dia_Stock_barcode_print.SetBarcode_arr(barcode_ArrList)
+            Dia_Stock_barcode_print.Show()
+
+        End If
+
+    End Sub
+    Public Structure Pc_stock_print_data
+        Dim psCode_sunCode As String   '제품바코드 일련번호
+        Dim PS_PL_Name As String        '제품명
+        Dim PS_Standard As String       '규격
+        Dim PS_Unit As String           '단위
+        Dim PS_PO_Total As String       '생산량
+        Dim PS_DAY As String            '생산일자
+        Dim PS_Bigo As String           '비고
+        Dim PS_CM As String             '고객
+        Dim PS_CODE As String             '고객
+    End Structure
+    Private Sub DataGridView1_DoubleClick(sender As Object, e As EventArgs) Handles DataGridView1.DoubleClick
+
+        If DataGridView1.Item(0, DataGridView1.CurrentCell.RowIndex).Value = "" Then
+            Exit Sub
+        End If
+
+        If DataGridView1.Item(0, DataGridView1.CurrentCell.RowIndex).Value = Nothing Then
+            Exit Sub
+        End If
+        Dim code = DataGridView1.Item(0, DataGridView1.CurrentCell.RowIndex).Value
+        Dim name, st, ut, gold
+
+
+        Dim DBT As New DataTable
+        Dim i As Integer
+        StrSQL = "Select PL_CODE, PL_NAME, PL_STANDARD, PL_UNIT, PL_UNIT_GOLD From SI_PRODUCT With(NOLOCK) Where PL_Code = '" & code & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                name = DBT.Rows(i)("PL_NAME")
+                st = DBT.Rows(i)("PL_STANDARD")
+                ut = DBT.Rows(i)("PL_UNIT")
+                gold = DBT.Rows(i)("PL_UNIT_GOLD")
+            Next i
+        Else
+            MsgBox("등록되지 않은 제품코드입니다.")
+            Panel1.Visible = False
+            Exit Sub
+        End If
+
+
+        TextBox1.Text = code
+        TextBox2.Text = name
+        TextBox3.Text = st
+        TextBox4.Text = ut
+        TextBox5.Text = gold
+
+        Panel1.Visible = False
+    End Sub
+
+    Private Sub TextBox6_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox6.KeyPress
+        If Not Char.IsDigit(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+            MsgBox("문자는 입력할 수 없습니다.")
+        End If
+    End Sub
+
+    Private Sub TextBox7_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox7.KeyPress
+        If Not Char.IsDigit(e.KeyChar) And Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+            MsgBox("문자는 입력할 수 없습니다.")
+        End If
+    End Sub
+End Class

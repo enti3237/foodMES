@@ -1,0 +1,1195 @@
+﻿Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.Globalization
+Imports System.Data.OleDb
+
+Public Class Frm_Contract
+    Dim tblContract As New DataTable
+    Dim tblContract_lst As New DataTable
+
+    Dim Grid_Info_Row As Integer
+    Dim Grid_Info_Col As Integer
+    Dim Grid_Main_Row As Integer
+    Dim Grid_Main_Col As Integer
+    Dim xlapp As Excel.Application
+    Dim xlbook As Excel.Workbook
+    Dim xlsheet As Excel.Worksheet
+    Dim Excel_Check As Boolean
+    Dim Grid_Display_Ch As Boolean
+    Dim bu_set() As String = {"경영지원팀", "영업팀", "기술개발팀", "품질보증팀", "생산팀"}
+    Dim bool_data As Boolean = False
+    Dim bool_data2 As Boolean = False
+    Dim file_path As String = ""
+    Dim file_name As String = ""
+    Dim Main As Frm_Main = Application.OpenForms("Frm_Main")
+
+    Private Sub fnFrmTblLoad()
+        tblContract = fnGetTableStructure("dbo.CR_Contract")
+        tblContract_lst = fnGetTableStructure("dbo.CR_Contract_List")
+    End Sub
+
+    Private Sub Frm_Contract_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Label_Color(btnMain, Color_Label, Di_Panel2)
+
+        '계약일 및 납기일 From설정
+        dtpDateFrom.Value = "2015-01-01"
+        dtpDueDateFrom.Value = "2015-01-01"
+        'dtpDateFrom.Value = DateTime.Now.ToString("yyyy") + "-01-01"
+        'dtpDueDateFrom.Value = DateTime.Now.ToString("yyyy") + "-01-01"
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+        palDetail.Top = 40
+        palDetail.Left = 10
+        palMain.Top = 40
+        palMain.Left = 10
+        palSub.Top = 40
+        palSub.Left = 10
+
+        palMain.Visible = True
+        palDetail.Visible = False
+        palSub.Visible = False
+
+        fnFrmTblLoad()
+        'Grid_CR_Load()
+
+        comboSatUp(cboGrade1, "1060")
+        comboSatUp2(cboCustomer2, "0001")
+        comboSatUp(cboCondition3, "1040")
+        comboSatUp(cboGrade3, "1080")
+        comboSatUp(cboQTYUnit, "1050")
+        comboSatUp(cboUnit, "1090")
+
+        Me.btnSearch.PerformClick()
+
+    End Sub
+
+    Private Sub Com_Contract_Click_1(sender As Object, e As EventArgs) Handles btnMain.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = True
+        palDetail.Visible = False
+        palSub.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click_1(sender As Object, e As EventArgs) Handles btnDetail.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        lstSub_Load()
+        palMain.Visible = False
+        palDetail.Visible = True
+        palSub.Visible = False
+    End Sub
+
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles btnSub.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        palDetail.Visible = False
+        palSub.Visible = True
+
+        If lstSub.Rows.Count > 0 Then
+            txtJobSun3.Text = (Convert.ToInt32(lstSub.Rows(lstSub.Rows.Count - 1).Cells("CR_Sun").Value.ToString) + 1).ToString
+        Else
+            txtJobSun3.Text = "1"
+        End If
+
+        txtJobNo4.Text = txtJobNo3.Text
+        txtJobRev4.Text = txtJobRev3.Text
+        lstSub_Load()
+    End Sub
+
+    '수주목록 
+    Private Sub Grid_CR_Load()
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "select 
+	                    CR.CR_Code, CR.CR_Rev_No, CR.CRS_Code, CR.CR_Name, 
+	                    CM.CM_Name, CR.CR_Date, CR.CR_Due_Date 
+                    FROM 
+                    CR_Contract CR, 
+                    Company CM 
+                    where 1=1
+                    and CR.CR_Customer_Code = CM.CM_Code
+                    and CR.CR_Rev_No = (select isnull(max(CR_Rev_No),1)
+	                                     from CR_Contract
+	                                     where CR_Code = CR.CR_Code)
+                    order by 1 asc"
+        Re_Count = DB_Select(DBT)
+
+        If Re_Count > 0 Then
+            lstMain.DataSource = DBT
+        End If
+
+        lstMain.ClearSelection()
+
+    End Sub
+
+    Private Sub Com_Can_Click(sender As Object, e As EventArgs)
+        Label_Color(btnMain, Color_Label, Di_Panel2)
+        palDetail.Visible = False
+        palSub.Visible = False
+        palMain.Visible = True
+    End Sub
+
+    '돋보기로 Job No 검색
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles btnJobSearch.Click
+        Dim pop1 As Frm_Contract_POP = New Frm_Contract_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            txtJobNo.Text = pop1.result
+        End If
+        pop1.Dispose()
+    End Sub
+
+    '수주목록 그리드 셀클릭
+    Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellClick
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+        If e.RowIndex >= 0 Then
+            StrSQL = "SELECT * FROM CR_Contract with(NOLOCK), Company with(NOLOCK) where CR_Customer_Code = CM_Code And
+                        CR_Code = '" & lstMain.Rows(e.RowIndex).Cells("CR_Code").Value.ToString() & "' And
+                        CR_Rev_No = '" & lstMain.Rows(e.RowIndex).Cells("CR_Rev_No").Value.ToString() & "' order by CR_Code, CR_Rev_No"
+            Re_Count = DB_Select(DBT2)
+
+            If Re_Count > 0 Then
+                txtJobNo2.Text = DBT2.Rows(0)("CR_Code").ToString
+                txtJobNo4.Text = DBT2.Rows(0)("CR_Code").ToString
+                txtJobRev2.Text = DBT2.Rows(0)("CR_Rev_No").ToString
+                txtCRSNo2.Text = DBT2.Rows(0)("CRS_Code").ToString
+                txtJobName2.Text = DBT2.Rows(0)("CR_Name").ToString
+                txtCustomer2.Text = DBT2.Rows(0)("CM_Name").ToString
+                cboCustomer2.SelectedValue = DBT2.Rows(0)("CM_Code").ToString
+            End If
+        End If
+
+        lstSub_Load()
+
+    End Sub
+
+    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim DBT As DataTable, DBT2 As DataTable
+        DBT = Nothing
+        DBT2 = Nothing
+
+        StrSQL = " SELECT CR.CR_Code, CR.CR_Rev_No, CR.CRS_Code, CR.CR_Name, CM.CM_Name, CR.CR_Date, CR.CR_Due_Date " &
+                 " FROM CR_Contract CR with(NOLOCK), Company CM with(NOLOCK) " &
+                 " where 1=1 " &
+                 " AND CR.CR_Rev_No = ( select isnull(max(CR_Rev_No),1) from CR_Contract where CR_Code = CR.CR_Code) " &
+                 " AND CR.CR_Customer_Code = CM.CM_Code " &
+                 " AND CR.CR_Code Like '%" & txtJobNo.Text & "%' " &
+                 " AND CR.CRS_Code Like '%" & txtCRSNo.Text & "%' " &
+                 " AND CR.CR_Name Like '%" & txtJobName.Text & "%' " &
+                 " AND CM.CM_Name Like '%" & txtCustomer.Text & "%' " &
+                 " AND convert(datetime,'" & dtpDateFrom.Value.ToString("yyyy-MM-dd") & "') <= CR.CR_Date and convert(datetime,'" & dtpDateTo.Value.ToString("yyyy-MM-dd") & "') >= CR.CR_Date " &
+                 " AND convert(datetime,'" & dtpDueDateFrom.Value.ToString("yyyy-MM-dd") & "') <= CR.CR_Due_Date and convert(datetime,'" & dtpDueDateTo.Value.ToString("yyyy-MM-dd") & "') >= CR.CR_Due_Date " &
+                 " order by CR.CR_Due_Date desc, CR.CR_Date desc, CR.CR_CODE, CR.CR_NAME "
+
+        Re_Count = DB_Select(DBT)
+
+        lstMain.DataSource = DBT
+        'lstMain.Rows(0).Selected = True '첫 째 행 선택
+
+        showRevLog("Frm_Contract", DBT2, lstRev)
+
+    End Sub
+
+    Private Sub btnExcelUpLoad_Click(sender As Object, e As EventArgs) Handles btnExcelUpLoad.Click
+        Excel2Grid()
+    End Sub
+
+    Private Sub Excel2Grid()
+        Dim vConn As OleDbConnection
+        Dim DS As DataSet
+        Dim myCmd As OleDbDataAdapter
+        Dim i As Integer
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+        DBT = Nothing
+
+        'hsim 20200602 Table PK컬럼 임시 저장 변수
+        Dim tmpPK As String
+        DBT2 = Nothing
+
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        Try
+            If OpenFileDialog1.ShowDialog = DialogResult.OK Then
+                '# Excel 을 Database로 인식하도록 Connection String 생성
+                vConn = New OleDbConnection("Provider=Microsoft.Ace.OLEDB.12.0;Data Source=" & OpenFileDialog1.FileName & ";Extended Properties=""Excel 12.0;HDR=YES;""")
+                myCmd = New OleDbDataAdapter("Select * FROM [Sheet1$]", vConn)
+                DS = New DataSet
+                myCmd.Fill(DS)      '# DataSet에 엑셀에 있는 내용 모두 담음(조회 된 Query)
+                'DS.Tables(0)
+                'table 컬럼명 변경
+                DS.Tables(0).Columns(0).ColumnName = "CR_Code" 'Job No
+                DS.Tables(0).Columns(1).ColumnName = "CR_PL_Code" '자재식별번호
+                DS.Tables(0).Columns(2).ColumnName = "CR_PL_Name" '제품명
+                DS.Tables(0).Columns(3).ColumnName = "CR_Standard" '규격
+                DS.Tables(0).Columns(4).ColumnName = "CR_Qty" '수량
+                DS.Tables(0).Columns(5).ColumnName = "CR_Qty_Unit" '수량단위
+                DS.Tables(0).Columns(6).ColumnName = "CR_Unit_Amount" '단가
+                DS.Tables(0).Columns(7).ColumnName = "CR_Unit" '단가단위
+                DS.Tables(0).Columns(8).ColumnName = "CR_Date" '납기일
+                DS.Tables(0).Columns(9).ColumnName = "CR_Bigo" '비고
+                'table 컬럼 추가
+                DS.Tables(0).Columns.Add("CR_Rev_No")
+                DS.Tables(0).Columns.Add("CR_Sun")
+                DS.Tables(0).Columns.Add("CR_Total")
+                DS.Tables(0).Columns.Add("CR_Prepared")
+                DS.Tables(0).Columns.Add("CR_Prepare_Date")
+                'table 추가된 컬럼 로우 값 넣어주기
+                For i = 0 To DS.Tables(0).Rows.Count - 1
+                    DS.Tables(0).Rows(i)("CR_Rev_No") = txtJobRev3.Text  '"0"
+                    DS.Tables(0).Rows(i)("CR_Sun") = i + 1
+                    DS.Tables(0).Rows(i)("CR_Total") = Convert.ToInt32(DS.Tables(0).Rows(i)("CR_Unit_Amount")) * Convert.ToInt32(DS.Tables(0).Rows(i)("CR_Qty"))
+                    DS.Tables(0).Rows(i)("CR_Prepared") = Main.Text_Man_Name.Text
+                    DS.Tables(0).Rows(i)("CR_Prepare_Date") = DateTime.Today.ToString("yyyy-MM-dd")
+                Next
+                'lstSub.DataSource = DS.Tables(0)
+
+                'Job No 조회
+                StrSQL = "SELECT * FROM CR_Contract_List with(NOLOCK) where CR_Code = '" & DS.Tables(0).Rows(0)("CR_Code").ToString & "'"
+                Re_Count = DB_Select(DBT)
+                '조회된 Job No 존재하면 삭제
+                If Re_Count > 0 Then
+                    StrSQL = "DELETE FROM CR_Contract_List where CR_Code = '" & DS.Tables(0).Rows(0)("CR_Code").ToString & "'"
+                    DB_Execute2("UPDATE")
+                End If
+                'table 값 insert
+                For i = 0 To DS.Tables(0).Rows.Count - 1
+                    If i = 0 Then
+                        tmpPK = PK_Make("CR_Contract_List")
+                    Else
+                        tmpPK = tmpPK.Substring(0, 8) & (Convert.ToInt32(tmpPK.Substring(8, 8)) + 1).ToString.PadLeft(8, "0")
+                        'MsgBox(tmpPK)
+                    End If
+                    StrSQL = " Insert into CR_Contract_List ( CR_List_Code, CR_Code, CR_Rev_No, CR_Sun, CR_PL_Code, CR_PL_Name, " &
+                             "                                CR_Standard, CR_Qty, CR_Qty_Unit, CR_Unit_Amount, CR_Unit, " &
+                             "                                CR_Total, CR_Date, CR_Bigo, CR_Prepared, CR_Prepare_Date)  " &
+                             "                       Values ( '" & tmpPK & "','" & DS.Tables(0).Rows(i)("CR_Code").ToString & "', " & DS.Tables(0).Rows(i)("CR_Rev_No").ToString & "," & DS.Tables(0).Rows(i)("CR_Sun").ToString & ",'" & DS.Tables(0).Rows(i)("CR_PL_Code").ToString & "','" & DS.Tables(0).Rows(i)("CR_PL_Name").ToString & "', " &
+                             "                                '" & DS.Tables(0).Rows(i)("CR_Standard").ToString & "', '" & DS.Tables(0).Rows(i)("CR_Qty").ToString & "','" & DS.Tables(0).Rows(i)("CR_Qty_Unit").ToString & "','" & DS.Tables(0).Rows(i)("CR_Unit_Amount").ToString & "','" & DS.Tables(0).Rows(i)("CR_Unit").ToString & "', " &
+                             "                                '" & DS.Tables(0).Rows(i)("CR_Total").ToString & "', '" & DS.Tables(0).Rows(i)("CR_Date").ToString & "','" & DS.Tables(0).Rows(i)("CR_Bigo").ToString & "','" & DS.Tables(0).Rows(i)("CR_Prepared").ToString & "','" & DS.Tables(0).Rows(i)("CR_Prepare_Date").ToString & "')"
+                    DB_Execute2("INSERT")
+                Next
+                MsgBox("Excel UpLoad 완료")
+
+                prcType = "Excel업로드"
+
+                histLogStr = "사용자 " & logInUserName & " 품목 정보 Excel업로드 : " & txtJobNo2.Text & "-" & txtJobName2.Text
+                Man_Log("물품 및 가격명세", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+                'hsim 20200515 개정이력 조회 갱신
+                showRevLog("Frm_Contract", DBT2, lstRev)
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message & vbCrLf & ex.StackTrace)
+            Exit Sub
+        End Try
+
+        lstSub_Load()
+    End Sub
+
+    '수주 상세정보
+    Private Sub lstMain_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstMain.CellDoubleClick
+        Label_Color(btnDetail, Color_Label, Di_Panel2)
+        palMain.Visible = False
+        palDetail.Visible = True
+        palSub.Visible = False
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        Try
+            If e.RowIndex >= 0 Then
+                StrSQL = "  select CR.*, CM.* " &
+                     " ,(select Man_Name from Man where CR.CR_Manager <> '' And Man_Code = CR.CR_Manager)  CR_Manager_Name " &
+                     "  FROM CR_Contract CR, Company CM " &
+                     "  where 1=1 " &
+                     "  And CR.CR_Customer_Code = CM.CM_Code " &
+                     "  And CR.CR_Code = '" & lstMain.Rows(e.RowIndex).Cells("CR_Code").Value.ToString & "' " &
+                     "  And CR.CR_Rev_No = " & lstMain.Rows(e.RowIndex).Cells("CR_Rev_No").Value.ToString &
+                     "  order by 1 asc "
+                Re_Count = DB_Select(DBT)
+
+                If Re_Count > 0 Then
+                    txtJobNo3.Text = DBT.Rows(0)("CR_Code")
+                    txtJobRev3.Text = DBT.Rows(0)("CR_Rev_No")
+                    txtJobName3.Text = DBT.Rows(0)("CR_Name")
+                    txtCRSNo3.Text = DBT.Rows(0)("CRS_Code")
+                    txtCustomer3.Text = DBT.Rows(0)("CM_Name")
+                    cboCondition3.SelectedValue = DBT.Rows(0)("CR_Condition")
+                    txtGold.Text = DBT.Rows(0)("CR_Gold")
+                    txtAnnouncement.Text = DBT.Rows(0)("CRS_Announcement")
+                    dtpOrderDate.Value = DBT.Rows(0)("CR_Order_Date")
+                    dtpDate.Value = DBT.Rows(0)("CR_Date")
+                    dtpDueDate.Value = DBT.Rows(0)("CR_Due_Date")
+                    dtpPlanDate.Value = DBT.Rows(0)("CR_Plan_Date")
+                    cboGrade1.SelectedValue = DBT.Rows(0)("CRS_Grade1")
+                    cboGrade2.SelectedValue = DBT.Rows(0)("CRS_Grade2")
+                    cboGrade3.SelectedValue = DBT.Rows(0)("CRS_Grade3")
+                    txtBigo.Text = DBT.Rows(0)("CR_bigo")
+                Else
+                    txtJobNo3.Text = txtJobNo2.Text
+                    txtJobRev3.Text = DBT.Rows(0)("CR_Rev_No")
+                    txtJobName3.Text = DBT.Rows(0)("CR_Name")
+                    txtCRSNo3.Text = DBT.Rows(0)("CRS_Code")
+                    txtCustomer3.Text = DBT.Rows(0)("CM_Name")
+                    cboCondition3.Text = ""
+                    txtGold.Text = ""
+                    txtAnnouncement.Text = ""
+                    dtpOrderDate.Value = ""
+                    dtpDate.Value = ""
+                    dtpDueDate.Value = ""
+                    dtpPlanDate.Value = ""
+                    cboGrade1.SelectedValue = ""
+                    cboGrade2.SelectedValue = ""
+                    cboGrade3.SelectedValue = ""
+                    txtBigo.Text = ""
+                End If
+
+                'hsim 20200602 담당자 combo setting
+                If DBT.Rows(0)("CR_Manager") <> "" Then
+                    Dim cboDBT As New DataTable()
+                    cboDBT.Columns.Add("Man_Code")
+                    cboDBT.Columns.Add("Man_Name")
+                    cboDBT.Rows.Add()
+                    cboDBT.Rows(0).Item(0) = DBT.Rows(0)("CR_Manager")
+                    cboDBT.Rows(0).Item(1) = DBT.Rows(0)("CR_Manager_Name")
+                    txtManagerCR.Text = DBT.Rows(0)("CR_Manager_Name")
+                    cboManagerCR.DataSource = cboDBT
+                    cboManagerCR.ValueMember = "Man_Code"
+                    cboManagerCR.DisplayMember = "Man_Name"
+                    cboManagerCR.SelectedValue = DBT.Rows(0)("CR_Manager")
+                End If
+                'hsim 20200602 담당자 combo setting - 끝
+
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Exit Sub
+        End Try
+    End Sub
+
+    Private Sub lstSub_Load()
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+        Try
+            StrSQL = "SELECT CL.CR_Code, CL.CR_Sun, CL.CR_PL_Code, CL.CR_PL_Name, CL.CR_Qty, CL.CR_Qty_Unit, CL.CR_Unit, CL.CR_Unit_Amount, CL.CR_Total, CL.CR_Date " &
+                     " ,(select Base_Name from Base_Code where Base_Sel_Code = '1050' and Base_Code = CL.CR_Qty_Unit ) CR_Qty_Unit_Name " & '수량 단위
+                     " ,(select Base_Name from Base_Code where Base_Sel_Code = '1090' and Base_Code = CL.CR_Unit ) CR_Unit_Name " & '화폐 단위
+                     " FROM CR_Contract_List CL with(NOLOCK) 
+                        where 1=1
+                        and CR_Code = '" & txtJobNo3.Text & "' 
+                        And CR_Rev_No = '" & txtJobRev3.Text & "' 
+                        order by CR_Sun"
+
+            Re_Count = DB_Select(DBT)
+
+            lstSub.DataSource = DBT
+            If Re_Count > 0 Then
+                lstSub.Rows(0).Selected = True ' 1행 선택
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Exit Sub
+        End Try
+    End Sub
+
+    Private Sub lstSub_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles lstSub.CellClick
+        Dim DBT As DataTable
+        DBT = Nothing
+        Try
+            If e.RowIndex >= 0 Then
+                StrSQL = "SELECT * FROM CR_Contract_List with(NOLOCK) where CR_Code = '" & lstSub.Rows(e.RowIndex).Cells("CR_Code_d").Value.ToString & "' And
+                                                                        CR_Rev_No = '" & txtJobRev2.Text & "' And
+                                                                        CR_Sun = '" & lstSub.Rows(e.RowIndex).Cells("CR_Sun").Value.ToString & "' order by CR_Sun"
+                Re_Count = DB_Select(DBT)
+
+                If Re_Count > 0 Then
+                    txtJobNo4.Text = DBT.Rows(0)("CR_Code").ToString
+                    txtJobRev4.Text = DBT.Rows(0)("CR_Rev_No").ToString
+                    txtJobSun3.Text = DBT.Rows(0)("CR_Sun").ToString
+                    txtPLCode.Text = DBT.Rows(0)("CR_PL_Code").ToString
+                    txtPLName.Text = DBT.Rows(0)("CR_PL_Name").ToString
+                    dtpDate4.Text = DBT.Rows(0)("CR_Date").ToString
+                    txtQTY.Text = DBT.Rows(0)("CR_Qty").ToString
+                    txtStandard.Text = DBT.Rows(0)("CR_Standard").ToString
+                    cboQTYUnit.SelectedValue = DBT.Rows(0)("CR_Qty_Unit").ToString
+                    txtUnitAmount.Text = DBT.Rows(0)("CR_Unit_Amount").ToString
+                    cboUnit.SelectedValue = DBT.Rows(0)("CR_Unit").ToString
+                    txtBigo2.Text = DBT.Rows(0)("CR_Bigo").ToString
+                End If
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Exit Sub
+        End Try
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        Clear_Items_1()
+        Clear_Items_2()
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        Dim DBT As DataTable
+        Dim histLogStr As String
+        Dim fmtStr As String, fmtStr2 As String
+
+        DBT = Nothing
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        If MessageBox.Show(txtJobNo2.Text + " 를 삭제하시겠습니까?" & vbCrLf & "물품 및 가격 명세의 내용도 함께 삭제합니다", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If txtJobNo2.Text <> "" Then
+                StrSQL = "Delete CR_Contract where CR_Code = '" & txtJobNo2.Text & "'"
+                Re_Count = DB_Execute()
+
+                StrSQL = "Delete CR_Contract_List where CR_Code = '" & txtJobNo2.Text & "'"
+                DB_Execute()
+                If Re_Count > 0 Then
+                    MsgBox("삭제 완료")
+                End If
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 정보 삭제 : " & txtJobNo2.Text & "-" & txtJobName2.Text
+                Man_Log("Frm_Contract", "정보 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+            Else
+                MsgBox("선택된 Job No 가 없습니다")
+                Exit Sub
+            End If
+            Grid_CR_Load()
+        End If
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        If InputCheck(txtCustomer2.Text, "발주처를 선택해주세요.") = 1 Then
+            Exit Sub
+        End If
+
+        Dim i%
+        Dim DBT As DataTable
+        Dim DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        Try
+
+            StrSQL = "SELECT * from CR_Contract where CR_Code = '" & txtJobNo2.Text & "' And CR_Rev_No = (SELECT max(CR_Rev_No) from CR_Contract where CR_Code = '" & txtJobNo2.Text & "' and CR_Rev_No = '" & txtJobRev2.Text & "')"
+            Re_Count = DB_Select(DBT)
+
+            StrSQL = "SELECT * from CR_Contract where CR_Code = '" & txtJobNo2.Text & "' And CR_Rev_No = (SELECT max(CR_Rev_No) from CR_Contract where CR_Code = '" & txtJobNo2.Text & "')"
+            Re_Count2 = DB_Select(DBT2)
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblContract)
+            '#2. 입력자료 입력
+            For i = 0 To tblContract.Rows.Count - 1
+
+                Select Case tblContract.Rows(i).Item(0).ToString
+
+                    Case "CR_Code"
+                        If txtJobNo2.Text <> "" Then
+                            tblContract.Rows(i).Item(11) = txtJobNo2.Text
+                        ElseIf Re_Count2 > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT2.Rows(0).Item("CR_Code")
+                        Else
+                            tblContract.Rows(i).Item(11) = PK_Make("CR_Contract")
+                        End If
+                    Case "CR_Name"
+                        If txtJobName2.Text <> "" Then
+                            tblContract.Rows(i).Item(11) = txtJobName2.Text
+                        ElseIf Re_Count2 > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT2.Rows(0).Item("CR_Name")
+                        End If
+                    Case "CR_Rev_No"
+                        If txtJobRev2.Text <> "" Then
+                            tblContract.Rows(i).Item(11) = txtJobRev2.Text
+                        ElseIf Re_Count2 > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0).Item("CR_Rev_No")
+                        Else
+                            tblContract.Rows(i).Item(11) = 1
+                        End If
+                    Case "CRS_Code"
+                        If txtCRSNo2.Text <> "" Then
+                            tblContract.Rows(i).Item(11) = txtCRSNo2.Text
+                        ElseIf Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0).Item("CRS_Code")
+                        ElseIf Re_Count2 > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT2.Rows(0).Item("CRS_Code")
+                        End If
+                    Case "CR_Customer_Code"
+                        If txtCustomer2.Text <> "" Then
+                            tblContract.Rows(i).Item(11) = cboCustomer2.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0).Item("CR_Customer_Code")
+                        ElseIf Re_Count2 > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT2.Rows(0).Item("CR_Customer_Code")
+                        End If
+                    Case "CR_Condition"
+                        If cboCondition3.Text <> "" Then
+                            tblContract.Rows(i).Item(11) = cboCondition3.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0).Item("CR_Condition")
+                        ElseIf Re_Count2 > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT2.Rows(0).Item("CR_Condition")
+                        End If
+                    Case "CRS_Announcement"
+                        If txtAnnouncement.Text <> "" Then
+                            tblContract.Rows(i).Item(11) = txtAnnouncement.Text
+                        ElseIf Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CRS_Announcement").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CRS_Announcement").ToString
+                            End If
+                        End If
+                    Case "CR_Date"
+                        If dtpDate.Value.ToString <> "" Then
+                            tblContract.Rows(i).Item(11) = dtpDate.Value.ToString(fmtStr2)
+                        ElseIf Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CR_Date").ToString
+                            End If
+                        End If
+                    Case "CR_Due_Date"
+                        If dtpDueDate.Value.ToString <> "" Then
+                            tblContract.Rows(i).Item(11) = dtpDueDate.Value.ToString(fmtStr2)
+                        ElseIf Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_Due_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CR_Due_Date").ToString
+                            End If
+                        End If
+                    Case "CR_Plan_Date"
+                        If dtpPlanDate.Value.ToString <> "" Then
+                            tblContract.Rows(i).Item(11) = dtpPlanDate.Value.ToString(fmtStr2)
+                        ElseIf Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_Plan_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CR_Plan_Date").ToString
+                            End If
+                        End If
+                    Case "CR_Order_Date"
+                        If dtpOrderDate.Value.ToString <> "" Then
+                            tblContract.Rows(i).Item(11) = dtpOrderDate.Value.ToString(fmtStr2)
+                        ElseIf Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_Order_Date").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CR_Order_Date").ToString
+                            End If
+                        End If
+                    Case "CRS_Grade1"
+                        If cboGrade1.SelectedValue <> "" Then
+                            tblContract.Rows(i).Item(11) = cboGrade1.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CRS_Grade1").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CRS_Grade1").ToString
+                            End If
+                        End If
+                    Case "CRS_Grade2"
+                        If cboGrade2.SelectedValue <> "" Then
+                            tblContract.Rows(i).Item(11) = cboGrade2.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CRS_Grade2").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CRS_Grade2").ToString
+                            End If
+                        End If
+                    Case "CRS_Grade3"
+                        If cboGrade3.SelectedValue <> "" Then
+                            tblContract.Rows(i).Item(11) = cboGrade3.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CRS_Grade3").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CRS_Grade3").ToString
+                            End If
+                        End If
+                    Case "CR_Gold"
+                        If txtGold.Text <> "" Then
+                            tblContract.Rows(i).Item(11) = txtGold.Text
+                        ElseIf Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_Gold").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CR_Gold").ToString
+                            End If
+                        End If
+                    Case "CR_Manager"
+                        If txtManagerCR.Text <> "" Then
+                            tblContract.Rows(i).Item(11) = cboManagerCR.SelectedValue
+                        ElseIf Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_Manager").ToString
+                        Else
+                            If Re_Count2 > 0 Then
+                                tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CR_Manager").ToString
+                            End If
+                        End If
+                    Case "CR_bigo"
+                        If txtBigo.Text <> "" Then
+                            tblContract.Rows(i).Item(11) = txtBigo.Text
+                        ElseIf Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_bigo").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CR_bigo").ToString
+                        Else
+                            tblContract.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                    Case "CR_Prepared"
+                        If Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_Prepared").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CR_Prepared").ToString
+                        Else
+                            tblContract.Rows(i).Item(11) = logInUserName
+                        End If
+                    Case "CR_Prepare_Date"
+                        If Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_Prepare_Date").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CR_Prepare_Date").ToString
+                        Else
+                            tblContract.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                    Case "CR_Updated"
+                        If Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_Updated").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CR_Updated").ToString
+                        Else
+                            tblContract.Rows(i).Item(11) = logInUserName
+                        End If
+                    Case "CR_Update_Date"
+                        If Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_Update_Date").ToString
+                        ElseIf Re_Count2 > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT2.Rows(0)("CR_Update_Date").ToString
+                        Else
+                            tblContract.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                End Select
+            Next
+
+            If Re_Count > 0 Then
+
+                Re_Count2 = fnTableUpdate("dbo.CR_Contract", tblContract)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            Else
+
+                Re_Count2 = fnTableInsert("dbo.CR_Contract", tblContract)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 품목 정보 수정 : " & txtJobNo2.Text & "-" & txtJobName2.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 품목 정보 신규 입력 : " & txtJobNo2.Text & "-" & txtJobName2.Text
+            End If
+            Man_Log("Frm_Contract", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+            'hsim 20200515 개정이력 조회 갱신
+            showRevLog("Frm_Contract", DBT2, lstRev)
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+
+        Clear_Items_1() '기본정보 초기화
+        Grid_CR_Load()
+
+    End Sub
+
+    Private Sub cboGrade1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboGrade1.SelectedIndexChanged
+        Dim DBT As DataTable, DBT2 As DataTable, cboDBT As DataTable
+        Dim cboRow As DataRow
+        Dim i As Integer
+        Dim j As Integer
+        DBT = Nothing
+        DBT2 = Nothing
+
+        'combo Item Setting
+        cboDBT = New DataTable
+        cboDBT.Columns.Add("Base_Code", GetType(String))
+        cboDBT.Columns.Add("Base_Name", GetType(String))
+
+        'combo row Setting
+        cboRow = Nothing
+
+        'cboGrade2.Items.Clear()
+
+        If cboGrade1.Text <> "" Then
+            StrSQL = "Select * From Base_Code with(NOLOCK) where Base_Name = '" & cboGrade1.Text & "' order by Base_Sun"
+            Re_Count = DB_Select(DBT)
+
+            StrSQL = "Select * From Base_Code with(NOLOCK) where Base_Sel_Code = '" & "1070" & "' order by Base_Sun"
+            Re_Count = DB_Select(DBT2)
+
+            For i = 0 To DBT.Rows.Count - 1
+                For j = 0 To DBT2.Rows.Count - 1
+                    If DBT.Rows(i)("Base_Code").ToString.Substring(0, 1) = DBT2.Rows(j)("Base_Code").ToString.Substring(0, 1) Then 'hsim 20200601
+                        'If DBT.Rows(i)("Base_Sun").ToString = DBT2.Rows(j)("Base_Code").ToString.Substring(0, DBT2.Rows(j)("Base_Code").ToString.Length - 3) Then
+                        cboRow = cboDBT.NewRow
+                        cboRow("Base_Code") = DBT2.Rows(j)("Base_Code").ToString
+                        cboRow("Base_Name") = DBT2.Rows(j)("Base_Name").ToString
+                        cboDBT.Rows.Add(cboRow)
+                    End If
+                Next
+            Next
+
+            'hsim 20200602 Combo 설정
+            cboGrade2.DataSource = cboDBT
+            cboGrade2.DisplayMember = "Base_Name"
+            cboGrade2.ValueMember = "Base_Code"
+
+        End If
+
+    End Sub
+
+    Private Sub btnSave2_Click(sender As Object, e As EventArgs) Handles btnSave2.Click
+        Dim i%
+        Dim DBT As DataTable, DBT2 As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+        DBT2 = Nothing
+
+        Try
+
+            StrSQL = "SELECT * from CR_Contract where CR_Code = '" & txtJobNo2.Text & "' And CR_Rev_No = (SELECT max(CR_Rev_No) from CR_Contract where CR_Code = '" & txtJobNo2.Text & "')"
+            Re_Count = DB_Select(DBT)
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblContract)
+            '#2. 입력자료 입력
+            For i = 0 To tblContract.Rows.Count - 1
+
+                Select Case tblContract.Rows(i).Item(0).ToString
+
+                    Case "CR_Code"
+                        tblContract.Rows(i).Item(11) = txtJobNo2.Text
+                    Case "CR_Rev_No"
+                        tblContract.Rows(i).Item(11) = txtJobRev2.Text
+                    Case "CR_Name"
+                        If Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_Name").ToString
+                        End If
+                    Case "CRS_Code"
+                        If Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CRS_Code").ToString
+                        End If
+                    Case "CR_Customer_Code"
+                        If Re_Count > 0 Then
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_Customer_Code").ToString
+                        End If
+                    Case "CR_Condition"
+                        tblContract.Rows(i).Item(11) = cboCondition3.SelectedValue
+                    Case "CR_Gold"
+                        tblContract.Rows(i).Item(11) = txtGold.Text
+                    Case "CRS_Announcement"
+                        tblContract.Rows(i).Item(11) = txtAnnouncement.Text
+                    Case "CR_Manager"
+                        tblContract.Rows(i).Item(11) = cboManagerCR.SelectedValue
+                    Case "CR_Order_Date"
+                        tblContract.Rows(i).Item(11) = dtpOrderDate.Value.ToString(fmtStr)
+                    Case "CR_Date"
+                        tblContract.Rows(i).Item(11) = dtpDate.Value.ToString(fmtStr)
+                    Case "CR_Due_Date"
+                        tblContract.Rows(i).Item(11) = dtpDueDate.Value.ToString(fmtStr)
+                    Case "CR_Plan_Date"
+                        tblContract.Rows(i).Item(11) = dtpPlanDate.Value.ToString(fmtStr)
+                    Case "CRS_Grade1"
+                        tblContract.Rows(i).Item(11) = cboGrade1.SelectedValue
+                    Case "CRS_Grade2"
+                        tblContract.Rows(i).Item(11) = cboGrade2.SelectedValue
+                    Case "CRS_Grade3"
+                        tblContract.Rows(i).Item(11) = cboGrade3.SelectedValue
+                    Case "CR_bigo"
+                        tblContract.Rows(i).Item(11) = txtBigo.Text
+                    Case "CR_Prepared"
+                        If DBT.Rows(0)("CR_Prepared") = "" Then
+                            tblContract.Rows(i).Item(11) = Main.Text_Man_Name.Text
+                        Else
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_Prepared").ToString
+                        End If
+                    Case "CR_Prepare_Date"
+                        If DBT.Rows(0)("CR_Prepare_Date") = "" Then
+                            tblContract.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        Else
+                            tblContract.Rows(i).Item(11) = DBT.Rows(0)("CR_Prepare_Date").ToString
+                        End If
+                    Case "CR_Updated"
+                        If DBT.Rows(0)("CR_Prepared") = "" Then
+                        Else
+                            tblContract.Rows(i).Item(11) = Main.Text_Man_Name.Text
+                        End If
+                    Case "CR_Update_Date"
+                        If DBT.Rows(0)("CR_Prepared") = "" Then
+                        Else
+                            tblContract.Rows(i).Item(11) = DateTime.Now.ToString(fmtStr2)
+                        End If
+                End Select
+
+            Next
+
+            If Re_Count > 0 Then
+
+                Re_Count2 = fnTableUpdate("dbo.CR_Contract", tblContract)
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 정보 수정 : " & txtJobNo3.Text & "-" & txtJobName3.Text
+                Man_Log("Frm_Contract", "정보 수정", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+            End If
+
+            Label_Color(btnMain, Color_Label, Di_Panel2)
+            palDetail.Visible = False
+            palSub.Visible = False
+            palMain.Visible = True
+            Clear_Items_1() '기본정보 초기화
+            Clear_Items_2() '기본정보2 초기화
+
+            'hsim 20200515 개정이력 조회 갱신
+            showRevLog("Frm_Contract", DBT2, lstRev)
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+
+        Grid_CR_Load()
+
+    End Sub
+
+    Private Sub btnAdd3_Click(sender As Object, e As EventArgs) Handles btnAdd3.Click
+        If lstSub.Rows.Count > 0 Then
+            txtJobSun3.Text = (Convert.ToInt32(lstSub.Rows(lstSub.Rows.Count - 1).Cells("CR_Sun").Value.ToString) + 1).ToString
+        Else
+            txtJobSun3.Text = "1"
+        End If
+        Clear_Items_3()
+    End Sub
+
+    Private Sub btnDelete3_Click(sender As Object, e As EventArgs) Handles btnDelete3.Click
+        Dim DBT As DataTable
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+        Dim histLogStr As String
+
+        DBT = Nothing
+        If MessageBox.Show(txtJobNo4.Text + " 의 자재식별번호 : " + txtPLCode.Text + " 의 내용을 삭제하시겠습니까?", "삭제", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            If txtJobNo4.Text <> "" And txtJobRev4.Text <> "" Then
+
+                StrSQL = "Delete CR_Contract_List where CR_Code = '" & txtJobNo4.Text & "' And
+                                                        CR_Rev_No = '" & txtJobRev2.Text & "' And
+                                                        CR_Sun = '" & txtJobRev4.Text & "'"
+                Re_Count = DB_Execute()
+                If Re_Count > 0 Then
+                    MsgBox("삭제 완료")
+                    'hsim 20200515 처리 이력
+                    histLogStr = "사용자 " & logInUserName & " 자재식별번호 삭제 : " & txtJobNo4.Text & "-" & txtJobRev2.Text & "-" & txtJobRev4.Text
+                    Man_Log("Frm_Contract", "자재식별번호 삭제", loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+                    lstSub_Load()
+                    btnAdd3.PerformClick()
+                End If
+            Else
+                MsgBox("선택된 자재가 없습니다")
+            End If
+        End If
+    End Sub
+
+    Private Sub btnSave3_Click(sender As Object, e As EventArgs) Handles btnSave3.Click
+        Dim i%
+        Dim DBT As DataTable
+
+        'hsim 20200515 개정이력 확인 정보
+        Dim prcType As String
+        Dim histLogStr As String
+
+        Dim fmtStr As String, fmtStr2 As String
+        fmtStr = String.Format("yyyy-MM-dd")
+        fmtStr2 = String.Format("yyyy-MM-dd HH:mm:ss")
+
+        DBT = Nothing
+
+        Try
+
+            StrSQL = "SELECT * from CR_Contract_List where CR_Code = '" & txtJobNo4.Text & "' And 
+                    CR_Rev_No =" & txtJobRev4.Text & " And
+                    CR_Sun = " & txtJobSun3.Text
+            Re_Count = DB_Select(DBT)
+
+            '#1. 기존 입력 값 초기화
+            clearTblRowValues(tblContract_lst)
+            '#2. 입력자료 입력
+            For i = 0 To tblContract_lst.Rows.Count - 1
+
+                Select Case tblContract_lst.Rows(i).Item(0).ToString
+
+                    Case "CR_List_Code"
+                        tblContract_lst.Rows(i).Item(11) = PK_Make("CR_Contract_List")
+                    Case "CR_Code"
+                        tblContract_lst.Rows(i).Item(11) = txtJobNo4.Text
+                    Case "CR_Rev_No"
+                        tblContract_lst.Rows(i).Item(11) = txtJobRev4.Text
+                    Case "CR_Sun"
+                        tblContract_lst.Rows(i).Item(11) = txtJobSun3.Text
+                    Case "CR_PL_Code"
+                        tblContract_lst.Rows(i).Item(11) = txtPLCode.Text
+                    Case "CR_PL_Name"
+                        tblContract_lst.Rows(i).Item(11) = txtPLName.Text
+                    Case "CR_Standard"
+                        tblContract_lst.Rows(i).Item(11) = txtStandard.Text
+                    Case "CR_Qty"
+                        tblContract_lst.Rows(i).Item(11) = txtQTY.Text
+                    Case "CR_Qty_Unit"
+                        tblContract_lst.Rows(i).Item(11) = cboQTYUnit.SelectedValue
+                    Case "CR_Unit_Amount"
+                        tblContract_lst.Rows(i).Item(11) = txtUnitAmount.Text
+                    Case "CR_Unit"
+                        tblContract_lst.Rows(i).Item(11) = cboUnit.SelectedValue
+                    Case "CR_Total"
+                        If txtQTY.Text = "" And txtUnitAmount.Text = "" Then
+                        Else
+                            tblContract_lst.Rows(i).Item(11) = (Convert.ToInt32(txtQTY.Text) * Convert.ToInt32(txtUnitAmount.Text)).ToString
+                        End If
+                    Case "CR_Date"
+                        tblContract_lst.Rows(i).Item(11) = dtpDate4.Value.ToString(fmtStr)
+                    Case "CR_Bigo"
+                        tblContract_lst.Rows(i).Item(11) = txtBigo2.Text
+                    Case "CR_Prepared"
+                        If Re_Count > 0 Then
+                            tblContract_lst.Rows(i).Item(11) = DBT.Rows(0)("CR_Prepared").ToString
+                        Else
+                            tblContract_lst.Rows(i).Item(11) = Main.Text_Man_Name.Text
+                        End If
+                    Case "CR_Prepare_Date"
+                        If Re_Count > 0 Then
+                            tblContract_lst.Rows(i).Item(11) = DBT.Rows(0)("CR_Prepare_Date").ToString
+                        Else
+                            tblContract_lst.Rows(i).Item(11) = DateTime.Now.ToString("yyyy-MM-dd")
+                        End If
+                    Case "CR_Updated"
+                        If Re_Count > 0 Then
+                            tblContract_lst.Rows(i).Item(11) = Main.Text_Man_Name.Text
+                        End If
+                    Case "CR_Update_Date"
+                        If Re_Count > 0 Then
+                            tblContract_lst.Rows(i).Item(11) = DateTime.Now.ToString("yyyy-MM-dd")
+                        End If
+
+                End Select
+
+            Next
+
+            If Re_Count > 0 Then
+
+                Re_Count2 = fnTableUpdate("dbo.CR_Contract_List", tblContract_lst)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+                prcType = "수정" '수정
+
+            Else
+
+                Re_Count2 = fnTableInsert("dbo.CR_Contract_List", tblContract_lst)
+
+                If Re_Count2 > 0 Then
+                    MsgBox("저장 완료")
+
+                Else
+                    MsgBox("저장 실패")
+                End If
+
+                prcType = "신규입력" '입력
+
+            End If
+
+            If Re_Count > 0 Then
+                prcType = "수정" '수정
+            Else
+                prcType = "신규입력" '입력
+            End If
+
+            If prcType = "수정" Then
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 품목 정보 수정 : " & txtJobNo2.Text & "-" & txtJobName2.Text
+            Else
+                'hsim 20200515 처리 이력
+                histLogStr = "사용자 " & logInUserName & " 품목 정보 신규 입력 : " & txtJobNo2.Text & "-" & txtJobName2.Text
+            End If
+            Man_Log("Frm_Contract", prcType, loginID, histLogStr, DateTime.Now.ToString(fmtStr2))
+
+        Catch ex As Exception
+
+            MsgBox(ex.Message)
+            Exit Sub
+
+        End Try
+
+        lstSub_Load()
+        btnAdd3.PerformClick()
+
+    End Sub
+
+    Private Sub txtGold_TextChanged(sender As Object, e As EventArgs) Handles txtGold.TextChanged
+        'Dim lgsText As String
+        'lgsText = txtGold.Text.Replace(",", "")
+        'txtGold.Text = String.Format("{0:#,##0}", Convert.ToDouble(lgsText))
+        'txtGold.SelectionStart = txtGold.TextLength
+        'txtGold.SelectionLength = 0
+    End Sub
+
+    Private Sub txtGold_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtGold.KeyPress
+        If Char.IsDigit(e.KeyChar) = False Or e.KeyChar = Convert.ToChar(Keys.Back) Then
+            e.Handled = True
+        End If
+
+    End Sub
+
+    Private Sub btnManSearch_Click(sender As Object, e As EventArgs) Handles btnManSearch.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Man_POP = New Frm_Man_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            cboDBT.Columns.Add("Man_Code")
+            cboDBT.Columns.Add("Man_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            txtManagerCR.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("Man_Name").Value.ToString
+            cboManagerCR.DataSource = cboDBT
+            cboManagerCR.ValueMember = "Man_Code"
+            cboManagerCR.DisplayMember = "Man_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Sub btnCustomer_Click(sender As Object, e As EventArgs) Handles btnCustomerSearch.Click
+        Dim cboDBT As New DataTable()
+        Dim pop1 As Frm_Customer_POP = New Frm_Customer_POP
+        pop1.StartPosition = FormStartPosition.CenterScreen
+        If (pop1.ShowDialog(Me) = DialogResult.OK) Then
+            cboDBT.Columns.Add("CM_Code")
+            cboDBT.Columns.Add("CM_Name")
+            cboDBT.Rows.Add()
+            cboDBT.Rows(0).Item(0) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Code").Value.ToString
+            cboDBT.Rows(0).Item(1) = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            txtCustomer2.Text = pop1.DataGridView1.Rows(pop1.DataGridView1.CurrentCell.RowIndex).Cells("CM_Name").Value.ToString
+            cboCustomer2.DataSource = cboDBT
+            cboCustomer2.ValueMember = "CM_Code"
+            cboCustomer2.DisplayMember = "CM_Name"
+        End If
+        pop1.Dispose()
+    End Sub
+
+    Private Function Clear_Items_1()
+        Me.txtJobNo2.Text = ""
+        Me.txtJobRev2.Text = ""
+        Me.txtJobName2.Text = ""
+        Me.txtCRSNo2.Text = ""
+        Me.txtCustomer2.Text = ""
+        Me.cboCustomer2.Text = ""
+    End Function
+
+    Private Function Clear_Items_2()
+        txtJobNo3.Text = ""
+        txtJobName3.Text = ""
+        txtJobRev3.Text = ""
+        txtCRSNo3.Text = ""
+        txtCustomer3.Text = ""
+        cboCondition3.SelectedValue = ""
+        txtGold.Text = ""
+        txtAnnouncement.Text = ""
+        txtManagerCR.Text = ""
+        dtpOrderDate.Text = ""
+        dtpDate.Text = ""
+        dtpDueDate.Text = ""
+        dtpPlanDate.Text = ""
+        cboGrade1.SelectedValue = ""
+        cboGrade2.SelectedValue = ""
+        cboGrade3.SelectedValue = ""
+        txtBigo.Text = ""
+    End Function
+
+    Private Function Clear_Items_3()
+        txtPLCode.Text = ""
+        txtPLName.Text = ""
+        txtStandard.Text = ""
+        dtpDate4.Text = ""
+        txtQTY.Text = ""
+        cboQTYUnit.Text = ""
+        txtUnitAmount.Text = ""
+        cboUnit.Text = ""
+        txtBigo2.Text = ""
+    End Function
+
+End Class

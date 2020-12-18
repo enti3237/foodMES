@@ -1,0 +1,24 @@
+﻿Public Class Frm_Customer_POP
+
+    Private DBT As New DataTable
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Me.Close()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.DialogResult = DialogResult.OK
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        DBT = Nothing
+        StrSQL = "SELECT CM_Code, CM_Name, CM_Op_Number, CM_Leader, CM_Conditions, CM_Item, CM_Man_Name, CM_Man_Tel, CM_Man_Cell, CM_Man_Email, concat(CM_Add1, ' ', CM_Add2) as CM_Addr 
+                  FROM Customer where 1=1
+                  and CM_Name Like '%" & TextBox15.Text & "%' "
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            DataGridView1.DataSource = DBT
+            DataGridView1.ClearSelection()
+        End If
+    End Sub
+End Class

@@ -1,0 +1,351 @@
+﻿Public Class Frm_CM_Stock_QC
+
+    Dim file_path As String = ""
+    Dim file_name As String = ""
+    Private Sub Frm_CM_Stock_QC_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Panel1.Top = 40
+        Panel1.Left = 10
+        Panel41.Top = 40
+        Panel41.Left = 10
+
+        Panel1.Visible = True
+        Panel41.Visible = False
+        'CQ_List_Lode()
+        'Setup()
+
+        Me.Dock = DockStyle.Fill
+        Me.BringToFront()
+
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT a1,a14,a17,a13,a3,a12,a11,a2,a10
+           FROM  test with(NOLOCK)"
+
+
+
+
+        Re_Count = DB_Select(DBT)
+        DataGridView1.DataSource = DBT
+
+    End Sub
+
+    Private Sub Setup()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        'CRS_NO, 공정명 콤보박스 부여
+        StrSQL = "SELECT CR_Code FROM Contract where CR_Code != ''"
+        Re_Count = DB_Select(DBT)
+
+        Dim i As Integer
+        If Re_Count > 0 Then
+            For i = 0 To DBT.Rows.Count - 1
+                ComboBox1.Items.Add(DBT.Rows(i)("CR_Code").ToString)
+
+            Next
+            ComboBox1.SelectedIndex = 0
+        End If
+    End Sub
+
+    Private Sub Com_Contract_Click(sender As Object, e As EventArgs) Handles Com_Contract.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+    End Sub
+
+    Private Sub Com_Excel_Click(sender As Object, e As EventArgs) Handles Com_Excel.Click
+        Label_Color(sender, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+    End Sub
+
+    Private Sub CQ_List_Lode()
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT CQ_JOB_Code,CQ_Code,CQ_Customer_Name,CQ_Name,CQ_Date,CQ_PS_Code,
+                    CQ_PR_Code,CQ_PO_Code,CQ_Manager FROM CM_Stock_QC order by CQ_JOB_Code"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+        DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Text_Clear()
+        ComboBox1.Text = ""
+        TextBox104.Text = ""
+        TextBox98.Text = ""
+        TextBox97.Text = ""
+        TextBox89.Text = ""
+        TextBox96.Text = ""
+        TextBox95.Text = ""
+        TextBox88.Text = ""
+        DateTimePicker1.Text = ""
+        TextBox2.Text = ""
+        ListBox1.Items.Clear()
+        ListBox2.Items.Clear()
+
+    End Sub
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+        Label_Color(Com_Excel, Color_Label, Di_Panel2)
+        Panel1.Visible = False
+        Panel41.Visible = True
+        Text_Clear()
+    End Sub
+
+    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
+        'Text_Clear()
+        'Label_Color(Com_Excel, Color_Label, Di_Panel2)
+        'Panel1.Visible = False
+        'Panel41.Visible = True
+
+        'Dim DBT As DataTable
+        'Dim i As Integer
+        'DBT = Nothing
+
+        'StrSQL = "SELECT * FROM CM_Stock_QC Where CQ_Code = '" & DataGridView1.Rows(e.RowIndex).Cells("CQ_Code").Value.ToString() & "'"
+        'Re_Count = DB_Select(DBT)
+
+        'ComboBox1.Text = DBT.Rows(0)("CQ_JOB_Code").ToString
+        'TextBox104.Text = DBT.Rows(0)("CQ_Code").ToString
+        'TextBox98.Text = DBT.Rows(0)("CQ_Customer_Name").ToString
+        'TextBox97.Text = DBT.Rows(0)("CQ_Name").ToString
+        'TextBox89.Text = DBT.Rows(0)("CQ_PS_Code").ToString
+        'TextBox96.Text = DBT.Rows(0)("CQ_PR_Code").ToString
+        'TextBox95.Text = DBT.Rows(0)("CQ_PO_Code").ToString
+        'TextBox88.Text = DBT.Rows(0)("CQ_Manager").ToString
+        'DateTimePicker1.Text = DBT.Rows(0)("CQ_Day").ToString
+        'TextBox2.Text = DBT.Rows(0)("CQ_Bigo").ToString
+        'If DBT.Rows(0)("CQ_File").ToString <> "" Then
+        '    For i = 0 To Split(DBT.Rows(0)("CQ_File").ToString, "/").Count - 1
+        '        ListBox1.Items.Add(System.IO.Path.GetFileName(Split(DBT.Rows(0)("CQ_File").ToString, "/")(i)))
+        '        ListBox2.Items.Add(Split(DBT.Rows(0)("CQ_File").ToString, "/")(i))
+        '    Next
+        'End If
+    End Sub
+
+    Private Sub Com_Can_Click(sender As Object, e As EventArgs) Handles Com_Can.Click
+        Label_Color(Com_Contract, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+        Text_Clear()
+    End Sub
+
+    Private Sub Com_OK_Click(sender As Object, e As EventArgs) Handles Com_OK.Click
+        Dim DBT As DataTable
+        Dim File As String = ""
+        DBT = Nothing
+
+        'CT_Code 
+        StrSQL = "SELECT * FROM CM_Stock_QC where CQ_Code = '" & TextBox104.Text & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            Dim findfile As New System.IO.FileInfo(Application.StartupPath + "\\RIR파일\\" + TextBox104.Text)
+            '기존파일삭제
+            If Dir(Application.StartupPath + "\\RIR파일\\" + TextBox104.Text, vbDirectory) <> "" And DBT.Rows(0)("CQ_File").ToString() = "" Then
+                System.IO.Directory.Delete(Application.StartupPath + "\\RIR파일\\" + TextBox104.Text, True)
+            End If
+        End If
+        If ListBox1.Items.Count > 0 Then
+            For i = 0 To ListBox2.Items.Count - 1
+                If i = 0 Then
+                    File += Application.StartupPath + "\\RIR파일\\" + TextBox104.Text + "\\" + ListBox1.Items(i).ToString()
+                End If
+
+                If i > 0 Then
+                    File += "/" + Application.StartupPath + "\\RIR파일\\" + TextBox104.Text + "\\" + ListBox1.Items(i).ToString()
+                End If
+            Next
+
+            '파일저장폴더생성
+            Dim path As String = Application.StartupPath + "\\RIR파일\\" + TextBox104.Text
+
+            If Len(Dir(path, vbDirectory)) = 0 Then
+                MkDir(path)
+
+
+            End If
+
+            '복사파일생성
+            path = Application.StartupPath + "\\RIR파일\\" + TextBox104.Text + "copy"
+            MkDir(path)
+            '파일내용 덮어쓰기
+            For i = 0 To ListBox1.Items.Count - 1
+                System.IO.File.Copy(ListBox2.Items(i).ToString(), path + "\\" & ListBox1.Items(i).ToString(), True)
+            Next
+            '기존파일삭제
+            System.IO.Directory.Delete(Application.StartupPath + "\\RIR파일\\" + TextBox104.Text, True)
+            System.Threading.Thread.Sleep(1000)
+            'copy파일 이름변경
+            My.Computer.FileSystem.RenameDirectory(path, TextBox104.Text)
+        End If
+
+        If Re_Count > 0 Then
+            StrSQL = "Update CM_Stock_QC Set CQ_Code ='" & TextBox104.Text & "',
+                                         CQ_JOB_Code = '" & ComboBox1.Text & "',
+                                         CQ_PS_Code = '" & TextBox89.Text & "',
+                                         CQ_PR_Code = '" & TextBox96.Text & "',
+                                         CQ_PO_Code = '" & TextBox95.Text & "',
+                                         CQ_Name = '" & TextBox97.Text & "',
+                                         CQ_Time = '" & "" & "',
+                                         CQ_Customer_Code = '" & "" & "',
+                                         CQ_Customer_Name = '" & TextBox98.Text & "',
+                                         CQ_Customer_Man_Name = '" & "" & "',
+                                         CQ_Customer_Man_Tel = '" & "" & "',
+                                         CQ_Manager = '" & TextBox88.Text & "',
+                                         CQ_Day = '" & DateTimePicker1.Text & "',
+                                         CQ_Check = '" & "" & "',
+                                         CQ_Bigo = '" & TextBox2.Text & "',
+                                         CQ_File = '" & File & "'
+                                         WHERE CQ_Code = '" & TextBox104.Text & "' "
+            Re_Count2 = DB_Execute()
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+        Else
+            'CT_Plan 추가
+            StrSQL = "Insert into CM_Stock_QC (CQ_Code, CQ_JOB_Code, CQ_PS_Code, CQ_PR_Code, CQ_PO_Code,
+                                           CQ_Name, CQ_Date, CQ_Time, CQ_Customer_Code, CQ_Customer_Name,
+                                           CQ_Customer_Man_Name, CQ_Customer_Man_Tel, CQ_Manager, CQ_Day, CQ_Check,
+                                           CQ_Bigo, CQ_File) 
+                                   Values ('" & TextBox104.Text & "', '" & ComboBox1.Text & "', '" & TextBox89.Text & "', '" & TextBox96.Text & "', '" & TextBox95.Text & "',
+                                           '" & TextBox97.Text & "', '" & DateTime.Today & "', '" & "" & "', '" & "" & "', '" & TextBox98.Text & "',
+                                           '" & "" & "', '" & "" & "', '" & TextBox88.Text & "', '" & DateTimePicker1.Text & "', '" & "" & "',
+                                           '" & TextBox2.Text & "', '" & File & "')"
+            Re_Count2 = DB_Execute()
+            If Re_Count2 > 0 Then
+                MsgBox("저장 완료")
+
+            Else
+                MsgBox("저장 실패")
+            End If
+
+        End If
+        CQ_List_Lode()
+        Label_Color(Com_Contract, Color_Label, Di_Panel2)
+        Panel1.Visible = True
+        Panel41.Visible = False
+
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        file_path = ""
+        file_name = ""
+        OpenFileDialog1.InitialDirectory = "C:\\"
+
+        If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
+            file_name = OpenFileDialog1.FileName
+            '파일이름
+            ListBox1.Items.Add(System.IO.Path.GetFileName(file_name))
+            '파일경로+이름
+            ListBox2.Items.Add(file_name)
+        End If
+
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        file_path = ""
+        file_name = ""
+        SaveFileDialog1.InitialDirectory = "C:\\"
+        SaveFileDialog1.FileName = ListBox1.Items(ListBox1.SelectedIndex).ToString
+        file_name = ListBox1.Items(ListBox1.SelectedIndex).ToString
+        If SaveFileDialog1.ShowDialog() = DialogResult.OK Then
+            System.IO.File.Copy(ListBox2.Items(ListBox1.SelectedIndex).ToString(), SaveFileDialog1.FileName.Replace(file_name, "") + "" & ListBox1.Items(ListBox1.SelectedIndex).ToString(), True)
+
+        End If
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        If ListBox1.SelectedIndex >= 0 Then
+            ListBox2.Items.RemoveAt(ListBox1.SelectedIndex)
+            ListBox1.Items.RemoveAt(ListBox1.SelectedIndex)
+
+        End If
+    End Sub
+
+    Private Sub Button13_Click(sender As Object, e As EventArgs) Handles Button13.Click
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT CQ_JOB_Code,CQ_Code,CQ_Customer_Name,CQ_Name,CQ_Date,CQ_PS_Code,
+        '            CQ_PR_Code,CQ_PO_Code,CQ_Manager 
+        '            FROM CM_Stock_QC where CQ_JOB_Code Like '%" & TextBox15.Text & "%' order by CQ_JOB_Code"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView1.DataSource = DBT
+        'DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+        'Dim DBT As DataTable
+        'DBT = Nothing
+
+        'StrSQL = "SELECT CQ_JOB_Code,CQ_Code,CQ_Customer_Name,CQ_Name,CQ_Date,CQ_PS_Code,
+        '            CQ_PR_Code,CQ_PO_Code,CQ_Manager 
+        '            FROM CM_Stock_QC where CQ_Code Like '%" & TextBox16.Text & "%' order by CQ_JOB_Code"
+        'Re_Count = DB_Select(DBT)
+
+        'DataGridView1.DataSource = DBT
+        'DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub Button14_Click(sender As Object, e As EventArgs) Handles Button14.Click
+        Dim DBT As DataTable
+        DBT = Nothing
+
+        StrSQL = "SELECT CQ_JOB_Code,CQ_Code,CQ_Customer_Name,CQ_Name,CQ_Date,CQ_PS_Code,
+                    CQ_PR_Code,CQ_PO_Code,CQ_Manager 
+                    FROM CM_Stock_QC where CQ_Manager Like '%" & TextBox17.Text & "%' order by CQ_JOB_Code"
+        Re_Count = DB_Select(DBT)
+
+        DataGridView1.DataSource = DBT
+        DataGridView1.ClearSelection()
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        Dim DBT As DataTable
+        Dim i As Integer
+        DBT = Nothing
+
+        StrSQL = "SELECT * FROM CM_Stock_QC Where CQ_JOB_Code = '" & ComboBox1.Text & "'"
+        Re_Count = DB_Select(DBT)
+        If Re_Count > 0 Then
+            TextBox104.Text = DBT.Rows(0)("CQ_Code").ToString
+            TextBox98.Text = DBT.Rows(0)("CQ_Customer_Name").ToString
+            TextBox97.Text = DBT.Rows(0)("CQ_Name").ToString
+            TextBox89.Text = DBT.Rows(0)("CQ_PS_Code").ToString
+            TextBox96.Text = DBT.Rows(0)("CQ_PR_Code").ToString
+            TextBox95.Text = DBT.Rows(0)("CQ_PO_Code").ToString
+            TextBox88.Text = DBT.Rows(0)("CQ_Manager").ToString
+            DateTimePicker1.Text = DBT.Rows(0)("CQ_Day").ToString
+            TextBox2.Text = DBT.Rows(0)("CQ_Bigo").ToString
+            If DBT.Rows(0)("CQ_File").ToString <> "" Then
+                For i = 0 To Split(DBT.Rows(0)("CQ_File").ToString, "/").Count - 1
+                    ListBox1.Items.Add(System.IO.Path.GetFileName(Split(DBT.Rows(0)("CQ_File").ToString, "/")(i)))
+                    ListBox2.Items.Add(Split(DBT.Rows(0)("CQ_File").ToString, "/")(i))
+                Next
+            End If
+        Else
+            TextBox104.Text = ""
+            TextBox98.Text = ""
+            TextBox97.Text = ""
+            TextBox89.Text = ""
+            TextBox96.Text = ""
+            TextBox95.Text = ""
+            TextBox88.Text = ""
+            DateTimePicker1.Text = ""
+            TextBox2.Text = ""
+            ListBox1.Items.Clear()
+            ListBox2.Items.Clear()
+        End If
+
+    End Sub
+End Class

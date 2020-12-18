@@ -1,0 +1,300 @@
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_DEL_Report2
+    Inherits System.Windows.Forms.UserControl
+
+    'UserControl은 Dispose를 재정의하여 구성 요소 목록을 정리합니다.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If disposing AndAlso components IsNot Nothing Then
+                components.Dispose()
+            End If
+        Finally
+            MyBase.Dispose(disposing)
+        End Try
+    End Sub
+
+    'Windows Form 디자이너에 필요합니다.
+    Private components As System.ComponentModel.IContainer
+
+    '참고: 다음 프로시저는 Windows Form 디자이너에 필요합니다.
+    '수정하려면 Windows Form 디자이너를 사용하십시오.  
+    '코드 편집기에서는 수정하지 마세요.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Me.Panel_List = New System.Windows.Forms.Panel()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.TextBox17 = New System.Windows.Forms.TextBox()
+        Me.Button15 = New System.Windows.Forms.Button()
+        Me.TextBox18 = New System.Windows.Forms.TextBox()
+        Me.Panel24 = New System.Windows.Forms.Panel()
+        Me.lstMain = New System.Windows.Forms.DataGridView()
+        Me.CR_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DL_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_List_Code = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Rev_No = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Sun = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_PL_Name = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Qty = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Total = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.CR_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DL_Check = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DL_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DL_Prepared = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DL_Prepare_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DL_Updated = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DL_Update_Date = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DL_Bigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Panel_List.SuspendLayout()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'Panel_List
+        '
+        Me.Panel_List.Controls.Add(Me.lstMain)
+        Me.Panel_List.Controls.Add(Me.Button14)
+        Me.Panel_List.Controls.Add(Me.TextBox17)
+        Me.Panel_List.Controls.Add(Me.Button15)
+        Me.Panel_List.Controls.Add(Me.TextBox18)
+        Me.Panel_List.Controls.Add(Me.Panel24)
+        Me.Panel_List.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel_List.Location = New System.Drawing.Point(10, 40)
+        Me.Panel_List.Name = "Panel_List"
+        Me.Panel_List.Size = New System.Drawing.Size(1660, 867)
+        Me.Panel_List.TabIndex = 145
+        '
+        'Button14
+        '
+        Me.Button14.BackColor = System.Drawing.Color.White
+        Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button14.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button14.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button14.Location = New System.Drawing.Point(1465, 45)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(150, 27)
+        Me.Button14.TabIndex = 294
+        Me.Button14.Text = "계약납기일 검색"
+        Me.Button14.UseVisualStyleBackColor = False
+        '
+        'TextBox17
+        '
+        Me.TextBox17.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox17.Location = New System.Drawing.Point(1309, 46)
+        Me.TextBox17.Name = "TextBox17"
+        Me.TextBox17.Size = New System.Drawing.Size(150, 25)
+        Me.TextBox17.TabIndex = 293
+        '
+        'Button15
+        '
+        Me.Button15.BackColor = System.Drawing.Color.White
+        Me.Button15.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button15.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Button15.ForeColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Button15.Location = New System.Drawing.Point(1465, 13)
+        Me.Button15.Name = "Button15"
+        Me.Button15.Size = New System.Drawing.Size(150, 27)
+        Me.Button15.TabIndex = 292
+        Me.Button15.Text = "Job No 검색"
+        Me.Button15.UseVisualStyleBackColor = False
+        '
+        'TextBox18
+        '
+        Me.TextBox18.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.TextBox18.Location = New System.Drawing.Point(1309, 14)
+        Me.TextBox18.Name = "TextBox18"
+        Me.TextBox18.Size = New System.Drawing.Size(150, 25)
+        Me.TextBox18.TabIndex = 291
+        '
+        'Panel24
+        '
+        Me.Panel24.BackColor = System.Drawing.SystemColors.MenuHighlight
+        Me.Panel24.Location = New System.Drawing.Point(16, 85)
+        Me.Panel24.Margin = New System.Windows.Forms.Padding(2)
+        Me.Panel24.Name = "Panel24"
+        Me.Panel24.Size = New System.Drawing.Size(1600, 1)
+        Me.Panel24.TabIndex = 69
+        '
+        'lstMain
+        '
+        Me.lstMain.AllowUserToAddRows = False
+        Me.lstMain.AllowUserToDeleteRows = False
+        Me.lstMain.BackgroundColor = System.Drawing.Color.White
+        Me.lstMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.lstMain.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.CR_Code, Me.DL_Code, Me.CR_List_Code, Me.CR_Rev_No, Me.CR_Sun, Me.CR_PL_Name, Me.CR_Qty, Me.CR_Total, Me.CR_Date, Me.DL_Check, Me.DL_Date, Me.DL_Prepared, Me.DL_Prepare_Date, Me.DL_Updated, Me.DL_Update_Date, Me.DL_Bigo})
+        Me.lstMain.Location = New System.Drawing.Point(16, 103)
+        Me.lstMain.Name = "lstMain"
+        Me.lstMain.ReadOnly = True
+        Me.lstMain.RowHeadersVisible = False
+        Me.lstMain.RowTemplate.Height = 23
+        Me.lstMain.Size = New System.Drawing.Size(1600, 732)
+        Me.lstMain.TabIndex = 296
+        '
+        'CR_Code
+        '
+        Me.CR_Code.DataPropertyName = "CR_Code"
+        Me.CR_Code.HeaderText = "Job No"
+        Me.CR_Code.Name = "CR_Code"
+        Me.CR_Code.ReadOnly = True
+        Me.CR_Code.Width = 200
+        '
+        'DL_Code
+        '
+        Me.DL_Code.DataPropertyName = "DL_Code"
+        Me.DL_Code.HeaderText = "납품코드"
+        Me.DL_Code.Name = "DL_Code"
+        Me.DL_Code.ReadOnly = True
+        Me.DL_Code.Visible = False
+        Me.DL_Code.Width = 200
+        '
+        'CR_List_Code
+        '
+        Me.CR_List_Code.DataPropertyName = "CR_List_Code"
+        Me.CR_List_Code.HeaderText = "항목코드"
+        Me.CR_List_Code.Name = "CR_List_Code"
+        Me.CR_List_Code.ReadOnly = True
+        Me.CR_List_Code.Visible = False
+        Me.CR_List_Code.Width = 200
+        '
+        'CR_Rev_No
+        '
+        Me.CR_Rev_No.DataPropertyName = "CR_Rev_No"
+        Me.CR_Rev_No.HeaderText = "Job개정번호"
+        Me.CR_Rev_No.Name = "CR_Rev_No"
+        Me.CR_Rev_No.ReadOnly = True
+        Me.CR_Rev_No.Visible = False
+        Me.CR_Rev_No.Width = 200
+        '
+        'CR_Sun
+        '
+        Me.CR_Sun.DataPropertyName = "CR_Sun"
+        Me.CR_Sun.HeaderText = "순번"
+        Me.CR_Sun.Name = "CR_Sun"
+        Me.CR_Sun.ReadOnly = True
+        Me.CR_Sun.Width = 200
+        '
+        'CR_PL_Name
+        '
+        Me.CR_PL_Name.DataPropertyName = "CR_PL_Name"
+        Me.CR_PL_Name.HeaderText = "물품명"
+        Me.CR_PL_Name.Name = "CR_PL_Name"
+        Me.CR_PL_Name.ReadOnly = True
+        Me.CR_PL_Name.Width = 200
+        '
+        'CR_Qty
+        '
+        Me.CR_Qty.DataPropertyName = "CR_Qty"
+        Me.CR_Qty.HeaderText = "수량"
+        Me.CR_Qty.Name = "CR_Qty"
+        Me.CR_Qty.ReadOnly = True
+        Me.CR_Qty.Width = 200
+        '
+        'CR_Total
+        '
+        Me.CR_Total.DataPropertyName = "CR_Total"
+        Me.CR_Total.HeaderText = "총계"
+        Me.CR_Total.Name = "CR_Total"
+        Me.CR_Total.ReadOnly = True
+        Me.CR_Total.Width = 200
+        '
+        'CR_Date
+        '
+        Me.CR_Date.DataPropertyName = "CR_Date"
+        Me.CR_Date.HeaderText = "납기일"
+        Me.CR_Date.Name = "CR_Date"
+        Me.CR_Date.ReadOnly = True
+        Me.CR_Date.Width = 200
+        '
+        'DL_Check
+        '
+        Me.DL_Check.DataPropertyName = "DL_Check"
+        Me.DL_Check.HeaderText = "납품확인"
+        Me.DL_Check.Name = "DL_Check"
+        Me.DL_Check.ReadOnly = True
+        Me.DL_Check.Visible = False
+        '
+        'DL_Date
+        '
+        Me.DL_Date.DataPropertyName = "DL_Date"
+        Me.DL_Date.HeaderText = "출하일자"
+        Me.DL_Date.Name = "DL_Date"
+        Me.DL_Date.ReadOnly = True
+        Me.DL_Date.Visible = False
+        '
+        'DL_Prepared
+        '
+        Me.DL_Prepared.DataPropertyName = "DL_Prepared"
+        Me.DL_Prepared.HeaderText = "작성자"
+        Me.DL_Prepared.Name = "DL_Prepared"
+        Me.DL_Prepared.ReadOnly = True
+        Me.DL_Prepared.Visible = False
+        '
+        'DL_Prepare_Date
+        '
+        Me.DL_Prepare_Date.DataPropertyName = "DL_Prepare_Date"
+        Me.DL_Prepare_Date.HeaderText = "작성일자"
+        Me.DL_Prepare_Date.Name = "DL_Prepare_Date"
+        Me.DL_Prepare_Date.ReadOnly = True
+        Me.DL_Prepare_Date.Visible = False
+        '
+        'DL_Updated
+        '
+        Me.DL_Updated.DataPropertyName = "DL_Updated"
+        Me.DL_Updated.HeaderText = "수정자"
+        Me.DL_Updated.Name = "DL_Updated"
+        Me.DL_Updated.ReadOnly = True
+        Me.DL_Updated.Visible = False
+        '
+        'DL_Update_Date
+        '
+        Me.DL_Update_Date.DataPropertyName = "DL_Update_Date"
+        Me.DL_Update_Date.HeaderText = "수정일자"
+        Me.DL_Update_Date.Name = "DL_Update_Date"
+        Me.DL_Update_Date.ReadOnly = True
+        Me.DL_Update_Date.Visible = False
+        '
+        'DL_Bigo
+        '
+        Me.DL_Bigo.DataPropertyName = "DL_Bigo"
+        Me.DL_Bigo.HeaderText = "비고"
+        Me.DL_Bigo.Name = "DL_Bigo"
+        Me.DL_Bigo.ReadOnly = True
+        Me.DL_Bigo.Visible = False
+        '
+        'Frm_DEL_Report2
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Panel_List)
+        Me.Name = "Frm_DEL_Report2"
+        Me.Size = New System.Drawing.Size(1860, 681)
+        Me.Panel_List.ResumeLayout(False)
+        Me.Panel_List.PerformLayout()
+        CType(Me.lstMain, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+
+    End Sub
+
+    Friend WithEvents Panel_List As Panel
+    Friend WithEvents Button14 As Button
+    Friend WithEvents TextBox17 As TextBox
+    Friend WithEvents Button15 As Button
+    Friend WithEvents TextBox18 As TextBox
+    Friend WithEvents Panel24 As Panel
+    Friend WithEvents lstMain As DataGridView
+    Friend WithEvents CR_Code As DataGridViewTextBoxColumn
+    Friend WithEvents DL_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CR_List_Code As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Rev_No As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Sun As DataGridViewTextBoxColumn
+    Friend WithEvents CR_PL_Name As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Qty As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Total As DataGridViewTextBoxColumn
+    Friend WithEvents CR_Date As DataGridViewTextBoxColumn
+    Friend WithEvents DL_Check As DataGridViewTextBoxColumn
+    Friend WithEvents DL_Date As DataGridViewTextBoxColumn
+    Friend WithEvents DL_Prepared As DataGridViewTextBoxColumn
+    Friend WithEvents DL_Prepare_Date As DataGridViewTextBoxColumn
+    Friend WithEvents DL_Updated As DataGridViewTextBoxColumn
+    Friend WithEvents DL_Update_Date As DataGridViewTextBoxColumn
+    Friend WithEvents DL_Bigo As DataGridViewTextBoxColumn
+End Class
