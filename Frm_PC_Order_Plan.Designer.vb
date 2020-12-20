@@ -23,11 +23,15 @@ Partial Class Frm_PC_Order_Plan
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.Main_Table = New System.Windows.Forms.TableLayoutPanel()
+        Me.Log = New System.Windows.Forms.DataGridView()
         Me.Grid_Order = New System.Windows.Forms.DataGridView()
         Me.Grid_Main = New System.Windows.Forms.DataGridView()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Title1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Delete__Order = New System.Windows.Forms.Button()
+        Me.Insert_Order = New System.Windows.Forms.Button()
         Me.Search_Combo = New System.Windows.Forms.ComboBox()
         Me.Search_Text = New System.Windows.Forms.TextBox()
         Me.Search_Com = New System.Windows.Forms.Button()
@@ -36,16 +40,12 @@ Partial Class Frm_PC_Order_Plan
         Me.Btn_Produc = New System.Windows.Forms.Button()
         Me.Panel_Menu = New System.Windows.Forms.Panel()
         Me.Di_Panel1 = New System.Windows.Forms.Panel()
-        Me.Log = New System.Windows.Forms.DataGridView()
-        Me.Insert__Order = New System.Windows.Forms.Button()
-        Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.Delete__Order = New System.Windows.Forms.Button()
         Me.Main_Table.SuspendLayout()
+        CType(Me.Log, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grid_Order, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grid_Main, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel_Menu.SuspendLayout()
-        CType(Me.Log, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel3.SuspendLayout()
+        Me.Panel_Menu.SuspendLayout()
         Me.SuspendLayout()
         '
         'Main_Table
@@ -74,6 +74,19 @@ Partial Class Frm_PC_Order_Plan
         Me.Main_Table.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.Main_Table.Size = New System.Drawing.Size(1442, 595)
         Me.Main_Table.TabIndex = 103
+        '
+        'Log
+        '
+        Me.Log.AllowUserToAddRows = False
+        Me.Log.BackgroundColor = System.Drawing.SystemColors.Control
+        Me.Log.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.Log.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Log.Location = New System.Drawing.Point(2, 415)
+        Me.Log.Margin = New System.Windows.Forms.Padding(2)
+        Me.Log.Name = "Log"
+        Me.Log.RowTemplate.Height = 30
+        Me.Log.Size = New System.Drawing.Size(1293, 178)
+        Me.Log.TabIndex = 104
         '
         'Grid_Order
         '
@@ -110,7 +123,7 @@ Partial Class Frm_PC_Order_Plan
         Me.Button1.Location = New System.Drawing.Point(0, 396)
         Me.Button1.Margin = New System.Windows.Forms.Padding(0)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(133, 17)
+        Me.Button1.Size = New System.Drawing.Size(144, 17)
         Me.Button1.TabIndex = 102
         Me.Button1.Text = "작업지시서 생성 내역"
         Me.Button1.UseVisualStyleBackColor = True
@@ -125,7 +138,7 @@ Partial Class Frm_PC_Order_Plan
         Me.Title1.Location = New System.Drawing.Point(0, 0)
         Me.Title1.Margin = New System.Windows.Forms.Padding(0)
         Me.Title1.Name = "Title1"
-        Me.Title1.Size = New System.Drawing.Size(65, 17)
+        Me.Title1.Size = New System.Drawing.Size(69, 17)
         Me.Title1.TabIndex = 96
         Me.Title1.Text = "수주현황"
         Me.Title1.UseVisualStyleBackColor = True
@@ -140,10 +153,43 @@ Partial Class Frm_PC_Order_Plan
         Me.Button2.Location = New System.Drawing.Point(0, 201)
         Me.Button2.Margin = New System.Windows.Forms.Padding(0)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(109, 17)
+        Me.Button2.Size = New System.Drawing.Size(118, 17)
         Me.Button2.TabIndex = 103
         Me.Button2.Text = "개별 소모량 산출"
         Me.Button2.UseVisualStyleBackColor = True
+        '
+        'Panel3
+        '
+        Me.Panel3.BackColor = System.Drawing.Color.FromArgb(CType(CType(91, Byte), Integer), CType(CType(155, Byte), Integer), CType(CType(213, Byte), Integer))
+        Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Panel3.Controls.Add(Me.Delete__Order)
+        Me.Panel3.Controls.Add(Me.Insert_Order)
+        Me.Panel3.Location = New System.Drawing.Point(1300, 20)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(124, 130)
+        Me.Panel3.TabIndex = 106
+        '
+        'Delete__Order
+        '
+        Me.Delete__Order.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Delete__Order.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Delete__Order.Location = New System.Drawing.Point(3, 63)
+        Me.Delete__Order.Name = "Delete__Order"
+        Me.Delete__Order.Size = New System.Drawing.Size(114, 54)
+        Me.Delete__Order.TabIndex = 7
+        Me.Delete__Order.Text = "삭제"
+        Me.Delete__Order.UseVisualStyleBackColor = False
+        '
+        'Insert_Order
+        '
+        Me.Insert_Order.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
+        Me.Insert_Order.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
+        Me.Insert_Order.Location = New System.Drawing.Point(3, 3)
+        Me.Insert_Order.Name = "Insert_Order"
+        Me.Insert_Order.Size = New System.Drawing.Size(114, 54)
+        Me.Insert_Order.TabIndex = 5
+        Me.Insert_Order.Text = "작업지시서 생성"
+        Me.Insert_Order.UseVisualStyleBackColor = False
         '
         'Search_Combo
         '
@@ -233,52 +279,6 @@ Partial Class Frm_PC_Order_Plan
         Me.Di_Panel1.Size = New System.Drawing.Size(2500, 2)
         Me.Di_Panel1.TabIndex = 115
         '
-        'Log
-        '
-        Me.Log.AllowUserToAddRows = False
-        Me.Log.BackgroundColor = System.Drawing.SystemColors.Control
-        Me.Log.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.Log.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Log.Location = New System.Drawing.Point(2, 415)
-        Me.Log.Margin = New System.Windows.Forms.Padding(2)
-        Me.Log.Name = "Log"
-        Me.Log.RowTemplate.Height = 30
-        Me.Log.Size = New System.Drawing.Size(1293, 178)
-        Me.Log.TabIndex = 104
-        '
-        'Insert__Order
-        '
-        Me.Insert__Order.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
-        Me.Insert__Order.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Insert__Order.Location = New System.Drawing.Point(3, 3)
-        Me.Insert__Order.Name = "Insert__Order"
-        Me.Insert__Order.Size = New System.Drawing.Size(114, 54)
-        Me.Insert__Order.TabIndex = 5
-        Me.Insert__Order.Text = "작업지시서 생성"
-        Me.Insert__Order.UseVisualStyleBackColor = False
-        '
-        'Panel3
-        '
-        Me.Panel3.BackColor = System.Drawing.Color.FromArgb(CType(CType(91, Byte), Integer), CType(CType(155, Byte), Integer), CType(CType(213, Byte), Integer))
-        Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.Panel3.Controls.Add(Me.Delete__Order)
-        Me.Panel3.Controls.Add(Me.Insert__Order)
-        Me.Panel3.Location = New System.Drawing.Point(1300, 20)
-        Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(124, 130)
-        Me.Panel3.TabIndex = 106
-        '
-        'Delete__Order
-        '
-        Me.Delete__Order.BackColor = System.Drawing.Color.FromArgb(CType(CType(210, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(239, Byte), Integer))
-        Me.Delete__Order.Font = New System.Drawing.Font("맑은 고딕", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(129, Byte))
-        Me.Delete__Order.Location = New System.Drawing.Point(3, 63)
-        Me.Delete__Order.Name = "Delete__Order"
-        Me.Delete__Order.Size = New System.Drawing.Size(114, 54)
-        Me.Delete__Order.TabIndex = 7
-        Me.Delete__Order.Text = "삭제"
-        Me.Delete__Order.UseVisualStyleBackColor = False
-        '
         'Frm_PC_Order_Plan
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
@@ -289,12 +289,12 @@ Partial Class Frm_PC_Order_Plan
         Me.Size = New System.Drawing.Size(1442, 675)
         Me.Main_Table.ResumeLayout(False)
         Me.Main_Table.PerformLayout()
+        CType(Me.Log, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grid_Order, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grid_Main, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel3.ResumeLayout(False)
         Me.Panel_Menu.ResumeLayout(False)
         Me.Panel_Menu.PerformLayout()
-        CType(Me.Log, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Panel3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -315,5 +315,5 @@ Partial Class Frm_PC_Order_Plan
     Friend WithEvents Log As DataGridView
     Friend WithEvents Panel3 As Panel
     Friend WithEvents Delete__Order As Button
-    Friend WithEvents Insert__Order As Button
+    Friend WithEvents Insert_Order As Button
 End Class

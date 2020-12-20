@@ -15,9 +15,9 @@ Public Class Frm_PC_Order_Plan
 
     Dim Product_Count_Cnt As Long
 
-    Dim xlapp As Excel.Application
-    Dim xlbook As Excel.Workbook
-    Dim xlsheet As Excel.Worksheet
+    'Dim xlapp As Excel.Application
+    'Dim xlbook As Excel.Workbook
+    'Dim xlsheet As Excel.Worksheet
     Dim Excel_check As Boolean
 
 
@@ -368,18 +368,19 @@ Public Class Frm_PC_Order_Plan
 
     End Function
 
-    Private Sub Insert__Order_Click(sender As Object, e As EventArgs) Handles Insert__Order.Click
+    Private Sub Insert__Order_Click(sender As Object, e As EventArgs) Handles Insert_Order.Click
 
+        '생산지시서 코드 중복검사 해야함
         Dim form As New PCOrder_Insert
         form.Label1.Text = "insert2"
-        form.contract_code.Text = Grid_Order.Item(0, Grid_Order.CurrentCell.RowIndex).Value
-        form.contract_name.Text = Grid_Order.Item(1, Grid_Order.CurrentCell.RowIndex).Value
-        form.contract_day.Text = Grid_Order.Item(2, Grid_Order.CurrentCell.RowIndex).Value
-        form.contract_time.Text = Grid_Order.Item(3, Grid_Order.CurrentCell.RowIndex).Value
-        form.customer_code.Text = Grid_Order.Item(4, Grid_Order.CurrentCell.RowIndex).Value
-        form.customer_name.Text = Grid_Order.Item(5, Grid_Order.CurrentCell.RowIndex).Value
-        form.CR_day.Text = Grid_Order.Item(6, Grid_Order.CurrentCell.RowIndex).Value
-        form.Contract_bigo.Text = Grid_Order.Item(7, Grid_Order.CurrentCell.RowIndex).Value
+        form.Txt_cmName.Text = Grid_Order.Item(3, Grid_Order.CurrentCell.RowIndex).Value
+        form.Txt_plName.Text = Grid_Order.Item(4, Grid_Order.CurrentCell.RowIndex).Value
+        form.Txt_crDate.Text = Grid_Order.Item(2, Grid_Order.CurrentCell.RowIndex).Value
+        form.Txt_standard.Text = Grid_Order.Item(5, Grid_Order.CurrentCell.RowIndex).Value
+        form.Txt_qty.Text = Grid_Order.Item(6, Grid_Order.CurrentCell.RowIndex).Value
+        form.Txt_crDay.Text = Grid_Order.Item(7, Grid_Order.CurrentCell.RowIndex).Value
+        form.inv_CRCode.Text = Grid_Order.Item(0, Grid_Order.CurrentCell.RowIndex).Value
+        form.inv_PPCode.Text = Grid_Order.Item(1, Grid_Order.CurrentCell.RowIndex).Value
 
         form.ShowDialog()
 

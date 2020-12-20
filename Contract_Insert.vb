@@ -245,4 +245,8 @@
     Private Sub TextBox8_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox8.KeyDown
 
     End Sub
+
+    Private Sub contract_code_TextChanged(sender As Object, e As EventArgs) Handles contract_code.TextChanged
+
+    End Sub
 End Class
